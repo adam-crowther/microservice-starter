@@ -1,0 +1,16 @@
+[
+  {
+    "name": "OrderSubmodules",
+    "regex": "^:order.*$",
+    "isEnabled": true,
+    "shape": "box3d",
+    "fillColor": "white"
+  },
+  {
+    "name": "CommonSubmodules",
+    "regex": "^:common.*$",
+    "isEnabled": true,
+    "shape": "box3d",
+    "fillColor": "yellow"
+  }
+]

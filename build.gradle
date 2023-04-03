@@ -1,0 +1,50 @@
+import com.github.ivancarras.graphfity.plugin.main.GraphfityPlugin
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.github.ivancarras:graphfity-plugin:1.0.0"
+    }
+}
+
+plugins {
+    id 'base'
+    id 'maven-publish'
+    id 'com.github.ivancarras.graphfity' version '1.0.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    mapstructVersion = "1.5.3.Final"
+    lombokVersion = "1.18.24"
+    lombokMapstructBindingVersion = "0.2.0"
+    slf4jVersion = "2.0.6"
+    kafkaVersion = "3.3.1"
+    googleGuavaVersion = "31.1-jre"
+    apacheCommonsLangVersion = "3.12.0"
+    apacheCommonsTextVersion = "1.10.0"
+    log4jVersion = "2.19.0"
+    springBootVersion = "3.0.5"
+    springVersion = "6.0.7"
+
+    junitVersion = "5.8.2"
+    mockitoVersion = "4.11.0"
+    hamcrestVersion = "1.3"
+    awaitilityVersion = "4.2.0"
+    groovyVersion = "4.0.5"
+    spockVersion = "2.3-groovy-4.0"
+}
+
+apply plugin: GraphfityPlugin
+graphfityExtension {
+    nodeTypesPath = "graphFity/nodeTypes.json"
+    projectRootName = ":order-service:order-container"
+    graphImagePath = "build/"
+}
