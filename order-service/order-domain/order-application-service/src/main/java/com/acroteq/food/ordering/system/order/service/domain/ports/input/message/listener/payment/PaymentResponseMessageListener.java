@@ -1,11 +1,10 @@
 package com.acroteq.food.ordering.system.order.service.domain.ports.input.message.listener.payment;
 
-import com.acroteq.food.ordering.system.order.service.domain.dto.message.PaymentResponse;
-import org.mapstruct.Mapper;
+import com.acroteq.food.ordering.system.order.service.domain.dto.message.PaymentResponseDto;
 
 public interface PaymentResponseMessageListener {
 
-  void paymentCompleted(PaymentResponse paymentResponse);
+  void paymentCompleted(PaymentResponseDto paymentResponse);
 
-  void paymentCancelled(PaymentResponse paymentResponse);
+  void paymentCancelled(PaymentResponseDto paymentResponse);
 }

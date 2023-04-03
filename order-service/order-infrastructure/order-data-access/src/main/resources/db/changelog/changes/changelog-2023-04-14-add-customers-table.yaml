@@ -1,0 +1,25 @@
+databaseChangeLog:
+- changeSet:
+    id: 1681472606781-1
+    author: micro (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: customersPK
+            name: id
+            type: VARCHAR(36)
+        - column:
+            name: first_name
+            type: VARCHAR(255)
+        - column:
+            name: last_name
+            type: VARCHAR(255)
+        - column:
+            name: user_name
+            type: VARCHAR(255)
+        tableName: customers
+

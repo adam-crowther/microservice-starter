@@ -1,14 +1,14 @@
 package com.acroteq.food.ordering.system.order.service.domain.ports.input.service;
 
-import com.acroteq.food.ordering.system.order.service.domain.dto.create.CreateOrderCommand;
-import com.acroteq.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse;
-import com.acroteq.food.ordering.system.order.service.domain.dto.track.TrackOrderQuery;
-import com.acroteq.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse;
+import com.acroteq.food.ordering.system.order.service.domain.dto.create.CreateOrderCommandDto;
+import com.acroteq.food.ordering.system.order.service.domain.dto.create.CreateOrderResponseDto;
+import com.acroteq.food.ordering.system.order.service.domain.dto.track.TrackOrderQueryDto;
+import com.acroteq.food.ordering.system.order.service.domain.dto.track.TrackOrderResponseDto;
 import jakarta.validation.Valid;
 
 public interface OrderApplicationService {
 
-  CreateOrderResponse createOrder(@Valid CreateOrderCommand createOrderCommand);
+  CreateOrderResponseDto createOrder(@Valid CreateOrderCommandDto createOrderCommand);
 
-  TrackOrderResponse trackOrder(@Valid TrackOrderQuery trackOrderQuery);
+  TrackOrderResponseDto trackOrder(@Valid TrackOrderQueryDto trackOrderQuery);
 }

@@ -1,0 +1,40 @@
+{
+  "namespace": "com.acroteq.food.ordering.system.kafka.order.avro.model",
+  "type": "record",
+  "name": "CustomerEventMessage",
+  "fields": [
+    {
+      "name": "eventType",
+      "type": {
+        "type": "enum",
+        "name": "EventType",
+        "symbols": ["CREATED", "CREATE_FAILED", "UPDATED", "UPDATE_FAILED", "DELETED"]
+      }
+    },
+    {
+      "name": "id",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "userName",
+      "type": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "firstName",
+      "type": {
+        "type": "string"
+      }
+    },
+    {
+      "name": "lastName",
+      "type": {
+        "type": "string"
+      }
+    }
+  ]
+}

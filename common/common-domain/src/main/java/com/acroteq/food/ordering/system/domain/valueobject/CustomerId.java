@@ -8,15 +8,19 @@ import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
 
-@SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@SuperBuilder(toBuilder = true)
 public class CustomerId extends BaseId<UUID> {
 
   public static CustomerId of(final UUID id) {
     return CustomerId.builder()
-                     .id(id)
+                     .value(id)
                      .build();
+  }
+
+  public static CustomerId of(final String id) {
+    return of(UUID.fromString(id));
   }
 
   public static CustomerId random() {

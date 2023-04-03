@@ -2,51 +2,23 @@ plugins {
     id 'java'
 }
 
-group 'com.acroteq.food.ordering.system'
-version '1.0-SNAPSHOT'
-
 compileJava {
     sourceCompatibility = javaSourceCompatibility
     targetCompatibility = javaTargetCompatibility
-}
-
-repositories {
-    mavenCentral()
+    options.compilerArgs += [
+            '-Xlint:deprecation'
+    ]
 }
 
 dependencies {
     implementation project(":common:common-helper")
 
-    implementation "org.projectlombok:lombok:${lombokVersion}"
-    implementation "org.slf4j:slf4j-api:${slf4jVersion}"
-    implementation "org.slf4j:slf4j-log4j12:${slf4jVersion}"
-    implementation "com.google.guava:guava:${googleGuavaVersion}"
-    implementation "org.apache.commons:commons-lang3:${apacheCommonsLangVersion}"
-    implementation "org.apache.commons:commons-text:${apacheCommonsTextVersion}"
+    implementation libs.lombok.core
+    implementation libs.google.guava
+    implementation libs.apache.commons.lang3
+    implementation libs.findbugs.jsr305
 
-    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-
-    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
-    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
-    testImplementation "org.mockito:mockito-inline:${mockitoVersion}"
-    testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
-    testImplementation "org.hamcrest:hamcrest-all:${hamcrestVersion}"
-    testImplementation "org.awaitility:awaitility:${awaitilityVersion}"
-    testImplementation "org.slf4j:slf4j-simple:${slf4jVersion}"
-
-    // mandatory dependencies for using Spock
-    implementation platform("org.apache.groovy:groovy-bom:${groovyVersion}")
-    implementation 'org.apache.groovy:groovy'
-    testImplementation platform("org.spockframework:spock-bom:${spockVersion}")
-    testImplementation "org.spockframework:spock-core"
-
-    // optional dependencies for using Spock
-    testImplementation "org.hamcrest:hamcrest-core:2.2"   // only necessary if Hamcrest matchers are used
-    testRuntimeOnly 'net.bytebuddy:byte-buddy:1.12.17' // allows mocking of classes (in addition to interfaces)
-    testRuntimeOnly "org.objenesis:objenesis:3.3"      // allows mocking of classes without default constructor (together with ByteBuddy or CGLIB)
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    annotationProcessor libs.lombok.core
 }
 
 test {

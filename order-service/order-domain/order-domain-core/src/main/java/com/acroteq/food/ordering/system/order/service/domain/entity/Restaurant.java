@@ -12,14 +12,13 @@ import lombok.experimental.SuperBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
-@SuperBuilder
 @Getter
 @ToString(callSuper = true)
+@SuperBuilder(toBuilder = true)
 public class Restaurant extends AggregateRoot<RestaurantId> {
 
   @NonNull

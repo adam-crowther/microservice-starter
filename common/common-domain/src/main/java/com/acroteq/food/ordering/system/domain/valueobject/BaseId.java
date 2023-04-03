@@ -2,14 +2,19 @@ package com.acroteq.food.ordering.system.domain.valueobject;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-@Getter
-@SuperBuilder
-@EqualsAndHashCode
-@ToString
-public abstract class BaseId<T> {
+import java.io.Serializable;
 
-  private final T id;
+@Getter
+@EqualsAndHashCode
+@SuperBuilder(toBuilder = true)
+public abstract class BaseId<T> implements Serializable {
+
+  private final T value;
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
 }

@@ -1,19 +1,21 @@
 package com.acroteq.food.ordering.system.domain.event;
 
-import com.acroteq.food.ordering.system.domain.entity.BaseEntity;
-import lombok.*;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 
 import static com.acroteq.food.ordering.system.helper.DateHelper.nowInSystemDefaultTimezone;
 
-@SuperBuilder
 @Getter
 @ToString
 @EqualsAndHashCode
-public class DomainEvent<T extends BaseEntity<?>> {
+@SuperBuilder(toBuilder = true)
+public abstract class DomainEvent<T> {
 
   @Builder.Default
   @NonNull

@@ -1,0 +1,34 @@
+{
+  "properties": [
+    {
+      "name": "order-service.payment-request-topic-name",
+      "type": "java.lang.String",
+      "description": "Kafka topic for payment requests."
+    },
+    {
+      "name": "order-service.payment-response-topic-name",
+      "type": "java.lang.String",
+      "description": "Kafka topic for payment responses."
+    },
+    {
+      "name": "order-service.restaurant-approval-request-topic-name",
+      "type": "java.lang.String",
+      "description": "Kafka topic for restaurant approval requests."
+    },
+    {
+      "name": "order-service.restaurant-approval-response-topic-name",
+      "type": "java.lang.String",
+      "description": "Kafka topic for restaurant approval responses."
+    },
+    {
+      "name": "kafka-consumer-config.payment-consumer-group-id",
+      "type": "java.lang.String",
+      "description": "Group id for payment response consumers."
+    },
+    {
+      "name": "kafka-consumer-config.restaurant-approval-consumer-group-id",
+      "type": "java.lang.String",
+      "description": "Group id for restaurant approval consumers."
+    }
+  ]
+}

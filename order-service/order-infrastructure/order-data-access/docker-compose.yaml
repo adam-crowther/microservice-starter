@@ -1,0 +1,28 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:15.2-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    volumes:
+      - ./build/postgresql:/var/lib/postgresql/data
+    ports:
+      - "5432"
+    networks:
+      - app-tier
+  pgadmin:
+    image: dpage/pgadmin4:2023-04-04-1
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@adamcc.ch
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+      PGADMIN_LISTEN_PORT: 5050
+    ports:
+      - "5050:5050"
+    networks:
+      - app-tier
+networks:
+  app-tier:
+    driver: bridge

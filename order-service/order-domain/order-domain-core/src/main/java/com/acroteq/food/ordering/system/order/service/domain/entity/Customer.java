@@ -6,9 +6,12 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-@SuperBuilder
 @Getter
 @ToString(callSuper = true)
+@SuperBuilder(toBuilder = true)
 public class Customer extends AggregateRoot<CustomerId> {
 
+  private String userName;
+  private String firstName;
+  private String lastName;
 }

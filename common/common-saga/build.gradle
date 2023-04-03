@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+dependencies {
+    implementation project(':common:common-domain')
+
+    implementation libs.lombok.core
+
+    annotationProcessor libs.lombok.core
+}
+
+test {
+    useJUnitPlatform()
+}

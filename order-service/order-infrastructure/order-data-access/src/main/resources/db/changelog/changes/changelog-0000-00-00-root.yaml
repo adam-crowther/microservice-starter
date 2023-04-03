@@ -1,0 +1,140 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1681467710786-1
+      author: micro (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: order_addressesPK
+                  name: id
+                  type: VARCHAR(36)
+              - column:
+                  name: city
+                  type: VARCHAR(255)
+              - column:
+                  name: postal_code
+                  type: VARCHAR(255)
+              - column:
+                  name: street
+                  type: VARCHAR(255)
+              - column:
+                  name: order_id
+                  type: VARCHAR(36)
+            tableName: order_addresses
+  - changeSet:
+      id: 1681467710786-2
+      author: micro (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  name: order_id
+                  type: VARCHAR(36)
+              - column:
+                  name: failure_message
+                  type: VARCHAR(255)
+            tableName: order_failure_messages
+  - changeSet:
+      id: 1681467710786-3
+      author: micro (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: order_itemsPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: product_id
+                  type: VARCHAR(36)
+              - column:
+                  name: quantity
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: order_itemsPK
+                  name: order_id
+                  type: VARCHAR(36)
+            tableName: order_items
+  - changeSet:
+      id: 1681467710786-4
+      author: micro (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: ordersPK
+                  name: id
+                  type: VARCHAR(36)
+              - column:
+                  name: customer_id
+                  type: VARCHAR(36)
+              - column:
+                  name: order_status
+                  type: VARCHAR(255)
+              - column:
+                  name: price_amount
+                  type: NUMBER(38, 2)
+              - column:
+                  name: price_currency_id
+                  type: VARCHAR(36)
+              - column:
+                  name: restaurant_id
+                  type: VARCHAR(36)
+              - column:
+                  name: tracking_id
+                  type: VARCHAR(36)
+            tableName: orders
+  - changeSet:
+      id: 1681467710786-5
+      author: micro (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: order_id
+            baseTableName: order_addresses
+            constraintName: FK50ktlegmhrk0yuibum1sg0jb8
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: orders
+            validate: true
+  - changeSet:
+      id: 1681467710786-6
+      author: micro (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: order_id
+            baseTableName: order_failure_messages
+            constraintName: FK5vvs9mekc0mj6p5pjge87ewqi
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: orders
+            validate: true
+  - changeSet:
+      id: 1681467710786-7
+      author: micro (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: order_id
+            baseTableName: order_items
+            constraintName: FKbioxgbv59vetrxe0ejfubep1w
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: orders
+            validate: true

@@ -1,0 +1,139 @@
+apply plugin: 'org.liquibase.gradle'
+
+configurations {
+    liquibaseRuntime.extendsFrom compileClasspath
+}
+
+dependencies {
+    liquibaseRuntime libs.picocli
+    liquibaseRuntime libs.snakeyaml
+    liquibaseRuntime libs.liquibase.core
+    liquibaseRuntime libs.liquibase.hibernate
+    liquibaseRuntime libs.liquibase.groovy.dsl
+    liquibaseRuntime libs.postgresql.driver
+    liquibaseRuntime libs.spring.boot.data.jpa
+    liquibaseRuntime libs.slf4j.simple
+    liquibaseRuntime sourceSets.main.output
+}
+
+dockerCompose {
+    useComposeFiles = ["docker-compose.yaml"]
+    startedServices = ['postgres'] //, 'pgadmin']
+    dockerComposeWorkingDirectory = projectDir
+}
+
+composeUp {
+    finalizedBy composeDown
+    doLast {
+        project.ext.postgresqlPort = dockerCompose.servicesInfos.postgres.ports[5432]
+    }
+}
+
+tasks.register('liquibaseInitialise') {
+    doFirst {
+        liquibase {
+            jvmArgs << "-Duser.dir=$projectDir"
+            project.ext.timestamp = new Date().format("yyyyMMdd-HHmmss")
+        }
+    }
+}
+
+liquibaseDropAll {
+    dependsOn liquibaseInitialise
+    dependsOn composeUp
+    finalizedBy composeDown
+
+    doFirst() {
+        liquibase {
+            activities {
+                dropSchema {
+                    url "jdbc:postgresql://localhost:${project.postgresqlPort}/postgres"
+                    driver "org.postgresql.Driver"
+                    username "postgres"
+                    password "password"
+                    logFile "build/liquibase/liquibase_dropall.log"
+                    logLevel "FINE"
+                }
+                runList = 'dropSchema'
+            }
+        }
+    }
+}
+
+liquibaseUpdate {
+    // Start up postgres docker container before running liquibaseDiffChangelog and shut it down after
+    dependsOn liquibaseInitialise
+    dependsOn liquibaseDropAll
+    dependsOn composeUp
+    finalizedBy composeDown
+
+    doFirst() {
+        liquibase {
+            activities {
+                deployChangeLog {
+                    changelogFile "src/main/resources/db/changelog/changelog-master.yaml"
+                    url "jdbc:postgresql://localhost:${project.postgresqlPort}/postgres"
+                    driver "org.postgresql.Driver"
+                    username "postgres"
+                    password "password"
+                    logFile "build/liquibase/liquibase_update.log"
+                    logLevel "FINE"
+                }
+                runList = 'deployChangeLog'
+            }
+        }
+    }
+}
+
+liquibaseDiffChangelog {
+    dependsOn liquibaseInitialise
+    dependsOn liquibaseUpdate
+    dependsOn compileJava
+    finalizedBy composeDown
+
+    doFirst() {
+        liquibase {
+            activities {
+                generateDiffChangeLog {
+                    changelogFile "./build/liquibase/changelog-diff-${project.timestamp}.yaml"
+                    overwriteOutputFile true
+                    url "jdbc:postgresql://localhost:${project.postgresqlPort}/postgres"
+                    driver "org.postgresql.Driver"
+                    excludeObjects "order_restaurant_m_view"
+                    username "postgres"
+                    password "password"
+                    referenceUrl "hibernate:spring:com.acroteq.food.ordering.system.order.service.data.access?dialect=org.hibernate.dialect.PostgreSQLDialect&" +
+                            "hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl&" +
+                            "hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
+                    referenceDriver "liquibase.ext.hibernate.database.connection.HibernateDriver"
+                    logFile "./build/liquibase/liquibase_diff.log"
+                }
+                runList = 'generateDiffChangeLog'
+            }
+        }
+    }
+}
+
+liquibaseGenerateChangelog {
+    dependsOn liquibaseInitialise
+    dependsOn compileJava
+
+    doFirst() {
+        liquibase {
+            activities {
+                generateChangeLog {
+                    changelogFile "./build/liquibase/changelog-${project.timestamp}.yaml"
+                    overwriteOutputFile true
+                    url "hibernate:spring:com.acroteq.food.ordering.system.order.service.data.access?dialect=org.hibernate.dialect.PostgreSQLDialect&" +
+                            "hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl&"
+                    "hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
+                    driver "liquibase.ext.hibernate.database.connection.HibernateDriver"
+                    excludeObjects "order_restaurant_m_view"
+                    logFile "./build/liquibase/liquibase_gen.log"
+                    logLevel "FINE"
+                }
+                runList = 'generateChangeLog'
+            }
+        }
+    }
+}

@@ -6,10 +6,10 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-@SuperBuilder
 @Getter
 @ToString
-public class OrderEvent extends DomainEvent<Order> {
+@SuperBuilder(toBuilder = true)
+public abstract class OrderEvent extends DomainEvent<Order> {
 
   private final Order order;
 }

@@ -8,14 +8,14 @@ import java.util.UUID;
 
 import static java.util.UUID.randomUUID;
 
-@SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@SuperBuilder(toBuilder = true)
 public class OrderId extends BaseId<UUID> {
 
   public static OrderId of(final UUID id) {
     return OrderId.builder()
-                  .id(id)
+                  .value(id)
                   .build();
   }
 

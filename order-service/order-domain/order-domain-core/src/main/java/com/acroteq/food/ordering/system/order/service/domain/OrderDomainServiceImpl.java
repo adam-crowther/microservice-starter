@@ -1,5 +1,6 @@
 package com.acroteq.food.ordering.system.order.service.domain;
 
+import com.acroteq.food.ordering.system.domain.validation.ValidationResult;
 import com.acroteq.food.ordering.system.domain.valueobject.ProductId;
 import com.acroteq.food.ordering.system.order.service.domain.entity.Order;
 import com.acroteq.food.ordering.system.order.service.domain.entity.OrderItem;
@@ -9,15 +10,14 @@ import com.acroteq.food.ordering.system.order.service.domain.event.OrderCancelle
 import com.acroteq.food.ordering.system.order.service.domain.event.OrderCreatedEvent;
 import com.acroteq.food.ordering.system.order.service.domain.event.OrderPaidEvent;
 import com.acroteq.food.ordering.system.order.service.domain.exception.ProductNotFoundException;
+import com.acroteq.food.ordering.system.order.service.domain.exception.RestaurantNotActiveException;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import static com.acroteq.food.ordering.system.order.service.domain.precondition.OrderDomainPrecondition.checkPrecondition;
-import static java.util.stream.Collectors.toMap;
+import static com.acroteq.food.ordering.system.precondition.Precondition.checkPrecondition;
 
 @Slf4j
 public class OrderDomainServiceImpl implements OrderDomainService {
@@ -37,7 +37,7 @@ public class OrderDomainServiceImpl implements OrderDomainService {
   }
 
   private void validateRestaurant(final Restaurant restaurant) {
-    checkPrecondition(restaurant.isActive(), "Restaurant with id %s is currently not active", restaurant.getId());
+    checkPrecondition(restaurant.isActive(), RestaurantNotActiveException::new, restaurant.getId());
   }
 
   private void validateOrderProducts(final Order order, final Restaurant restaurant) {
@@ -70,7 +70,9 @@ public class OrderDomainServiceImpl implements OrderDomainService {
   public OrderPaidEvent payOrder(final Order order) {
     order.pay();
     log.info("Order {} is paid", order.getId());
-    return OrderPaidEvent.builder().order(order).build();
+    return OrderPaidEvent.builder()
+                         .order(order)
+                         .build();
   }
 
   @Override
@@ -80,15 +82,17 @@ public class OrderDomainServiceImpl implements OrderDomainService {
   }
 
   @Override
-  public OrderCancelledEvent cancelOrderPayment(final Order order, final List<String> failureMessages) {
-    order.initCancel(failureMessages);
+  public OrderCancelledEvent cancelOrderPayment(final Order order, final ValidationResult cancelResult) {
+    order.initCancel(cancelResult);
     log.info("Order {} cancel requested", order.getId());
-    return OrderCancelledEvent.builder().order(order).build();
+    return OrderCancelledEvent.builder()
+                              .order(order)
+                              .build();
   }
 
   @Override
-  public void cancelOrder(final Order order, final List<String> failureMessages) {
-    order.cancel(failureMessages);
+  public void cancelOrder(final Order order, final ValidationResult cancelResult) {
+    order.cancel(cancelResult);
     log.info("Order {} cancelled", order.getId());
   }
 }

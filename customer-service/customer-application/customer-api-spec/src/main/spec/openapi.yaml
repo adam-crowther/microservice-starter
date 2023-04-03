@@ -1,0 +1,248 @@
+openapi: "3.0.0"
+info:
+  title: Food Ordering System
+  version: 1.0.0
+paths:
+  /customers:
+    get:
+      summary: List all customers
+      operationId: listCustomers
+      tags:
+        - customers
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            format: int32
+      responses:
+        '200':
+          description: A paged array of customers
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customers"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+    post:
+      summary: Create a customer
+      operationId: createCustomer
+      tags:
+        - customers
+      requestBody:
+        description: The customer to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCustomerCommand"
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateCustomerResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+
+  /customers/{id}:
+    get:
+      summary: Info for a specific customer
+      operationId: getCustomerById
+      tags:
+        - customers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the customer to retrieve
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+    put:
+      summary: Update a customer
+      operationId: updateCustomerById
+      tags:
+        - customers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the customer to update
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: The customer to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCustomerCommand"
+      responses:
+        '204':
+          description: Updated
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+    delete:
+      summary: Delete a customer
+      operationId: deleteCustomerById
+      tags:
+        - customers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the customer to delete
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Deleted
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+
+components:
+  schemas:
+    CreateCustomerCommand:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - userName
+        - firstName
+        - lastName
+      properties:
+        userName:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+
+    CreateCustomerResponse:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - customerId
+      properties:
+        customerId:
+          type: string
+          format: uuid
+
+    UpdateCustomerCommand:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - id
+        - userName
+        - firstName
+        - lastName
+      properties:
+        id:
+          type: string
+          format: uuid
+        userName:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+
+    Customer:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - id
+        - userName
+        - firstName
+        - lastName
+      properties:
+        id:
+          type: string
+          format: uuid
+        userName:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+
+    Customers:
+      type: array
+      x-class-extra-annotation: "@lombok.Builder"
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Customer"
+
+    Problem:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - code
+        - reason
+        - i18nCode
+        - i18nParameters
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          readOnly: true
+        reason:
+          type: string
+          maxLength: 50
+          readOnly: true
+        i18nCode:
+          type: string
+          readOnly: true
+        i18nParameters:
+          type: array
+          x-field-extra-annotation: "@lombok.Builder.Default"
+          readOnly: true
+          items:
+            type: string
+            maxLength: 50
+            readOnly: true
+        message:
+          type: string
+          maxLength: 100
+          readOnly: true

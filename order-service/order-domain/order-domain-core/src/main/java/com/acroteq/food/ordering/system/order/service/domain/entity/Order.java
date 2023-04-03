@@ -1,7 +1,13 @@
 package com.acroteq.food.ordering.system.order.service.domain.entity;
 
 import com.acroteq.food.ordering.system.domain.entity.AggregateRoot;
-import com.acroteq.food.ordering.system.domain.valueobject.*;
+import com.acroteq.food.ordering.system.domain.validation.ValidationResult;
+import com.acroteq.food.ordering.system.domain.valueobject.CashValue;
+import com.acroteq.food.ordering.system.domain.valueobject.CustomerId;
+import com.acroteq.food.ordering.system.domain.valueobject.OrderId;
+import com.acroteq.food.ordering.system.domain.valueobject.OrderStatus;
+import com.acroteq.food.ordering.system.domain.valueobject.RestaurantId;
+import com.acroteq.food.ordering.system.order.service.domain.exception.InvalidOrderPrestateException;
 import com.acroteq.food.ordering.system.order.service.domain.valueobject.OrderItemId;
 import com.acroteq.food.ordering.system.order.service.domain.valueobject.StreetAddress;
 import com.acroteq.food.ordering.system.order.service.domain.valueobject.TrackingId;
@@ -10,19 +16,23 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static com.acroteq.food.ordering.system.domain.valueobject.Money.ZERO;
-import static com.acroteq.food.ordering.system.domain.valueobject.OrderStatus.*;
-import static com.acroteq.food.ordering.system.order.service.domain.precondition.OrderDomainPrecondition.checkPrecondition;
+import static com.acroteq.food.ordering.system.domain.validation.ValidationResult.pass;
+import static com.acroteq.food.ordering.system.domain.valueobject.CashValue.ZERO;
+import static com.acroteq.food.ordering.system.domain.valueobject.OrderStatus.APPROVED;
+import static com.acroteq.food.ordering.system.domain.valueobject.OrderStatus.CANCELLED;
+import static com.acroteq.food.ordering.system.domain.valueobject.OrderStatus.CANCELLING;
+import static com.acroteq.food.ordering.system.domain.valueobject.OrderStatus.PAID;
+import static com.acroteq.food.ordering.system.domain.valueobject.OrderStatus.PENDING;
+import static com.acroteq.food.ordering.system.precondition.Precondition.checkPrecondition;
 
-@SuperBuilder
 @Getter
 @ToString
+@SuperBuilder(toBuilder = true)
 public class Order extends AggregateRoot<OrderId> {
 
   @NonNull
@@ -43,7 +53,7 @@ public class Order extends AggregateRoot<OrderId> {
   private OrderStatus orderStatus = PENDING;
   @NonNull
   @Builder.Default
-  private final List<String> failureMessages = new ArrayList<>();
+  private final ValidationResult result = pass();
 
   public void initialiseOrder() {
     setId(OrderId.random());
@@ -58,19 +68,14 @@ public class Order extends AggregateRoot<OrderId> {
     }
   }
 
-  public Money getPrice() {
+  public CashValue getPrice() {
     return items.stream()
                 .map(OrderItem::getSubTotal)
-                .reduce(ZERO, Money::add);
+                .reduce(ZERO, CashValue::add);
   }
 
   public void validateOrder() {
-    validateInitialOrder();
     items.forEach(OrderItem::validateOrderItem);
-  }
-
-  private void validateInitialOrder() {
-    checkPrecondition(getId() != null, "Order id can not be null");
   }
 
   public void pay() {
@@ -83,35 +88,21 @@ public class Order extends AggregateRoot<OrderId> {
     orderStatus = APPROVED;
   }
 
-  public void initCancel(final List<String> failureMessages) {
+  public void initCancel(final ValidationResult cancelResult) {
     checkOrderState("initCancel", PAID);
     orderStatus = CANCELLING;
-    storeFailureMessages(failureMessages);
+    result.add(cancelResult);
   }
 
-  public void cancel(final List<String> failureMessages) {
+  public void cancel(final ValidationResult cancelResult) {
     checkOrderState("initCancel", PENDING, CANCELLING);
     orderStatus = CANCELLED;
-    storeFailureMessages(failureMessages);
+    result.add(cancelResult);
   }
 
   private void checkOrderState(final String action, final OrderStatus... statuses) {
     final Set<OrderStatus> required = Set.of(statuses);
     checkPrecondition(
-        required.contains(orderStatus),
-        "Order state must be in " + required + " for " + action + " action");
-  }
-
-  private void storeFailureMessages(final List<String> messages) {
-    final List<String> filteredMessages =
-        messages.stream()
-                .filter(StringUtils::isNotBlank)
-                .filter(m -> !failureMessages.contains(m))
-                .distinct()
-                .toList();
-
-    if (!filteredMessages.isEmpty()) {
-      failureMessages.addAll(filteredMessages);
-    }
+        required.contains(orderStatus), InvalidOrderPrestateException::new, required, action);
   }
 }

@@ -1,0 +1,30 @@
+[
+  {
+    "name": "PaymentDomain",
+    "regex": "^.*payment-domain.*$",
+    "isEnabled": true,
+    "shape": "box3d",
+    "fillColor": "#E6BFB1"
+  },
+  {
+    "name": "PaymentInfrastructureSubmodules",
+    "regex": "^.*payment-infrastructure.*$",
+    "isEnabled": true,
+    "shape": "box3d",
+    "fillColor": "#FDFFBF"
+  },
+  {
+    "name": "PaymentSubmodules",
+    "regex": "^.*payment-application.*$",
+    "isEnabled": true,
+    "shape": "box3d",
+    "fillColor": "#CCE3FF"
+  },
+  {
+    "name": "PaymentSubmodules",
+    "regex": "^.*payment-container.*$",
+    "isEnabled": true,
+    "shape": "box3d",
+    "fillColor": "#D8C8E6"
+  }
+]

@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    alias pluginLibs.plugins.avro
+}
+
+compileJava {
+    sourceCompatibility = javaSourceCompatibility
+    targetCompatibility = javaTargetCompatibility
+    options.compilerArgs += [
+            '-Xlint:deprecation'
+    ]
+}
+
+dependencies {
+
+    implementation libs.jackson.core
+    implementation libs.apache.avro
+    implementation libs.kafka.clients
+    implementation libs.kafka.avro.serializer
+    implementation libs.google.guava
+    implementation libs.findbugs.jsr305
+}
+
+avro {
+    createSetters = false
+    gettersReturnOptional = true
+    optionalGettersForNullableFieldsOnly = true
+    stringType = "String"
+    enableDecimalLogicalType = true
+    fieldVisibility = "PRIVATE"
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}

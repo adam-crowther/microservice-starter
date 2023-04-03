@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    alias pluginLibs.plugins.openapi.generator
+}
+
+apply plugin: "org.openapi.generator"
+
+dependencies {
+    implementation libs.lombok.core
+    implementation libs.javax.annotation.api
+    implementation libs.javax.validation.api
+    implementation libs.jackson.annotations
+    implementation libs.swagger.core
+    implementation libs.swagger.annotations
+    implementation libs.javax.servlet.api
+    implementation libs.openapitools.jackson.databind.nullable
+    implementation libs.spring.core
+    implementation libs.spring.web
+    implementation libs.spring.context
+
+    annotationProcessor libs.lombok.core
+}
+
+openApiGenerate {
+    generatorName = "spring"
+    inputSpec = "$projectDir/src/main/spec/openapi.yaml"
+    outputDir = "$buildDir/generated"
+    apiPackage = "com.acroteq.food.ordering.system.customer.service.application.api"
+    invokerPackage = "org.openapi.example.invoker"
+    modelPackage = "com.acroteq.food.ordering.system.customer.service.application.model"
+    configOptions.putAll([
+            dateLibrary: "java8",
+            interfaceOnly: "true"
+    ])
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs += "$buildDir/generated/src/main/java"
+        }
+        resources {
+            srcDirs += "$projectDir/src/main/spec"
+        }
+    }
+}
+
+compileJava {
+    sourceCompatibility = javaSourceCompatibility
+    targetCompatibility = javaTargetCompatibility
+    options.compilerArgs += [
+            '-Xlint:deprecation'
+    ]
+}
+
+compileJava.dependsOn tasks.openApiGenerate

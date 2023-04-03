@@ -1,0 +1,82 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1681467660352-1
+      author: micro (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: credit_entryPK
+                  name: id
+                  type: VARCHAR(36)
+              - column:
+                  name: customer_id
+                  type: VARCHAR(36)
+              - column:
+                  name: total_credit_amount
+                  type: NUMBER(38, 2)
+              - column:
+                  name: total_credit_currency_id
+                  type: VARCHAR(36)
+            tableName: credit_entry
+  - changeSet:
+      id: 1681467660352-2
+      author: micro (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: credit_historyPK
+                  name: id
+                  type: VARCHAR(36)
+              - column:
+                  name: credit_amount
+                  type: NUMBER(38, 2)
+              - column:
+                  name: credit_currency_id
+                  type: VARCHAR(36)
+              - column:
+                  name: customer_id
+                  type: VARCHAR(36)
+              - column:
+                  name: type
+                  type: VARCHAR(255)
+            tableName: credit_history
+  - changeSet:
+      id: 1681467660352-3
+      author: micro (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: paymentsPK
+                  name: id
+                  type: VARCHAR(36)
+              - column:
+                  name: created_date_time
+                  type: timestamp
+              - column:
+                  name: customer_id
+                  type: VARCHAR(36)
+              - column:
+                  name: order_id
+                  type: VARCHAR(36)
+              - column:
+                  name: status
+                  type: VARCHAR(255)
+              - column:
+                  name: value_amount
+                  type: NUMBER(38, 2)
+              - column:
+                  name: value_currency_id
+                  type: VARCHAR(36)
+            tableName: payments

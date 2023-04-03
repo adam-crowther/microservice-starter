@@ -1,16 +1,20 @@
 plugins {
     id 'java'
+    alias pluginLibs.plugins.spring.boot
+    alias pluginLibs.plugins.graphfity
 }
-
-group 'com.acroteq.food.ordering.system'
-version '1.0-SNAPSHOT'
 
 compileJava {
     sourceCompatibility = javaSourceCompatibility
     targetCompatibility = javaTargetCompatibility
     options.compilerArgs += [
-            '-Amapstruct.defaultComponentModel=spring'
+            '-Xlint:deprecation'
     ]
+}
+
+configurations {
+    runtimeOnly.exclude group: 'ch.qos.logback'
+    runtimeOnly.exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
 }
 
 repositories {
@@ -20,43 +24,38 @@ repositories {
 dependencies {
     implementation project(":order-service:order-domain:order-domain-core")
     implementation project(":order-service:order-domain:order-application-service")
-    implementation project(":order-service:order-application")
-    implementation project(":order-service:order-data-access")
-    implementation project(":order-service:order-messaging")
+    implementation project(":order-service:order-application:order-rest-controller")
+    implementation project(":order-service:order-infrastructure:order-data-access")
+    implementation project(":order-service:order-infrastructure:order-messaging")
 
-    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
-    implementation "org.projectlombok:lombok:${lombokVersion}"
-    implementation "org.slf4j:slf4j-api:${slf4jVersion}"
-    implementation "org.slf4j:slf4j-log4j12:${slf4jVersion}"
-    implementation "com.google.guava:guava:${googleGuavaVersion}"
-    implementation "org.apache.commons:commons-lang3:${apacheCommonsLangVersion}"
-    implementation "org.apache.commons:commons-text:${apacheCommonsTextVersion}"
+    implementation libs.spring.beans
+    implementation libs.spring.context
+    implementation libs.spring.data.commons
+    implementation libs.spring.data.jpa
+    implementation libs.spring.boot.core
+    implementation libs.spring.boot.autoconfigure
 
-    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
-    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-    annotationProcessor "org.mapstruct:mapstruct:${mapstructVersion}"
+    runtimeOnly libs.slf4j.log4j12
+    runtimeOnly libs.log4j.core
+    runtimeOnly libs.log4j.slf4j
+    runtimeOnly libs.postgresql.driver
+    runtimeOnly libs.spring.boot.validation
+    runtimeOnly libs.spring.boot.data.jpa
+    runtimeOnly libs.spring.boot.web
+}
 
-    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
-    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+springBoot {
+    mainClass = 'com.acroteq.food.ordering.system.order.service.OrderServiceApplication'
+}
 
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
-    testImplementation "org.mockito:mockito-inline:${mockitoVersion}"
-    testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
-    testImplementation "org.hamcrest:hamcrest-all:${hamcrestVersion}"
-    testImplementation "org.awaitility:awaitility:${awaitilityVersion}"
-    testImplementation "org.slf4j:slf4j-simple:${slf4jVersion}"
+bootBuildImage {
+    imageName = "${dockerNamespace}/${rootProject.name}/${project.name}:${project.version}"
+}
 
-    // mandatory dependencies for using Spock
-    implementation platform("org.apache.groovy:groovy-bom:${groovyVersion}")
-    implementation 'org.apache.groovy:groovy'
-    testImplementation platform("org.spockframework:spock-bom:${spockVersion}")
-    testImplementation "org.spockframework:spock-core"
-
-    // optional dependencies for using Spock
-    testImplementation "org.hamcrest:hamcrest-core:2.2"   // only necessary if Hamcrest matchers are used
-    testRuntimeOnly 'net.bytebuddy:byte-buddy:1.12.17' // allows mocking of classes (in addition to interfaces)
-    testRuntimeOnly "org.objenesis:objenesis:3.3"      // allows mocking of classes without default constructor (together with ByteBuddy or CGLIB)
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+graphfityExtension {
+    nodeTypesPath = "${projectDir}/graphfityNodeTypes.json"
+    projectRootName = "${project.path}"
+    graphImagePath = "${buildDir}/"
 }
 
 test {

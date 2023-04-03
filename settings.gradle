@@ -1,22 +1,215 @@
 rootProject.name = 'food-ordering-system'
-include 'order-service'
-include 'order-service:order-domain'
-findProject(':order-service:order-domain')?.name = 'order-domain'
-include 'order-service:order-application'
-findProject(':order-service:order-application')?.name = 'order-application'
-include 'order-service:order-data-access'
-findProject(':order-service:order-data-access')?.name = 'order-data-access'
-include 'order-service:order-messaging'
-findProject(':order-service:order-messaging')?.name = 'order-messaging'
-include 'order-service:order-container'
-findProject(':order-service:order-container')?.name = 'order-container'
-include 'order-service:order-domain:order-domain-core'
-findProject(':order-service:order-domain:order-domain-core')?.name = 'order-domain-core'
-include 'order-service:order-domain:order-application-service'
-findProject(':order-service:order-domain:order-application-service')?.name = 'order-application-service'
+
 include 'common'
 include 'common:common-domain'
 findProject(':common:common-domain')?.name = 'common-domain'
 include 'common:common-helper'
 findProject(':common:common-helper')?.name = 'common-helper'
+include 'common:common-application'
+findProject(':common:common-application')?.name = 'common-application'
+include 'common:common-kafka'
+findProject(':common:common-kafka')?.name = 'common-kafka'
+include 'common:common-kafka:kafka-producer'
+findProject(':common:common-kafka:kafka-producer')?.name = 'kafka-producer'
+include 'common:common-kafka:kafka-consumer'
+findProject(':common:common-kafka:kafka-consumer')?.name = 'kafka-consumer'
+include 'common:common-kafka:kafka-model'
+findProject(':common:common-kafka:kafka-model')?.name = 'kafka-model'
+include 'common:common-kafka:kafka-config-data'
+findProject(':common:common-kafka:kafka-config-data')?.name = 'kafka-config-data'
+include 'common:common-saga'
+findProject(':common:common-saga')?.name = 'common-saga'
 
+include 'customer-service'
+include 'customer-service:customer-application'
+findProject(':customer-service:customer-application')?.name = 'customer-application'
+include 'customer-service:customer-application:customer-api-spec'
+findProject(':customer-service:customer-application:customer-api-spec')?.name = 'customer-api-spec'
+include 'customer-service:customer-application:customer-rest-controller'
+findProject(':customer-service:customer-application:customer-rest-controller')?.name = 'customer-rest-controller'
+include 'customer-service:customer-container'
+findProject(':customer-service:customer-container')?.name = 'customer-container'
+include 'customer-service:customer-domain'
+findProject(':customer-service:customer-domain')?.name = 'customer-domain'
+include 'customer-service:customer-domain:customer-domain-core'
+findProject(':customer-service:customer-domain:customer-domain-core')?.name = 'customer-domain-core'
+include 'customer-service:customer-domain:customer-application-service'
+findProject(':customer-service:customer-domain:customer-application-service')?.name = 'customer-application-service'
+include 'customer-service:customer-infrastructure'
+findProject(':customer-service:customer-infrastructure')?.name = 'customer-infrastructure'
+include 'customer-service:customer-infrastructure:customer-data-access'
+findProject(':customer-service:customer-infrastructure:customer-data-access')?.name = 'customer-data-access'
+include 'customer-service:customer-infrastructure:customer-messaging'
+findProject(':customer-service:customer-infrastructure:customer-messaging')?.name = 'customer-messaging'
+
+include 'order-service'
+include 'order-service:order-application'
+findProject(':order-service:order-application')?.name = 'order-application'
+include 'order-service:order-application:order-api-spec'
+findProject(':order-service:order-application:order-api-spec')?.name = 'order-api-spec'
+include 'order-service:order-application:order-rest-controller'
+findProject(':order-service:order-application:order-rest-controller')?.name = 'order-rest-controller'
+include 'order-service:order-container'
+findProject(':order-service:order-container')?.name = 'order-container'
+include 'order-service:order-domain'
+findProject(':order-service:order-domain')?.name = 'order-domain'
+include 'order-service:order-domain:order-domain-core'
+findProject(':order-service:order-domain:order-domain-core')?.name = 'order-domain-core'
+include 'order-service:order-domain:order-application-service'
+findProject(':order-service:order-domain:order-application-service')?.name = 'order-application-service'
+include 'order-service:order-infrastructure'
+findProject(':order-service:order-infrastructure')?.name = 'order-infrastructure'
+include 'order-service:order-infrastructure:order-data-access'
+findProject(':order-service:order-infrastructure:order-data-access')?.name = 'order-data-access'
+include 'order-service:order-infrastructure:order-messaging'
+findProject(':order-service:order-infrastructure:order-messaging')?.name = 'order-messaging'
+
+include 'payment-service'
+include 'payment-service:payment-container'
+findProject(':payment-service:payment-container')?.name = 'payment-container'
+include 'payment-service:payment-domain'
+findProject(':payment-service:payment-domain')?.name = 'payment-domain'
+include 'payment-service:payment-domain:payment-domain-core'
+findProject(':payment-service:payment-domain:payment-domain-core')?.name = 'payment-domain-core'
+include 'payment-service:payment-domain:payment-application-service'
+findProject(':payment-service:payment-domain:payment-application-service')?.name = 'payment-application-service'
+include 'payment-service:payment-infrastructure'
+findProject(':payment-service:payment-infrastructure')?.name = 'payment-infrastructure'
+include 'payment-service:payment-infrastructure:payment-data-access'
+findProject(':payment-service:payment-infrastructure:payment-data-access')?.name = 'payment-data-access'
+include 'payment-service:payment-infrastructure:payment-messaging'
+findProject(':payment-service:payment-infrastructure:payment-messaging')?.name = 'payment-messaging'
+
+include 'restaurant-service'
+include 'restaurant-service:restaurant-container'
+findProject(':restaurant-service:restaurant-container')?.name = 'restaurant-container'
+include 'restaurant-service:restaurant-domain'
+findProject(':restaurant-service:restaurant-domain')?.name = 'restaurant-domain'
+include 'restaurant-service:restaurant-domain:restaurant-domain-core'
+findProject(':restaurant-service:restaurant-domain:restaurant-domain-core')?.name = 'restaurant-domain-core'
+include 'restaurant-service:restaurant-domain:restaurant-application-service'
+findProject(':restaurant-service:restaurant-domain:restaurant-application-service')?.name = 'restaurant-application-service'
+include 'restaurant-service:restaurant-infrastructure'
+findProject(':restaurant-service:restaurant-infrastructure')?.name = 'restaurant-infrastructure'
+include 'restaurant-service:restaurant-infrastructure:restaurant-data-access'
+findProject(':restaurant-service:restaurant-infrastructure:restaurant-data-access')?.name = 'restaurant-data-access'
+include 'restaurant-service:restaurant-infrastructure:restaurant-messaging'
+findProject(':restaurant-service:restaurant-infrastructure:restaurant-messaging')?.name = 'restaurant-messaging'
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            library('apache-commons-lang3', 'org.apache.commons', 'commons-lang3').version('3.12.0')
+            library('google-guava', 'com.google.guava', 'guava').version('31.1-jre')
+            library('google-gson', 'com.google.code.gson', 'gson').version('2.10.1')
+            library('findbugs-jsr305', 'com.google.code.findbugs', 'jsr305').version('3.0.2')
+            library('javax-annotation-api', 'javax.annotation', 'javax.annotation-api').version('1.3.2')
+            library('javax-validation-api', 'javax.validation', 'validation-api').version('2.0.1.Final')
+            library('javax-servlet-api', 'javax.servlet', 'javax.servlet-api').version('4.0.1')
+
+            // Jakarta
+            library('jakarta-annotation-api', 'jakarta.annotation', 'jakarta.annotation-api').version('2.1.1')
+            library('jakarta-validation-api', 'jakarta.validation', 'jakarta.validation-api').version('3.0.2')
+            library('jakarta-persistence-api', 'jakarta.persistence', 'jakarta.persistence-api').version('3.1.0')
+
+            // MapStruct
+            version('mapstruct', '1.5.3.Final')
+            library('mapstruct-core', 'org.mapstruct', 'mapstruct').versionRef('mapstruct')
+            library('mapstruct-processor', 'org.mapstruct', 'mapstruct-processor').versionRef('mapstruct')
+            library('lombok-core', 'org.projectlombok', 'lombok').version('1.18.24')
+            library('lombok-mapstruct-binding', 'org.projectlombok', 'lombok-mapstruct-binding').version('0.2.0')
+
+            // Jackson
+            version('jackson', '2.12.7')
+            library('jackson-core', 'com.fasterxml.jackson.core', 'jackson-core').versionRef('jackson')
+            library('jackson-annotations', 'com.fasterxml.jackson.core', 'jackson-annotations').versionRef('jackson')
+            library('jackson-databind', 'com.fasterxml.jackson.core', 'jackson-databind').versionRef('jackson')
+            library('jackson-jdk8', 'com.fasterxml.jackson.datatype', 'jackson-datatype-jdk8').versionRef('jackson')
+            library('jackson-jsr310', 'com.fasterxml.jackson.datatype', 'jackson-datatype-jsr310').versionRef('jackson')
+
+            bundle('jackson', List.of('jackson-core', 'jackson-annotations', 'jackson-databind', 'jackson-jdk8', 'jackson-jsr310'))
+
+            // Slf4j
+            version('slf4j', '2.0.6')
+            version('log4j', '2.20.0')
+            library('slf4j-api', 'org.slf4j', 'slf4j-api').versionRef('slf4j')
+            library('slf4j-log4j12', 'org.slf4j', 'slf4j-log4j12').versionRef('slf4j')
+            library('slf4j-simple', 'org.slf4j', 'slf4j-simple').versionRef('slf4j')
+            library('slf4j-reload4j', 'org.slf4j', 'slf4j-reload4j').versionRef('slf4j')
+            library('log4j-core', 'org.apache.logging.log4j', 'log4j-core').versionRef('log4j')
+            library('log4j-slf4j', 'org.apache.logging.log4j', 'log4j-slf4j-impl').versionRef('log4j')
+
+            // Spring
+            version('spring', '6.0.7')
+            version('springBoot', '3.0.5')
+            library('spring-core', 'org.springframework', 'spring-core').versionRef('spring')
+            library('spring-beans', 'org.springframework', 'spring-beans').versionRef('spring')
+            library('spring-context', 'org.springframework', 'spring-context').versionRef('spring')
+            library('spring-web', 'org.springframework', 'spring-web').versionRef('spring')
+            library('spring-webmvc', 'org.springframework', 'spring-webmvc').versionRef('spring')
+            library('spring-tx', 'org.springframework', 'spring-tx').versionRef('spring')
+            library('spring-messaging', 'org.springframework', 'spring-messaging').versionRef('spring')
+            library('spring-validation', 'org.springframework', 'spring-validation').versionRef('spring')
+            library('spring-test', 'org.springframework', 'spring-test').versionRef('spring')
+
+            // Spring Data
+            version('springData', '3.0.5')
+            library('spring-data-commons', 'org.springframework.data', 'spring-data-commons').versionRef('springData')
+            library('spring-data-jpa', 'org.springframework.data', 'spring-data-jpa').versionRef('springData')
+
+            // Spring Boot
+            library('spring-boot-core', 'org.springframework.boot', 'spring-boot').versionRef('springBoot')
+            library('spring-boot-autoconfigure', 'org.springframework.boot', 'spring-boot-autoconfigure').versionRef('springBoot')
+            library('spring-boot-data-jpa', 'org.springframework.boot', 'spring-boot-starter-data-jpa').versionRef('springBoot')
+            library('spring-boot-thymeleaf', 'org.springframework.boot', 'spring-boot-starter-thymeleaf').versionRef('springBoot')
+            library('spring-boot-validation', 'org.springframework.boot', 'spring-boot-starter-validation').versionRef('springBoot')
+            library('spring-boot-web', 'org.springframework.boot', 'spring-boot-starter-web').versionRef('springBoot')
+            library('spring-boot-configuration-processor', 'org.springframework.boot', 'spring-boot-configuration-processor').versionRef('springBoot')
+            library('spring-boot-test', 'org.springframework.boot', 'spring-boot-test').versionRef('springBoot')
+
+            // Postgres
+            library('postgresql-driver', 'org.postgresql', 'postgresql').version('42.6.0')
+
+            // Liquibase
+            version('liquibase', '4.19.0')
+            library('picocli', 'info.picocli', 'picocli').version('4.7.1')
+            library('snakeyaml', 'org.yaml', 'snakeyaml').version('1.33')
+            library('liquibase-core', 'org.liquibase', 'liquibase-core').versionRef('liquibase')
+            library('liquibase-hibernate', 'org.liquibase.ext', 'liquibase-hibernate6').versionRef('liquibase')
+            library('liquibase-groovy-dsl', 'org.liquibase', 'liquibase-groovy-dsl').version('3.0.3')
+
+            // Kafka
+            library('kafka-clients', 'org.apache.kafka', 'kafka-clients').version('3.3.1')
+            library('kafka-avro-serializer', 'io.confluent', 'kafka-avro-serializer').version('7.3.3')
+            library('spring-kafka', 'org.springframework.kafka', 'spring-kafka').version('3.0.5')
+            library('apache-avro', 'org.apache.avro', 'avro').version('1.11.0')
+
+            // Swagger / OpenAPI
+            version('swaggerAnnotations', '2.2.8')
+            library('javax-ws-rs-api', 'javax.ws.rs', 'javax.ws.rs-api').version('2.1.1')
+            library('okhttp', 'com.squareup.okhttp3', 'okhttp').version('4.10.0')
+            library('swagger-core', 'io.swagger.core.v3', 'swagger-core').versionRef('swaggerAnnotations')
+            library('swagger-annotations', 'io.swagger.core.v3', 'swagger-annotations').versionRef('swaggerAnnotations')
+            library('openapitools-jackson-databind-nullable', 'org.openapitools', 'jackson-databind-nullable').version('0.2.6')
+
+            version('junit', '5.9.2')
+            version('mockito', '5.2.0')
+            library('junit-jupiter-api', 'org.junit.jupiter', 'junit-jupiter-api').versionRef('junit')
+            library('junit-jupiter-engine', 'org.junit.jupiter', 'junit-jupiter-engine').versionRef('junit')
+            library('mockito-core', 'org.mockito', 'mockito-core').versionRef('mockito')
+            library('mockito-junit-jupiter', 'org.mockito', 'mockito-junit-jupiter').versionRef('mockito')
+            library('mockito-inline', 'org.mockito', 'mockito-inline').versionRef('mockito')
+            library('hamcrest-core', 'org.hamcrest', 'hamcrest').version('2.2')
+        }
+
+        pluginLibs {
+            plugin('graphfity', 'com.github.ivancarras.graphfity').version('1.0.0')
+            plugin('nebula-lint', 'nebula.lint').version('18.0.3')
+            plugin('avro', 'com.github.davidmc24.gradle.plugin.avro').version('1.3.0')
+            plugin('openapi-generator', 'org.openapi.generator').version('6.5.0')
+            plugin('liquibase', 'org.liquibase.gradle').version('2.2.0')
+            plugin('docker-compose', 'com.avast.gradle.docker-compose').version('0.16.12')
+            plugin('spring-boot', 'org.springframework.boot').version('3.0.5')
+        }
+    }
+}

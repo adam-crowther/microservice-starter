@@ -1,6 +1,10 @@
 package com.acroteq.food.ordering.system.order.service.domain.valueobject;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.NonNull;
+import lombok.ToString;
+import lombok.Value;
 
 import java.util.UUID;
 

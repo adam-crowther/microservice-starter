@@ -17,6 +17,18 @@
     * Orchestrates transactions, security, persistence, messaging
     * Does NOT contain business logic
 
+### Modules
+
+* TODO
+
+### Packages
+
+* TODO
+
+### Events / Messages
+
+* Avro model: change management and backward / forward compatibility
+
 ### Libraries
 
 * We accept the following very basic and common library dependencies in our Domain Core submodules:
@@ -24,10 +36,6 @@
     * Apache Commons
     * Google Guava
     * Slf4j
-
-### Packages
-
-* TODO
 
 ## Testing
 

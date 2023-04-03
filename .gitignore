@@ -110,6 +110,3 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-
-# Kafka Connect Runtime
-/offsets/standalone.offsets
