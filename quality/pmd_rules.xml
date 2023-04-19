@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="PMDRuleset"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+    <!-- http://maven.apache.org/plugins/maven-pmd-plugin/examples/usingRuleSets.html -->
+    <!-- PMD default rule sets: basic.xml, empty.xml, imports.xml, unnecessary.xml & unusedcode.xml -->
+
+    <description>PMD rule exclusions</description>
+
+    <exclude-pattern>.*/avro/model/.*</exclude-pattern>
+    <exclude-pattern>.*/application/api/.*</exclude-pattern>
+    <exclude-pattern>.*/application/model/.*</exclude-pattern>
+
+    <rule ref="category/java/bestpractices.xml">
+        <exclude name="GuardLogStatement"/>
+        <exclude name="AbstractClassWithoutAbstractMethod"/>
+        <exclude name="JUnitAssertionsShouldIncludeMessage"/>
+        <exclude name="JUnitTestContainsTooManyAsserts"/>
+    </rule>
+
+    <rule ref="category/java/codestyle.xml">
+        <exclude name="GenericsNaming"/>
+        <exclude name="AtLeastOneConstructor"/>
+        <exclude name="CommentDefaultAccessModifier"/>
+    </rule>
+
+    <rule ref="category/java/codestyle.xml/LongVariable">
+        <properties>
+            <property name="minimum">
+                <value>35</value>
+            </property>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/codestyle.xml/ShortVariable">
+        <properties>
+            <property name="xpath">
+                <!-- Exceptions to the rule.  "id" is ok as a variable name. -->
+                <value>
+                    //VariableDeclaratorId[(string-length(@Name) &lt; 3) and (not (@Name='id'))]
+                    [not(ancestor::ForInit)]
+                    [not((ancestor::FormalParameter) and (ancestor::TryStatement))]
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/codestyle.xml/ShortMethodName">
+        <properties>
+            <property name="xpath">
+                <!-- Exceptions to the rule.  "of" is ok as a method name for static constructor methods. -->
+                <value>
+                    //MethodDeclarator[(string-length(@Image) &lt; 3) and (not (@Image='of'))]
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/codestyle.xml/TooManyStaticImports">
+        <properties>
+            <property name="maximumStaticImports" value="20"/>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/design.xml">
+        <!-- Too many false positives for builder, fluent interface and factory pattern -->
+        <exclude name="LawOfDemeter"/>
+        <exclude name="AbstractClassWithoutAnyMethod"/>
+        <exclude name="LoosePackageCoupling"/>
+    </rule>
+
+    <rule ref="category/java/design.xml/UseUtilityClass">
+        <properties>
+            <property name="ignoredAnnotations" value="org.springframework.boot.autoconfigure.SpringBootApplication"/>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/documentation.xml">
+        <exclude name="CommentRequired"/>
+    </rule>
+
+    <rule ref="category/java/documentation.xml/CommentSize">
+        <properties>
+            <property name="maxLines" value="6"/>
+            <property name="maxLineLength" value="120"/>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/errorprone.xml">
+        <exclude name="MissingSerialVersionUID"/>
+    </rule>
+
+    <rule ref="category/java/errorprone.xml/AvoidDuplicateLiterals">
+        <properties>
+            <property name="maxDuplicateLiterals" value="2"/>
+            <property name="skipAnnotations" value="true"/>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/errorprone.xml/TestClassWithoutTestCases">
+        <properties>
+            <property name="testClassPattern" value="^(?:.*\.)?.*Tests?$|^(?:.*\.)?.*TestCase$"/>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/multithreading.xml"/>
+
+    <rule ref="category/java/performance.xml"/>
+
+    <rule ref="category/java/security.xml"/>
+
+</ruleset>

@@ -1,75 +1,78 @@
 databaseChangeLog:
   - changeSet:
-      id: 1681467660352-1
+      id: 1681920127426-1
       author: micro (generated)
       changes:
         - createTable:
             columns:
               - column:
+                  autoIncrement: true
                   constraints:
                     nullable: false
                     primaryKey: true
                     primaryKeyName: credit_entryPK
                   name: id
-                  type: VARCHAR(36)
+                  type: BIGINT
               - column:
                   name: customer_id
-                  type: VARCHAR(36)
+                  type: BIGINT
               - column:
                   name: total_credit_amount
                   type: NUMBER(38, 2)
               - column:
                   name: total_credit_currency_id
-                  type: VARCHAR(36)
+                  type: BIGINT
             tableName: credit_entry
   - changeSet:
-      id: 1681467660352-2
+      id: 1681920127426-2
       author: micro (generated)
       changes:
         - createTable:
             columns:
               - column:
+                  autoIncrement: true
                   constraints:
                     nullable: false
                     primaryKey: true
                     primaryKeyName: credit_historyPK
                   name: id
-                  type: VARCHAR(36)
+                  type: BIGINT
               - column:
                   name: credit_amount
                   type: NUMBER(38, 2)
               - column:
                   name: credit_currency_id
-                  type: VARCHAR(36)
+                  type: BIGINT
               - column:
                   name: customer_id
-                  type: VARCHAR(36)
+                  type: BIGINT
               - column:
                   name: type
                   type: VARCHAR(255)
             tableName: credit_history
   - changeSet:
-      id: 1681467660352-3
+      id: 1681920127426-3
       author: micro (generated)
       changes:
         - createTable:
             columns:
               - column:
+                  autoIncrement: true
                   constraints:
                     nullable: false
                     primaryKey: true
                     primaryKeyName: paymentsPK
                   name: id
-                  type: VARCHAR(36)
+                  type: BIGINT
               - column:
                   name: created_date_time
                   type: timestamp
               - column:
                   name: customer_id
-                  type: VARCHAR(36)
+                  type: BIGINT
               - column:
                   name: order_id
-                  type: VARCHAR(36)
+                  type: BIGINT
               - column:
                   name: status
                   type: VARCHAR(255)
@@ -78,5 +81,5 @@ databaseChangeLog:
                   type: NUMBER(38, 2)
               - column:
                   name: value_currency_id
-                  type: VARCHAR(36)
+                  type: BIGINT
             tableName: payments

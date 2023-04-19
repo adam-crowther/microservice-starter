@@ -1,5 +1,5 @@
 {
-  "namespace": "com.acroteq.food.ordering.system.kafka.order.avro.model",
+  "namespace": "com.acroteq.ticketing.kafka.order.avro.model",
   "type": "record",
   "name": "CustomerEventMessage",
   "fields": [
@@ -8,15 +8,18 @@
       "type": {
         "type": "enum",
         "name": "EventType",
-        "symbols": ["CREATED", "CREATE_FAILED", "UPDATED", "UPDATE_FAILED", "DELETED"]
+        "symbols": [
+          "CREATED",
+          "CREATE_FAILED",
+          "UPDATED",
+          "UPDATE_FAILED",
+          "DELETED"
+        ]
       }
     },
     {
       "name": "id",
-      "type": {
-        "type": "string",
-        "logicalType": "uuid"
-      }
+      "type": "long"
     },
     {
       "name": "userName",

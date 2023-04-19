@@ -25,12 +25,11 @@ dependencies {
     implementation project(":common:common-application")
     implementation project(":customer-service:customer-domain:customer-application-service")
     implementation project(":customer-service:customer-domain:customer-domain-core")
-    implementation project(":common:common-kafka:kafka-producer")
-    implementation project(":common:common-kafka:kafka-consumer")
+    implementation project(":common:common-kafka:kafka-libs")
     implementation project(":common:common-kafka:kafka-model")
-    implementation project(":common:common-kafka:kafka-config-data")
 
     implementation libs.lombok.core
+    implementation libs.spotbugs.annotations
     implementation libs.mapstruct.core
     implementation libs.slf4j.api
     implementation libs.apache.avro

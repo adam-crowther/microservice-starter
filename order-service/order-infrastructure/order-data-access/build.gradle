@@ -32,6 +32,8 @@ dependencies {
     implementation project(":order-service:order-domain:order-application-service")
 
     implementation libs.lombok.core
+    implementation libs.google.guava
+    implementation libs.spotbugs.annotations
     implementation libs.mapstruct.core
     implementation libs.jakarta.persistence.api
     implementation libs.spring.beans

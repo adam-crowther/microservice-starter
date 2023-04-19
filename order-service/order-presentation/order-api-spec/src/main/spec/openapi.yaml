@@ -1,0 +1,279 @@
+openapi: "3.0.0"
+info:
+  title: Ticketing System
+  version: 1.0.0
+paths:
+  /orders:
+    get:
+      summary: List all orders
+      operationId: listOrders
+      tags:
+        - orders
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            format: int32
+      responses:
+        '200':
+          description: A paged array of orders
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Orders"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+    post:
+      summary: Create an order
+      operationId: createOrder
+      tags:
+        - orders
+      requestBody:
+        description: The order to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOrderCommand"
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateOrderResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+
+  /orders/{trackingId}:
+    get:
+      summary: Info for a specific order
+      operationId: getOrderByTrackingId
+      tags:
+        - orders
+      parameters:
+        - name: trackingId
+          in: path
+          required: true
+          description: The tracking id of the order to retrieve
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+components:
+  schemas:
+    CreateOrderCommand:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - customerId
+        - airlineId
+        - items
+        - address
+      properties:
+        customerId:
+          type: integer
+          format: int64
+        airlineId:
+          type: integer
+          format: int64
+        items:
+          type: array
+          x-field-extra-annotation: "@lombok.Builder.Default"
+          items:
+            $ref: "#/components/schemas/CreateOrderItemCommand"
+        address:
+          $ref: "#/components/schemas/CreateAddressCommand"
+
+    CreateOrderResponse:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - trackingId
+        - status
+        - message
+      properties:
+        trackingId:
+          type: string
+          format: uuid
+        status:
+          $ref: "#/components/schemas/OrderStatus"
+        message:
+          type: string
+          maxLength: 50
+
+    Order:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - trackingId
+        - customerId
+        - airlineId
+        - items
+        - address
+      properties:
+        trackingId:
+          type: string
+          format: uuid
+          readOnly: true
+        customerId:
+          type: integer
+          format: int64
+          readOnly: true
+        airlineId:
+          type: integer
+          format: int64
+          readOnly: true
+        items:
+          type: array
+          x-field-extra-annotation: "@lombok.Builder.Default"
+          items:
+            $ref: "#/components/schemas/OrderItem"
+          readOnly: true
+        address:
+          $ref: "#/components/schemas/Address"
+
+    OrderStatus:
+      type: string
+      enum: [ PENDING, PAID, APPROVED, CANCELLING, CANCELLED ]
+
+    Orders:
+      type: array
+      x-class-extra-annotation: "@lombok.Builder"
+      maxItems: 100
+      items:
+        $ref: "#/components/schemas/Order"
+
+    CreateOrderItemCommand:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - flightId
+        - quantity
+      properties:
+        flightId:
+          type: integer
+          format: int64
+        quantity:
+          type: integer
+          format: int32
+          minimum: 1
+
+    OrderItem:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - flightId
+        - quantity
+      properties:
+        flightId:
+          type: integer
+          format: int64
+          readOnly: true
+        quantity:
+          type: integer
+          format: int32
+          minimum: 1
+          readOnly: true
+
+    CreateAddressCommand:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - street
+        - postalCode
+        - city
+      properties:
+        street:
+          type: string
+          maxLength: 50
+        postalCode:
+          type: string
+          maxLength: 10
+        city:
+          type: string
+          maxLength: 50
+
+    Address:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - street
+        - postalCode
+        - city
+      properties:
+        street:
+          type: string
+          maxLength: 50
+          readOnly: true
+        postalCode:
+          type: string
+          maxLength: 10
+          readOnly: true
+        city:
+          type: string
+          maxLength: 50
+          readOnly: true
+
+    Problem:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - code
+        - reason
+        - i18nCode
+        - i18nParameters
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          readOnly: true
+        reason:
+          type: string
+          maxLength: 50
+          readOnly: true
+        i18nCode:
+          type: string
+          readOnly: true
+        i18nParameters:
+          type: array
+          x-field-extra-annotation: "@lombok.Builder.Default"
+          readOnly: true
+          items:
+            type: string
+            maxLength: 50
+            readOnly: true
+        message:
+          type: string
+          maxLength: 100
+          readOnly: true

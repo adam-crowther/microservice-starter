@@ -6,6 +6,7 @@ dependencies {
     implementation project(':common:common-domain')
 
     implementation libs.lombok.core
+    implementation libs.spotbugs.annotations
 
     annotationProcessor libs.lombok.core
 }

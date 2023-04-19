@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+}
+
+compileJava {
+    sourceCompatibility = javaSourceCompatibility
+    targetCompatibility = javaTargetCompatibility
+    options.compilerArgs += [
+            '-Xlint:deprecation'
+    ]
+}
+
+dependencies {
+    implementation project(":common:common-domain")
+    implementation project(":common:common-helper")
+
+    implementation libs.lombok.core
+    implementation libs.google.guava
+    implementation libs.spotbugs.annotations
+    implementation libs.slf4j.api
+    implementation libs.spring.web
+    implementation libs.jakarta.annotation.api
+    implementation libs.jakarta.validation.api
+
+    annotationProcessor libs.lombok.core
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}

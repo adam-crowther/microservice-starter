@@ -45,7 +45,7 @@ dependencies {
 }
 
 springBoot {
-    mainClass = 'com.acroteq.food.ordering.system.payment.service.domain.PaymentServiceApplication'
+    mainClass = 'com.acroteq.ticketing.payment.service.domain.PaymentServiceApplication'
 }
 
 bootBuildImage {

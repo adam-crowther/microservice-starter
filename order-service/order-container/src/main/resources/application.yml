@@ -3,7 +3,7 @@ server:
 
 logging:
   level:
-    com.acroteq.food.ordering.system: DEBUG
+    com.acroteq.ticketing: DEBUG
     #org.springframework.web: TRACE
     #org.springframework.kafka: TRACE
     #org.apache.kafka: TRACE
@@ -11,8 +11,8 @@ logging:
 order-service:
   payment-request-topic-name: payment-request
   payment-response-topic-name: payment-response
-  restaurant-approval-request-topic-name: restaurant-approval-request
-  restaurant-approval-response-topic-name: restaurant-approval-response
+  airline-approval-request-topic-name: airline-approval-request
+  airline-approval-response-topic-name: airline-approval-response
   customer-topic-name: customer
 
 spring:
@@ -59,7 +59,7 @@ kafka-consumer-config:
   key-deserializer-class: org.apache.kafka.common.serialization.StringDeserializer
   value-deserializer-class: io.confluent.kafka.serializers.KafkaAvroDeserializer
   payment-consumer-group-id: payment-consumer-group
-  restaurant-approval-consumer-group-id: restaurant-approval-consumer-group
+  airline-approval-consumer-group-id: airline-approval-consumer-group
   customer-consumer-group-id: customer-consumer-group
   auto-offset-reset: earliest
   specific-avro-reader-key: specific.avro.reader

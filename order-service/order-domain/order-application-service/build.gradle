@@ -22,12 +22,14 @@ repositories {
 
 dependencies {
     implementation project(":common:common-domain")
-    implementation project(":common:common-helper")
     implementation project(":common:common-application")
+    implementation project(":common:common-helper")
     implementation project(":order-service:order-domain:order-domain-core")
     implementation project("::common:common-saga")
 
     implementation libs.lombok.core
+    implementation libs.google.guava
+    implementation libs.spotbugs.annotations
     implementation libs.mapstruct.core
     implementation libs.slf4j.api
     implementation libs.spring.boot.core
@@ -35,8 +37,6 @@ dependencies {
     implementation libs.jakarta.validation.api
     implementation libs.spring.context
     implementation libs.spring.tx
-
-    compileOnly libs.findbugs.jsr305
 
     runtimeOnly libs.slf4j.log4j12
 
@@ -54,6 +54,8 @@ dependencies {
 
     testRuntimeOnly libs.mockito.inline
     testRuntimeOnly libs.junit.jupiter.engine
+
+    testAnnotationProcessor libs.lombok.core
 }
 
 test {

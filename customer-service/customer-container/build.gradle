@@ -23,18 +23,22 @@ repositories {
 
 dependencies {
     implementation project(":common:common-domain")
-    implementation project(":customer-service:customer-application:customer-rest-controller")
+    implementation project(":customer-service:customer-presentation:customer-rest-controller")
     implementation project(":customer-service:customer-domain:customer-domain-core")
     implementation project(":customer-service:customer-domain:customer-application-service")
     implementation project(":customer-service:customer-infrastructure:customer-data-access")
     implementation project(":customer-service:customer-infrastructure:customer-messaging")
 
+    implementation libs.lombok.core
+    implementation libs.spotbugs.annotations
     implementation libs.spring.beans
     implementation libs.spring.context
     implementation libs.spring.data.commons
     implementation libs.spring.data.jpa
     implementation libs.spring.boot.core
     implementation libs.spring.boot.autoconfigure
+
+    annotationProcessor libs.lombok.core
 
     runtimeOnly libs.slf4j.log4j12
     runtimeOnly libs.log4j.core
@@ -46,7 +50,7 @@ dependencies {
 }
 
 springBoot {
-    mainClass = 'com.acroteq.food.ordering.system.customer.service.CustomerServiceApplication'
+    mainClass = 'com.acroteq.ticketing.customer.service.CustomerServiceApplication'
 }
 
 bootBuildImage {

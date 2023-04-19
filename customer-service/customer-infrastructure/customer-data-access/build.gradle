@@ -32,6 +32,7 @@ dependencies {
     implementation project(":customer-service:customer-domain:customer-application-service")
 
     implementation libs.lombok.core
+    implementation libs.spotbugs.annotations
     implementation libs.mapstruct.core
     implementation libs.jakarta.persistence.api
     implementation libs.spring.beans

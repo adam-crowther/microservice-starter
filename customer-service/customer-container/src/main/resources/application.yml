@@ -3,7 +3,7 @@ server:
 
 logging:
   level:
-    com.acroteq.food.ordering.system: DEBUG
+    com.acroteq.ticketing: DEBUG
     # org.springframework.kafka: TRACE
     # org.apache.kafka: TRACE
 

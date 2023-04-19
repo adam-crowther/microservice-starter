@@ -18,7 +18,6 @@ dependencies {
     implementation libs.kafka.clients
     implementation libs.kafka.avro.serializer
     implementation libs.google.guava
-    implementation libs.findbugs.jsr305
 }
 
 avro {

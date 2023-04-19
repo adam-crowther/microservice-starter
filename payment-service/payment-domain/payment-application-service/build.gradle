@@ -27,6 +27,7 @@ dependencies {
     implementation project(":payment-service:payment-domain:payment-domain-core")
 
     implementation libs.lombok.core
+    implementation libs.spotbugs.annotations
     implementation libs.mapstruct.core
     implementation libs.slf4j.api
     implementation libs.spring.boot.core
@@ -34,8 +35,6 @@ dependencies {
     implementation libs.jakarta.validation.api
     implementation libs.spring.context
     implementation libs.spring.tx
-
-    compileOnly libs.findbugs.jsr305
 
     runtimeOnly libs.slf4j.log4j12
 

@@ -1,0 +1,39 @@
+apply plugin: 'com.github.spotbugs'
+dependencies {
+    spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.12.0'
+}
+
+spotbugs {
+    toolVersion = '4.7.3'
+    ignoreFailures = false
+    showStackTraces = true
+    showProgress = true
+    effort = 'more'
+    reportLevel = 'default'
+    excludeFilter.fileValue file("${rootDir}/quality/spotbugs_exclude.xml")
+}
+
+// TODO: the following AutoConfigure setup is causing deprecation warnings in Gradle.
+//  When SpotBugs has a solution, replace this configuration with the new methodology.
+//  See https://docs.gradle.org/8.1.1/userguide/upgrading_version_7.html#org_gradle_util_reports_deprecations
+spotbugsMain {
+    reports {
+        xml {
+            required = false
+        }
+        html {
+            required = true
+        }
+    }
+}
+
+spotbugsTest {
+    reports {
+        xml {
+            required = false
+        }
+        html {
+            required = true
+        }
+    }
+}

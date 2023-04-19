@@ -19,6 +19,7 @@ dependencies {
     implementation project(":common:common-domain")
 
     implementation libs.lombok.core
+    implementation libs.spotbugs.annotations
     implementation libs.slf4j.api
     implementation libs.google.guava
     implementation libs.apache.commons.lang3

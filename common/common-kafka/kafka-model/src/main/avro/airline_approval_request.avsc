@@ -1,0 +1,76 @@
+{
+  "namespace": "com.acroteq.ticketing.kafka.order.avro.model",
+  "type": "record",
+  "name": "AirlineApprovalRequestMessage",
+  "fields": [
+    {
+      "name": "id",
+      "type": "long"
+    },
+    {
+      "name": "sagaId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "airlineId",
+      "type": "long"
+    },
+    {
+      "name": "orderId",
+      "type": "long"
+    },
+    {
+      "name": "airlineOrderStatus",
+      "type": {
+        "type": "enum",
+        "name": "AirlineOrderStatus",
+        "symbols": [
+          "PAID"
+        ]
+      }
+    },
+    {
+      "name": "flights",
+      "type": {
+        "type": "array",
+        "items": {
+          "name": "Flight",
+          "type": "record",
+          "fields": [
+            {
+              "name": "id",
+              "type": "long"
+            },
+            {
+              "name": "quantity",
+              "type": "int"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "priceCurrencyId",
+      "type": "long"
+    },
+    {
+      "name": "priceAmount",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 10,
+        "scale": 2
+      }
+    },
+    {
+      "name": "createdDateTime",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    }
+  ]
+}

@@ -24,7 +24,7 @@ repositories {
 dependencies {
     implementation project(":order-service:order-domain:order-domain-core")
     implementation project(":order-service:order-domain:order-application-service")
-    implementation project(":order-service:order-application:order-rest-controller")
+    implementation project(":order-service:order-presentation:order-rest-controller")
     implementation project(":order-service:order-infrastructure:order-data-access")
     implementation project(":order-service:order-infrastructure:order-messaging")
 
@@ -45,7 +45,7 @@ dependencies {
 }
 
 springBoot {
-    mainClass = 'com.acroteq.food.ordering.system.order.service.OrderServiceApplication'
+    mainClass = 'com.acroteq.ticketing.order.service.OrderServiceApplication'
 }
 
 bootBuildImage {

@@ -1,25 +1,27 @@
 plugins {
     id 'base'
     id 'maven-publish'
+    id 'checkstyle'
+
+    alias pluginLibs.plugins.spotbugs
     alias pluginLibs.plugins.nebula.lint
 }
 
 allprojects {
-    apply plugin: 'nebula.lint'
+    apply plugin: 'java'
+    apply from: "${rootDir}/quality/checkstyle.gradle"
+    apply from: "${rootDir}/quality/pmd.gradle"
+    apply from: "${rootDir}/quality/spotbugs.gradle"
+    apply from: "${rootDir}/quality/gradlelint.gradle"
+
+    group group
+    version version
 
     configurations {
         implementation {
             transitive = false
         }
     }
-
-    gradleLint {
-        rules += ['dependency-all', 'archaic-wrapper', 'duplicate-dependency-class']
-        alwaysRun = true
-    }
-
-    group group
-    version version
 
     repositories {
         mavenCentral()

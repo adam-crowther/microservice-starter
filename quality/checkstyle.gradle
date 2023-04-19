@@ -1,0 +1,16 @@
+apply plugin: 'checkstyle'
+
+checkstyle {
+    toolVersion = '10.9.3'
+    configFile = file("${rootDir}/quality/checkstyle.xml")
+    ignoreFailures = false
+    maxWarnings = 0
+    maxErrors = 0
+}
+
+tasks.withType(Checkstyle).configureEach {
+    outputs.upToDateWhen { false }
+    exclude '**/application/api/**'
+    exclude '**/application/model/**'
+    exclude '**/avro/model/**'
+}

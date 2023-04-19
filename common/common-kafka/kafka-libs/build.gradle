@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+compileJava {
+    sourceCompatibility = javaSourceCompatibility
+    targetCompatibility = javaTargetCompatibility
+    options.compilerArgs += [
+            '-Xlint:deprecation'
+    ]
+}
+
+dependencies {
+    implementation project(':common:common-domain')
+
+    implementation libs.google.guava
+    implementation libs.lombok.core
+    implementation libs.spotbugs.annotations
+    implementation libs.apache.avro
+    implementation libs.javax.annotation.api
+    implementation libs.kafka.avro.serializer
+    implementation libs.kafka.clients
+    implementation libs.slf4j.api
+    implementation libs.spring.beans
+    implementation libs.spring.boot.autoconfigure
+    implementation libs.spring.boot.core
+    implementation libs.spring.context
+    implementation libs.spring.kafka
+    implementation libs.spring.messaging
+
+    annotationProcessor libs.lombok.core
+    annotationProcessor libs.spring.boot.configuration.processor
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}

@@ -11,14 +11,14 @@
       "description": "Kafka topic for payment responses."
     },
     {
-      "name": "order-service.restaurant-approval-request-topic-name",
+      "name": "order-service.airline-approval-request-topic-name",
       "type": "java.lang.String",
-      "description": "Kafka topic for restaurant approval requests."
+      "description": "Kafka topic for airline approval requests."
     },
     {
-      "name": "order-service.restaurant-approval-response-topic-name",
+      "name": "order-service.airline-approval-response-topic-name",
       "type": "java.lang.String",
-      "description": "Kafka topic for restaurant approval responses."
+      "description": "Kafka topic for airline approval responses."
     },
     {
       "name": "kafka-consumer-config.payment-consumer-group-id",
@@ -26,9 +26,9 @@
       "description": "Group id for payment response consumers."
     },
     {
-      "name": "kafka-consumer-config.restaurant-approval-consumer-group-id",
+      "name": "kafka-consumer-config.airline-approval-consumer-group-id",
       "type": "java.lang.String",
-      "description": "Group id for restaurant approval consumers."
+      "description": "Group id for airline approval consumers."
     }
   ]
 }

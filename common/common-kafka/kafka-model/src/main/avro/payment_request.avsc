@@ -1,14 +1,11 @@
 {
-  "namespace": "com.acroteq.food.ordering.system.kafka.order.avro.model",
+  "namespace": "com.acroteq.ticketing.kafka.order.avro.model",
   "type": "record",
   "name": "PaymentRequestMessage",
   "fields": [
     {
       "name": "id",
-      "type": {
-        "type": "string",
-        "logicalType": "uuid"
-      }
+      "type": "long"
     },
     {
       "name": "sagaId",
@@ -19,24 +16,15 @@
     },
     {
       "name": "customerId",
-      "type": {
-        "type": "string",
-        "logicalType": "uuid"
-      }
+      "type": "long"
     },
     {
       "name": "orderId",
-      "type": {
-        "type": "string",
-        "logicalType": "uuid"
-      }
+      "type": "long"
     },
     {
       "name": "valueCurrencyId",
-      "type": {
-        "type": "string",
-        "logicalType": "uuid"
-      }
+      "type": "long"
     },
     {
       "name": "valueAmount",
@@ -55,11 +43,16 @@
       }
     },
     {
-      "name": "paymentOrderStatus",
+      "name": "paymentStatus",
       "type": {
         "type": "enum",
-        "name": "PaymentOrderStatus",
-        "symbols": ["PENDING", "COMPLETED", "CANCELLED", "FAILED"]
+        "name": "PaymentStatus",
+        "symbols": [
+          "PENDING",
+          "COMPLETED",
+          "CANCELLED",
+          "FAILED"
+        ]
       }
     }
   ]

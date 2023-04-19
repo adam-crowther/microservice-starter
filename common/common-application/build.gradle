@@ -20,15 +20,13 @@ dependencies {
     implementation project(":common:common-domain")
     implementation project(":common:common-helper")
 
+    implementation libs.apache.commons.lang3
     implementation libs.lombok.core
     implementation libs.mapstruct.core
-    implementation libs.slf4j.api
-
+    implementation libs.google.guava
+    implementation libs.spotbugs.annotations
     implementation libs.spring.context
     implementation libs.spring.beans
-    implementation libs.spring.web
-    implementation libs.jakarta.annotation.api
-    implementation libs.jakarta.validation.api
 
     annotationProcessor libs.lombok.core
     annotationProcessor libs.lombok.mapstruct.binding

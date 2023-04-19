@@ -1,32 +1,30 @@
 databaseChangeLog:
   - changeSet:
-      id: 1681467710786-1
+      id: 1681920125011-1
       author: micro (generated)
       changes:
         - createTable:
             columns:
               - column:
+                  autoIncrement: true
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: order_addressesPK
+                    primaryKeyName: customersPK
                   name: id
-                  type: VARCHAR(36)
+                  type: BIGINT
               - column:
-                  name: city
+                  name: first_name
                   type: VARCHAR(255)
               - column:
-                  name: postal_code
+                  name: last_name
                   type: VARCHAR(255)
               - column:
-                  name: street
+                  name: user_name
                   type: VARCHAR(255)
-              - column:
-                  name: order_id
-                  type: VARCHAR(36)
-            tableName: order_addresses
+            tableName: customers
   - changeSet:
-      id: 1681467710786-2
+      id: 1681920125011-2
       author: micro (generated)
       changes:
         - createTable:
@@ -35,13 +33,13 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                   name: order_id
-                  type: VARCHAR(36)
+                  type: BIGINT
               - column:
                   name: failure_message
                   type: VARCHAR(255)
             tableName: order_failure_messages
   - changeSet:
-      id: 1681467710786-3
+      id: 1681920125011-3
       author: micro (generated)
       changes:
         - createTable:
@@ -54,35 +52,51 @@ databaseChangeLog:
                   name: id
                   type: BIGINT
               - column:
-                  name: product_id
-                  type: VARCHAR(36)
-              - column:
-                  name: quantity
-                  type: INT
-              - column:
                   constraints:
                     nullable: false
                     primaryKey: true
                     primaryKeyName: order_itemsPK
                   name: order_id
-                  type: VARCHAR(36)
+                  type: BIGINT
+              - column:
+                  name: flight_id
+                  type: BIGINT
+              - column:
+                  name: quantity
+                  type: INT
+              - column:
+                  name: owner_id
+                  type: BIGINT
             tableName: order_items
   - changeSet:
-      id: 1681467710786-4
+      id: 1681920125011-4
       author: micro (generated)
       changes:
         - createTable:
             columns:
               - column:
+                  autoIncrement: true
                   constraints:
                     nullable: false
                     primaryKey: true
                     primaryKeyName: ordersPK
                   name: id
-                  type: VARCHAR(36)
+                  type: BIGINT
+              - column:
+                  name: city
+                  type: VARCHAR(255)
+              - column:
+                  name: postal_code
+                  type: VARCHAR(255)
+              - column:
+                  name: street
+                  type: VARCHAR(255)
+              - column:
+                  name: airline_id
+                  type: BIGINT
               - column:
                   name: customer_id
-                  type: VARCHAR(36)
+                  type: BIGINT
               - column:
                   name: order_status
                   type: VARCHAR(255)
@@ -91,29 +105,13 @@ databaseChangeLog:
                   type: NUMBER(38, 2)
               - column:
                   name: price_currency_id
-                  type: VARCHAR(36)
-              - column:
-                  name: restaurant_id
-                  type: VARCHAR(36)
+                  type: BIGINT
               - column:
                   name: tracking_id
                   type: VARCHAR(36)
             tableName: orders
   - changeSet:
-      id: 1681467710786-5
-      author: micro (generated)
-      changes:
-        - addForeignKeyConstraint:
-            baseColumnNames: order_id
-            baseTableName: order_addresses
-            constraintName: FK50ktlegmhrk0yuibum1sg0jb8
-            deferrable: false
-            initiallyDeferred: false
-            referencedColumnNames: id
-            referencedTableName: orders
-            validate: true
-  - changeSet:
-      id: 1681467710786-6
+      id: 1681920125011-5
       author: micro (generated)
       changes:
         - addForeignKeyConstraint:
@@ -126,13 +124,13 @@ databaseChangeLog:
             referencedTableName: orders
             validate: true
   - changeSet:
-      id: 1681467710786-7
+      id: 1681920125011-6
       author: micro (generated)
       changes:
         - addForeignKeyConstraint:
-            baseColumnNames: order_id
+            baseColumnNames: owner_id
             baseTableName: order_items
-            constraintName: FKbioxgbv59vetrxe0ejfubep1w
+            constraintName: FKg5lu5i310tyh4chh1ao0ycl2o
             deferrable: false
             initiallyDeferred: false
             referencedColumnNames: id

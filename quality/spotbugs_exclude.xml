@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+    <!-- Exclude all generated code -->
+    <Match>
+        <Package name="com.acroteq.ticketing.kafka.order.avro.model"/>
+    </Match>
+    <Match>
+        <Package name="com.acroteq.ticketing.customer.service.application.api"/>
+    </Match>
+    <Match>
+        <Package name="com.acroteq.ticketing.customer.service.application.model"/>
+    </Match>
+    <Match>
+        <Package name="com.acroteq.ticketing.order.service.application.api"/>
+    </Match>
+    <Match>
+        <Package name="com.acroteq.ticketing.order.service.application.model"/>
+    </Match>
+
+    <!-- Spring IOC/injection does not do a deep copy of the injected instances, which means we can't meet this rule.  -->
+    <Match>
+        <!-- TODO Replace Class filter with Annotation  -->
+        <!-- The new Annotation matcher was only merged to Spotbugs master in April 2023.  It should be available with the next release. -->
+        <!-- Until then, we need to specify the Spring component and service classes by name.  -->
+        <!-- <Or> -->
+        <!--     <Annotation name="javax.annotation.processing.Generated"/> -->
+        <!--     <Annotation name="org.springframework.stereotype.Service"/> -->
+        <!-- </Or> -->
+        <Or>
+            <Class name="~.*Mapper"/>
+            <Class name="~.*Helper"/>
+            <Class name="~.*Controller"/>
+            <Class name="~.*ApplicationServiceImpl"/>
+            <Class name="~.*KafkaProducerImpl"/>
+            <Class name="~.*MessageListenerImpl"/>
+            <Class name="~.*RepositoryImpl"/>
+            <Class name="~.*CommandProcessor"/>
+            <Class name="~.*KafkaMessagePublisher"/>
+        </Or>
+        <Method name="&lt;init&gt;"/>
+        <!-- </And> -->
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+    <!-- Mapstruct checks everything for null, even if it is not nullable. -->
+    <Match>
+        <!-- TODO Replace Class filter with Annotation  -->
+        <Class name="~.*MapperImpl"/>
+        <!-- <Annotation name="javax.annotation.processing.Generated"/> -->
+        <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"/>
+    </Match>
+
+</FindBugsFilter>

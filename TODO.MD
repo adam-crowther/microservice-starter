@@ -1,27 +1,14 @@
-* Change use-case.  
-  * Food = Ticket
-  * Restaurant = Airline
-
-* AVRO backward compatibility
-
-* Static code analysis
-  * Security scanner
-  * FindBugs
-  * Checkstyle
-
-* Code style 
-
-* Externalised Configs: Move Spring configs to config server
-
-* split application modules in to 
-  * spec (containing openapi.yaml)
-  * rest-controller (containing spring rest controller)
-
-* Where to put @Transactional operations?
-  * SQL transaction should be rolled back if Kafka publish fails
-
 * Dockerfile for the containers/services
 
-* Gradle: 
-  * hide redundant tasks
-  * clean up lint output
+* Generate and deploy a Swagger Test API for the REST APIs
+
+* Configure all logging so that it includes the correlationId from the Session.  
+  CorrelationId must be enriched in all messages using an interceptor, and stored in the Session.
+
+* Integrate a security checker
+
+* Logical delete
+
+* Entity level security
+
+* Historised data

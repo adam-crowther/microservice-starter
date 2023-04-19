@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: order-service
-          image: com.food.ordering.system/order.service:1.0-SNAPSHOT
+          image: com.ticketing/order.service:1.0-SNAPSHOT
           env:
             - name: SPRING_DATASOURCE_URL
               value: "jdbc:postgresql://postgres-service:5432/postgres?currentSchema=order&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified"
@@ -69,7 +69,7 @@ spec:
     spec:
       containers:
         - name: payment-service
-          image: com.food.ordering.system/payment.service:1.0-SNAPSHOT
+          image: com.ticketing/payment.service:1.0-SNAPSHOT
           env:
             - name: SPRING_DATASOURCE_URL
               value: "jdbc:postgresql://postgres-service:5432/postgres?currentSchema=payment&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified"
@@ -106,25 +106,25 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: restaurant-deployment
+  name: airline-deployment
   namespace: default
   labels:
-    app: restaurant-deployment
+    app: airline-deployment
 spec:
   selector:
     matchLabels:
-      app: restaurant-deployment
+      app: airline-deployment
   template:
     metadata:
       labels:
-        app: restaurant-deployment
+        app: airline-deployment
     spec:
       containers:
-        - name: restaurant-service
-          image: com.food.ordering.system/restaurant.service:1.0-SNAPSHOT
+        - name: airline-service
+          image: com.ticketing/airline.service:1.0-SNAPSHOT
           env:
             - name: SPRING_DATASOURCE_URL
-              value: "jdbc:postgresql://postgres-service:5432/postgres?currentSchema=restaurant&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified"
+              value: "jdbc:postgresql://postgres-service:5432/postgres?currentSchema=airline&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified"
             - name: KAFKA-CONFIG_BOOTSTRAP-SERVERS
               value: "local-confluent-kafka-cp-kafka-headless:9092"
             - name: KAFKA-CONFIG_SCHEMA-REGISTRY-URL
@@ -140,15 +140,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: restaurant-service
+  name: airline-service
   namespace: default
   labels:
-    app: restaurant-service
+    app: airline-service
 spec:
   selector:
-    app: restaurant-deployment
+    app: airline-deployment
   ports:
-    - name: restaurant-service-port
+    - name: airline-service-port
       protocol: TCP
       port: 8183
   type: LoadBalancer
@@ -172,7 +172,7 @@ spec:
     spec:
       containers:
         - name: customer-service
-          image: com.food.ordering.system/customer.service:1.0-SNAPSHOT
+          image: com.ticketing/customer.service:1.0-SNAPSHOT
           env:
             - name: SPRING_DATASOURCE_URL
               value: "jdbc:postgresql://postgres-service:5432/postgres?currentSchema=customer&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified"

@@ -18,12 +18,13 @@ compileJava {
 
 dependencies {
     implementation project(":common:common-domain")
-    implementation project(":common:common-helper")
     implementation project(":common:common-application")
+    implementation project(":common:common-helper")
     implementation project(":customer-service:customer-domain:customer-domain-core")
     implementation project("::common:common-saga")
 
     implementation libs.lombok.core
+    implementation libs.spotbugs.annotations
     implementation libs.mapstruct.core
     implementation libs.slf4j.api
     implementation libs.spring.boot.core
@@ -31,8 +32,6 @@ dependencies {
     implementation libs.jakarta.validation.api
     implementation libs.spring.context
     implementation libs.spring.tx
-
-    compileOnly libs.findbugs.jsr305
 
     runtimeOnly libs.slf4j.log4j12
 
