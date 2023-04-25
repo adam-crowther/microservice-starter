@@ -16,8 +16,6 @@ import java.util.UUID;
 public class AirlineApprovalResponseDto {
 
   @NotNull
-  private final Long id;
-  @NotNull
   private final UUID sagaId;
   @NotNull
   private final Long orderId;

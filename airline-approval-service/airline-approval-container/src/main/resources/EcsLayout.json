@@ -1,0 +1,70 @@
+{
+  "@timestamp": {
+    "$resolver": "timestamp",
+    "pattern": {
+      "format": "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
+      "timeZone": "UTC"
+    }
+  },
+  "ecs.version": "1.2.0",
+  "log.level": {
+    "$resolver": "level",
+    "field": "name"
+  },
+  "log.syslog.hostname": "${hostname}",
+  "process.thread.name": {
+    "$resolver": "thread",
+    "field": "name"
+  },
+  "log.logger": {
+    "$resolver": "logger",
+    "field": "name"
+  },
+  "log.origin.class": {
+    "$resolver": "source",
+    "field": "className"
+  },
+  "log.origin.function": {
+    "$resolver": "source",
+    "field": "methodName"
+  },
+  "log.origin.file.name": {
+    "$resolver": "source",
+    "field": "fileName"
+  },
+  "log.origin.file.line": {
+    "$resolver": "source",
+    "field": "lineNumber"
+  },
+  "labels": {
+    "$resolver": "mdc",
+    "flatten": true,
+    "stringified": true
+  },
+  "tags": {
+    "$resolver": "ndc"
+  },
+  "error.code": {
+  },
+  "error.id": {
+  },
+  "error.type": {
+    "$resolver": "exception",
+    "field": "className"
+  },
+  "error.message": {
+    "$resolver": "exception",
+    "field": "message"
+  },
+  "error.stack_trace": {
+    "$resolver": "exception",
+    "field": "stackTrace",
+    "stackTrace": {
+      "stringified": true
+    }
+  },
+  "message": {
+    "$resolver": "message",
+    "stringified": true
+  }
+}

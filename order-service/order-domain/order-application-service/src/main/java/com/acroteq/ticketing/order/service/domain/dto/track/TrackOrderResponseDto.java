@@ -7,11 +7,13 @@ import com.acroteq.ticketing.domain.valueobject.OrderStatus;
 import com.acroteq.ticketing.order.service.domain.dto.create.OrderAddressDto;
 import com.acroteq.ticketing.order.service.domain.dto.create.OrderItemDto;
 import com.google.common.collect.ImmutableList;
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Builder
@@ -38,8 +40,10 @@ public class TrackOrderResponseDto {
   @SuppressWarnings("PublicInnerClass")
   public static class TrackOrderResponseDtoBuilder {
 
-    public TrackOrderResponseDtoBuilder items(final List<OrderItemDto> items) {
-      this.items = ImmutableList.copyOf(items);
+    public TrackOrderResponseDtoBuilder items(@Nullable final List<OrderItemDto> items) {
+      this.items = Optional.ofNullable(items)
+                           .map(ImmutableList::copyOf)
+                           .orElse(ImmutableList.of());
       return this;
     }
   }

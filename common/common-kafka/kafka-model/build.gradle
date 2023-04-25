@@ -12,12 +12,11 @@ compileJava {
 }
 
 dependencies {
-
-    implementation libs.jackson.core
     implementation libs.apache.avro
-    implementation libs.kafka.clients
-    implementation libs.kafka.avro.serializer
     implementation libs.google.guava
+    implementation libs.jackson.core
+    implementation libs.kafka.avro.serializer
+    implementation libs.kafka.clients
 }
 
 avro {

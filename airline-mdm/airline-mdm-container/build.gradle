@@ -1,0 +1,69 @@
+plugins {
+    id 'java'
+    alias pluginLibs.plugins.spring.boot
+    alias pluginLibs.plugins.graphfity
+}
+
+compileJava {
+    sourceCompatibility = javaSourceCompatibility
+    targetCompatibility = javaTargetCompatibility
+    options.compilerArgs += [
+            '-Xlint:deprecation'
+    ]
+}
+
+configurations {
+    runtimeOnly.exclude group: 'ch.qos.logback'
+    runtimeOnly.exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(":common:common-domain")
+    implementation project(":airline-mdm:airline-mdm-presentation:airline-mdm-rest-controller")
+    implementation project(":airline-mdm:airline-mdm-domain:airline-mdm-domain-core")
+    implementation project(":airline-mdm:airline-mdm-domain:airline-mdm-application-service")
+    implementation project(":airline-mdm:airline-mdm-infrastructure:airline-mdm-data-access")
+    implementation project(":airline-mdm:airline-mdm-infrastructure:airline-mdm-messaging")
+
+    implementation libs.spring.beans
+    implementation libs.spring.boot.autoconfigure
+    implementation libs.spring.boot.core
+    implementation libs.spring.context
+    implementation libs.spring.data.commons
+    implementation libs.spring.data.jpa
+
+    runtimeOnly libs.jackson.databind
+    runtimeOnly libs.jackson.dataformat.yaml
+    runtimeOnly libs.log4j.core
+    runtimeOnly libs.log4j.json.layout
+    runtimeOnly libs.log4j.slf4j
+    runtimeOnly libs.postgresql.driver
+    runtimeOnly libs.spring.boot.data.jpa
+    runtimeOnly libs.spring.boot.validation
+    runtimeOnly libs.spring.boot.web
+}
+
+springBoot {
+    mainClass = 'com.acroteq.ticketing.airline.service.container.AirlineMasterDataManagementApplication'
+}
+
+bootBuildImage {
+    imageName = "${dockerNamespace}/${rootProject.name}/${project.name}:${project.version}"
+}
+
+graphfityExtension {
+    nodeTypesPath = "${projectDir}/graphfityNodeTypes.json"
+    projectRootName = "${project.path}"
+    graphImagePath = "${buildDir}/"
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}

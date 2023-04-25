@@ -26,17 +26,16 @@ dependencies {
     implementation project(":common:common-helper")
     implementation project(":payment-service:payment-domain:payment-domain-core")
 
+    implementation libs.jakarta.annotation.api
+    implementation libs.jakarta.validation.api
     implementation libs.lombok.core
-    implementation libs.spotbugs.annotations
     implementation libs.mapstruct.core
     implementation libs.slf4j.api
-    implementation libs.spring.boot.core
+    implementation libs.spotbugs.annotations
     implementation libs.spring.beans
-    implementation libs.jakarta.validation.api
+    implementation libs.spring.boot.core
     implementation libs.spring.context
     implementation libs.spring.tx
-
-    runtimeOnly libs.slf4j.log4j12
 
     annotationProcessor libs.lombok.core
     annotationProcessor libs.lombok.mapstruct.binding

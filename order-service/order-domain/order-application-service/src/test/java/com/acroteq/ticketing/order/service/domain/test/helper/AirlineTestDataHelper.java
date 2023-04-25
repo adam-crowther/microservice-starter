@@ -5,7 +5,7 @@ import static org.mockito.Mockito.lenient;
 import com.acroteq.ticketing.domain.valueobject.AirlineId;
 import com.acroteq.ticketing.order.service.domain.entity.Airline;
 import com.acroteq.ticketing.order.service.domain.entity.Flight;
-import com.acroteq.ticketing.order.service.domain.ports.output.repository.AirlineFlightRepository;
+import com.acroteq.ticketing.order.service.domain.ports.output.repository.AirlineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.test.context.TestComponent;
 
@@ -17,9 +17,11 @@ import java.util.Optional;
 public class AirlineTestDataHelper {
 
   public static final Long AIRLINE_ID = IdTestDataHelper.nextId();
+  public static final String AIRLINE_NAME = "airline-name";
 
   public static final Airline AIRLINE = Airline.builder()
                                                .id(AirlineId.of(AIRLINE_ID))
+                                               .name(AIRLINE_NAME)
                                                .active(true)
                                                .flights(List.of(new Flight[]{ FlightTestDataHelper.FLIGHT_1,
                                                                               FlightTestDataHelper.FLIGHT_2,
@@ -27,10 +29,10 @@ public class AirlineTestDataHelper {
                                                .build();
 
 
-  private final AirlineFlightRepository airlineFlightRepository;
+  private final AirlineRepository airlineRepository;
 
   public void initialiseMocks() {
-    lenient().when(airlineFlightRepository.loadAirline(AirlineId.of(AIRLINE_ID)))
+    lenient().when(airlineRepository.findAirline(AirlineId.of(AIRLINE_ID)))
              .thenReturn(Optional.of(AIRLINE));
   }
 }

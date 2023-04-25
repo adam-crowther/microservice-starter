@@ -2,20 +2,14 @@
 <FindBugsFilter>
     <!-- Exclude all generated code -->
     <Match>
-        <Package name="com.acroteq.ticketing.kafka.order.avro.model"/>
+        <Package name="~com.acroteq.ticketing.kafka.[a-z\.]+.avro.model"/>
     </Match>
     <Match>
-        <Package name="com.acroteq.ticketing.customer.service.application.api"/>
+        <Package name="~com.acroteq.ticketing.[a-z\.]+.service.presentation.(api|model)"/>
     </Match>
-    <Match>
-        <Package name="com.acroteq.ticketing.customer.service.application.model"/>
-    </Match>
-    <Match>
-        <Package name="com.acroteq.ticketing.order.service.application.api"/>
-    </Match>
-    <Match>
-        <Package name="com.acroteq.ticketing.order.service.application.model"/>
-    </Match>
+    <!-- <Match> -->
+    <!--     <Package name="~com.acroteq.ticketing.[a-z\-]+.service.presentation.model"/> -->
+    <!-- </Match> -->
 
     <!-- Spring IOC/injection does not do a deep copy of the injected instances, which means we can't meet this rule.  -->
     <Match>
@@ -30,6 +24,7 @@
             <Class name="~.*Mapper"/>
             <Class name="~.*Helper"/>
             <Class name="~.*Controller"/>
+            <Class name="~.*Resolver"/>
             <Class name="~.*ApplicationServiceImpl"/>
             <Class name="~.*KafkaProducerImpl"/>
             <Class name="~.*MessageListenerImpl"/>

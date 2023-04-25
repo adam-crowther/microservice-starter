@@ -14,6 +14,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(uses = { OrderIdMapper.class,
+                 OrderItemIdMapper.class,
                  TrackingIdMapper.class,
                  CustomerIdMapper.class,
                  AirlineIdMapper.class,
@@ -22,8 +23,5 @@ public interface OrderItemJpaToDomainMapper {
 
   @Mapping(target = "id", source = "id")
   @Mapping(target = "flight", source = "flightId")
-  OrderItem convertEntityToDomain(OrderItemJpaEntity orderItem);
-
-  @Mapping(target = "value", source = "id")
-  OrderItemId convertUuidToOrderItemId(Long id);
+  OrderItem convertJpaToDomain(OrderItemJpaEntity orderItem);
 }

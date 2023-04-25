@@ -27,33 +27,32 @@ dependencies {
     implementation project(":order-service:order-domain:order-domain-core")
     implementation project("::common:common-saga")
 
-    implementation libs.lombok.core
     implementation libs.google.guava
-    implementation libs.spotbugs.annotations
+    implementation libs.jakarta.annotation.api
+    implementation libs.jakarta.validation.api
+    implementation libs.lombok.core
     implementation libs.mapstruct.core
     implementation libs.slf4j.api
-    implementation libs.spring.boot.core
+    implementation libs.spotbugs.annotations
     implementation libs.spring.beans
-    implementation libs.jakarta.validation.api
+    implementation libs.spring.boot.core
     implementation libs.spring.context
     implementation libs.spring.tx
-
-    runtimeOnly libs.slf4j.log4j12
 
     annotationProcessor libs.lombok.core
     annotationProcessor libs.lombok.mapstruct.binding
     annotationProcessor libs.mapstruct.processor
 
-    testImplementation libs.spring.boot.autoconfigure
-    testImplementation libs.spring.boot.test
-    testImplementation libs.spring.test
+    testImplementation libs.hamcrest.core
     testImplementation libs.junit.jupiter.api
     testImplementation libs.mockito.core
     testImplementation libs.mockito.junit.jupiter
-    testImplementation libs.hamcrest.core
+    testImplementation libs.spring.boot.autoconfigure
+    testImplementation libs.spring.boot.test
+    testImplementation libs.spring.test
 
-    testRuntimeOnly libs.mockito.inline
     testRuntimeOnly libs.junit.jupiter.engine
+    testRuntimeOnly libs.mockito.inline
 
     testAnnotationProcessor libs.lombok.core
 }

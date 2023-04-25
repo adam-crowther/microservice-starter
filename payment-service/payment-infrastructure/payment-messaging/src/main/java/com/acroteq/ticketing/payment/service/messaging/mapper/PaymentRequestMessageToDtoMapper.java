@@ -2,8 +2,8 @@ package com.acroteq.ticketing.payment.service.messaging.mapper;
 
 import com.acroteq.ticketing.application.mapper.CurrencyIdMapper;
 import com.acroteq.ticketing.application.mapper.CustomerIdMapper;
-import com.acroteq.ticketing.kafka.order.avro.model.PaymentRequestMessage;
-import com.acroteq.ticketing.payment.service.domain.dto.PaymentRequestDto;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentRequestMessage;
+import com.acroteq.ticketing.payment.service.domain.dto.payment.PaymentRequestDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

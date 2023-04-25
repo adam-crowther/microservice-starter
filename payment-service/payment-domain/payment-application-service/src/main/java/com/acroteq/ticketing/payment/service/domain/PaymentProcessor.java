@@ -4,18 +4,15 @@ import com.acroteq.ticketing.application.mapper.OrderIdMapper;
 import com.acroteq.ticketing.domain.validation.ValidationResult;
 import com.acroteq.ticketing.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.domain.valueobject.OrderId;
-import com.acroteq.ticketing.payment.service.domain.dto.PaymentRequestDto;
+import com.acroteq.ticketing.payment.service.domain.dto.payment.PaymentRequestDto;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditEntry;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditHistory;
 import com.acroteq.ticketing.payment.service.domain.entity.Payment;
 import com.acroteq.ticketing.payment.service.domain.event.PaymentEvent;
 import com.acroteq.ticketing.payment.service.domain.event.PaymentFailedEvent;
 import com.acroteq.ticketing.payment.service.domain.exception.CreditEntryNotFoundException;
-import com.acroteq.ticketing.payment.service.domain.exception.CreditEntrySaveFailedException;
 import com.acroteq.ticketing.payment.service.domain.exception.CreditHistoryNotFoundException;
-import com.acroteq.ticketing.payment.service.domain.exception.CreditHistorySaveFailedException;
 import com.acroteq.ticketing.payment.service.domain.exception.PaymentNotFoundException;
-import com.acroteq.ticketing.payment.service.domain.exception.PaymentSaveFailedException;
 import com.acroteq.ticketing.payment.service.domain.mapper.PaymentDtoToDomainMapper;
 import com.acroteq.ticketing.payment.service.domain.ports.output.repository.CreditEntryRepository;
 import com.acroteq.ticketing.payment.service.domain.ports.output.repository.CreditHistoryRepository;
@@ -27,6 +24,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -48,13 +46,13 @@ class PaymentProcessor {
     final List<CreditHistory> creditHistories = getCreditHistory(customerId);
 
     final PaymentOutput paymentOutput = paymentDomainService.validatePayment(payment, creditEntry, creditHistories);
-    final Payment updatedPayment = paymentOutput.payment();
-    final ValidationResult result = paymentOutput.validationResult();
+    final Payment savedPayment = persistDbObjects(paymentOutput);
 
-    persistDbObjects(updatedPayment, creditEntry, creditHistories, result);
-
+    final ValidationResult result = paymentOutput.getValidationResult();
+    final UUID sagaId = paymentRequestDto.getSagaId();
     return PaymentFailedEvent.builder()
-                             .payment(updatedPayment)
+                             .sagaId(sagaId)
+                             .payment(savedPayment)
                              .result(result)
                              .build();
   }
@@ -70,15 +68,15 @@ class PaymentProcessor {
     }
     final Payment payment = paymentResponse.get();
     final CreditEntry creditEntry = getCreditEntry(payment.getCustomerId());
-    final List<CreditHistory> creditHistories = getCreditHistory(payment.getCustomerId());
 
-    final PaymentOutput paymentOutput = paymentDomainService.cancelPayment(payment, creditEntry, creditHistories);
-    final Payment updatedPayment = paymentOutput.payment();
-    final ValidationResult result = paymentOutput.validationResult();
+    final PaymentOutput paymentOutput = paymentDomainService.cancelPayment(payment, creditEntry);
+    final Payment savedPayment = persistDbObjects(paymentOutput);
 
-    persistDbObjects(updatedPayment, creditEntry, creditHistories, result);
+    final ValidationResult result = paymentOutput.getValidationResult();
+    final UUID sagaId = paymentRequestDto.getSagaId();
     return PaymentFailedEvent.builder()
-                             .payment(payment)
+                             .sagaId(sagaId)
+                             .payment(savedPayment)
                              .result(result)
                              .build();
   }
@@ -101,35 +99,17 @@ class PaymentProcessor {
     return creditHistories.get();
   }
 
-  private void persistDbObjects(final Payment payment,
-                                final CreditEntry creditEntry,
-                                final List<CreditHistory> creditHistories,
-                                final ValidationResult result) {
-    persistPayment(payment);
-
+  private Payment persistDbObjects(final PaymentOutput paymentOutput) {
+    final ValidationResult result = paymentOutput.getValidationResult();
     if (result.isPass()) {
-      persistCreditEntry(creditEntry);
-      persistLatestCreditHistory(creditHistories);
-    }
-  }
+      final CreditEntry creditEntry = paymentOutput.getCreditEntry();
+      creditEntryRepository.save(creditEntry);
 
-  private void persistPayment(final Payment payment) {
-    if (paymentRepository.save(payment) == null) {
-      throw new PaymentSaveFailedException(payment.getId());
+      final CreditHistory creditHistory = paymentOutput.getCreditHistory();
+      creditHistoryRepository.save(creditHistory);
     }
-  }
 
-  private void persistCreditEntry(final CreditEntry creditEntry) {
-    if (creditEntryRepository.save(creditEntry) == null) {
-      throw new CreditEntrySaveFailedException(creditEntry.getId());
-    }
-  }
-
-  private void persistLatestCreditHistory(final List<CreditHistory> creditHistories) {
-    final CreditHistory creditHistory = creditHistories.get(creditHistories.size() - 1);
-    final CreditHistory savedCreditHistory = creditHistoryRepository.save(creditHistory);
-    if (savedCreditHistory == null) {
-      throw new CreditHistorySaveFailedException(creditHistory.getId());
-    }
+    final Payment payment = paymentOutput.getPayment();
+    return paymentRepository.save(payment);
   }
 }

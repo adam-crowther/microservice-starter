@@ -20,6 +20,7 @@ import com.acroteq.ticketing.order.service.domain.exception.InvalidOrderPrestate
 import com.acroteq.ticketing.order.service.domain.valueobject.StreetAddress;
 import com.acroteq.ticketing.order.service.domain.valueobject.TrackingId;
 import com.google.common.collect.ImmutableList;
+import jakarta.annotation.Nullable;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -27,6 +28,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Getter
@@ -100,8 +102,10 @@ public class Order extends AggregateRoot<OrderId> {
   public abstract static class OrderBuilder<C extends Order, B extends OrderBuilder<C, B>>
       extends AggregateRoot.AggregateRootBuilder<OrderId, C, B> {
 
-    public B items(final List<OrderItem> items) {
-      this.items = ImmutableList.copyOf(items);
+    public B items(@Nullable final List<OrderItem> items) {
+      this.items = Optional.ofNullable(items)
+                           .map(ImmutableList::copyOf)
+                           .orElse(ImmutableList.of());
       return this.self();
     }
   }

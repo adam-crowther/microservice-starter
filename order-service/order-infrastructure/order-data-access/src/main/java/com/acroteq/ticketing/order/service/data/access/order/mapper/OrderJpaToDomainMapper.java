@@ -25,7 +25,7 @@ public interface OrderJpaToDomainMapper {
 
   @Mapping(target = "streetAddress", source = "address")
   @Mapping(target = "result", source = "failureMessages")
-  Order convertEntityToDomain(OrderJpaEntity order);
+  Order convertJpaToDomain(OrderJpaEntity order);
 
   @Mapping(target = "value", source = "uuid")
   TrackingId convertUuidToTrackingId(UUID uuid);

@@ -22,14 +22,14 @@ public class PaymentRepositoryImpl implements PaymentRepository {
 
   @Override
   public Payment save(final Payment payment) {
-    final PaymentJpaEntity paymentJpaEntity = paymentDomainToJpaMapper.convertDomainToEntity(payment);
+    final PaymentJpaEntity paymentJpaEntity = paymentDomainToJpaMapper.convertDomainToJpa(payment);
     final PaymentJpaEntity savedEntity = paymentJpaRepository.save(paymentJpaEntity);
-    return paymentJpaToDomainMapper.convertEntityToDomain(savedEntity);
+    return paymentJpaToDomainMapper.convertJpaToDomain(savedEntity);
   }
 
   @Override
   public Optional<Payment> findByOrderId(final OrderId orderId) {
     return paymentJpaRepository.findByOrderId(orderId.getValue())
-                               .map(paymentJpaToDomainMapper::convertEntityToDomain);
+                               .map(paymentJpaToDomainMapper::convertJpaToDomain);
   }
 }

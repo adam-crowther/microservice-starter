@@ -1,11 +1,14 @@
 package com.acroteq.ticketing.order.service.data.access.airline.entity;
 
+import static jakarta.persistence.CascadeType.ALL;
+import static java.util.Collections.unmodifiableList;
 import static lombok.AccessLevel.PRIVATE;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +16,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Materialised view of the airline entity in the airline schema.
@@ -23,33 +26,35 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@IdClass(AirlineJpaEntityId.class)
-@Table(name = "order_airline_m_view", schema = "airline")
+@Table(name = "airlines")
 @Entity
 public class AirlineJpaEntity {
 
   @EqualsAndHashCode.Include
   @Id
   @Column(name = "id")
-  private Long airlineId;
+  private Long id;
 
-  @EqualsAndHashCode.Include
-  @Id
-  @Column(name = "flight_id")
-  private Long flightId;
+  @Column(name = "name")
+  private String name;
 
-  @Column(name = "airline_name")
-  private String airlineName;
+  @Column(name = "active")
+  private boolean active;
 
-  @Column(name = "airline_active")
-  private boolean airlineActive;
+  @OneToMany(cascade = ALL)
+  @JoinColumn(name = "airline_id", referencedColumnName = "id")
+  private List<FlightJpaEntity> flights;
 
-  @Column(name = "flight_number")
-  private String flightNumber;
+  public List<FlightJpaEntity> getFlights() {
+    return unmodifiableList(flights);
+  }
 
-  @Column(name = "flight_price_currency_id")
-  private Long flightPriceCurrencyId;
+  @SuppressWarnings("PublicInnerClass")
+  public static class AirlineJpaEntityBuilder {
 
-  @Column(name = "flight_price_amount")
-  private BigDecimal flightPriceAmount;
+    public AirlineJpaEntityBuilder flights(final List<FlightJpaEntity> flights) {
+      this.flights = List.copyOf(flights);
+      return this;
+    }
+  }
 }

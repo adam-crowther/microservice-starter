@@ -23,14 +23,14 @@ public class CreditHistoryRepositoryImpl implements CreditHistoryRepository {
 
   @Override
   public CreditHistory save(final CreditHistory creditHistory) {
-    final CreditHistoryJpaEntity creditHistoryJpaEntity = domainToEntityMapper.convertDomainToEntity(creditHistory);
+    final CreditHistoryJpaEntity creditHistoryJpaEntity = domainToEntityMapper.convertDomainToJpa(creditHistory);
     final CreditHistoryJpaEntity savedEntity = jpaRepository.save(creditHistoryJpaEntity);
-    return entityToDomainMapper.convertEntityToDomain(savedEntity);
+    return entityToDomainMapper.convertJpaToDomain(savedEntity);
   }
 
   @Override
   public Optional<List<CreditHistory>> findByCustomerId(final CustomerId customerId) {
     final Optional<List<CreditHistoryJpaEntity>> creditHistory = jpaRepository.findByCustomerId(customerId.getValue());
-    return creditHistory.map(entityToDomainMapper::convertEntityToDomain);
+    return creditHistory.map(entityToDomainMapper::convertJpaToDomain);
   }
 }

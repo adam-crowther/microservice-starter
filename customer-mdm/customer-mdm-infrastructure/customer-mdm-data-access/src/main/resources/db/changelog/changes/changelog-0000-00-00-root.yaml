@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1681920121253-1
+      author: micro (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: customersPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: credit_limit_amount
+                  type: NUMBER(38, 2)
+              - column:
+                  name: credit_limit_currency_id
+                  type: VARCHAR(255)
+              - column:
+                  name: first_name
+                  type: VARCHAR(255)
+              - column:
+                  name: last_name
+                  type: VARCHAR(255)
+              - column:
+                  name: user_name
+                  type: VARCHAR(255)
+            tableName: customers
+

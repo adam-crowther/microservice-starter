@@ -1,0 +1,89 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1681920118949-1
+      author: micro (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: airlinesPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: active
+                  type: BOOLEAN
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+            tableName: airlines
+  - changeSet:
+      id: 1681920118949-2
+      author: micro (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: flightsPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: available
+                  type: BOOLEAN
+              - column:
+                  name: flight_number
+                  type: VARCHAR(255)
+              - column:
+                  name: price_amount
+                  type: NUMBER(38, 2)
+              - column:
+                  name: price_currency_id
+                  type: VARCHAR(255)
+              - column:
+                  name: airline_id
+                  type: BIGINT
+            tableName: flights
+  - changeSet:
+      id: 1681920118949-3
+      author: micro (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: order_approvalPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: airline_id
+                  type: BIGINT
+              - column:
+                  name: order_id
+                  type: BIGINT
+              - column:
+                  name: status
+                  type: VARCHAR(255)
+            tableName: order_approval
+  - changeSet:
+      id: 1681920118949-4
+      author: micro (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: airline_id
+            baseTableName: flights
+            constraintName: FKieor4j3ivp3xu584qenhfh0gd
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: airlines
+            validate: true

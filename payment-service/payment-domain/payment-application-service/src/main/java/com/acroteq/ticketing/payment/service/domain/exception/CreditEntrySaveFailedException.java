@@ -1,18 +1,18 @@
 package com.acroteq.ticketing.payment.service.domain.exception;
 
 import com.acroteq.ticketing.domain.exception.DomainException;
-import com.acroteq.ticketing.payment.service.domain.valueobject.CreditEntryId;
+import com.acroteq.ticketing.domain.valueobject.CustomerId;
 
 public class CreditEntrySaveFailedException extends DomainException {
 
   private static final String I18N_CODE = "problem.creditEntry.save.failed";
   private static final String MESSAGE = "Failed while saving credit entry: %s";
 
-  private final CreditEntryId creditEntryId;
+  private final CustomerId customerId;
 
-  public CreditEntrySaveFailedException(final CreditEntryId creditEntryId) {
-    super(String.format(MESSAGE, creditEntryId));
-    this.creditEntryId = creditEntryId;
+  public CreditEntrySaveFailedException(final CustomerId customerId) {
+    super(String.format(MESSAGE, customerId));
+    this.customerId = customerId;
   }
 
   @Override
@@ -22,6 +22,6 @@ public class CreditEntrySaveFailedException extends DomainException {
 
   @Override
   public String[] getParameters() {
-    return new String[]{ creditEntryId.toString() };
+    return new String[]{ customerId.toString() };
   }
 }

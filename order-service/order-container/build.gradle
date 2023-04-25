@@ -29,23 +29,25 @@ dependencies {
     implementation project(":order-service:order-infrastructure:order-messaging")
 
     implementation libs.spring.beans
+    implementation libs.spring.boot.autoconfigure
+    implementation libs.spring.boot.core
     implementation libs.spring.context
     implementation libs.spring.data.commons
     implementation libs.spring.data.jpa
-    implementation libs.spring.boot.core
-    implementation libs.spring.boot.autoconfigure
 
-    runtimeOnly libs.slf4j.log4j12
+    runtimeOnly libs.jackson.databind
+    runtimeOnly libs.jackson.dataformat.yaml
     runtimeOnly libs.log4j.core
+    runtimeOnly libs.log4j.json.layout
     runtimeOnly libs.log4j.slf4j
     runtimeOnly libs.postgresql.driver
-    runtimeOnly libs.spring.boot.validation
     runtimeOnly libs.spring.boot.data.jpa
+    runtimeOnly libs.spring.boot.validation
     runtimeOnly libs.spring.boot.web
 }
 
 springBoot {
-    mainClass = 'com.acroteq.ticketing.order.service.OrderServiceApplication'
+    mainClass = 'com.acroteq.ticketing.order.service.container.OrderServiceApplication'
 }
 
 bootBuildImage {

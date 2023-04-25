@@ -24,7 +24,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
   public Optional<Customer> findCustomer(final CustomerId customerId) {
     final Long id = customerId.getValue();
     return customerJpaRepository.findById(id)
-                                .map(customerJpaToDomainMapper::convertEntityToDomain);
+                                .map(customerJpaToDomainMapper::convertJpaToDomain);
   }
 
   @Override
@@ -35,9 +35,9 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
   @Override
   public Customer saveCustomer(final Customer customer) {
-    final CustomerJpaEntity customerJpaEntity = customerDomainToJpaMapper.convertDomainToEntity(customer);
+    final CustomerJpaEntity customerJpaEntity = customerDomainToJpaMapper.convertDomainToJpa(customer);
     final CustomerJpaEntity savedCustomerJpaEntity = customerJpaRepository.save(customerJpaEntity);
-    return customerJpaToDomainMapper.convertEntityToDomain(savedCustomerJpaEntity);
+    return customerJpaToDomainMapper.convertJpaToDomain(savedCustomerJpaEntity);
   }
 
   @Override

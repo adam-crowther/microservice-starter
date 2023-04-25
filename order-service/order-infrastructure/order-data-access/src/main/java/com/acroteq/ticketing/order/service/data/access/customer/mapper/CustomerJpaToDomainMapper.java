@@ -8,5 +8,5 @@ import org.mapstruct.Mapper;
 @Mapper(uses = { CustomerIdMapper.class })
 public interface CustomerJpaToDomainMapper {
 
-  Customer convertEntityToDomain(CustomerJpaEntity customer);
+  Customer convertJpaToDomain(CustomerJpaEntity customer);
 }

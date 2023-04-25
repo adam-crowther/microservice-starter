@@ -1,5 +1,5 @@
 {
-  "namespace": "com.acroteq.ticketing.kafka.order.avro.model",
+  "namespace": "com.acroteq.ticketing.kafka.customer.avro.model",
   "type": "record",
   "name": "CustomerEventMessage",
   "fields": [
@@ -23,20 +23,27 @@
     },
     {
       "name": "userName",
-      "type": {
-        "type": "string"
-      }
+      "type": "string"
     },
     {
       "name": "firstName",
-      "type": {
-        "type": "string"
-      }
+      "type": "string"
     },
     {
       "name": "lastName",
+      "type": "string"
+    },
+    {
+      "name": "creditLimitCurrencyId",
+      "type": "string"
+    },
+    {
+      "name": "creditLimitAmount",
       "type": {
-        "type": "string"
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 10,
+        "scale": 2
       }
     }
   ]

@@ -21,12 +21,13 @@ dependencies {
     implementation project(":common:common-helper")
 
     implementation libs.apache.commons.lang3
+    implementation libs.google.guava
+    implementation libs.jakarta.annotation.api
     implementation libs.lombok.core
     implementation libs.mapstruct.core
-    implementation libs.google.guava
     implementation libs.spotbugs.annotations
-    implementation libs.spring.context
     implementation libs.spring.beans
+    implementation libs.spring.context
 
     annotationProcessor libs.lombok.core
     annotationProcessor libs.lombok.mapstruct.binding

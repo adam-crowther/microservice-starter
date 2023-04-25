@@ -1,14 +1,14 @@
 package com.acroteq.ticketing.order.service.messaging.listener.kafka;
 
-import static com.acroteq.ticketing.kafka.order.avro.model.OrderApprovalStatus.APPROVED;
-import static com.acroteq.ticketing.kafka.order.avro.model.OrderApprovalStatus.REJECTED;
+import static com.acroteq.ticketing.kafka.flight.approval.avro.model.OrderApprovalStatus.APPROVED;
+import static com.acroteq.ticketing.kafka.flight.approval.avro.model.OrderApprovalStatus.REJECTED;
 import static org.springframework.kafka.support.KafkaHeaders.OFFSET;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_KEY;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
 
 import com.acroteq.ticketing.kafka.consumer.KafkaConsumer;
-import com.acroteq.ticketing.kafka.order.avro.model.AirlineApprovalResponseMessage;
-import com.acroteq.ticketing.kafka.order.avro.model.OrderApprovalStatus;
+import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalResponseMessage;
+import com.acroteq.ticketing.kafka.flight.approval.avro.model.OrderApprovalStatus;
 import com.acroteq.ticketing.order.service.domain.dto.message.AirlineApprovalResponseDto;
 import com.acroteq.ticketing.order.service.domain.ports.input.message.listener.airlineapproval.AirlineApprovalResponseMessageListener;
 import com.acroteq.ticketing.order.service.messaging.mapper.AirlineApprovalResponseMessageMapper;

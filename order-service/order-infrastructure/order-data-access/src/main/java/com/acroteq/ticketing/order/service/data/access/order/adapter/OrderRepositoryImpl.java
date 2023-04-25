@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Component
@@ -24,22 +23,23 @@ public class OrderRepositoryImpl implements OrderRepository {
 
   @Override
   public Order save(final Order order) {
-    final OrderJpaEntity entity = orderDomainToJpaMapper.convertDomainToEntity(order);
+    final OrderJpaEntity entity = orderDomainToJpaMapper.convertDomainToJpa(order);
     final OrderJpaEntity saved = orderJpaRepository.save(entity);
-    return orderJpaToDomainMapper.convertEntityToDomain(saved);
+    return orderJpaToDomainMapper.convertJpaToDomain(saved);
   }
 
   @Override
   public Optional<Order> findById(final OrderId orderId) {
     final Long id = orderId.getValue();
     return orderJpaRepository.findById(id)
-                             .map(orderJpaToDomainMapper::convertEntityToDomain);
+                             .map(orderJpaToDomainMapper::convertJpaToDomain);
   }
 
   @Override
   public Optional<Order> findByTrackingId(final TrackingId trackingId) {
-    final UUID id = trackingId.getValue();
+    final String id = trackingId.getValue()
+                                .toString();
     return orderJpaRepository.findByTrackingId(id)
-                             .map(orderJpaToDomainMapper::convertEntityToDomain);
+                             .map(orderJpaToDomainMapper::convertJpaToDomain);
   }
 }

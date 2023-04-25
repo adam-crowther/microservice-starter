@@ -11,6 +11,7 @@ import com.acroteq.ticketing.domain.valueobject.OrderId;
 import com.acroteq.ticketing.domain.valueobject.PaymentId;
 import com.acroteq.ticketing.domain.valueobject.PaymentStatus;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
@@ -21,11 +22,16 @@ import java.time.ZonedDateTime;
 @SuperBuilder(toBuilder = true)
 public class Payment extends AggregateRoot<PaymentId> {
 
+  @NonNull
   private final OrderId orderId;
+  @NonNull
   private final CustomerId customerId;
+  @NonNull
   private final CashValue value;
 
+  @NonNull
   private final PaymentStatus paymentStatus;
+  @NonNull
   private final ZonedDateTime createdDateTime;
 
   public ValidationResult validatePayment() {

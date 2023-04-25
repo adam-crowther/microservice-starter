@@ -1,6 +1,6 @@
 openapi: "3.0.0"
 info:
-  title: Ticketing System
+  title: Order Service
   version: 1.0.0
 paths:
   /orders:
@@ -20,7 +20,7 @@ paths:
             format: int32
       responses:
         '200':
-          description: A paged array of orders
+          description: An  array of orders
           headers:
             x-next:
               description: A link to the next page of responses
@@ -136,6 +136,7 @@ components:
       x-class-extra-annotation: "@lombok.Builder"
       required:
         - trackingId
+        - status
         - customerId
         - airlineId
         - items
@@ -145,6 +146,8 @@ components:
           type: string
           format: uuid
           readOnly: true
+        status:
+          $ref: "#/components/schemas/OrderStatus"
         customerId:
           type: integer
           format: int64
@@ -156,20 +159,22 @@ components:
         items:
           type: array
           x-field-extra-annotation: "@lombok.Builder.Default"
+          readOnly: true
           items:
             $ref: "#/components/schemas/OrderItem"
-          readOnly: true
         address:
           $ref: "#/components/schemas/Address"
 
     OrderStatus:
       type: string
       enum: [ PENDING, PAID, APPROVED, CANCELLING, CANCELLED ]
+      readOnly: true
 
     Orders:
       type: array
       x-class-extra-annotation: "@lombok.Builder"
       maxItems: 100
+      readOnly: true
       items:
         $ref: "#/components/schemas/Order"
 

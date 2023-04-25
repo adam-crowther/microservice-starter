@@ -27,7 +27,7 @@ public abstract class OrderDomainToJpaMapper {
   @Mapping(target = "priceCurrencyId", source = "price.currencyId")
   @Mapping(target = "priceAmount", source = "price.amount")
   @Mapping(target = "failureMessages", source = "result")
-  public abstract OrderJpaEntity convertDomainToEntity(Order order);
+  public abstract OrderJpaEntity convertDomainToJpa(Order order);
 
   @AfterMapping
   void setOrderBackReferences(@MappingTarget final OrderJpaEntity orderJpaEntity) {

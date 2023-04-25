@@ -31,8 +31,9 @@
 
 ## Microservice submodules
 
-- Each microservice is located in its own submodule, eg `airline-service`, `customer-service`, `order-service`,
-  `payment-service`.
+- Each microservice is located in its own submodule,
+  eg `airline-mdm`, `customer-mdm`, `order-service`, `airline-approval-service`,  `payment-service`.
+- MDM is an industry standard abbreviation, and stands for 'Master Data Management'.
 - In a real-world project, each microservice would be split out in to its own Git Repository, and integrated via Maven
   Artifacts.
 - Microservice code can *only* depend on the `common` submodules
@@ -155,14 +156,25 @@ Accordingly, the project submodule structure looks like this:
 
 ```
 ticketing
-├── airline-service
-│   ├── airline-container
-│   ├── airline-domain
-│   │   ├── airline-application-service
-│   │   └── airline-domain-core
-│   └── airline-infrastructure
-│       ├── airline-data-access
-│       └── airline-messaging
+├── airline-approval-service
+│   ├── airline-approval-container
+│   ├── airline-approval-domain
+│   │   ├── airline-approval-application-service
+│   │   └── airline-approval-domain-core
+│   └── airline-approval-infrastructure
+│       ├── airline-approval-data-access
+│       └── airline-approval-messaging
+├── airline-mdm-service
+│   ├── airline-mdm-container
+│   ├── airline-mdm-domain
+│   │   ├── airline-mdm-application-service
+│   │   └── airline-mdm-domain-core
+│   ├── airline-mdm-infrastructure
+│   │   ├── airline-mdm-data-access
+│   │   └── airline-mdm-messaging
+│   └── airline-mdm-presentation
+│       ├── airline-mdm-api-spec
+│       └── airline-mdm-rest-controller
 ├── common
 │   ├── common-application
 │   ├── common-domain
@@ -172,20 +184,21 @@ ticketing
 │   │   └── kafka-model
 │   ├── common-presentation
 │   └── common-saga
-├── customer-service
-│   ├── customer-container
-│   ├── customer-domain
-│   │   ├── customer-application-service
-│   │   └── customer-domain-core
-│   ├── customer-infrastructure
-│   │   ├── customer-data-access
-│   │   └── customer-messaging
-│   └── customer-presentation
+├── customer-mdm-service
+│   ├── customer-mdm-container
+│   ├── customer-mdm-domain
+│   │   ├── customer-mdm-application-service
+│   │   └── customer-mdm-domain-core
+│   ├── customer-mdm-infrastructure
+│   │   ├── customer-mdm-data-access
+│   │   └── customer-mdm-messaging
+│   └── customer-mdm-presentation
+│       ├── customer-mdm-api-spec
+│       └── customer-mdm-rest-controller
 ├── docs
 │   └── images
 ├── infrastructure
 │   ├── docker-compose
-│   ├── graphfity
 │   └── kubernetes
 ├── order-service
 │   ├── order-container
@@ -196,6 +209,8 @@ ticketing
 │   │   ├── order-data-access
 │   │   └── order-messaging
 │   └── order-presentation
+│       ├── order-api-spec
+│       └── order-rest-controller
 ├── payment-service
 │   ├── payment-container
 │   ├── payment-domain
@@ -219,18 +234,18 @@ Where a submodule contains Java source code, we use a standardised package struc
 
 - All packages start with `com.acroteq.`
 - Packages in a microservice start with `com.acroteq.xxxx.service.`, e.g. `com.acroteq.order.service.`
-- Packages in a `xxxx-container` submodule start with `com.acroteq.xxxx.service.container`,
-- Packages in a `xxxx-application` submodule start with `com.acroteq.xxxx.service.application`,
-- Packages in a `xxxx-data-access` submodule start with `com.acroteq.xxxx.service.data-access`,
-- Packages in a `xxxx-messaging` submodule start with `com.acroteq.xxxx.service.messaging`,
-- Packages in a `xxxx-domain` submodule start with `com.acroteq.xxxx.service.domain`,
+- Packages in a `xxxx-container` submodule start with `com.acroteq.xxxx.service.container`
+- Packages in a `xxxx-data-access` submodule start with `com.acroteq.xxxx.service.data-access`
+- Packages in a `xxxx-messaging` submodule start with `com.acroteq.xxxx.service.messaging`
+- Packages in a `xxxx-domain` submodule start with `com.acroteq.xxxx.service.domain`
+- Packages in a `xxxx-presentation` submodule start with `com.acroteq.xxxx.service.presentation`
 
 This gives us the following packages in the `order-service` submodule:
 
 ```
-com.acroteq.order.service.application.*
 com.acroteq.order.service.container.*
 com.acroteq.order.service.data-access.*
 com.acroteq.order.service.domain.*
 com.acroteq.order.service.messaging.*
+com.acroteq.order.service.presentation.*
 ```

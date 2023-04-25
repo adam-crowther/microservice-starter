@@ -6,7 +6,8 @@ import com.acroteq.ticketing.domain.valueobject.CashValue;
 import com.acroteq.ticketing.domain.valueobject.CurrencyId;
 import com.acroteq.ticketing.domain.valueobject.FlightId;
 import com.acroteq.ticketing.order.service.domain.entity.Flight;
-import com.acroteq.ticketing.order.service.domain.ports.output.repository.AirlineFlightRepository;
+import com.acroteq.ticketing.order.service.domain.ports.output.repository.AirlineRepository;
+import com.acroteq.ticketing.order.service.domain.ports.output.repository.FlightRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.test.context.TestComponent;
 
@@ -17,9 +18,9 @@ import java.util.Optional;
 @TestComponent
 public class FlightTestDataHelper {
 
-  public static final Long CURRENCY_ID = IdTestDataHelper.nextId();
+  public static final String CURRENCY_ID = "CHF";
   public static final Long FLIGHT_1_ID = IdTestDataHelper.nextId();
-  public static final String FLIGHT_1_NAME = "FLIGHT 1";
+  public static final String FLIGHT_1_NAME = "flight-1";
   public static final BigDecimal FLIGHT_1_PRICE = new BigDecimal("10.00");
   public static final Flight FLIGHT_1 = Flight.builder()
                                               .id(FlightId.of(FLIGHT_1_ID))
@@ -32,7 +33,7 @@ public class FlightTestDataHelper {
 
 
   public static final Long FLIGHT_2_ID = IdTestDataHelper.nextId();
-  public static final String FLIGHT_2_NAME = "FLIGHT 2";
+  public static final String FLIGHT_2_NAME = "flight-2";
   public static final BigDecimal FLIGHT_2_PRICE = new BigDecimal("20.00");
   public static final Flight FLIGHT_2 = Flight.builder()
                                               .id(FlightId.of(FLIGHT_2_ID))
@@ -44,7 +45,7 @@ public class FlightTestDataHelper {
                                               .build();
 
   public static final Long FLIGHT_3_ID = IdTestDataHelper.nextId();
-  public static final String FLIGHT_3_NAME = "FLIGHT 3";
+  public static final String FLIGHT_3_NAME = "flight-3";
   public static final BigDecimal FLIGHT_3_PRICE = new BigDecimal("30.00");
   public static final Flight FLIGHT_3 = Flight.builder()
                                               .id(FlightId.of(FLIGHT_3_ID))
@@ -55,14 +56,15 @@ public class FlightTestDataHelper {
                                                               .build())
                                               .build();
 
-  private final AirlineFlightRepository airlineFlightRepository;
+  private final AirlineRepository airlineRepository;
+  private final FlightRepository flightRepository;
 
   public void initialiseMocks() {
-    lenient().when(airlineFlightRepository.loadFlight(FlightId.of(FLIGHT_1_ID)))
+    lenient().when(flightRepository.findFlight(FlightId.of(FLIGHT_1_ID)))
              .thenReturn(Optional.of(FLIGHT_1));
-    lenient().when(airlineFlightRepository.loadFlight(FlightId.of(FLIGHT_2_ID)))
+    lenient().when(flightRepository.findFlight(FlightId.of(FLIGHT_2_ID)))
              .thenReturn(Optional.of(FLIGHT_2));
-    lenient().when(airlineFlightRepository.loadFlight(FlightId.of(FLIGHT_3_ID)))
+    lenient().when(flightRepository.findFlight(FlightId.of(FLIGHT_3_ID)))
              .thenReturn(Optional.of(FLIGHT_3));
   }
 }

@@ -31,10 +31,11 @@ dependencies {
     implementation project(":payment-service:payment-domain:payment-domain-core")
     implementation project(":payment-service:payment-domain:payment-application-service")
 
-    implementation libs.lombok.core
-    implementation libs.spotbugs.annotations
-    implementation libs.mapstruct.core
+    implementation libs.jakarta.annotation.api
     implementation libs.jakarta.persistence.api
+    implementation libs.lombok.core
+    implementation libs.mapstruct.core
+    implementation libs.spotbugs.annotations
     implementation libs.spring.beans
     implementation libs.spring.context
     implementation libs.spring.data.commons

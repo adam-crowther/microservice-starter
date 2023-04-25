@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.payment.service.messaging.publisher.kafka;
 
 import com.acroteq.ticketing.domain.valueobject.OrderId;
-import com.acroteq.ticketing.kafka.order.avro.model.PaymentResponseMessage;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentResponseMessage;
 import com.acroteq.ticketing.kafka.producer.service.KafkaProducer;
 import com.acroteq.ticketing.payment.service.domain.config.PaymentServiceConfigData;
 import com.acroteq.ticketing.payment.service.domain.event.PaymentCancelledEvent;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PaymentCancelledKafkaMessagePublisher implements PaymentCancelledMessagePublisher {
 
-  private final PaymentResponseMessageFactory paymentResponseMessageFactory;
+  private final PaymentResponseMessageFactory messageFactory;
   private final KafkaProducer<OrderId, PaymentResponseMessage> kafkaProducer;
   private final EventPublisherCallback callback;
   private final PaymentServiceConfigData configData;
@@ -29,14 +29,13 @@ public class PaymentCancelledKafkaMessagePublisher implements PaymentCancelledMe
 
     log.info("Received PaymentCancelledEvent for order id: {}", orderId);
 
-    final PaymentResponseMessage paymentResponseMessage = paymentResponseMessageFactory.createPaymentResponseMessage(
-        domainEvent);
+    final PaymentResponseMessage responseMessage = messageFactory.createPaymentResponseMessage(domainEvent);
 
     kafkaProducer.send(configData.getPaymentResponseTopicName(),
                        orderId,
-                       paymentResponseMessage,
+                       responseMessage,
                        callback.getHandler(configData.getPaymentResponseTopicName(),
-                                           paymentResponseMessage,
+                                           responseMessage,
                                            orderId,
                                            "PaymentResponseMessage"));
 

@@ -3,10 +3,10 @@ package com.acroteq.ticketing.order.service.data.access.order.entity;
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static java.util.Collections.unmodifiableList;
 import static lombok.AccessLevel.PRIVATE;
 
 import com.acroteq.ticketing.domain.valueobject.OrderStatus;
-import com.google.common.collect.ImmutableList;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -52,7 +52,7 @@ public class OrderJpaEntity {
   private String trackingId;
 
   @Column(name = "price_currency_id")
-  private Long priceCurrencyId;
+  private String priceCurrencyId;
 
   @Column(name = "price_amount")
   private BigDecimal priceAmount;
@@ -64,33 +64,36 @@ public class OrderJpaEntity {
   @ElementCollection
   @CollectionTable(name = "order_failure_messages", joinColumns = @JoinColumn(name = "order_id"))
   @Column(name = "failure_message")
-  private ImmutableList<String> failureMessages;
+  private List<String> failureMessages;
 
   @Embedded
   private OrderAddressJpaEntity address;
 
   @OneToMany(cascade = ALL)
   @JoinColumn(name = "owner_id", referencedColumnName = "id")
-  private ImmutableList<OrderItemJpaEntity> items;
+  private List<OrderItemJpaEntity> items;
+
+  // JPA does not support ImmutableList
+  public List<String> getFailureMessages() {
+    return unmodifiableList(failureMessages);
+  }
+
+  // JPA does not support ImmutableList
+  public List<OrderItemJpaEntity> getItems() {
+    return unmodifiableList(items);
+  }
+
 
   @SuppressWarnings("PublicInnerClass")
   public static class OrderJpaEntityBuilder {
 
-    public List<OrderItemJpaEntity> getItems() {
-      return items;
-    }
-
-    public OrderAddressJpaEntity getAddress() {
-      return address;
-    }
-
-    public OrderJpaEntityBuilder items(final List<OrderItemJpaEntity> items) {
-      this.items = ImmutableList.copyOf(items);
+    public OrderJpaEntityBuilder failureMessages(final List<String> failureMessages) {
+      this.failureMessages = List.copyOf(failureMessages);
       return this;
     }
 
-    public OrderJpaEntityBuilder failureMessages(final List<String> failureMessages) {
-      this.failureMessages = ImmutableList.copyOf(failureMessages);
+    public OrderJpaEntityBuilder items(final List<OrderItemJpaEntity> items) {
+      this.items = List.copyOf(items);
       return this;
     }
   }

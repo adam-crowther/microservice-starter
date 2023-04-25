@@ -6,6 +6,7 @@ import static com.acroteq.ticketing.domain.valueobject.CashValue.ZERO;
 import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.CANCELLED;
 import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.COMPLETED;
 import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.FAILED;
+import static com.acroteq.ticketing.payment.service.domain.valueobject.CreditHistoryEventType.PAYMENT;
 import static com.acroteq.ticketing.payment.service.domain.valueobject.TransactionType.CREDIT;
 import static com.acroteq.ticketing.payment.service.domain.valueobject.TransactionType.DEBIT;
 
@@ -33,9 +34,9 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
     resultBuilder.addValidationResult(payment.validatePayment());
 
     resultBuilder.addValidationResult(validateCreditEntry(payment, creditEntry));
-    subtractCreditEntry(payment, creditEntry);
-    updateCreditHistory(payment, creditHistories, DEBIT);
-    resultBuilder.addValidationResult(validateCreditHistory(creditEntry, creditHistories));
+    final CreditEntry updatedCreditEntry = subtractCreditEntry(payment, creditEntry);
+    final CreditHistory newCreditHistory = updateCreditHistory(payment, DEBIT);
+    resultBuilder.addValidationResult(validateCreditHistory(updatedCreditEntry, creditHistories));
 
     final ValidationResult result = resultBuilder.build();
     final PaymentStatus updatedStatus = result.isPass() ? COMPLETED : FAILED;
@@ -43,22 +44,30 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
                                           .paymentStatus(updatedStatus)
                                           .build();
     log.info("Payment is {} for order id: {}", updatedStatus, payment.getOrderId());
-    return new PaymentOutput(updatedPayment, result);
+    return PaymentOutput.builder()
+                        .payment(updatedPayment)
+                        .creditEntry(updatedCreditEntry)
+                        .creditHistory(newCreditHistory)
+                        .validationResult(result)
+                        .build();
   }
 
   @Override
-  public PaymentOutput cancelPayment(final Payment payment,
-                                     final CreditEntry creditEntry,
-                                     final List<CreditHistory> creditHistories) {
+  public PaymentOutput cancelPayment(final Payment payment, final CreditEntry creditEntry) {
     final ValidationResult result = payment.validatePayment();
-    addCreditEntry(payment, creditEntry);
-    updateCreditHistory(payment, creditHistories, CREDIT);
+    final CreditEntry updatedCreditEntry = addCreditEntry(payment, creditEntry);
+    final CreditHistory newCreditHistory = updateCreditHistory(payment, CREDIT);
     final PaymentStatus updatedStatus = result.isPass() ? CANCELLED : FAILED;
     final Payment updatedPayment = payment.toBuilder()
                                           .paymentStatus(updatedStatus)
                                           .build();
     log.info("Payment cancellation is {} for order id: {}", updatedStatus, payment.getOrderId());
-    return new PaymentOutput(updatedPayment, result);
+    return PaymentOutput.builder()
+                        .payment(updatedPayment)
+                        .creditEntry(updatedCreditEntry)
+                        .creditHistory(newCreditHistory)
+                        .validationResult(result)
+                        .build();
   }
 
   private ValidationResult validateCreditEntry(final Payment payment, final CreditEntry creditEntry) {
@@ -74,21 +83,18 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
     return result;
   }
 
-  private void subtractCreditEntry(final Payment payment, final CreditEntry creditEntry) {
-    creditEntry.subtractCredit(payment.getValue());
+  private CreditEntry subtractCreditEntry(final Payment payment, final CreditEntry creditEntry) {
+    return creditEntry.subtractCredit(payment.getValue());
   }
 
-  private void updateCreditHistory(final Payment payment,
-                                   final List<CreditHistory> creditHistories,
-                                   final TransactionType transactionType) {
-    final CreditHistory creditHistory = CreditHistory.builder()
-                                                     .customerId(payment.getCustomerId())
-                                                     .credit(payment.getValue())
-                                                     .transactionType(transactionType)
-                                                     .build();
-    creditHistories.add(creditHistory);
+  private CreditHistory updateCreditHistory(final Payment payment, final TransactionType transactionType) {
+    return CreditHistory.builder()
+                        .customerId(payment.getCustomerId())
+                        .credit(payment.getValue())
+                        .transactionType(transactionType)
+                        .creditHistoryEventType(PAYMENT)
+                        .build();
   }
-
 
   private ValidationResult validateCreditHistory(final CreditEntry creditEntry,
                                                  final List<CreditHistory> creditHistories) {
@@ -98,20 +104,18 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
     final ValidationResultBuilder validationResult = ValidationResult.builder();
 
     if (totalDebitHistory.isGreaterThan(totalCreditHistory)) {
-      log.error("Customer with id: {} doesn't have enough credit according to credit history",
-                creditEntry.getCustomerId());
+      log.error("Customer with id: {} doesn't have enough credit according to credit history", creditEntry.getId());
 
 
       validationResult.addFailure("Customer with id %s doesn't have enough credit according to credit history",
-                                  creditEntry.getCustomerId());
+                                  creditEntry.getId());
     }
 
     if (!creditEntry.getTotalCredit()
                     .equals(totalCreditHistory.subtract(totalDebitHistory))) {
-      log.error("Credit history total is not equal to current credit for customer id: {}!",
-                creditEntry.getCustomerId());
+      log.error("Credit history total is not equal to current credit for customer id: {}!", creditEntry.getId());
       validationResult.addFailure("Credit history total is not equal to current credit for customer id: %s",
-                                  creditEntry.getCustomerId());
+                                  creditEntry.getId());
     }
 
     return validationResult.build();
@@ -125,7 +129,7 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
                           .reduce(ZERO, CashValue::add);
   }
 
-  private void addCreditEntry(final Payment payment, final CreditEntry creditEntry) {
-    creditEntry.addCredit(payment.getValue());
+  private CreditEntry addCreditEntry(final Payment payment, final CreditEntry creditEntry) {
+    return creditEntry.addCredit(payment.getValue());
   }
 }

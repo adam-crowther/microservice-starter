@@ -17,7 +17,7 @@ import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderResponse
 import com.acroteq.ticketing.order.service.domain.entity.Airline;
 import com.acroteq.ticketing.order.service.domain.exception.AirlineNotActiveException;
 import com.acroteq.ticketing.order.service.domain.ports.input.service.OrderApplicationService;
-import com.acroteq.ticketing.order.service.domain.ports.output.repository.AirlineFlightRepository;
+import com.acroteq.ticketing.order.service.domain.ports.output.repository.AirlineRepository;
 import com.acroteq.ticketing.order.service.domain.test.config.TestConfig;
 import com.acroteq.ticketing.order.service.domain.test.helper.AirlineTestDataHelper;
 import com.acroteq.ticketing.order.service.domain.test.helper.MockInitialiser;
@@ -32,7 +32,7 @@ import java.util.Optional;
 class OrderApplicationServiceIntegrationTest {
 
   @Autowired
-  private AirlineFlightRepository airlineFlightRepository;
+  private AirlineRepository airlineRepository;
   @Autowired
   private MockInitialiser mockInitialiser;
   @Autowired
@@ -62,8 +62,7 @@ class OrderApplicationServiceIntegrationTest {
     final Airline airline = AirlineTestDataHelper.AIRLINE.toBuilder()
                                                          .active(false)
                                                          .build();
-    when(airlineFlightRepository.loadAirline(AirlineId.of(AirlineTestDataHelper.AIRLINE_ID))).thenReturn(Optional.of(
-        airline));
+    when(airlineRepository.findAirline(AirlineId.of(AirlineTestDataHelper.AIRLINE_ID))).thenReturn(Optional.of(airline));
     final CreateOrderCommandDto createOrderCommand = createCreateOrderCommandDto();
 
     // when:

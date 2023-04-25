@@ -11,5 +11,5 @@ public interface AddressDomainToJpaMapper {
   @Mapping(target = "street", source = "address.street")
   @Mapping(target = "postalCode", source = "address.postalCode")
   @Mapping(target = "city", source = "address.city")
-  OrderAddressJpaEntity convertDomainToEntity(StreetAddress address);
+  OrderAddressJpaEntity convertDomainToJpa(StreetAddress address);
 }

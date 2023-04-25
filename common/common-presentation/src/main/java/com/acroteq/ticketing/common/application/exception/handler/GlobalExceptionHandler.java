@@ -8,15 +8,17 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.List;
 
 @Slf4j
-@ControllerAdvice
+@RestControllerAdvice
+@Order
 public class GlobalExceptionHandler {
 
   private static final String I18N_CODE_CONSTRAINT_VIOLATION = "problem.constraint.violation";
@@ -58,7 +60,7 @@ public class GlobalExceptionHandler {
   }
 
   @ResponseBody
-  @ExceptionHandler({ Exception.class })
+  @ExceptionHandler
   @ResponseStatus(INTERNAL_SERVER_ERROR)
   public Problem handleException(final Exception exception) {
     log.error(exception.getMessage(), exception);

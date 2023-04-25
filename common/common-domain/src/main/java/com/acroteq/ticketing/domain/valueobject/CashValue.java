@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.domain.valueobject;
 
+import static com.acroteq.ticketing.domain.valueobject.CurrencyId.NONE;
 import static com.google.common.base.Preconditions.checkArgument;
 import static java.math.RoundingMode.HALF_EVEN;
-import static org.apache.commons.lang3.ObjectUtils.firstNonNull;
 
 import lombok.Builder;
 import lombok.NonNull;
@@ -11,19 +11,19 @@ import lombok.Value;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
-import javax.annotation.Nullable;
+import java.util.stream.Stream;
 
 @Value
 @Builder
 public class CashValue implements Serializable {
 
-  @NonNull BigDecimal amount;
-  @Nullable
-  CurrencyId currencyId;
 
   public static final CashValue ZERO = CashValue.builder()
                                                 .amount(BigDecimal.ZERO)
+                                                .currencyId(NONE)
                                                 .build();
+  @NonNull BigDecimal amount;
+  @NonNull CurrencyId currencyId;
 
   public boolean isGreaterThanZero() {
     return amount.compareTo(BigDecimal.ZERO) > 0;
@@ -31,20 +31,35 @@ public class CashValue implements Serializable {
 
   public boolean isGreaterThan(final CashValue other) {
     checkMatchingCurrency(other);
-
     return amount.compareTo(other.getAmount()) > 0;
   }
 
+  public boolean isGreaterThanOrEqualToZero() {
+    return amount.compareTo(BigDecimal.ZERO) >= 0;
+  }
+
+  public boolean isLessThanZero() {
+    return amount.compareTo(BigDecimal.ZERO) < 0;
+  }
+
+  public boolean isGreaterThanOrEqualTo(final CashValue other) {
+    checkMatchingCurrency(other);
+    return amount.compareTo(other.getAmount()) >= 0;
+  }
+
   private CurrencyId checkMatchingCurrency(final CashValue other) {
-    if (!amount.equals(BigDecimal.ZERO) && !other.getAmount()
-                                                 .equals(BigDecimal.ZERO)) {
+    if (amount.compareTo(BigDecimal.ZERO) != 0 && other.getAmount()
+                                                       .compareTo(BigDecimal.ZERO) != 0) {
       checkArgument(Objects.equals(currencyId, other.getCurrencyId()),
                     "The other Money object does not have a matching currency.  this: %s, other: %s",
                     this,
                     other);
     }
 
-    return firstNonNull(currencyId, other.getCurrencyId());
+    return Stream.of(currencyId, other.getCurrencyId())
+                 .filter(CurrencyId::isNotNone)
+                 .findFirst()
+                 .orElse(NONE);
   }
 
   public CashValue add(final CashValue other) {
@@ -94,6 +109,14 @@ public class CashValue implements Serializable {
     final BigDecimal roundedQuotient = round(quotient);
     return CashValue.builder()
                     .amount(roundedQuotient)
+                    .currencyId(currencyId)
+                    .build();
+  }
+
+  public CashValue absolute() {
+    final BigDecimal absoluteAmount = amount.abs();
+    return CashValue.builder()
+                    .amount(absoluteAmount)
                     .currencyId(currencyId)
                     .build();
   }

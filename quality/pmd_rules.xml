@@ -10,8 +10,8 @@
     <description>PMD rule exclusions</description>
 
     <exclude-pattern>.*/avro/model/.*</exclude-pattern>
-    <exclude-pattern>.*/application/api/.*</exclude-pattern>
-    <exclude-pattern>.*/application/model/.*</exclude-pattern>
+    <exclude-pattern>.*/presentation/api/.*</exclude-pattern>
+    <exclude-pattern>.*/presentation/model/.*</exclude-pattern>
 
     <rule ref="category/java/bestpractices.xml">
         <exclude name="GuardLogStatement"/>

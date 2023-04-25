@@ -1,15 +1,15 @@
 package com.acroteq.ticketing.order.service.messaging.mapper;
 
 
-import static com.acroteq.ticketing.kafka.order.avro.model.PaymentStatus.CANCELLED;
-import static com.acroteq.ticketing.kafka.order.avro.model.PaymentStatus.PENDING;
+import static com.acroteq.ticketing.kafka.payment.avro.model.PaymentStatus.CANCELLED;
+import static com.acroteq.ticketing.kafka.payment.avro.model.PaymentStatus.PENDING;
 
 import com.acroteq.ticketing.application.mapper.CurrencyIdMapper;
 import com.acroteq.ticketing.application.mapper.CustomerIdMapper;
 import com.acroteq.ticketing.application.mapper.DateTimeMapper;
 import com.acroteq.ticketing.application.mapper.OrderIdMapper;
-import com.acroteq.ticketing.kafka.order.avro.model.PaymentRequestMessage;
-import com.acroteq.ticketing.kafka.order.avro.model.PaymentStatus;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentRequestMessage;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentStatus;
 import com.acroteq.ticketing.order.service.domain.event.OrderCancelledEvent;
 import com.acroteq.ticketing.order.service.domain.event.OrderCreatedEvent;
 import com.acroteq.ticketing.order.service.domain.event.OrderEvent;
@@ -32,8 +32,6 @@ public abstract class PaymentRequestMessageFactory {
                                                                                            OrderCancelledEvent.class,
                                                                                            CANCELLED);
 
-  @Mapping(target = "id", ignore = true)
-  @Mapping(target = "sagaId", constant = "")
   @Mapping(target = "customerId", source = "event.order.customerId")
   @Mapping(target = "orderId", source = "event.order.id")
   @Mapping(target = "valueAmount", source = "event.order.price.amount")

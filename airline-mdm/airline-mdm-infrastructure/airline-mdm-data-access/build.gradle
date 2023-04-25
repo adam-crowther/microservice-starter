@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    alias pluginLibs.plugins.docker.compose
+    alias pluginLibs.plugins.liquibase
+}
+
+apply from: 'liquibase.gradle'
+
+compileJava {
+    sourceCompatibility = javaSourceCompatibility
+    targetCompatibility = javaTargetCompatibility
+    options.compilerArgs += [
+            '-Amapstruct.defaultComponentModel=spring',
+            '-Amapstruct.defaultInjectionStrategy=constructor',
+            '-Amapstruct.unmappedTargetPolicy=ERROR',
+            '-Amapstruct.verbose=false',
+            '-Amapstruct.suppressGeneratorVersionInfoComment=true',
+            '-Amapstruct.suppressGeneratorTimestamp=true',
+            '-Xlint:deprecation'
+    ]
+}
+
+configurations {
+    compileOnly.extendsFrom annotationProcessor
+}
+
+dependencies {
+    implementation project(":common:common-domain")
+    implementation project(":common:common-application")
+    implementation project(":common:common-helper")
+    implementation project(":airline-mdm:airline-mdm-domain:airline-mdm-domain-core")
+    implementation project(":airline-mdm:airline-mdm-domain:airline-mdm-application-service")
+
+    implementation libs.google.guava
+    implementation libs.jakarta.annotation.api
+    implementation libs.jakarta.persistence.api
+    implementation libs.lombok.core
+    implementation libs.mapstruct.core
+    implementation libs.spotbugs.annotations
+    implementation libs.spring.beans
+    implementation libs.spring.context
+    implementation libs.spring.data.commons
+    implementation libs.spring.data.jpa
+
+    runtimeOnly libs.liquibase.core
+    runtimeOnly libs.liquibase.hibernate
+    runtimeOnly libs.postgresql.driver
+
+    annotationProcessor libs.lombok.core
+    annotationProcessor libs.lombok.mapstruct.binding
+    annotationProcessor libs.mapstruct.processor
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}

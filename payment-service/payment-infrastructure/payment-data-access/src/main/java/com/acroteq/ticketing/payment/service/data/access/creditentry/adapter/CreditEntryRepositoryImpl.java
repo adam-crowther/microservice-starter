@@ -23,14 +23,14 @@ public class CreditEntryRepositoryImpl implements CreditEntryRepository {
 
   @Override
   public CreditEntry save(final CreditEntry creditEntry) {
-    final CreditEntryJpaEntity creditEntryJpaEntity = creditEntryDomainToJpaMapper.convertDomainToEntity(creditEntry);
+    final CreditEntryJpaEntity creditEntryJpaEntity = creditEntryDomainToJpaMapper.convertDomainToJpa(creditEntry);
     final CreditEntryJpaEntity savedEntity = creditEntryJpaRepository.save(creditEntryJpaEntity);
-    return creditEntryJpaToDomainMapper.convertEntityToDomain(savedEntity);
+    return creditEntryJpaToDomainMapper.convertJpaToDomain(savedEntity);
   }
 
   @Override
   public Optional<CreditEntry> findByCustomerId(final CustomerId customerId) {
     return creditEntryJpaRepository.findByCustomerId(customerId.getValue())
-                                   .map(creditEntryJpaToDomainMapper::convertEntityToDomain);
+                                   .map(creditEntryJpaToDomainMapper::convertJpaToDomain);
   }
 }

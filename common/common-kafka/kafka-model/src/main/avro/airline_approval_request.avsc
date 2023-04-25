@@ -1,12 +1,8 @@
 {
-  "namespace": "com.acroteq.ticketing.kafka.order.avro.model",
+  "namespace": "com.acroteq.ticketing.kafka.flight.approval.avro.model",
   "type": "record",
   "name": "AirlineApprovalRequestMessage",
   "fields": [
-    {
-      "name": "id",
-      "type": "long"
-    },
     {
       "name": "sagaId",
       "type": {
@@ -54,7 +50,7 @@
     },
     {
       "name": "priceCurrencyId",
-      "type": "long"
+      "type": "string"
     },
     {
       "name": "priceAmount",

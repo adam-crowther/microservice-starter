@@ -1,19 +1,15 @@
 databaseChangeLog:
   - changeSet:
-      id: 1681920127426-1
+      id: 1682526373901-1
       author: micro (generated)
       changes:
         - createTable:
             columns:
               - column:
-                  autoIncrement: true
                   constraints:
                     nullable: false
                     primaryKey: true
                     primaryKeyName: credit_entryPK
-                  name: id
-                  type: BIGINT
-              - column:
                   name: customer_id
                   type: BIGINT
               - column:
@@ -21,10 +17,10 @@ databaseChangeLog:
                   type: NUMBER(38, 2)
               - column:
                   name: total_credit_currency_id
-                  type: BIGINT
+                  type: VARCHAR(255)
             tableName: credit_entry
   - changeSet:
-      id: 1681920127426-2
+      id: 1682526373901-2
       author: micro (generated)
       changes:
         - createTable:
@@ -42,16 +38,19 @@ databaseChangeLog:
                   type: NUMBER(38, 2)
               - column:
                   name: credit_currency_id
-                  type: BIGINT
+                  type: VARCHAR(255)
+              - column:
+                  name: credit_history_event_type
+                  type: VARCHAR(255)
               - column:
                   name: customer_id
                   type: BIGINT
               - column:
-                  name: type
+                  name: transaction_type
                   type: VARCHAR(255)
             tableName: credit_history
   - changeSet:
-      id: 1681920127426-3
+      id: 1682526373901-3
       author: micro (generated)
       changes:
         - createTable:
@@ -81,5 +80,6 @@ databaseChangeLog:
                   type: NUMBER(38, 2)
               - column:
                   name: value_currency_id
-                  type: BIGINT
+                  type: VARCHAR(255)
             tableName: payments
+

@@ -4,7 +4,7 @@ import com.acroteq.ticketing.application.resolver.Resolver;
 import com.acroteq.ticketing.domain.valueobject.FlightId;
 import com.acroteq.ticketing.order.service.domain.entity.Flight;
 import com.acroteq.ticketing.order.service.domain.exception.FlightNotFoundException;
-import com.acroteq.ticketing.order.service.domain.ports.output.repository.AirlineFlightRepository;
+import com.acroteq.ticketing.order.service.domain.ports.output.repository.FlightRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class FlightResolver implements Resolver<FlightId, Flight> {
 
-  private final AirlineFlightRepository airlineFlightRepository;
+  private final FlightRepository flightRepository;
 
   @Override
   public Flight resolve(final FlightId flightId) {
-    return airlineFlightRepository.loadFlight(flightId)
-                                  .orElseThrow(() -> new FlightNotFoundException(flightId));
+    return flightRepository.findFlight(flightId)
+                           .orElseThrow(() -> new FlightNotFoundException(flightId));
   }
 
   @Override

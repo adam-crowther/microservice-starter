@@ -14,8 +14,7 @@ public interface CreditHistoryJpaToDomainMapper {
 
   @Mapping(target = "credit.currencyId", source = "creditCurrencyId")
   @Mapping(target = "credit.amount", source = "creditAmount")
-  @Mapping(target = "transactionType", source = "type")
-  CreditHistory convertEntityToDomain(CreditHistoryJpaEntity creditHistoryJpaEntity);
+  CreditHistory convertJpaToDomain(CreditHistoryJpaEntity creditHistoryJpaEntity);
 
-  List<CreditHistory> convertEntityToDomain(List<CreditHistoryJpaEntity> creditHistoryJpaEntity);
+  List<CreditHistory> convertJpaToDomain(List<CreditHistoryJpaEntity> creditHistoryJpaEntity);
 }

@@ -1,12 +1,31 @@
 databaseChangeLog:
   - changeSet:
-      id: 1681920125011-1
+      id: 1682499464917-1
       author: micro (generated)
       changes:
         - createTable:
             columns:
               - column:
-                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: airlinesPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: active
+                  type: BOOLEAN
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+            tableName: airlines
+  - changeSet:
+      id: 1682499464917-2
+      author: micro (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
                   constraints:
                     nullable: false
                     primaryKey: true
@@ -24,7 +43,33 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: customers
   - changeSet:
-      id: 1681920125011-2
+      id: 1682499464917-3
+      author: micro (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: flightsPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: flight_number
+                  type: VARCHAR(255)
+              - column:
+                  name: flight_price_amount
+                  type: NUMBER(38, 2)
+              - column:
+                  name: flight_price_currency_id
+                  type: VARCHAR(255)
+              - column:
+                  name: airline_id
+                  type: BIGINT
+            tableName: flights
+  - changeSet:
+      id: 1682499464917-4
       author: micro (generated)
       changes:
         - createTable:
@@ -39,12 +84,13 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: order_failure_messages
   - changeSet:
-      id: 1681920125011-3
+      id: 1682499464917-5
       author: micro (generated)
       changes:
         - createTable:
             columns:
               - column:
+                  autoIncrement: true
                   constraints:
                     nullable: false
                     primaryKey: true
@@ -52,24 +98,17 @@ databaseChangeLog:
                   name: id
                   type: BIGINT
               - column:
-                  constraints:
-                    nullable: false
-                    primaryKey: true
-                    primaryKeyName: order_itemsPK
-                  name: order_id
+                  name: flight_id
                   type: BIGINT
               - column:
-                  name: flight_id
+                  name: owner_id
                   type: BIGINT
               - column:
                   name: quantity
                   type: INT
-              - column:
-                  name: owner_id
-                  type: BIGINT
             tableName: order_items
   - changeSet:
-      id: 1681920125011-4
+      id: 1682499464917-6
       author: micro (generated)
       changes:
         - createTable:
@@ -105,13 +144,13 @@ databaseChangeLog:
                   type: NUMBER(38, 2)
               - column:
                   name: price_currency_id
-                  type: BIGINT
+                  type: VARCHAR(255)
               - column:
                   name: tracking_id
                   type: VARCHAR(36)
             tableName: orders
   - changeSet:
-      id: 1681920125011-5
+      id: 1682499464917-7
       author: micro (generated)
       changes:
         - addForeignKeyConstraint:
@@ -124,7 +163,7 @@ databaseChangeLog:
             referencedTableName: orders
             validate: true
   - changeSet:
-      id: 1681920125011-6
+      id: 1682499464917-8
       author: micro (generated)
       changes:
         - addForeignKeyConstraint:
@@ -136,3 +175,17 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: orders
             validate: true
+  - changeSet:
+      id: 1682499464917-9
+      author: micro (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: airline_id
+            baseTableName: flights
+            constraintName: FKieor4j3ivp3xu584qenhfh0gd
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: airlines
+            validate: true
+

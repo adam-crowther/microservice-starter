@@ -7,5 +7,5 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface AddressJpaToDomainMapper {
 
-  StreetAddress convertEntityToDomain(OrderAddressJpaEntity address);
+  StreetAddress convertEntityToJpa(OrderAddressJpaEntity address);
 }

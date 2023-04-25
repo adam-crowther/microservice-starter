@@ -6,12 +6,13 @@ import com.acroteq.ticketing.order.service.domain.dto.message.PaymentResponseDto
 import com.acroteq.ticketing.order.service.domain.entity.Order;
 import com.acroteq.ticketing.order.service.domain.event.OrderPaidEvent;
 import com.acroteq.ticketing.order.service.domain.exception.OrderNotFoundException;
-import com.acroteq.ticketing.order.service.domain.exception.OrderSaveFailedException;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.OrderRepository;
 import com.acroteq.ticketing.saga.SagaStep;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -29,13 +30,12 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponseDto, OrderPaidE
                                        .orElseThrow(() -> new OrderNotFoundException(orderId));
     final Order paidOrder = orderDomainService.payOrder(order);
     final Order savedOrder = orderRepository.save(paidOrder);
-    if (savedOrder == null) {
-      throw new OrderSaveFailedException(orderId);
-    }
 
+    final UUID sagaId = paymentResponse.getSagaId();
     log.info("Order with id {} is paid", orderId);
     return OrderPaidEvent.builder()
-                         .order(paidOrder)
+                         .sagaId(sagaId)
+                         .order(savedOrder)
                          .build();
   }
 
@@ -46,10 +46,7 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponseDto, OrderPaidE
     final Order order = orderRepository.findById(orderId)
                                        .orElseThrow(() -> new OrderNotFoundException(orderId));
     final Order cancelledOrder = orderDomainService.cancelOrder(order, paymentResponse.getResult());
-    final Order savedOrder = orderRepository.save(cancelledOrder);
-    if (savedOrder == null) {
-      throw new OrderSaveFailedException(orderId);
-    }
+    orderRepository.save(cancelledOrder);
 
     log.info("Order with id {} is cancelled", orderId);
     return EmptyEvent.INSTANCE;

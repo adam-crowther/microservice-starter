@@ -42,7 +42,7 @@ public class PaymentJpaEntity {
   private Long orderId;
 
   @Column(name = "value_currency_id")
-  private Long valueCurrencyId;
+  private String valueCurrencyId;
 
   @Column(name = "value_amount")
   private BigDecimal valueAmount;

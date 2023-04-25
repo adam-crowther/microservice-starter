@@ -15,5 +15,5 @@ public interface PaymentDomainToJpaMapper {
   @Mapping(target = "valueCurrencyId", source = "value.currencyId")
   @Mapping(target = "valueAmount", source = "value.amount")
   @Mapping(target = "status", source = "paymentStatus")
-  PaymentJpaEntity convertDomainToEntity(Payment payment);
+  PaymentJpaEntity convertDomainToJpa(Payment payment);
 }

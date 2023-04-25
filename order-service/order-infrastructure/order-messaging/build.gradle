@@ -28,13 +28,13 @@ dependencies {
     implementation project(":common:common-kafka:kafka-libs")
     implementation project(":common:common-kafka:kafka-model")
 
-    implementation libs.lombok.core
+    implementation libs.apache.avro
     implementation libs.google.guava
-    implementation libs.spotbugs.annotations
+    implementation libs.kafka.clients
+    implementation libs.lombok.core
     implementation libs.mapstruct.core
     implementation libs.slf4j.api
-    implementation libs.apache.avro
-    implementation libs.kafka.clients
+    implementation libs.spotbugs.annotations
     implementation libs.spring.beans
     implementation libs.spring.context
     implementation libs.spring.kafka

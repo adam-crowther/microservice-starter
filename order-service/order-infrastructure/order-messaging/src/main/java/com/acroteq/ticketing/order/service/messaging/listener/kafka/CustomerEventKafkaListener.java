@@ -1,15 +1,15 @@
 package com.acroteq.ticketing.order.service.messaging.listener.kafka;
 
-import static com.acroteq.ticketing.kafka.order.avro.model.EventType.CREATED;
-import static com.acroteq.ticketing.kafka.order.avro.model.EventType.DELETED;
-import static com.acroteq.ticketing.kafka.order.avro.model.EventType.UPDATED;
+import static com.acroteq.ticketing.kafka.customer.avro.model.EventType.CREATED;
+import static com.acroteq.ticketing.kafka.customer.avro.model.EventType.DELETED;
+import static com.acroteq.ticketing.kafka.customer.avro.model.EventType.UPDATED;
 import static org.springframework.kafka.support.KafkaHeaders.OFFSET;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_KEY;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
 
 import com.acroteq.ticketing.kafka.consumer.KafkaConsumer;
-import com.acroteq.ticketing.kafka.order.avro.model.CustomerEventMessage;
-import com.acroteq.ticketing.kafka.order.avro.model.EventType;
+import com.acroteq.ticketing.kafka.customer.avro.model.CustomerEventMessage;
+import com.acroteq.ticketing.kafka.customer.avro.model.EventType;
 import com.acroteq.ticketing.order.service.domain.dto.customer.CustomerDto;
 import com.acroteq.ticketing.order.service.domain.ports.input.message.listener.customer.CustomerEventMessageListener;
 import com.acroteq.ticketing.order.service.messaging.mapper.CustomerEventMessageToDtoMapper;
@@ -44,8 +44,8 @@ public class CustomerEventKafkaListener implements KafkaConsumer<CustomerEventMe
 
 
   @Override
-  @KafkaListener(id = "${kafka-consumer-config.customer-consumer-group-id}",
-                 topics = "${order-service.customer-topic-name}")
+  @KafkaListener(id = "${kafka-consumer-config.customer-event-consumer-group-id}",
+                 topics = "${order-service.customer-event-topic-name}")
   public void receive(@Payload final List<CustomerEventMessage> messages,
                       @Header(RECEIVED_KEY) final List<String> keys,
                       @Header(RECEIVED_PARTITION) final List<Integer> partitions,

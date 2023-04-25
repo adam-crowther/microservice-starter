@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -48,12 +50,11 @@ public class OrderApprovalSaga implements SagaStep<AirlineApprovalResponseDto, E
 
     final Order cancelledOrder = orderDomainService.cancelOrderPayment(order, result);
     final Order savedOrder = orderRepository.save(cancelledOrder);
-    if (savedOrder == null) {
-      throw new OrderSaveFailedException(orderId);
-    }
 
+    final UUID sagaId = approvalResponse.getSagaId();
     log.info("Payment is cancelled for order with id {} ", orderId);
     return OrderCancelledEvent.builder()
+                              .sagaId(sagaId)
                               .order(savedOrder)
                               .build();
   }

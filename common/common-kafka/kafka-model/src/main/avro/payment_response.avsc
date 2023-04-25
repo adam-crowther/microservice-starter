@@ -1,12 +1,8 @@
 {
-  "namespace": "com.acroteq.ticketing.kafka.order.avro.model",
+  "namespace": "com.acroteq.ticketing.kafka.payment.avro.model",
   "type": "record",
   "name": "PaymentResponseMessage",
   "fields": [
-    {
-      "name": "id",
-      "type": "long"
-    },
     {
       "name": "sagaId",
       "type": {
@@ -28,7 +24,7 @@
     },
     {
       "name": "valueCurrencyId",
-      "type": "long"
+      "type": "string"
     },
     {
       "name": "valueAmount",

@@ -23,9 +23,9 @@ import java.util.UUID;
 @TestComponent
 public class OrderTestDataHelper {
 
-  public static final String ADDRESS_STREET = "ADDRESS_STREET";
-  public static final String ADDRESS_POSTAL_CODE = "ADDRESS_POSTAL_CODE";
-  public static final String ADDRESS_CITY = "ADDRESS_CITY";
+  public static final String ADDRESS_STREET = "address-street";
+  public static final String ADDRESS_POSTAL_CODE = "address-postal-code";
+  public static final String ADDRESS_CITY = "address-city";
   public static final StreetAddress ADDRESS = StreetAddress.builder()
                                                            .street(ADDRESS_STREET)
                                                            .postalCode(ADDRESS_POSTAL_CODE)

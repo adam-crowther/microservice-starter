@@ -1,12 +1,8 @@
 {
-  "namespace": "com.acroteq.ticketing.kafka.order.avro.model",
+  "namespace": "com.acroteq.ticketing.kafka.flight.approval.avro.model",
   "type": "record",
   "name": "AirlineApprovalResponseMessage",
   "fields": [
-    {
-      "name": "id",
-      "type": "long"
-    },
     {
       "name": "sagaId",
       "type": {

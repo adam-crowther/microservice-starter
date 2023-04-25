@@ -14,13 +14,13 @@ dependencies {
     implementation project(":common:common-domain")
     implementation project(":common:common-helper")
 
-    implementation libs.lombok.core
     implementation libs.google.guava
-    implementation libs.spotbugs.annotations
-    implementation libs.slf4j.api
-    implementation libs.spring.web
     implementation libs.jakarta.annotation.api
     implementation libs.jakarta.validation.api
+    implementation libs.lombok.core
+    implementation libs.slf4j.api
+    implementation libs.spotbugs.annotations
+    implementation libs.spring.web
 
     annotationProcessor libs.lombok.core
 }

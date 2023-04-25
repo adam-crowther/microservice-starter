@@ -1,0 +1,521 @@
+openapi: "3.0.0"
+info:
+  title: Airline Master Data Management
+  version: 1.0.0
+paths:
+  /airlines:
+    get:
+      summary: List all airlines
+      operationId: listAirlines
+      tags:
+        - airlines
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            format: int32
+      responses:
+        '200':
+          description: An  array of airlines
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Airlines"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+    post:
+      summary: Create an airline
+      operationId: createAirline
+      tags:
+        - airlines
+      requestBody:
+        description: The airline to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAirlineCommand"
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateAirlineResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+
+  /airlines/{id}:
+    get:
+      summary: Info for a specific airline
+      operationId: getAirlineById
+      tags:
+        - airlines
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the airline to retrieve
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Airline"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+    put:
+      summary: Update an airline
+      operationId: updateAirlineById
+      tags:
+        - airlines
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the airline to update
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: The airline to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateAirlineCommand"
+      responses:
+        '204':
+          description: Updated
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+    delete:
+      summary: Delete an airline
+      operationId: deleteAirlineById
+      tags:
+        - airlines
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the airline to delete
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Deleted
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+
+  /airlines/{airlineId}/flights:
+    get:
+      summary: List all flights for a given airline
+      operationId: listAirlineFlights
+      tags:
+        - airlines
+        - flights
+      parameters:
+        - name: airlineId
+          in: path
+          required: true
+          description: The id of the airline
+          schema:
+            type: integer
+            format: int64
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            format: int32
+      responses:
+        '200':
+          description: An array of flights
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Flights"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+    post:
+      summary: Create an airline flight
+      operationId: createAirlineFlight
+      tags:
+        - airlines
+        - flights
+      parameters:
+        - name: airlineId
+          in: path
+          required: true
+          description: The id of the airline
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: The flight to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateFlightCommand"
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateFlightResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+
+  /airlines/{airlineId}/flights/{flightId}:
+    get:
+      summary: Info for a specific flight
+      operationId: getAirlineFlightById
+      tags:
+        - airlines
+        - flights
+      parameters:
+        - name: airlineId
+          in: path
+          required: true
+          description: The id of the airline to retrieve
+          schema:
+            type: integer
+            format: int64
+        - name: flightId
+          in: path
+          required: true
+          description: The id of the flight to retrieve
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Airline"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+    put:
+      summary: Update a flight
+      operationId: updateAirlineFlightById
+      tags:
+        - airlines
+        - flights
+      parameters:
+        - name: airlineId
+          in: path
+          required: true
+          description: The id of the airline to retrieve
+          schema:
+            type: integer
+            format: int64
+        - name: flightId
+          in: path
+          required: true
+          description: The id of the flight to retrieve
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: The flight to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateFlightCommand"
+      responses:
+        '204':
+          description: Updated
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+    delete:
+      summary: Delete a flight
+      operationId: deleteFlightById
+      tags:
+        - airlines
+        - flights
+      parameters:
+        - name: airlineId
+          in: path
+          required: true
+          description: The id of the airline to retrieve
+          schema:
+            type: integer
+            format: int64
+        - name: flightId
+          in: path
+          required: true
+          description: The id of the flight to retrieve
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Deleted
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+
+components:
+  schemas:
+    CreateAirlineCommand:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder @lombok.AllArgsConstructor"
+      required:
+        - name
+        - active
+      properties:
+        name:
+          type: string
+        active:
+          type: boolean
+        flights:
+          type: array
+          x-class-extra-annotation: "@lombok.Builder"
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/CreateFlightCommand"
+
+    CreateAirlineResponse:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - airlineId
+      properties:
+        airlineId:
+          type: integer
+          format: int64
+
+    UpdateAirlineCommand:
+      allOf:
+        - $ref: '#/components/schemas/CreateAirlineCommand'
+      x-class-extra-annotation: "@lombok.Builder @lombok.AllArgsConstructor"
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+        flights:
+          type: array
+          x-class-extra-annotation: "@lombok.Builder"
+          maxItems: 100
+          items:
+            $ref: "#/components/schemas/UpdateFlightCommand"
+
+    Airline:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder @lombok.AllArgsConstructor"
+      required:
+        - id
+        - name
+        - active
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        active:
+          type: boolean
+          readOnly: true
+        flights:
+          $ref: "#/components/schemas/Flights"
+
+    Airlines:
+      type: array
+      x-class-extra-annotation: "@lombok.Builder"
+      maxItems: 100
+      readOnly: true
+      items:
+        $ref: "#/components/schemas/Airline"
+
+    CreateFlightCommand:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - flightNumber
+        - price
+        - available
+      properties:
+        flightNumber:
+          type: string
+        price:
+          $ref: "#/components/schemas/CashValueCommand"
+        available:
+          type: boolean
+
+    CreateFlightResponse:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - flightId
+      properties:
+        flightId:
+          type: integer
+          format: int64
+
+    UpdateFlightCommand:
+      allOf:
+        - $ref: '#/components/schemas/CreateFlightCommand'
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+
+    Flight:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - id
+        - flightNumber
+        - price
+        - available
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        flightNumber:
+          type: string
+          readOnly: true
+        price:
+          $ref: "#/components/schemas/CashValue"
+        available:
+          type: boolean
+          readOnly: true
+
+    Flights:
+      type: array
+      x-class-extra-annotation: "@lombok.Builder"
+      maxItems: 100
+      readOnly: true
+      items:
+        $ref: "#/components/schemas/Flight"
+
+    CashValueCommand:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - currencyId
+        - amount
+      properties:
+        currencyId:
+          type: string
+        amount:
+          type: number
+          format: double
+
+    CashValue:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - currencyId
+        - amount
+      properties:
+        currencyId:
+          type: string
+          readOnly: true
+        amount:
+          type: number
+          format: double
+          readOnly: true
+
+
+    Problem:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - code
+        - reason
+        - i18nCode
+        - i18nParameters
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          readOnly: true
+        reason:
+          type: string
+          maxLength: 50
+          readOnly: true
+        i18nCode:
+          type: string
+          readOnly: true
+        i18nParameters:
+          type: array
+          x-field-extra-annotation: "@lombok.Builder.Default"
+          readOnly: true
+          items:
+            type: string
+            maxLength: 50
+            readOnly: true
+        message:
+          type: string
+          maxLength: 100
+          readOnly: true

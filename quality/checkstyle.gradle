@@ -10,7 +10,7 @@ checkstyle {
 
 tasks.withType(Checkstyle).configureEach {
     outputs.upToDateWhen { false }
-    exclude '**/application/api/**'
-    exclude '**/application/model/**'
+    exclude '**/presentation/api/**'
+    exclude '**/presentation/model/**'
     exclude '**/avro/model/**'
 }

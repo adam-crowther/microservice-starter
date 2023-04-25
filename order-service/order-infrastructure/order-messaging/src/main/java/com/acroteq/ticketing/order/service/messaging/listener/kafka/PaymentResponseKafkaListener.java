@@ -1,15 +1,15 @@
 package com.acroteq.ticketing.order.service.messaging.listener.kafka;
 
-import static com.acroteq.ticketing.kafka.order.avro.model.PaymentStatus.CANCELLED;
-import static com.acroteq.ticketing.kafka.order.avro.model.PaymentStatus.COMPLETED;
-import static com.acroteq.ticketing.kafka.order.avro.model.PaymentStatus.FAILED;
+import static com.acroteq.ticketing.kafka.payment.avro.model.PaymentStatus.CANCELLED;
+import static com.acroteq.ticketing.kafka.payment.avro.model.PaymentStatus.COMPLETED;
+import static com.acroteq.ticketing.kafka.payment.avro.model.PaymentStatus.FAILED;
 import static org.springframework.kafka.support.KafkaHeaders.OFFSET;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_KEY;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
 
 import com.acroteq.ticketing.kafka.consumer.KafkaConsumer;
-import com.acroteq.ticketing.kafka.order.avro.model.PaymentResponseMessage;
-import com.acroteq.ticketing.kafka.order.avro.model.PaymentStatus;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentResponseMessage;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentStatus;
 import com.acroteq.ticketing.order.service.domain.dto.message.PaymentResponseDto;
 import com.acroteq.ticketing.order.service.domain.ports.input.message.listener.payment.PaymentResponseMessageListener;
 import com.acroteq.ticketing.order.service.messaging.mapper.PaymentResponseMessageToDtoMapper;

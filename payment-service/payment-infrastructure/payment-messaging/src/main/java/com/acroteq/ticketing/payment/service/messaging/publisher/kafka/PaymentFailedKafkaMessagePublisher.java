@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.payment.service.messaging.publisher.kafka;
 
 import com.acroteq.ticketing.domain.valueobject.OrderId;
-import com.acroteq.ticketing.kafka.order.avro.model.PaymentResponseMessage;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentResponseMessage;
 import com.acroteq.ticketing.kafka.producer.service.KafkaProducer;
 import com.acroteq.ticketing.payment.service.domain.config.PaymentServiceConfigData;
 import com.acroteq.ticketing.payment.service.domain.event.PaymentFailedEvent;

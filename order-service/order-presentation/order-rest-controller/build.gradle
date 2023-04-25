@@ -24,18 +24,18 @@ dependencies {
     implementation project(":order-service:order-domain:order-domain-core")
     implementation project(":order-service:order-presentation:order-api-spec")
 
-    implementation libs.lombok.core
-    implementation libs.spotbugs.annotations
-    implementation libs.google.guava
     implementation libs.google.gson
+    implementation libs.google.guava
+    implementation libs.lombok.core
     implementation libs.mapstruct.core
     implementation libs.slf4j.api
-    implementation libs.swagger.annotations
+    implementation libs.spotbugs.annotations
     implementation libs.spring.beans
+    implementation libs.spring.context
     implementation libs.spring.core
     implementation libs.spring.web
     implementation libs.spring.webmvc
-    implementation libs.spring.context
+    implementation libs.swagger.annotations
 
     annotationProcessor libs.lombok.core
     annotationProcessor libs.lombok.mapstruct.binding

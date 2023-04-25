@@ -1,0 +1,38 @@
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.10"
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = false
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('reports/jacoco')
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.95
+            }
+        }
+
+        rule {
+            enabled = true
+            element = 'CLASS'
+            includes = ['ch.acroteq.ticketing.*']
+
+            limit {
+                counter = 'LINE'
+                value = 'TOTALCOUNT'
+                minimum = 0.95
+            }
+        }
+    }
+}
+
+test.finalizedBy(jacocoTestReport)
+test.finalizedBy(jacocoTestCoverageVerification)

@@ -1,21 +1,17 @@
 server:
   port: 8181
 
-logging:
-  level:
-    com.acroteq.ticketing: DEBUG
-    #org.springframework.web: TRACE
-    #org.springframework.kafka: TRACE
-    #org.apache.kafka: TRACE
-
 order-service:
   payment-request-topic-name: payment-request
   payment-response-topic-name: payment-response
   airline-approval-request-topic-name: airline-approval-request
   airline-approval-response-topic-name: airline-approval-response
-  customer-topic-name: customer
+  customer-event-topic-name: customer-event
+  airline-event-topic-name: airline-event
 
 spring:
+  main:
+    banner-mode: off
   jpa:
     open-in-view: false
     show-sql: true
@@ -60,7 +56,8 @@ kafka-consumer-config:
   value-deserializer-class: io.confluent.kafka.serializers.KafkaAvroDeserializer
   payment-consumer-group-id: payment-consumer-group
   airline-approval-consumer-group-id: airline-approval-consumer-group
-  customer-consumer-group-id: customer-consumer-group
+  customer-event-consumer-group-id: customer-event-consumer-group
+  airline-event-consumer-group-id: airline-event-consumer-group
   auto-offset-reset: earliest
   specific-avro-reader-key: specific.avro.reader
   specific-avro-reader: true

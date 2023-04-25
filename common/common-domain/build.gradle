@@ -14,10 +14,10 @@ dependencies {
     implementation project(":common:common-helper")
 
     implementation libs.apache.commons.lang3
-    implementation libs.lombok.core
     implementation libs.google.guava
+    implementation libs.jakarta.annotation.api
+    implementation libs.lombok.core
     implementation libs.spotbugs.annotations
-    implementation libs.findbugs.annotations
 
     annotationProcessor libs.lombok.core
 }

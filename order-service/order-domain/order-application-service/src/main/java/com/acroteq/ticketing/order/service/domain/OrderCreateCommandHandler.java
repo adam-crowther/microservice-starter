@@ -5,7 +5,7 @@ import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderResponse
 import com.acroteq.ticketing.order.service.domain.entity.Order;
 import com.acroteq.ticketing.order.service.domain.event.OrderCreatedEvent;
 import com.acroteq.ticketing.order.service.domain.mapper.CreateOrderResponseDomainToDtoMapper;
-import com.acroteq.ticketing.order.service.domain.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher;
+import com.acroteq.ticketing.order.service.domain.ports.output.message.publisher.payment.PaymentRequestMessagePublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,7 +20,7 @@ class OrderCreateCommandHandler {
 
   private final OrderCreateHelper orderCreateHelper;
   private final CreateOrderResponseDomainToDtoMapper responseMapper;
-  private final OrderCreatedPaymentRequestMessagePublisher messagePublisher;
+  private final PaymentRequestMessagePublisher messagePublisher;
 
   @Transactional
   public CreateOrderResponseDto createOrder(final CreateOrderCommandDto createOrderCommand) {

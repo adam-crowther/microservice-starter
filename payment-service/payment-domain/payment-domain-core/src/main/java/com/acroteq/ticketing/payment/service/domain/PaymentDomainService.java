@@ -11,6 +11,6 @@ public interface PaymentDomainService {
 
   PaymentOutput validatePayment(Payment payment, CreditEntry creditEntry, List<CreditHistory> creditHistories);
 
-  PaymentOutput cancelPayment(Payment payment, CreditEntry creditEntry, List<CreditHistory> creditHistories);
+  PaymentOutput cancelPayment(Payment payment, CreditEntry creditEntry);
 }
 

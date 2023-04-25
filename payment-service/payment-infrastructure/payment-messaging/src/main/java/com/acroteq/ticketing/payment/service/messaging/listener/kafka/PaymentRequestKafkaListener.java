@@ -1,15 +1,15 @@
 package com.acroteq.ticketing.payment.service.messaging.listener.kafka;
 
-import static com.acroteq.ticketing.kafka.order.avro.model.PaymentStatus.CANCELLED;
-import static com.acroteq.ticketing.kafka.order.avro.model.PaymentStatus.PENDING;
+import static com.acroteq.ticketing.kafka.payment.avro.model.PaymentStatus.CANCELLED;
+import static com.acroteq.ticketing.kafka.payment.avro.model.PaymentStatus.PENDING;
 import static org.springframework.kafka.support.KafkaHeaders.OFFSET;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_KEY;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
 
 import com.acroteq.ticketing.kafka.consumer.KafkaConsumer;
-import com.acroteq.ticketing.kafka.order.avro.model.PaymentRequestMessage;
-import com.acroteq.ticketing.kafka.order.avro.model.PaymentStatus;
-import com.acroteq.ticketing.payment.service.domain.dto.PaymentRequestDto;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentRequestMessage;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentStatus;
+import com.acroteq.ticketing.payment.service.domain.dto.payment.PaymentRequestDto;
 import com.acroteq.ticketing.payment.service.domain.ports.input.message.listener.PaymentRequestMessageListener;
 import com.acroteq.ticketing.payment.service.messaging.mapper.PaymentRequestMessageToDtoMapper;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class PaymentRequestKafkaListener implements KafkaConsumer<PaymentRequest
       = Map.of(PENDING, this::paymentPendingMessageHandler, CANCELLED, this::paymentCancelledMessageHandler);
 
   @Override
-  @KafkaListener(id = "${kafka-consumer-config.payment-consumer-group-id}",
+  @KafkaListener(id = "${kafka-consumer-config.payment-request-consumer-group-id}",
                  topics = "${payment-service.payment-request-topic-name}")
   public void receive(@Payload final List<PaymentRequestMessage> messages,
                       @Header(RECEIVED_KEY) final List<String> keys,

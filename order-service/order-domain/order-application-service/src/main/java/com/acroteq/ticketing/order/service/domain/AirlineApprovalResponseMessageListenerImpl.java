@@ -4,7 +4,7 @@ import com.acroteq.ticketing.domain.validation.ValidationResult;
 import com.acroteq.ticketing.order.service.domain.dto.message.AirlineApprovalResponseDto;
 import com.acroteq.ticketing.order.service.domain.event.OrderCancelledEvent;
 import com.acroteq.ticketing.order.service.domain.ports.input.message.listener.airlineapproval.AirlineApprovalResponseMessageListener;
-import com.acroteq.ticketing.order.service.domain.ports.output.message.publisher.payment.OrderCancelledPaymentRequestMessagePublisher;
+import com.acroteq.ticketing.order.service.domain.ports.output.message.publisher.payment.PaymentCancelRequestMessagePublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import org.springframework.validation.annotation.Validated;
 public class AirlineApprovalResponseMessageListenerImpl implements AirlineApprovalResponseMessageListener {
 
   private final OrderApprovalSaga saga;
-  private final OrderCancelledPaymentRequestMessagePublisher messagePublisher;
+  private final PaymentCancelRequestMessagePublisher messagePublisher;
 
   @Override
   @Transactional

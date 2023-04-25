@@ -23,8 +23,15 @@ import java.util.Optional;
 public class CustomerTestDataHelper {
 
   public static final Long CUSTOMER_ID = IdTestDataHelper.nextId();
+  public static final String CUSTOMER_FIRST_NAME = "customer-first-name";
+  public static final String CUSTOMER_LAST_NAME = "customer-last-name";
+  public static final String CUSTOMER_USER_NAME = "customer-user-name";
+
   public static final Customer CUSTOMER = Customer.builder()
                                                   .id(CustomerId.of(CUSTOMER_ID))
+                                                  .firstName(CUSTOMER_FIRST_NAME)
+                                                  .lastName(CUSTOMER_LAST_NAME)
+                                                  .userName(CUSTOMER_USER_NAME)
                                                   .build();
 
   private final CustomerRepository customerRepository;

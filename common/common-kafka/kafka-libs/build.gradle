@@ -13,14 +13,14 @@ compileJava {
 dependencies {
     implementation project(':common:common-domain')
 
-    implementation libs.google.guava
-    implementation libs.lombok.core
-    implementation libs.spotbugs.annotations
     implementation libs.apache.avro
+    implementation libs.google.guava
     implementation libs.javax.annotation.api
     implementation libs.kafka.avro.serializer
     implementation libs.kafka.clients
+    implementation libs.lombok.core
     implementation libs.slf4j.api
+    implementation libs.spotbugs.annotations
     implementation libs.spring.beans
     implementation libs.spring.boot.autoconfigure
     implementation libs.spring.boot.core

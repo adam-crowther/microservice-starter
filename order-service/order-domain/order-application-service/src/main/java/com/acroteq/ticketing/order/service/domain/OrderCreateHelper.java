@@ -8,7 +8,6 @@ import com.acroteq.ticketing.order.service.domain.entity.Airline;
 import com.acroteq.ticketing.order.service.domain.entity.Order;
 import com.acroteq.ticketing.order.service.domain.event.OrderCreatedEvent;
 import com.acroteq.ticketing.order.service.domain.exception.CustomerNotFoundException;
-import com.acroteq.ticketing.order.service.domain.exception.OrderSaveFailedException;
 import com.acroteq.ticketing.order.service.domain.mapper.CreateOrderCommandDtoToDomainMapper;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.CustomerRepository;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.OrderRepository;
@@ -16,6 +15,8 @@ import com.acroteq.ticketing.order.service.domain.resolver.AirlineResolver;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -38,12 +39,10 @@ public class OrderCreateHelper {
 
     orderDomainService.validate(order, airline);
     final Order savedOrder = orderRepository.save(order);
-    if (savedOrder == null) {
-      throw new OrderSaveFailedException(order.getId());
-    }
 
     log.info("Created order {}", savedOrder.getId());
     return OrderCreatedEvent.builder()
+                            .sagaId(UUID.randomUUID())
                             .order(savedOrder)
                             .build();
   }

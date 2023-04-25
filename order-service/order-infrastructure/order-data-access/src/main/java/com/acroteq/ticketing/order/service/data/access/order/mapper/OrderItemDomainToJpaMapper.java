@@ -28,5 +28,5 @@ public interface OrderItemDomainToJpaMapper {
   @Mapping(target = "id", source = "orderItem.id")
   @Mapping(target = "orderId", ignore = true)
   @Mapping(target = "flightId", source = "orderItem.flight.id")
-  OrderItemJpaEntity convertDomainToEntity(OrderItem orderItem);
+  OrderItemJpaEntity convertDomainToJpa(OrderItem orderItem);
 }

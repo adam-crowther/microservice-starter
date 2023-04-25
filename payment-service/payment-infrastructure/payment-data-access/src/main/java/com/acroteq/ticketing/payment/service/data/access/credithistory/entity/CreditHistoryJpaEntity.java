@@ -4,6 +4,7 @@ import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PRIVATE;
 
+import com.acroteq.ticketing.payment.service.domain.valueobject.CreditHistoryEventType;
 import com.acroteq.ticketing.payment.service.domain.valueobject.TransactionType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -38,12 +39,16 @@ public class CreditHistoryJpaEntity {
   private Long customerId;
 
   @Column(name = "credit_currency_id")
-  private Long creditCurrencyId;
+  private String creditCurrencyId;
 
   @Column(name = "credit_amount")
   private BigDecimal creditAmount;
 
   @Enumerated(STRING)
-  @Column(name = "type")
-  private TransactionType type;
+  @Column(name = "transaction_type")
+  private TransactionType transactionType;
+
+  @Enumerated(STRING)
+  @Column(name = "credit_history_event_type")
+  private CreditHistoryEventType creditHistoryEventType;
 }

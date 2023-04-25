@@ -1,10 +1,11 @@
 package com.acroteq.ticketing.order.service.domain;
 
-import com.acroteq.ticketing.order.service.domain.ports.output.message.publisher.airlineapproval.OrderPaidAirlineRequestMessagePublisher;
-import com.acroteq.ticketing.order.service.domain.ports.output.message.publisher.payment.OrderCancelledPaymentRequestMessagePublisher;
-import com.acroteq.ticketing.order.service.domain.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher;
-import com.acroteq.ticketing.order.service.domain.ports.output.repository.AirlineFlightRepository;
+import com.acroteq.ticketing.order.service.domain.ports.output.message.publisher.airlineapproval.AirlineApprovalRequestMessagePublisher;
+import com.acroteq.ticketing.order.service.domain.ports.output.message.publisher.payment.PaymentCancelRequestMessagePublisher;
+import com.acroteq.ticketing.order.service.domain.ports.output.message.publisher.payment.PaymentRequestMessagePublisher;
+import com.acroteq.ticketing.order.service.domain.ports.output.repository.AirlineRepository;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.CustomerRepository;
+import com.acroteq.ticketing.order.service.domain.ports.output.repository.FlightRepository;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.OrderRepository;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
@@ -16,17 +17,19 @@ import org.springframework.context.annotation.Bean;
 public class TestOrderApplication {
 
   @MockBean
-  private OrderCreatedPaymentRequestMessagePublisher orderCreatedPublisher;
+  private PaymentRequestMessagePublisher orderCreatedPublisher;
   @MockBean
-  private OrderCancelledPaymentRequestMessagePublisher orderCancelledPublisher;
+  private PaymentCancelRequestMessagePublisher orderCancelledPublisher;
   @MockBean
-  private OrderPaidAirlineRequestMessagePublisher orderPaidPublisher;
+  private AirlineApprovalRequestMessagePublisher orderPaidPublisher;
   @MockBean
   private OrderRepository orderRepository;
   @MockBean
   private CustomerRepository customerRepository;
   @MockBean
-  private AirlineFlightRepository airlineFlightRepository;
+  private AirlineRepository airlineRepository;
+  @MockBean
+  private FlightRepository flightRepository;
 
   @Bean
   public OrderDomainService orderDomainService() {

@@ -7,11 +7,12 @@ import com.acroteq.ticketing.payment.service.domain.entity.CreditEntry;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(uses = { CurrencyIdMapper.class, CreditEntryIdMapper.class, CustomerIdMapper.class })
+@Mapper(uses = { CurrencyIdMapper.class, CustomerIdMapper.class })
 public interface CreditEntryJpaToDomainMapper {
 
 
+  @Mapping(target = "id", source = "customerId")
   @Mapping(target = "totalCredit.currencyId", source = "totalCreditCurrencyId")
   @Mapping(target = "totalCredit.amount", source = "totalCreditAmount")
-  CreditEntry convertEntityToDomain(CreditEntryJpaEntity creditEntryJpaEntity);
+  CreditEntry convertJpaToDomain(CreditEntryJpaEntity creditEntryJpaEntity);
 }

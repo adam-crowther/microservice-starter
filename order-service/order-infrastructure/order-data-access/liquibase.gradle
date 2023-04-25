@@ -103,7 +103,6 @@ liquibaseDiffChangelog {
                     overwriteOutputFile true
                     url "jdbc:postgresql://localhost:${project.postgresqlPort}/postgres"
                     driver "org.postgresql.Driver"
-                    excludeObjects "order_airline_m_view"
                     username "postgres"
                     password "password"
                     referenceUrl "hibernate:spring:com.acroteq.ticketing.order.service.data.access?dialect=org.hibernate.dialect.PostgreSQLDialect&" +
@@ -132,7 +131,6 @@ liquibaseGenerateChangelog {
                             "hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl&"
                     "hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
                     driver "liquibase.ext.hibernate.database.connection.HibernateDriver"
-                    excludeObjects "order_airline_m_view"
                     logFile "./build/liquibase/liquibase_gen.log"
                     logLevel "FINE"
                 }

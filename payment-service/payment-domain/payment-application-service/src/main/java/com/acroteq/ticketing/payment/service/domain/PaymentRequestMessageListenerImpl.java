@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.payment.service.domain;
 
-import com.acroteq.ticketing.payment.service.domain.dto.PaymentRequestDto;
+import com.acroteq.ticketing.payment.service.domain.dto.payment.PaymentRequestDto;
 import com.acroteq.ticketing.payment.service.domain.event.PaymentEvent;
 import com.acroteq.ticketing.payment.service.domain.ports.input.message.listener.PaymentRequestMessageListener;
 import com.acroteq.ticketing.payment.service.domain.visitor.PaymentEventPublisherVisitor;

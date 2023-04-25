@@ -94,6 +94,18 @@ Uses Docker Compose to start up a clean PostgreSQL database.
 | Analyse src/main | `gradle spotbugsMain` | Compile           |
 | Analyse src/test | `gradle spotbugsTest` | Compile           |
 
+### JacCoCo
+
+- Test coverage: reporting and enforcement
+- See https://www.eclemma.org/jacoco/
+- The plugin is configured to fail the build if coverage is less than 95%.
+- Reports are generated in `build/reports/jacoco`
+- JaCoCo is configured in the file: [jacoco.gradle](../quality/jacoco.gradle)
+
+|                          | Gradle command            | Task dependencies |
+|--------------------------|:--------------------------|-------------------|
+| Generate the HTML report | `gradle jacocoTestReport` | Test              |
+
 ### Gradle Lint
 
 - Gradle Lint checks the gradle setup for wrong configuration, deprecation and unused dependencies.

@@ -15,7 +15,7 @@
   },
   {
     "name": "OrderSubmodules",
-    "regex": "^.*order-application.*$",
+    "regex": "^.*order-presentation.*$",
     "isEnabled": true,
     "shape": "box3d",
     "fillColor": "#CCE3FF"

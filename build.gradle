@@ -2,6 +2,7 @@ plugins {
     id 'base'
     id 'maven-publish'
     id 'checkstyle'
+    id 'jacoco'
 
     alias pluginLibs.plugins.spotbugs
     alias pluginLibs.plugins.nebula.lint
@@ -13,6 +14,7 @@ allprojects {
     apply from: "${rootDir}/quality/pmd.gradle"
     apply from: "${rootDir}/quality/spotbugs.gradle"
     apply from: "${rootDir}/quality/gradlelint.gradle"
+    apply from: "${rootDir}/quality/jacoco.gradle"
 
     group group
     version version
