@@ -5,31 +5,28 @@
 If you want to start with a fresh and empty data constellation, delete the contents
 of `infrastructure/docker-compose/build`.
 
-|    |                                       |                                                               |
-|----|---------------------------------------|---------------------------------------------------------------|
-|    | Change directory to docker_compose.   | `$ cd infrastructure/docker-compose/`                         |
-| 1. | Start Zookeeper                       | `$ ./start_zookeeper.sh`                                      |
-| 2. | Start PostgreSQL                      | `$ ./start_postgres.sh`                                       |
-| 3. | Start Kafka                           | `$ ./start_kafka.sh`                                          |
-| 4. | Initialise Kafka topics               | `$ ./init_kafka.sh`                                           |
-|    | Change directory back to project root | `$ cd ../..`                                                  |
-| 5. | Start Airline MDM Service             | `gradle :airline-mdm:airline-mdm-container:bootRun`           |
-| 6. | Start Customer MDM Service            | `gradle :customer-mdm:customer-mdm-container:bootRun`         |
-| 7. | Start Airline-Approval MDM Service    | `gradle :airline-approval:airline-approval-container:bootRun` |
-| 8. | Start Payment Service                 | `gradle :payment-service:payment-container:bootRun`           |
-| 9. | Start Order Service                   | `gradle :order-service:order-container:bootRun`               |
-
-Install [Postman](https://www.postman.com/downloads/) or another REST client.
+|     |                                       | Shell script / Gradle task                                                    |
+|----:|---------------------------------------|-------------------------------------------------------------------------------|
+|     | Change directory to docker_compose.   | `$ cd infrastructure/docker-compose/`                                         |
+|  1. | Start Zookeeper                       | `$ ./start_zookeeper.sh`                                                      |
+|  2. | Start PostgreSQL                      | `$ ./start_postgres.sh`                                                       |
+|  3. | Start Kafka                           | `$ ./start_kafka.sh`                                                          |
+|  4. | Initialise Kafka topics               | `$ ./init_kafka.sh`                                                           |
+|     | Change directory back to project root | `$ cd ../..`                                                                  |
+|  5. | Start Airline MDM                     | `gradle :airline-mdm:airline-mdm-container:bootRun`                           |
+|  6. | Start Airline MDM Swagger             | `gradle :airline-mdm:airline-mdm-presentation:airline-mdm-swagger:bootRun`    |
+|  7. | Start Customer MDM                    | `gradle :customer-mdm:customer-mdm-container:bootRun`                         |
+|  8. | Start Customer MDM Swagger            | `gradle :customer-mdm:customer-mdm-presentation:customer-mdm-swagger:bootRun` |
+|  9. | Start Airline-Approval MDM Service    | `gradle :airline-approval:airline-approval-container:bootRun`                 |
+| 10. | Start Payment Service                 | `gradle :payment-service:payment-container:bootRun`                           |
+| 11. | Start Order Service                   | `gradle :order-service:order-container:bootRun`                               |
+| 12. | Start Order Service Swagger           | `gradle :order-service:order-presentation:order-swagger:bootRun`              |
 
 ## Operation
 
-Add master data:
-
-Create an airline with 2 flights:
-
 ### Create an airline with 2 flights
 
-POST `localhost:8183/airlines` with body:
+[POST `localhost:8183/airlines`](http://localhost:8283/index.html#operations-airlines-createAirline) with body:
 
 ```json
 {
@@ -79,7 +76,8 @@ it will actually need.
 
 ### Load the airline to get the flightIds.
 
-GET `localhost:8183/airlines/<airlineId>`
+[GET `localhost:8183/airlines/<airlineId>`](http://localhost:8283/index.html#operations-airlines-getAirlineById) with
+body:
 
 Output:
 
@@ -115,7 +113,7 @@ Note that the output includes the IDs of the new entities.
 
 ### Create a customer
 
-POST `localhost:8185/customers` with body:
+[POST `localhost:8185/customers`](http://localhost:8285/index.html#operations-customers-createCustomer) with body:
 
 ```json
 {
@@ -146,7 +144,8 @@ data that it will actually need.
 
 ### Load the customer
 
-GET `localhost:8185/customers/<customerId>`
+[GET `localhost:8185/customers/<customerId>`](http://localhost:8285/index.html#operations-customers-getCustomerById)
+with body:
 
 Output:
 
@@ -163,7 +162,7 @@ Output:
 
 ### Create an order
 
-POST `localhost:8181/orders` with body:
+[POST `localhost:8281/orders`](http://localhost:8281/index.html#operations-orders-createOrder) with body:
 
 ```json
 {
@@ -195,7 +194,8 @@ Output:
 
 ### Load the order
 
-GET `localhost:8181/orders/c721bfe2-791c-454c-85cd-464d07aafe5f`
+[GET `localhost:8281/orders/c721bfe2-791c-454c-85cd-464d07aafe5f`](http://localhost:8281/index.html#operations-orders-getOrderByTrackingId)
+with body:
 
 ```json
 {

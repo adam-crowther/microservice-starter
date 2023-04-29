@@ -35,6 +35,11 @@ dependencies {
     implementation libs.spring.context
     implementation libs.spring.data.commons
     implementation libs.spring.data.jpa
+    implementation libs.spring.web
+    implementation libs.spring.webmvc
+    // implementation libs.spring.security.core
+    // implementation libs.spring.security.config
+    // implementation libs.spring.security.web
 
     runtimeOnly libs.jackson.databind
     runtimeOnly libs.jackson.dataformat.yaml
@@ -43,6 +48,7 @@ dependencies {
     runtimeOnly libs.log4j.slf4j
     runtimeOnly libs.postgresql.driver
     runtimeOnly libs.spring.boot.data.jpa
+    // runtimeOnly libs.spring.boot.security
     runtimeOnly libs.spring.boot.validation
     runtimeOnly libs.spring.boot.web
 }

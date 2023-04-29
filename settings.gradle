@@ -1,38 +1,28 @@
 rootProject.name = 'ticketing'
 
-include 'airline-mdm'
 include 'airline-mdm:airline-mdm-container'
 findProject(':airline-mdm:airline-mdm-container')?.name = 'airline-mdm-container'
-include 'airline-mdm:airline-mdm-domain'
-findProject(':airline-mdm:airline-mdm-domain')?.name = 'airline-mdm-domain'
 include 'airline-mdm:airline-mdm-domain:airline-mdm-domain-core'
 findProject(':airline-mdm:airline-mdm-domain:airline-mdm-domain-core')?.name = 'airline-mdm-domain-core'
 include 'airline-mdm:airline-mdm-domain:airline-mdm-application-service'
 findProject(':airline-mdm:airline-mdm-domain:airline-mdm-application-service')?.name = 'airline-mdm-application-service'
-include 'airline-mdm:airline-mdm-infrastructure'
-findProject(':airline-mdm:airline-mdm-infrastructure')?.name = 'airline-mdm-infrastructure'
 include 'airline-mdm:airline-mdm-infrastructure:airline-mdm-data-access'
 findProject(':airline-mdm:airline-mdm-infrastructure:airline-mdm-data-access')?.name = 'airline-mdm-data-access'
 include 'airline-mdm:airline-mdm-infrastructure:airline-mdm-messaging'
 findProject(':airline-mdm:airline-mdm-infrastructure:airline-mdm-messaging')?.name = 'airline-mdm-messaging'
-include 'airline-mdm:airline-mdm-presentation'
-findProject(':airline-mdm:airline-mdm-presentation')?.name = 'airline-mdm-presentation'
 include 'airline-mdm:airline-mdm-presentation:airline-mdm-api-spec'
 findProject(':airline-mdm:airline-mdm-presentation:airline-mdm-api-spec')?.name = 'airline-mdm-api-spec'
 include 'airline-mdm:airline-mdm-presentation:airline-mdm-rest-controller'
 findProject(':airline-mdm:airline-mdm-presentation:airline-mdm-rest-controller')?.name = 'airline-mdm-rest-controller'
+include 'airline-mdm:airline-mdm-presentation:airline-mdm-swagger'
+findProject(':airline-mdm:airline-mdm-presentation:airline-mdm-swagger')?.name = 'airline-mdm-swagger'
 
-include 'airline-approval-service'
 include 'airline-approval-service:airline-approval-container'
 findProject(':airline-approval-service:airline-approval-container')?.name = 'airline-approval-container'
-include 'airline-approval-service:airline-approval-domain'
-findProject(':airline-approval-service:airline-approval-domain')?.name = 'airline-approval-domain'
 include 'airline-approval-service:airline-approval-domain:airline-approval-domain-core'
 findProject(':airline-approval-service:airline-approval-domain:airline-approval-domain-core')?.name = 'airline-approval-domain-core'
 include 'airline-approval-service:airline-approval-domain:airline-approval-application-service'
 findProject(':airline-approval-service:airline-approval-domain:airline-approval-application-service')?.name = 'airline-approval-application-service'
-include 'airline-approval-service:airline-approval-infrastructure'
-findProject(':airline-approval-service:airline-approval-infrastructure')?.name = 'airline-approval-infrastructure'
 include 'airline-approval-service:airline-approval-infrastructure:airline-approval-data-access'
 findProject(':airline-approval-service:airline-approval-infrastructure:airline-approval-data-access')?.name = 'airline-approval-data-access'
 include 'airline-approval-service:airline-approval-infrastructure:airline-approval-messaging'
@@ -56,61 +46,46 @@ findProject(':common:common-kafka:kafka-model')?.name = 'kafka-model'
 include 'common:common-saga'
 findProject(':common:common-saga')?.name = 'common-saga'
 
-include 'customer-mdm'
 include 'customer-mdm:customer-mdm-container'
 findProject(':customer-mdm:customer-mdm-container')?.name = 'customer-mdm-container'
-include 'customer-mdm:customer-mdm-domain'
-findProject(':customer-mdm:customer-mdm-domain')?.name = 'customer-mdm-domain'
 include 'customer-mdm:customer-mdm-domain:customer-mdm-domain-core'
 findProject(':customer-mdm:customer-mdm-domain:customer-mdm-domain-core')?.name = 'customer-mdm-domain-core'
 include 'customer-mdm:customer-mdm-domain:customer-mdm-application-service'
 findProject(':customer-mdm:customer-mdm-domain:customer-mdm-application-service')?.name = 'customer-mdm-application-service'
-include 'customer-mdm:customer-mdm-infrastructure'
-findProject(':customer-mdm:customer-mdm-infrastructure')?.name = 'customer-mdm-infrastructure'
 include 'customer-mdm:customer-mdm-infrastructure:customer-mdm-data-access'
 findProject(':customer-mdm:customer-mdm-infrastructure:customer-mdm-data-access')?.name = 'customer-mdm-data-access'
 include 'customer-mdm:customer-mdm-infrastructure:customer-mdm-messaging'
 findProject(':customer-mdm:customer-mdm-infrastructure:customer-mdm-messaging')?.name = 'customer-mdm-messaging'
-include 'customer-mdm:customer-mdm-presentation'
-findProject(':customer-mdm:customer-mdm-presentation')?.name = 'customer-mdm-presentation'
 include 'customer-mdm:customer-mdm-presentation:customer-mdm-api-spec'
 findProject(':customer-mdm:customer-mdm-presentation:customer-mdm-api-spec')?.name = 'customer-mdm-api-spec'
 include 'customer-mdm:customer-mdm-presentation:customer-mdm-rest-controller'
 findProject(':customer-mdm:customer-mdm-presentation:customer-mdm-rest-controller')?.name = 'customer-mdm-rest-controller'
+include 'customer-mdm:customer-mdm-presentation:customer-mdm-swagger'
+findProject(':customer-mdm:customer-mdm-presentation:customer-mdm-swagger')?.name = 'customer-mdm-swagger'
 
-include 'order-service'
 include 'order-service:order-container'
 findProject(':order-service:order-container')?.name = 'order-container'
-include 'order-service:order-domain'
-findProject(':order-service:order-domain')?.name = 'order-domain'
 include 'order-service:order-domain:order-domain-core'
 findProject(':order-service:order-domain:order-domain-core')?.name = 'order-domain-core'
 include 'order-service:order-domain:order-application-service'
 findProject(':order-service:order-domain:order-application-service')?.name = 'order-application-service'
-include 'order-service:order-infrastructure'
-findProject(':order-service:order-infrastructure')?.name = 'order-infrastructure'
 include 'order-service:order-infrastructure:order-data-access'
 findProject(':order-service:order-infrastructure:order-data-access')?.name = 'order-data-access'
 include 'order-service:order-infrastructure:order-messaging'
 findProject(':order-service:order-infrastructure:order-messaging')?.name = 'order-messaging'
-include 'order-service:order-presentation'
-findProject(':order-service:order-presentation')?.name = 'order-presentation'
 include 'order-service:order-presentation:order-api-spec'
 findProject(':order-service:order-presentation:order-api-spec')?.name = 'order-api-spec'
 include 'order-service:order-presentation:order-rest-controller'
 findProject(':order-service:order-presentation:order-rest-controller')?.name = 'order-rest-controller'
+include 'order-service:order-presentation:order-swagger'
+findProject(':order-service:order-presentation:order-swagger')?.name = 'order-swagger'
 
-include 'payment-service'
 include 'payment-service:payment-container'
 findProject(':payment-service:payment-container')?.name = 'payment-container'
-include 'payment-service:payment-domain'
-findProject(':payment-service:payment-domain')?.name = 'payment-domain'
 include 'payment-service:payment-domain:payment-domain-core'
 findProject(':payment-service:payment-domain:payment-domain-core')?.name = 'payment-domain-core'
 include 'payment-service:payment-domain:payment-application-service'
 findProject(':payment-service:payment-domain:payment-application-service')?.name = 'payment-application-service'
-include 'payment-service:payment-infrastructure'
-findProject(':payment-service:payment-infrastructure')?.name = 'payment-infrastructure'
 include 'payment-service:payment-infrastructure:payment-data-access'
 findProject(':payment-service:payment-infrastructure:payment-data-access')?.name = 'payment-data-access'
 include 'payment-service:payment-infrastructure:payment-messaging'
@@ -165,7 +140,6 @@ dependencyResolutionManagement {
 
             // Spring
             version('spring', '6.0.7')
-            version('springBoot', '3.0.5')
             library('spring-core', 'org.springframework', 'spring-core').versionRef('spring')
             library('spring-beans', 'org.springframework', 'spring-beans').versionRef('spring')
             library('spring-context', 'org.springframework', 'spring-context').versionRef('spring')
@@ -176,20 +150,31 @@ dependencyResolutionManagement {
             library('spring-validation', 'org.springframework', 'spring-validation').versionRef('spring')
             library('spring-test', 'org.springframework', 'spring-test').versionRef('spring')
 
+            // Spring Security
+            version('springSecurity', '6.0.3')
+            library('spring-security-core', 'org.springframework.security', 'spring-security-core').versionRef('springSecurity')
+            library('spring-security-config', 'org.springframework.security', 'spring-security-config').versionRef('springSecurity')
+            library('spring-security-web', 'org.springframework.security', 'spring-security-web').versionRef('springSecurity')
+
             // Spring Data
             version('springData', '3.0.5')
             library('spring-data-commons', 'org.springframework.data', 'spring-data-commons').versionRef('springData')
             library('spring-data-jpa', 'org.springframework.data', 'spring-data-jpa').versionRef('springData')
 
             // Spring Boot
+            version('springBoot', '3.0.5')
             library('spring-boot-core', 'org.springframework.boot', 'spring-boot').versionRef('springBoot')
             library('spring-boot-autoconfigure', 'org.springframework.boot', 'spring-boot-autoconfigure').versionRef('springBoot')
             library('spring-boot-data-jpa', 'org.springframework.boot', 'spring-boot-starter-data-jpa').versionRef('springBoot')
             library('spring-boot-thymeleaf', 'org.springframework.boot', 'spring-boot-starter-thymeleaf').versionRef('springBoot')
             library('spring-boot-validation', 'org.springframework.boot', 'spring-boot-starter-validation').versionRef('springBoot')
+            library('spring-boot-security', 'org.springframework.boot', 'spring-boot-starter-security').versionRef('springBoot')
             library('spring-boot-web', 'org.springframework.boot', 'spring-boot-starter-web').versionRef('springBoot')
             library('spring-boot-configuration-processor', 'org.springframework.boot', 'spring-boot-configuration-processor').versionRef('springBoot')
             library('spring-boot-test', 'org.springframework.boot', 'spring-boot-test').versionRef('springBoot')
+
+            // Springfox / Swagger
+            library('springfox.boot.starter', 'io.springfox', 'springfox-boot-starter').version('3.0.0')
 
             // Postgres
             library('postgresql-driver', 'org.postgresql', 'postgresql').version('42.6.0')
@@ -215,6 +200,7 @@ dependencyResolutionManagement {
             library('swagger-core', 'io.swagger.core.v3', 'swagger-core').versionRef('swaggerAnnotations')
             library('swagger-annotations', 'io.swagger.core.v3', 'swagger-annotations').versionRef('swaggerAnnotations')
             library('openapitools-jackson-databind-nullable', 'org.openapitools', 'jackson-databind-nullable').version('0.2.6')
+            library('swagger-ui', 'org.webjars', 'swagger-ui').version('4.1.3')
 
             version('junit', '5.9.2')
             version('mockito', '5.2.0')
@@ -235,9 +221,7 @@ dependencyResolutionManagement {
             plugin('docker-compose', 'com.avast.gradle.docker-compose').version('0.16.12')
             plugin('spring-boot', 'org.springframework.boot').version('3.0.5')
             plugin('spotbugs', 'com.github.spotbugs').version('5.0.14')
+            plugin('swagger', 'org.hidetake.swagger.generator').version('2.19.2')
         }
     }
 }
-include 'common:common-application'
-findProject(':common:common-application')?.name = 'common-application'
-

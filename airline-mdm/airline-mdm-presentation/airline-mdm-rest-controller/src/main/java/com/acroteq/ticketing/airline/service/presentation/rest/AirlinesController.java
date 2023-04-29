@@ -18,6 +18,7 @@ import com.acroteq.ticketing.airline.service.presentation.model.UpdateAirlineCom
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:${airline-service.swagger-port}")
 public class AirlinesController implements AirlinesApi {
 
   private final AirlineDtoToApiMapper createMapper;

@@ -15,6 +15,7 @@ import com.acroteq.ticketing.order.service.presentation.model.Order;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
@@ -26,6 +27,7 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:${order-service.swagger-port}")
 public class OrderController implements OrdersApi {
 
   private final CreateOrderCommandApiToDtoMapper createOrderCommandApiToDtoMapper;

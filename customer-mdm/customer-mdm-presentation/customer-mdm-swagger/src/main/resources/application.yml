@@ -1,0 +1,10 @@
+server:
+  port: 8285
+
+spring:
+  main:
+    banner-mode: off
+
+logging:
+  level:
+    root: WARN

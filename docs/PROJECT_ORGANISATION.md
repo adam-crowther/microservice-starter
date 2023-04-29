@@ -83,11 +83,11 @@
               define a DTO (=Data Transfer Object) model for that purpose.
             - The DTO model is used in the external interface (Input and Output Ports), and is defined
               in terms of interactions:  Queries (Request e.g.
-              [TrackOrderQueryDto](/order-service/order-domain/order-application-service/src/main/java/com/acroteq/ticketing/order/service/domain/dto/track/TrackOrderQueryDto.java)
+              [TrackOrderQueryDto](../order-service/order-domain/order-application-service/src/main/java/com/acroteq/ticketing/order/service/domain/dto/track/TrackOrderQueryDto.java)
               and Response
-              [TrackOrderResponseDto](/order-service/order-domain/order-application-service/src/main/java/com/acroteq/ticketing/order/service/domain/dto/track/TrackOrderResponseDto.java)
+              [TrackOrderResponseDto](../order-service/order-domain/order-application-service/src/main/java/com/acroteq/ticketing/order/service/domain/dto/track/TrackOrderResponseDto.java)
               ) and Commands (e.g.
-              [CreateOrderCommandDto](./order-service/order-domain/order-application-service/src/main/java/com/acroteq/ticketing/order/service/domain/dto/create/CreateOrderCommandDto.java)
+              [CreateOrderCommandDto](../order-service/order-domain/order-application-service/src/main/java/com/acroteq/ticketing/order/service/domain/dto/create/CreateOrderCommandDto.java)
               ).
 
   ### `xxxx-presentation`
@@ -111,33 +111,40 @@
         - The controller implementation converts the external API model to the internal DTO model, which is used to
           invoke the application service.  (We do **not** want the external API model bleeding in to the Domain layer.)
         - The application service implementation is injected in to the REST controller. (No inversion of control here).
+        - The REST API is configured on port 818x.
+      #### `xxxx-swagger`
+        - Auto-generates a Swagger UI that delegates to the `xxxx-rest-controller` microservice.
+        - The Swagger UI is a pure client-side Javascript application, that is served by its own Spring Application.
+        - For more information see [REST_API.md](REST_API.md#swagger-ui)
 
-  ### `xxxx-infrastructure`
-    - Provides the implementations for all Input and Output Ports except for the REST API, which is provided by
-      the `xxxx-application` submodule.
-    - Implementations are injected into the Domain Application-Service layer using Spring IOC.
-    - By definition, implementations are specific to and specialised for the backend applications that they
-      integrate, e.g. PostgreSQL and Kafka. The abstract, implementation-agnostic interfaces are defined by the
-      Input and Output Ports.
-      #### `xxxx-data-access`
-        - Contains the database schema definition and integration code.
-        - Provides the Output Port adapters for the Repository interfaces that are defined in the
-          `xxxx-application-service` submodule, and are injected there, into the application service implementation
-          (IOC).
-        - In this implementation, Entities are defined using JPA annotations.
-        - Mapping is done between the JPA Entity and the Domain Entity Models using Mapstruct. We don't want to bleed
-          the details of the JPA integration in to the Domain Core.
-        - Integration is handled by Spring-Data via `JpaRepository`.
-        - Database initialisation and migration is done using Liquibase.
-      #### `xxxx-messaging`
-        - Implements Kafka Message Listeners which delegate to the Listeners that are implemented in the
-          `xxxx-application-service` submodule.
-        - Implements Kafka Message Publishers, which implement the Publisher interface that is defined in the
-          `xxxx-application-service` submodule, and are injected there, into the listener and application service
-          implementations (IOC).
+### `xxxx-infrastructure`
 
-  ### `xxxx-container`
-    - Integrates all the above submodules together in a `@SpringBootApplication`.
+- Provides the implementations for all Input and Output Ports except for the REST API, which is provided by
+  the `xxxx-application` submodule.
+- Implementations are injected into the Domain Application-Service layer using Spring IOC.
+- By definition, implementations are specific to and specialised for the backend applications that they
+  integrate, e.g. PostgreSQL and Kafka. The abstract, implementation-agnostic interfaces are defined by the
+  Input and Output Ports.
+  #### `xxxx-data-access`
+    - Contains the database schema definition and integration code.
+    - Provides the Output Port adapters for the Repository interfaces that are defined in the
+      `xxxx-application-service` submodule, and are injected there, into the application service implementation
+      (IOC).
+    - In this implementation, Entities are defined using JPA annotations.
+    - Mapping is done between the JPA Entity and the Domain Entity Models using Mapstruct. We don't want to bleed
+      the details of the JPA integration in to the Domain Core.
+    - Integration is handled by Spring-Data via `JpaRepository`.
+    - Database initialisation and migration is done using Liquibase.
+  #### `xxxx-messaging`
+    - Implements Kafka Message Listeners which delegate to the Listeners that are implemented in the
+      `xxxx-application-service` submodule.
+    - Implements Kafka Message Publishers, which implement the Publisher interface that is defined in the
+      `xxxx-application-service` submodule, and are injected there, into the listener and application service
+      implementations (IOC).
+
+### `xxxx-container`
+
+- Integrates all the above submodules together in a `@SpringBootApplication`.
 
 ## Submodules
 
@@ -174,7 +181,8 @@ ticketing
 │   │   └── airline-mdm-messaging
 │   └── airline-mdm-presentation
 │       ├── airline-mdm-api-spec
-│       └── airline-mdm-rest-controller
+│       ├── airline-mdm-rest-controller
+│       └── airline-mdm-swagger
 ├── common
 │   ├── common-application
 │   ├── common-domain
@@ -194,7 +202,8 @@ ticketing
 │   │   └── customer-mdm-messaging
 │   └── customer-mdm-presentation
 │       ├── customer-mdm-api-spec
-│       └── customer-mdm-rest-controller
+│       ├── customer-mdm-rest-controller
+│       └── customer-mdm-swagger
 ├── docs
 │   └── images
 ├── infrastructure
@@ -210,7 +219,8 @@ ticketing
 │   │   └── order-messaging
 │   └── order-presentation
 │       ├── order-api-spec
-│       └── order-rest-controller
+│       ├── order-rest-controller
+│       └── order-swagger
 ├── payment-service
 │   ├── payment-container
 │   ├── payment-domain

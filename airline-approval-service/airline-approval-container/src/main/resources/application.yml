@@ -18,7 +18,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=airline&binaryTransfer=true&reWriteBatchedInserts=true&stringType=unspecified
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=airline_approval&binaryTransfer=true&reWriteBatchedInserts=true&stringType=unspecified
     username: postgres
     password: password
     driver-class-name: org.postgresql.Driver

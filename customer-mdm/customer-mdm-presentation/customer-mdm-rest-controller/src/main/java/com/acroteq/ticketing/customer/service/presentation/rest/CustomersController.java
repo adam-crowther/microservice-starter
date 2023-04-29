@@ -18,6 +18,7 @@ import com.acroteq.ticketing.customer.service.presentation.model.UpdateCustomerC
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:${customer-service.swagger-port}")
 public class CustomersController implements CustomersApi {
 
   private final CustomerDtoToApiMapper createMapper;

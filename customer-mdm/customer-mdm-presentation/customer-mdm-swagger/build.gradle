@@ -1,0 +1,71 @@
+plugins {
+    id 'java'
+    alias pluginLibs.plugins.spring.boot
+    alias pluginLibs.plugins.swagger
+}
+
+compileJava {
+    sourceCompatibility = javaSourceCompatibility
+    targetCompatibility = javaTargetCompatibility
+    options.compilerArgs += [
+            '-Xlint:deprecation'
+    ]
+}
+
+dependencies {
+    implementation libs.spring.boot.autoconfigure
+    implementation libs.spring.boot.core
+    implementation libs.spring.webmvc
+    implementation libs.google.guava
+
+    runtimeOnly libs.spring.boot.web
+
+    swaggerUI libs.swagger.ui
+}
+
+springBoot {
+    mainClass = springApplicationClass
+}
+
+bootBuildImage {
+    imageName = "${dockerNamespace}/${rootProject.name}/${project.name}:${project.version}"
+}
+
+swaggerSources {
+    ticketing {
+        inputFile = file("${buildDir}/openapi/openapi.yaml")
+        ui {
+            outputDir = file("$buildDir/swagger-html/resources")
+        }
+    }
+}
+
+tasks.register('copySpec', Copy) {
+    def specProject = project(openApiSpecSubmodule)
+
+    from specProject.layout.files('/src/main/spec/openapi.yaml')
+    into "${buildDir}/openapi"
+
+    doLast {
+        def specFile = new File("${buildDir}/openapi/openapi.yaml")
+        specFile.append("\nservers:" +
+                "\n  - url: //${swaggerRestServerUrl}" +
+                "\n    description: ${swaggerRestServerDescription}\n")
+    }
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs "${buildDir}/openapi", "$buildDir/swagger-html"
+        }
+    }
+}
+
+generateSwaggerUITicketing {
+    dependsOn tasks.named('copySpec')
+}
+
+processResources {
+    dependsOn generateSwaggerUI
+}

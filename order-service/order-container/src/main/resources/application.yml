@@ -8,6 +8,7 @@ order-service:
   airline-approval-response-topic-name: airline-approval-response
   customer-event-topic-name: customer-event
   airline-event-topic-name: airline-event
+  swagger-port: 8281
 
 spring:
   main:

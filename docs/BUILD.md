@@ -104,7 +104,7 @@ Uses Docker Compose to start up a clean PostgreSQL database.
 
 |                          | Gradle command            | Task dependencies |
 |--------------------------|:--------------------------|-------------------|
-| Generate the HTML report | `gradle jacocoTestReport` | Test              |
+| Generate the HTML report | `gradle jacocoTestReport` | Compile Test      |
 
 ### Gradle Lint
 

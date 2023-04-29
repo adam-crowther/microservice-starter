@@ -13,7 +13,7 @@ All Gradle plugins are integrated and configured, so the gradle build should wor
 
 The project is not fully fleshed out with modelling, business logic and tests.
 
-See [INSTALL.md](docs/INSTALL.md) for instructions on how to run the microservices.
+See [USAGE.md](docs/USAGE.md) for instructions on how to run the microservices.
 
 See the following documentation for more information:
 

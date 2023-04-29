@@ -1,0 +1,10 @@
+server:
+  port: 8283
+
+spring:
+  main:
+    banner-mode: off
+
+logging:
+  level:
+    root: WARN

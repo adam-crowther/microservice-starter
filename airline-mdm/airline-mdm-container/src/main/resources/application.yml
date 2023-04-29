@@ -3,6 +3,7 @@ server:
 
 airline-service:
   airline-event-topic-name: airline-event
+  swagger-port: 8283
 
 spring:
   main:
@@ -16,7 +17,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=airline&binaryTransfer=true&reWriteBatchedInserts=true&stringType=unspecified
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=airline_master&binaryTransfer=true&reWriteBatchedInserts=true&stringType=unspecified
     username: postgres
     password: password
     driver-class-name: org.postgresql.Driver
