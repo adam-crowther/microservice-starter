@@ -21,8 +21,9 @@ repositories {
 }
 
 dependencies {
-    implementation project(":common:common-domain")
     implementation project(":common:common-application")
+    implementation project(":common:common-domain")
+    implementation project(":common:common-infrastructure")
     implementation project(":airline-mdm:airline-mdm-domain:airline-mdm-application-service")
     implementation project(":airline-mdm:airline-mdm-domain:airline-mdm-domain-core")
     implementation project(":common:common-kafka:kafka-model")

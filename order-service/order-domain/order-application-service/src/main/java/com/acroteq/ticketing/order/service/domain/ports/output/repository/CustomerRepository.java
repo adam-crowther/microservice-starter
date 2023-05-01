@@ -7,11 +7,13 @@ import java.util.Optional;
 
 public interface CustomerRepository {
 
-  Optional<Customer> findCustomer(CustomerId customerId);
+  Optional<Customer> findById(CustomerId customerId);
 
-  boolean customerExists(CustomerId customerId);
+  boolean existsById(CustomerId customerId);
 
-  Customer saveCustomer(Customer customer);
+  Customer insert(Customer customer);
 
-  void deleteCustomer(CustomerId customerId);
+  Customer update(Customer customer);
+
+  void deleteById(CustomerId customerId);
 }

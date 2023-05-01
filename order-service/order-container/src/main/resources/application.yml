@@ -2,13 +2,22 @@ server:
   port: 8181
 
 order-service:
-  payment-request-topic-name: payment-request
-  payment-response-topic-name: payment-response
-  airline-approval-request-topic-name: airline-approval-request
-  airline-approval-response-topic-name: airline-approval-response
-  customer-event-topic-name: customer-event
-  airline-event-topic-name: airline-event
   swagger-port: 8281
+  payment:
+    consumer-group-id: payment-consumer-group
+    request-topic-name: payment-request
+    response-topic-name: payment-response
+  airline-approval:
+    consumer-group-id: airline-approval-consumer-group
+    request-topic-name: airline-approval-request
+    response-topic-name: airline-approval-response
+  airline-event:
+    consumer-group-id: airline-event-consumer-group
+    topic-name: airline-event
+  customer-event:
+    consumer-group-id: customer-event-consumer-group
+    topic-name: customer-event
+
 
 spring:
   main:
@@ -34,41 +43,46 @@ spring:
     change-log: "classpath:db/changelog/changelog-master.yaml"
     default-schema: orders
 
-kafka-config:
+kafka:
   bootstrap-servers: localhost:19092, localhost:29092, localhost:39092
   schema-registry-url-key: schema.registry.url
   schema-registry-url: http://localhost:8081
   num-of-partitions: 3
   replication-factor: 3
-
-kafka-producer-config:
-  key-serializer-class: org.apache.kafka.common.serialization.StringSerializer
-  value-serializer-class: io.confluent.kafka.serializers.KafkaAvroSerializer
-  compression-type: snappy
-  acks: all
-  batch-size: 16384
-  batch-size-boost-factor: 100
-  linger-ms: 5
-  request-timeout-ms: 60000
-  retry-count: 5
-
-kafka-consumer-config:
-  key-deserializer-class: org.apache.kafka.common.serialization.StringDeserializer
-  value-deserializer-class: io.confluent.kafka.serializers.KafkaAvroDeserializer
-  payment-consumer-group-id: payment-consumer-group
-  airline-approval-consumer-group-id: airline-approval-consumer-group
-  customer-event-consumer-group-id: customer-event-consumer-group
-  airline-event-consumer-group-id: airline-event-consumer-group
-  auto-offset-reset: earliest
-  specific-avro-reader-key: specific.avro.reader
-  specific-avro-reader: true
-  batch-listener: true
-  auto-startup: true
-  concurrency-level: 3
-  session-timeout-ms: 10000
-  heartbeat-interval-ms: 3000
-  max-poll-interval-ms: 300000
-  max-poll-records: 500
-  max-partition-fetch-bytes-default: 1048576
-  max-partition-fetch-bytes-boost-factor: 1
-  poll-timeout-ms: 150
+  producer:
+    acks: all
+    batch-size: 16384
+    batch-size-boost-factor: 100
+    linger-ms: 5
+    request-timeout-ms: 60000
+    retry-count: 5
+    serialisation:
+      key-serializer-class: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer-class: io.confluent.kafka.serializers.KafkaAvroSerializer
+      compression-type: snappy
+  consumer:
+    auto-offset-reset: earliest
+    batch-listener: true
+    auto-startup: true
+    concurrency-level: 3
+    deserialisation:
+      key-deserializer-class: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer-class: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      specific-avro-reader-key: specific.avro.reader
+      specific-avro-reader: true
+    group-management:
+      session-timeout-ms: 10000
+      heartbeat-interval-ms: 3000
+    polling:
+      max-poll-interval-ms: 300000
+      max-poll-records: 500
+      max-partition-fetch-bytes-default: 1048576
+      max-partition-fetch-bytes-boost-factor: 1
+      poll-timeout-ms: 150
+    dead-letter:
+      suffix: -dlt
+    backoff:
+      max-retries: 3
+      initial-interval-in-seconds: 10
+      multiplier: 2
+      max-interval-in-seconds: 40

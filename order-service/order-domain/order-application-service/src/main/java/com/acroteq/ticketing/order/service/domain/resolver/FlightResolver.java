@@ -16,7 +16,7 @@ public class FlightResolver implements Resolver<FlightId, Flight> {
 
   @Override
   public Flight resolve(final FlightId flightId) {
-    return flightRepository.findFlight(flightId)
+    return flightRepository.findById(flightId)
                            .orElseThrow(() -> new FlightNotFoundException(flightId));
   }
 

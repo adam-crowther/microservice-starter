@@ -1,0 +1,19 @@
+package com.acroteq.ticketing.order.service.messaging.mapper.payment;
+
+import com.acroteq.ticketing.application.mapper.ValidationResultMapper;
+import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
+import com.acroteq.ticketing.infrastructure.mapper.MessageToDtoMapper;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentPaidResponseMessage;
+import com.acroteq.ticketing.order.service.domain.dto.message.PaymentPaidResponseDto;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+@Mapper(uses = { CurrencyIdMapper.class, ValidationResultMapper.class })
+public interface PaymentPaidResponseMessageToDtoMapper
+    extends MessageToDtoMapper<PaymentPaidResponseMessage, PaymentPaidResponseDto> {
+
+  @Mapping(target = "value.currencyId", source = "valueCurrencyId")
+  @Mapping(target = "value.amount", source = "valueAmount")
+  @Override
+  PaymentPaidResponseDto convertMessageToDto(PaymentPaidResponseMessage message);
+}

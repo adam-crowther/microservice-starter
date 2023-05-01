@@ -2,6 +2,7 @@ package com.acroteq.ticketing.approval.service.domain.dto;
 
 import static lombok.AccessLevel.PRIVATE;
 
+import com.acroteq.ticketing.application.dto.Dto;
 import com.acroteq.ticketing.domain.valueobject.OrderStatus;
 import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @Getter
 @Builder
 @AllArgsConstructor(access = PRIVATE)
-public class AirlineApprovalRequestDto {
+public class AirlineApprovalRequestDto implements Dto {
 
   @NotNull
   private final UUID sagaId;
@@ -32,6 +33,10 @@ public class AirlineApprovalRequestDto {
   private final ImmutableList<OrderItemDto> items;
   @NotNull
   private final Instant createdDateTime;
+
+  public Long getId() {
+    return orderId;
+  }
 
   @SuppressWarnings("PublicInnerClass")
   public static class AirlineApprovalRequestDtoBuilder {

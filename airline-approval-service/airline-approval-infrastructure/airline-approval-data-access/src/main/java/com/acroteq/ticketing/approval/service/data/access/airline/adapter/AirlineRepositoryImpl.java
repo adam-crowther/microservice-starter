@@ -1,6 +1,8 @@
 package com.acroteq.ticketing.approval.service.data.access.airline.adapter;
 
 import com.acroteq.ticketing.approval.service.data.access.airline.entity.AirlineJpaEntity;
+import com.acroteq.ticketing.approval.service.data.access.airline.exception.AirlineAlreadyExistsException;
+import com.acroteq.ticketing.approval.service.data.access.airline.exception.AirlineMissingIdException;
 import com.acroteq.ticketing.approval.service.data.access.airline.mapper.AirlineDomainToJpaMapper;
 import com.acroteq.ticketing.approval.service.data.access.airline.mapper.AirlineJpaToDomainMapper;
 import com.acroteq.ticketing.approval.service.data.access.airline.repository.AirlineJpaRepository;
@@ -16,31 +18,43 @@ import java.util.Optional;
 @Component
 public class AirlineRepositoryImpl implements AirlineRepository {
 
-  private final AirlineJpaRepository airlineJpaRepository;
+  private final AirlineJpaRepository jpaRepository;
   private final AirlineJpaToDomainMapper jpaToDomainMapper;
   private final AirlineDomainToJpaMapper domainToJpaMapper;
 
   @Override
-  public Optional<Airline> loadAirline(final AirlineId airlineId) {
-    return airlineJpaRepository.findById(airlineId.getValue())
-                               .map(jpaToDomainMapper::convertJpaToDomain);
+  public Optional<Airline> findById(final AirlineId airlineId) {
+    return jpaRepository.findById(airlineId.getValue())
+                        .map(jpaToDomainMapper::convertJpaToDomain);
   }
 
   @Override
-  public Airline save(final Airline airline) {
+  public Airline insert(final Airline airline) {
+    final AirlineId airlineId = airline.getId();
+    checkDoesNotAlreadyExist(airlineId);
     final AirlineJpaEntity airlineJpaEntity = domainToJpaMapper.convertDomainToJpa(airline);
-    final AirlineJpaEntity savedEntity = airlineJpaRepository.save(airlineJpaEntity);
+    final AirlineJpaEntity savedEntity = jpaRepository.save(airlineJpaEntity);
+    return jpaToDomainMapper.convertJpaToDomain(savedEntity);
+  }
+
+  private void checkDoesNotAlreadyExist(final AirlineId airlineId) {
+    final Long id = Optional.ofNullable(airlineId)
+                            .map(AirlineId::getValue)
+                            .orElseThrow(AirlineMissingIdException::new);
+    if (jpaRepository.existsById(id)) {
+      throw new AirlineAlreadyExistsException(airlineId);
+    }
+  }
+
+  @Override
+  public Airline update(final Airline airline) {
+    final AirlineJpaEntity airlineJpaEntity = domainToJpaMapper.convertDomainToJpa(airline);
+    final AirlineJpaEntity savedEntity = jpaRepository.save(airlineJpaEntity);
     return jpaToDomainMapper.convertJpaToDomain(savedEntity);
   }
 
   @Override
-  public Optional<Airline> findById(final AirlineId airlineId) {
-    return airlineJpaRepository.findById(airlineId.getValue())
-                               .map(jpaToDomainMapper::convertJpaToDomain);
-  }
-
-  @Override
   public void deleteById(final AirlineId airlineId) {
-    airlineJpaRepository.deleteById(airlineId.getValue());
+    jpaRepository.deleteById(airlineId.getValue());
   }
 }

@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface FlightRepository {
 
-  Optional<Flight> findFlight(FlightId flightId);
+  Optional<Flight> findById(FlightId flightId);
 }

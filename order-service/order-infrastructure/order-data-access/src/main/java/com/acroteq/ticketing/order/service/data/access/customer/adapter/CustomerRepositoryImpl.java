@@ -2,6 +2,8 @@ package com.acroteq.ticketing.order.service.data.access.customer.adapter;
 
 import com.acroteq.ticketing.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.order.service.data.access.customer.entity.CustomerJpaEntity;
+import com.acroteq.ticketing.order.service.data.access.customer.exception.CustomerAlreadyExistsException;
+import com.acroteq.ticketing.order.service.data.access.customer.exception.CustomerMissingIdException;
 import com.acroteq.ticketing.order.service.data.access.customer.mapper.CustomerDomainToJpaMapper;
 import com.acroteq.ticketing.order.service.data.access.customer.mapper.CustomerJpaToDomainMapper;
 import com.acroteq.ticketing.order.service.data.access.customer.repository.CustomerJpaRepository;
@@ -16,32 +18,50 @@ import java.util.Optional;
 @Component
 public class CustomerRepositoryImpl implements CustomerRepository {
 
-  private final CustomerJpaRepository customerJpaRepository;
-  private final CustomerJpaToDomainMapper customerJpaToDomainMapper;
-  private final CustomerDomainToJpaMapper customerDomainToJpaMapper;
+  private final CustomerJpaRepository jpaRepository;
+  private final CustomerJpaToDomainMapper jpaToDomainMapper;
+  private final CustomerDomainToJpaMapper domainToJpaMapper;
 
   @Override
-  public Optional<Customer> findCustomer(final CustomerId customerId) {
+  public Optional<Customer> findById(final CustomerId customerId) {
     final Long id = customerId.getValue();
-    return customerJpaRepository.findById(id)
-                                .map(customerJpaToDomainMapper::convertJpaToDomain);
+    return jpaRepository.findById(id)
+                        .map(jpaToDomainMapper::convertJpaToDomain);
   }
 
   @Override
-  public boolean customerExists(final CustomerId customerId) {
+  public boolean existsById(final CustomerId customerId) {
     final Long id = customerId.getValue();
-    return customerJpaRepository.existsById(id);
+    return jpaRepository.existsById(id);
   }
 
   @Override
-  public Customer saveCustomer(final Customer customer) {
-    final CustomerJpaEntity customerJpaEntity = customerDomainToJpaMapper.convertDomainToJpa(customer);
-    final CustomerJpaEntity savedCustomerJpaEntity = customerJpaRepository.save(customerJpaEntity);
-    return customerJpaToDomainMapper.convertJpaToDomain(savedCustomerJpaEntity);
+  public Customer insert(final Customer customer) {
+    final CustomerId customerId = customer.getId();
+    checkDoesNotAlreadyExist(customerId);
+    final CustomerJpaEntity customerJpaEntity = domainToJpaMapper.convertDomainToJpa(customer);
+    final CustomerJpaEntity savedCustomerJpaEntity = jpaRepository.save(customerJpaEntity);
+    return jpaToDomainMapper.convertJpaToDomain(savedCustomerJpaEntity);
+  }
+
+  private void checkDoesNotAlreadyExist(final CustomerId customerId) {
+    final Long id = Optional.ofNullable(customerId)
+                            .map(CustomerId::getValue)
+                            .orElseThrow(CustomerMissingIdException::new);
+    if (jpaRepository.existsById(id)) {
+      throw new CustomerAlreadyExistsException(customerId);
+    }
   }
 
   @Override
-  public void deleteCustomer(final CustomerId customerId) {
-    customerJpaRepository.deleteById(customerId.getValue());
+  public Customer update(final Customer customer) {
+    final CustomerJpaEntity customerJpaEntity = domainToJpaMapper.convertDomainToJpa(customer);
+    final CustomerJpaEntity savedCustomerJpaEntity = jpaRepository.save(customerJpaEntity);
+    return jpaToDomainMapper.convertJpaToDomain(savedCustomerJpaEntity);
+  }
+
+  @Override
+  public void deleteById(final CustomerId customerId) {
+    jpaRepository.deleteById(customerId.getValue());
   }
 }

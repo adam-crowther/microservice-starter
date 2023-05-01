@@ -2,7 +2,8 @@ package com.acroteq.ticketing.order.service.domain;
 
 import com.acroteq.ticketing.domain.event.EmptyEvent;
 import com.acroteq.ticketing.domain.valueobject.OrderId;
-import com.acroteq.ticketing.order.service.domain.dto.message.PaymentResponseDto;
+import com.acroteq.ticketing.order.service.domain.dto.message.PaymentCancelledResponseDto;
+import com.acroteq.ticketing.order.service.domain.dto.message.PaymentPaidResponseDto;
 import com.acroteq.ticketing.order.service.domain.entity.Order;
 import com.acroteq.ticketing.order.service.domain.event.OrderPaidEvent;
 import com.acroteq.ticketing.order.service.domain.exception.OrderNotFoundException;
@@ -17,13 +18,14 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class OrderPaymentSaga implements SagaStep<PaymentResponseDto, OrderPaidEvent, EmptyEvent> {
+public class OrderPaymentSaga
+    implements SagaStep<PaymentPaidResponseDto, OrderPaidEvent, PaymentCancelledResponseDto, EmptyEvent> {
 
   private final OrderDomainService orderDomainService;
   private final OrderRepository orderRepository;
 
   @Override
-  public OrderPaidEvent process(final PaymentResponseDto paymentResponse) {
+  public OrderPaidEvent process(final PaymentPaidResponseDto paymentResponse) {
     final OrderId orderId = OrderId.of(paymentResponse.getOrderId());
     log.info("Completing payment for order with id {}", orderId);
     final Order order = orderRepository.findById(orderId)
@@ -40,7 +42,7 @@ public class OrderPaymentSaga implements SagaStep<PaymentResponseDto, OrderPaidE
   }
 
   @Override
-  public EmptyEvent rollback(final PaymentResponseDto paymentResponse) {
+  public EmptyEvent rollback(final PaymentCancelledResponseDto paymentResponse) {
     final OrderId orderId = OrderId.of(paymentResponse.getOrderId());
     log.info("Cancelling order with id {}", orderId);
     final Order order = orderRepository.findById(orderId)

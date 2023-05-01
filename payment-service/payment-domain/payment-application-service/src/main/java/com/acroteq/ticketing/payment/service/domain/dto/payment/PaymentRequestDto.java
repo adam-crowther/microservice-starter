@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.payment.service.domain.dto.payment;
 
+import com.acroteq.ticketing.application.dto.Dto;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.PaymentStatus;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,16 +10,11 @@ import java.util.UUID;
 
 @Getter
 @Builder
-public class PaymentRequestDto {
+public class PaymentRequestDto implements Dto {
 
-  private UUID sagaId;
-  private Long orderId;
-  private Long customerId;
-  private CashValue value;
-  private Instant createdDateTime;
-  private PaymentStatus paymentStatus;
-
-  public void setPaymentOrderStatus(final PaymentStatus paymentStatus) {
-    this.paymentStatus = paymentStatus;
-  }
+  private final UUID sagaId;
+  private final Long orderId;
+  private final Long customerId;
+  private final CashValue value;
+  private final Instant createdDateTime;
 }

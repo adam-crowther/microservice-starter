@@ -1,13 +1,13 @@
 package com.acroteq.ticketing.payment.service.messaging.publisher.kafka;
 
 import com.acroteq.ticketing.domain.valueobject.OrderId;
-import com.acroteq.ticketing.kafka.payment.avro.model.PaymentResponseMessage;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentCancelledResponseMessage;
 import com.acroteq.ticketing.kafka.producer.service.KafkaProducer;
-import com.acroteq.ticketing.payment.service.domain.config.PaymentServiceConfigData;
+import com.acroteq.ticketing.kafka.producer.service.callback.KafkaPublisherCallbackHandler;
+import com.acroteq.ticketing.payment.service.domain.config.PaymentServiceConfig;
 import com.acroteq.ticketing.payment.service.domain.event.PaymentCancelledEvent;
 import com.acroteq.ticketing.payment.service.domain.ports.output.message.publisher.PaymentCancelledMessagePublisher;
-import com.acroteq.ticketing.payment.service.messaging.mapper.PaymentResponseMessageFactory;
-import com.acroteq.ticketing.payment.service.messaging.publisher.kafka.callback.EventPublisherCallback;
+import com.acroteq.ticketing.payment.service.messaging.mapper.payment.PaymentCancelledResponseMessageFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -17,27 +17,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class PaymentCancelledKafkaMessagePublisher implements PaymentCancelledMessagePublisher {
 
-  private final PaymentResponseMessageFactory messageFactory;
-  private final KafkaProducer<OrderId, PaymentResponseMessage> kafkaProducer;
-  private final EventPublisherCallback callback;
-  private final PaymentServiceConfigData configData;
+  private final PaymentCancelledResponseMessageFactory messageFactory;
+  private final KafkaProducer<OrderId, PaymentCancelledResponseMessage> kafkaProducer;
+  private final KafkaPublisherCallbackHandler<PaymentCancelledResponseMessage> callbackHandler;
+  private final PaymentServiceConfig config;
 
   @Override
-  public void publish(final PaymentCancelledEvent domainEvent) {
-    final OrderId orderId = domainEvent.getPayment()
-                                       .getOrderId();
-
+  public void publish(final PaymentCancelledEvent event) {
+    final OrderId orderId = event.getPayment()
+                                 .getOrderId();
     log.info("Received PaymentCancelledEvent for order id: {}", orderId);
 
-    final PaymentResponseMessage responseMessage = messageFactory.createPaymentResponseMessage(domainEvent);
-
-    kafkaProducer.send(configData.getPaymentResponseTopicName(),
-                       orderId,
-                       responseMessage,
-                       callback.getHandler(configData.getPaymentResponseTopicName(),
-                                           responseMessage,
-                                           orderId,
-                                           "PaymentResponseMessage"));
+    final PaymentCancelledResponseMessage message = messageFactory.convertEventToMessage(event);
+    final String topic = config.getPaymentResponse()
+                               .getTopicName();
+    kafkaProducer.send(topic, orderId, message, callbackHandler::callback);
 
     log.info("PaymentResponseMessage sent to kafka for order id: {}", orderId);
   }

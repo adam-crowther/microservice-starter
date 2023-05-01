@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+    implementation project(':common:common-application')
     implementation project(':common:common-domain')
 
     implementation libs.lombok.core

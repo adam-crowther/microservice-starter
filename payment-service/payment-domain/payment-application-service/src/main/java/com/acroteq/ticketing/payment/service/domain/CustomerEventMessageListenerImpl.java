@@ -5,10 +5,14 @@ import static com.acroteq.ticketing.payment.service.domain.exception.CreditEntry
 import static com.acroteq.ticketing.payment.service.domain.exception.CreditHistoryNotFoundException.newCreditHistoryNotFoundException;
 
 import com.acroteq.ticketing.domain.valueobject.CustomerId;
-import com.acroteq.ticketing.payment.service.domain.dto.customer.CustomerDto;
+import com.acroteq.ticketing.payment.service.domain.dto.customer.CustomerCreatedDto;
+import com.acroteq.ticketing.payment.service.domain.dto.customer.CustomerDeletedDto;
+import com.acroteq.ticketing.payment.service.domain.dto.customer.CustomerUpdatedDto;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditEntry;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditHistory;
-import com.acroteq.ticketing.payment.service.domain.mapper.CustomerDtoToDomainMapper;
+import com.acroteq.ticketing.payment.service.domain.mapper.CustomerCreatedDtoToDomainMapper;
+import com.acroteq.ticketing.payment.service.domain.mapper.CustomerDeletedDtoToDomainMapper;
+import com.acroteq.ticketing.payment.service.domain.mapper.CustomerUpdatedDtoToDomainMapper;
 import com.acroteq.ticketing.payment.service.domain.ports.input.message.listener.CustomerEventMessageListener;
 import com.acroteq.ticketing.payment.service.domain.ports.output.repository.CreditEntryRepository;
 import com.acroteq.ticketing.payment.service.domain.ports.output.repository.CreditHistoryRepository;
@@ -27,16 +31,18 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
 
   private final CreditEntryRepository creditEntryRepository;
   private final CreditHistoryRepository creditHistoryRepository;
-  private final CustomerDtoToDomainMapper customerDtoToDomainMapper;
+  private final CustomerCreatedDtoToDomainMapper customerCreatedMapper;
+  private final CustomerUpdatedDtoToDomainMapper customerUpdatedMapper;
+  private final CustomerDeletedDtoToDomainMapper customerDeletedMapper;
   private final CreditEntryDomainService creditEntryDomainService;
 
   @Transactional
   @Override
-  public void customerCreated(final CustomerDto customerDto) {
-    final CustomerId customerId = CustomerId.of(customerDto.getId());
+  public void customerCreated(final CustomerCreatedDto dto) {
+    final CustomerId customerId = CustomerId.of(dto.getId());
     log.info("Creating CreditEntry and adding CreditHistory for customer: {}", customerId);
 
-    final CreditEntry creditEntry = customerDtoToDomainMapper.convertDtoToCreditEntryDomain(customerDto);
+    final CreditEntry creditEntry = customerCreatedMapper.convertDtoToDomain(dto);
     final CreditEntryOutput output = creditEntryDomainService.createCreditEntry(creditEntry);
 
     creditEntryRepository.save(output.getCreditEntry());
@@ -45,10 +51,10 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
 
   @Transactional
   @Override
-  public void customerUpdated(final CustomerDto customerDto) {
-    final CustomerId customerId = CustomerId.of(customerDto.getId());
+  public void customerUpdated(final CustomerUpdatedDto dto) {
+    final CustomerId customerId = CustomerId.of(dto.getId());
     log.info("Updating CreditEntry and adding CreditHistory for customer: {}", customerId);
-    final CreditEntry updatedCreditEntry = customerDtoToDomainMapper.convertDtoToCreditEntryDomain(customerDto);
+    final CreditEntry updatedCreditEntry = customerUpdatedMapper.convertDtoToDomain(dto);
     final CreditEntry currentCreditEntry = creditEntryRepository.findByCustomerId(customerId)
                                                                 .orElseThrow(newCreditEntryNotFoundException(customerId));
 
@@ -66,9 +72,9 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
 
   @Transactional
   @Override
-  public void customerDeleted(final Long id) {
-    log.info("Customer {} deleted. Setting credit to zero", id);
-    final CustomerId customerId = CustomerId.of(id);
+  public void customerDeleted(final CustomerDeletedDto dto) {
+    final CustomerId customerId = customerDeletedMapper.convertDtoToDomain(dto);
+    log.info("Customer {} deleted. Setting credit to zero", customerId);
     creditEntryRepository.findByCustomerId(customerId)
                          .map(this::withZeroCredit)
                          .ifPresent(creditEntryRepository::save);

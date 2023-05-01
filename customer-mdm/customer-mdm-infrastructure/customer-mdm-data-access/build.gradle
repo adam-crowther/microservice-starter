@@ -28,6 +28,7 @@ dependencies {
     implementation project(":common:common-domain")
     implementation project(":common:common-application")
     implementation project(":common:common-helper")
+    implementation project(":common:common-infrastructure")
     implementation project(":customer-mdm:customer-mdm-domain:customer-mdm-domain-core")
     implementation project(":customer-mdm:customer-mdm-domain:customer-mdm-application-service")
 

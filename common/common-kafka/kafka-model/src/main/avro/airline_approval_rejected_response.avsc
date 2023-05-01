@@ -1,0 +1,38 @@
+{
+  "namespace": "com.acroteq.ticketing.kafka.flight.approval.avro.model",
+  "type": "record",
+  "name": "AirlineApprovalRejectedResponseMessage",
+  "fields": [
+    {
+      "name": "sagaId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "airlineId",
+      "type": "long"
+    },
+    {
+      "name": "orderId",
+      "type": "long"
+    },
+    {
+      "name": "createdDateTime",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "failureMessages",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  ]
+}

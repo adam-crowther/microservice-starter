@@ -2,6 +2,7 @@ package com.acroteq.ticketing.order.service.domain.dto.track;
 
 import static com.acroteq.ticketing.domain.validation.ValidationResult.pass;
 
+import com.acroteq.ticketing.application.dto.Dto;
 import com.acroteq.ticketing.domain.validation.ValidationResult;
 import com.acroteq.ticketing.domain.valueobject.OrderStatus;
 import com.acroteq.ticketing.order.service.domain.dto.create.OrderAddressDto;
@@ -18,7 +19,7 @@ import java.util.UUID;
 
 @Builder
 @Getter
-public class TrackOrderResponseDto {
+public class TrackOrderResponseDto implements Dto {
 
   @NotNull
   private final Long customerId;

@@ -11,7 +11,5 @@ public interface AirlineRepository {
 
   Optional<Airline> findById(AirlineId airlineId);
 
-  Optional<Airline> loadAirline(AirlineId airlineId);
-
   void deleteById(AirlineId airlineId);
 }

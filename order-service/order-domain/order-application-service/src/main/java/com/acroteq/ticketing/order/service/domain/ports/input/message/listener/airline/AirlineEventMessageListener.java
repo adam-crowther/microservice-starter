@@ -1,12 +1,14 @@
 package com.acroteq.ticketing.order.service.domain.ports.input.message.listener.airline;
 
-import com.acroteq.ticketing.order.service.domain.dto.airline.AirlineDto;
+import com.acroteq.ticketing.order.service.domain.dto.airline.AirlineCreatedDto;
+import com.acroteq.ticketing.order.service.domain.dto.airline.AirlineDeletedDto;
+import com.acroteq.ticketing.order.service.domain.dto.airline.AirlineUpdatedDto;
 
 public interface AirlineEventMessageListener {
 
-  void airlineCreated(AirlineDto airlineCreatedDto);
+  void airlineCreated(AirlineCreatedDto airlineCreatedDto);
 
-  void airlineUpdated(AirlineDto airlineUpdatedDto);
+  void airlineUpdated(AirlineUpdatedDto airlineUpdatedDto);
 
-  void airlineDeleted(Long airlineId);
+  void airlineDeleted(AirlineDeletedDto airlineDeletedDto);
 }

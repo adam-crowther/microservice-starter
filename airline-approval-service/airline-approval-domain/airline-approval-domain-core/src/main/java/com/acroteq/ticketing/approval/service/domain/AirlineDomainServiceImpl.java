@@ -6,6 +6,7 @@ import com.acroteq.ticketing.approval.service.domain.entity.order.OrderApproval;
 import com.acroteq.ticketing.approval.service.domain.valueobject.OrderApprovalOutput;
 import com.acroteq.ticketing.domain.validation.ValidationResult;
 import com.acroteq.ticketing.domain.valueobject.OrderApprovalStatus;
+import com.acroteq.ticketing.domain.valueobject.OrderId;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -13,15 +14,16 @@ public class AirlineDomainServiceImpl implements AirlineDomainService {
 
   @Override
   public OrderApprovalOutput validateOrder(final Order order) {
-    log.info("Validating order with orderId: {}", order.getId());
+    final OrderId orderId = order.getId();
+    log.info("Validating order with orderId: {}", orderId);
 
     final ValidationResult result = order.validate();
     final Airline airline = order.getAirline();
 
     final OrderApprovalStatus approvalStatus = result.getApprovalStatus();
-    log.info("Order is {} for order id: {}", approvalStatus, order.getId());
+    log.info("Order is {} for order id: {}", approvalStatus, orderId);
     final OrderApproval orderApproval = OrderApproval.builder()
-                                                     .orderId(order.getId())
+                                                     .orderId(orderId)
                                                      .airline(airline)
                                                      .approvalStatus(approvalStatus)
                                                      .build();

@@ -1,9 +1,10 @@
 package com.acroteq.ticketing.payment.service.domain;
 
-import com.acroteq.ticketing.application.mapper.OrderIdMapper;
+import com.acroteq.ticketing.application.mapper.id.OrderIdMapper;
 import com.acroteq.ticketing.domain.validation.ValidationResult;
 import com.acroteq.ticketing.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.domain.valueobject.OrderId;
+import com.acroteq.ticketing.payment.service.domain.dto.payment.PaymentCancelRequestDto;
 import com.acroteq.ticketing.payment.service.domain.dto.payment.PaymentRequestDto;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditEntry;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditHistory;
@@ -38,9 +39,9 @@ class PaymentProcessor {
   private final CreditEntryRepository creditEntryRepository;
   private final CreditHistoryRepository creditHistoryRepository;
 
-  PaymentEvent processPayment(final PaymentRequestDto paymentRequestDto) {
-    log.info("Received payment complete event for order id: {}", paymentRequestDto.getOrderId());
-    final Payment payment = paymentDtoToDomainMapper.convertDtoToDomain(paymentRequestDto);
+  PaymentEvent processPayment(final PaymentRequestDto dto) {
+    log.info("Received payment complete event for order id: {}", dto.getOrderId());
+    final Payment payment = paymentDtoToDomainMapper.convertDtoToDomain(dto);
     final CustomerId customerId = payment.getCustomerId();
     final CreditEntry creditEntry = getCreditEntry(customerId);
     final List<CreditHistory> creditHistories = getCreditHistory(customerId);
@@ -49,7 +50,7 @@ class PaymentProcessor {
     final Payment savedPayment = persistDbObjects(paymentOutput);
 
     final ValidationResult result = paymentOutput.getValidationResult();
-    final UUID sagaId = paymentRequestDto.getSagaId();
+    final UUID sagaId = dto.getSagaId();
     return PaymentFailedEvent.builder()
                              .sagaId(sagaId)
                              .payment(savedPayment)
@@ -57,8 +58,8 @@ class PaymentProcessor {
                              .build();
   }
 
-  PaymentEvent cancelPayment(final PaymentRequestDto paymentRequestDto) {
-    final OrderId orderId = idMapper.convertLongToId(paymentRequestDto.getOrderId());
+  PaymentEvent cancelPayment(final PaymentCancelRequestDto dto) {
+    final OrderId orderId = idMapper.convertLongToId(dto.getOrderId());
 
     log.info("Received payment rollback event for order id: {}", orderId);
     final Optional<Payment> paymentResponse = paymentRepository.findByOrderId(orderId);
@@ -73,7 +74,7 @@ class PaymentProcessor {
     final Payment savedPayment = persistDbObjects(paymentOutput);
 
     final ValidationResult result = paymentOutput.getValidationResult();
-    final UUID sagaId = paymentRequestDto.getSagaId();
+    final UUID sagaId = dto.getSagaId();
     return PaymentFailedEvent.builder()
                              .sagaId(sagaId)
                              .payment(savedPayment)

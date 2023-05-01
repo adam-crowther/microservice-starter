@@ -5,7 +5,6 @@ import com.acroteq.ticketing.airline.service.domain.dto.update.UpdateAirlineComm
 import com.acroteq.ticketing.airline.service.domain.entity.Airline;
 import com.acroteq.ticketing.airline.service.domain.event.AirlineCreatedEvent;
 import com.acroteq.ticketing.airline.service.domain.event.AirlineDeletedEvent;
-import com.acroteq.ticketing.airline.service.domain.event.AirlineEvent;
 import com.acroteq.ticketing.airline.service.domain.event.AirlineUpdatedEvent;
 import com.acroteq.ticketing.airline.service.domain.mapper.CreateAirlineDtoToDomainMapper;
 import com.acroteq.ticketing.airline.service.domain.mapper.UpdateAirlineDtoToDomainMapper;
@@ -25,7 +24,7 @@ class AirlineCommandProcessor {
   private final CreateAirlineDtoToDomainMapper createAirlineMapper;
   private final UpdateAirlineDtoToDomainMapper updateAirlineMapper;
 
-  AirlineEvent createAirline(final CreateAirlineCommandDto createAirlineCommandDto) {
+  AirlineCreatedEvent createAirline(final CreateAirlineCommandDto createAirlineCommandDto) {
     log.info("Received create airline command");
     final Airline airline = createAirlineMapper.convertDtoToDomain(createAirlineCommandDto);
     airlineDomainService.validateAirline(airline);
@@ -36,7 +35,7 @@ class AirlineCommandProcessor {
                               .build();
   }
 
-  AirlineEvent updateAirline(final UpdateAirlineCommandDto updateAirlineCommandDto) {
+  AirlineUpdatedEvent updateAirline(final UpdateAirlineCommandDto updateAirlineCommandDto) {
     log.info("Received update airline command for id {}", updateAirlineCommandDto.getId());
     final Airline airline = updateAirlineMapper.convertDtoToDomain(updateAirlineCommandDto);
     airlineDomainService.validateAirline(airline);
@@ -47,7 +46,7 @@ class AirlineCommandProcessor {
                               .build();
   }
 
-  AirlineEvent deleteAirline(final Long id) {
+  AirlineDeletedEvent deleteAirline(final Long id) {
     final AirlineId airlineId = AirlineId.of(id);
     log.info("Received delete airline command for id {}", airlineId);
     airlineRepository.deleteById(airlineId);

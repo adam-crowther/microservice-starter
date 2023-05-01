@@ -12,18 +12,11 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 public class AirlineUpdatedEvent extends AirlineEvent {
 
-  private static final String EVENT_TYPE = AirlineUpdatedEvent.class.getSimpleName();
-
   @NonNull
   private final Airline airline;
 
   @Override
   public AirlineId getAirlineId() {
     return airline.getId();
-  }
-
-  @Override
-  public String getEventType() {
-    return EVENT_TYPE;
   }
 }

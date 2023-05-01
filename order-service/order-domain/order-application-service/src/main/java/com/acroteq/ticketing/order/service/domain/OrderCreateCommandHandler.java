@@ -4,7 +4,7 @@ import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderCommandD
 import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderResponseDto;
 import com.acroteq.ticketing.order.service.domain.entity.Order;
 import com.acroteq.ticketing.order.service.domain.event.OrderCreatedEvent;
-import com.acroteq.ticketing.order.service.domain.mapper.CreateOrderResponseDomainToDtoMapper;
+import com.acroteq.ticketing.order.service.domain.mapper.order.CreateOrderResponseDomainToDtoMapper;
 import com.acroteq.ticketing.order.service.domain.ports.output.message.publisher.payment.PaymentRequestMessagePublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

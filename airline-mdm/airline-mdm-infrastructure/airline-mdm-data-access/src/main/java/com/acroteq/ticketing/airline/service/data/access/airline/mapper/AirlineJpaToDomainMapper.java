@@ -2,12 +2,13 @@ package com.acroteq.ticketing.airline.service.data.access.airline.mapper;
 
 import com.acroteq.ticketing.airline.service.data.access.airline.entity.AirlineJpaEntity;
 import com.acroteq.ticketing.airline.service.domain.entity.Airline;
-import com.acroteq.ticketing.application.mapper.AirlineIdMapper;
+import com.acroteq.ticketing.application.mapper.id.AirlineIdMapper;
+import com.acroteq.ticketing.infrastructure.mapper.JpaToDomainMapper;
 import org.mapstruct.Mapper;
 
 @Mapper(uses = { AirlineIdMapper.class, FlightJpaToDomainMapper.class })
-public interface AirlineJpaToDomainMapper {
+public interface AirlineJpaToDomainMapper extends JpaToDomainMapper<AirlineJpaEntity, Airline> {
 
-  /* package */
+  @Override
   Airline convertJpaToDomain(AirlineJpaEntity entity);
 }

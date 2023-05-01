@@ -1,52 +1,56 @@
 package com.acroteq.ticketing.order.service.messaging.listener.kafka;
 
-import static com.acroteq.ticketing.kafka.customer.avro.model.EventType.CREATED;
-import static com.acroteq.ticketing.kafka.customer.avro.model.EventType.DELETED;
-import static com.acroteq.ticketing.kafka.customer.avro.model.EventType.UPDATED;
 import static org.springframework.kafka.support.KafkaHeaders.OFFSET;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_KEY;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
 
-import com.acroteq.ticketing.kafka.consumer.KafkaConsumer;
-import com.acroteq.ticketing.kafka.customer.avro.model.CustomerEventMessage;
-import com.acroteq.ticketing.kafka.customer.avro.model.EventType;
-import com.acroteq.ticketing.order.service.domain.dto.customer.CustomerDto;
+import com.acroteq.ticketing.kafka.consumer.KafkaMessageHandler;
+import com.acroteq.ticketing.kafka.customer.avro.model.CustomerCreatedEventMessage;
+import com.acroteq.ticketing.kafka.customer.avro.model.CustomerDeletedEventMessage;
+import com.acroteq.ticketing.kafka.customer.avro.model.CustomerUpdatedEventMessage;
 import com.acroteq.ticketing.order.service.domain.ports.input.message.listener.customer.CustomerEventMessageListener;
-import com.acroteq.ticketing.order.service.messaging.mapper.CustomerEventMessageToDtoMapper;
+import com.acroteq.ticketing.order.service.messaging.mapper.customer.CustomerCreatedEventMessageToDtoMapper;
+import com.acroteq.ticketing.order.service.messaging.mapper.customer.CustomerDeletedEventMessageToDtoMapper;
+import com.acroteq.ticketing.order.service.messaging.mapper.customer.CustomerUpdatedEventMessageToDtoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.avro.specific.SpecificRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class CustomerEventKafkaListener implements KafkaConsumer<CustomerEventMessage> {
+public class CustomerEventKafkaListener {
 
-  private final Map<EventType, Consumer<CustomerEventMessage>> messageHandlers //
-      = Map.of(CREATED,
-               this::customerCreatedMessageHandler,
-               UPDATED,
-               this::customerUpdatedMessageHandler,
-               DELETED,
-               this::customerDeletedMessageHandler);
+  private final KafkaMessageHandler kafkaMessageHandler;
 
-  private final CustomerEventMessageListener messageListener;
-  private final CustomerEventMessageToDtoMapper mapper;
+  public CustomerEventKafkaListener(final CustomerCreatedEventMessageToDtoMapper createdEventMapper,
+                                    final CustomerUpdatedEventMessageToDtoMapper updatedEventMapper,
+                                    final CustomerDeletedEventMessageToDtoMapper deletedEventMapper,
+                                    final CustomerEventMessageListener listener) {
 
+    kafkaMessageHandler = KafkaMessageHandler.builder()
+                                             .addMessageType(CustomerCreatedEventMessage.SCHEMA$.getName(),
+                                                             createdEventMapper,
+                                                             listener::customerCreated)
+                                             .addMessageType(CustomerUpdatedEventMessage.SCHEMA$.getName(),
+                                                             updatedEventMapper,
+                                                             listener::customerUpdated)
+                                             .addMessageType(CustomerDeletedEventMessage.SCHEMA$.getName(),
+                                                             deletedEventMapper,
+                                                             listener::customerDeleted)
+                                             .build();
+  }
 
-  @Override
-  @KafkaListener(id = "${kafka-consumer-config.customer-event-consumer-group-id}",
-                 topics = "${order-service.customer-event-topic-name}")
-  public void receive(@Payload final List<CustomerEventMessage> messages,
+  @KafkaListener(id = "${order-service.customer-event.consumer-group-id}",
+                 topics = "${order-service.customer-event.topic-name}")
+  public void receive(@Payload @Validated final List<? extends SpecificRecord> messages,
                       @Header(RECEIVED_KEY) final List<String> keys,
                       @Header(RECEIVED_PARTITION) final List<Integer> partitions,
                       @Header(OFFSET) final List<Long> offsets) {
@@ -56,41 +60,6 @@ public class CustomerEventKafkaListener implements KafkaConsumer<CustomerEventMe
              partitions,
              offsets);
 
-    messages.forEach(this::handleMessage);
-  }
-
-  private void handleMessage(final CustomerEventMessage message) {
-    final Consumer<CustomerEventMessage> messageHandler = Optional.of(message)
-                                                                  .map(CustomerEventMessage::getEventType)
-                                                                  .map(messageHandlers::get)
-                                                                  .orElseThrow(unsupportedOperationException(message));
-    messageHandler.accept(message);
-  }
-
-  private static Supplier<UnsupportedOperationException> unsupportedOperationException(final CustomerEventMessage message) {
-    return () -> createUnsupportedOperationException(message);
-  }
-
-  private static UnsupportedOperationException createUnsupportedOperationException(final CustomerEventMessage message) {
-    final EventType eventType = message.getEventType();
-    return new UnsupportedOperationException("Unsupported event type " + eventType);
-  }
-
-  private void customerCreatedMessageHandler(final CustomerEventMessage message) {
-    log.info("Customer created with id {}", message.getId());
-    final CustomerDto customerEvent = mapper.convertMessageToDto(message);
-    messageListener.customerCreated(customerEvent);
-  }
-
-  private void customerUpdatedMessageHandler(final CustomerEventMessage message) {
-    log.info("Customer updated with id {}", message.getId());
-    final CustomerDto customerEvent = mapper.convertMessageToDto(message);
-    messageListener.customerUpdated(customerEvent);
-  }
-
-  private void customerDeletedMessageHandler(final CustomerEventMessage message) {
-    final Long customerId = message.getId();
-    log.info("Customer deleted with id {}", customerId);
-    messageListener.customerDeleted(customerId);
+    kafkaMessageHandler.processMessages(messages, keys, partitions, offsets);
   }
 }

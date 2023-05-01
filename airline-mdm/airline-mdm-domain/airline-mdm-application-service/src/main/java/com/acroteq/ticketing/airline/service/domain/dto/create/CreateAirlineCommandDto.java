@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.airline.service.domain.dto.create;
 
+import com.acroteq.ticketing.application.dto.Dto;
 import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
@@ -11,7 +12,7 @@ import java.util.Optional;
 
 @Getter
 @Builder
-public class CreateAirlineCommandDto {
+public class CreateAirlineCommandDto implements Dto {
 
   @NotNull
   private String name;
@@ -19,6 +20,7 @@ public class CreateAirlineCommandDto {
   private boolean active;
   @NotNull
   private ImmutableList<CreateFlightCommandDto> flights;
+
 
   @SuppressWarnings("PublicInnerClass")
   public static class CreateAirlineCommandDtoBuilder {

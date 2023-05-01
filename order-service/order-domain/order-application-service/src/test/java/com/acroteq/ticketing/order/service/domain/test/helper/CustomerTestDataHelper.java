@@ -55,9 +55,9 @@ public class CustomerTestDataHelper {
   }
 
   void initialiseMocks() {
-    lenient().when(customerRepository.customerExists(CustomerId.of(CUSTOMER_ID)))
+    lenient().when(customerRepository.existsById(CustomerId.of(CUSTOMER_ID)))
              .thenReturn(true);
-    lenient().when(customerRepository.findCustomer(CustomerId.of(CUSTOMER_ID)))
+    lenient().when(customerRepository.findById(CustomerId.of(CUSTOMER_ID)))
              .thenReturn(Optional.of(CUSTOMER));
   }
 }

@@ -18,7 +18,7 @@ public class FlightRepositoryImpl implements FlightRepository {
   private final FlightJpaToDomainMapper jpaToDomainMapper;
 
   @Override
-  public Optional<Flight> loadFlight(final FlightId flightId) {
+  public Optional<Flight> findById(final FlightId flightId) {
     return flightJpaRepository.findById(flightId.getValue())
                               .map(jpaToDomainMapper::convertJpaToDomain);
   }

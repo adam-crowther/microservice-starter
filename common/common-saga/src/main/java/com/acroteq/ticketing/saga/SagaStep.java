@@ -1,10 +1,12 @@
 package com.acroteq.ticketing.saga;
 
+import com.acroteq.ticketing.application.dto.Dto;
 import com.acroteq.ticketing.domain.event.DomainEvent;
 
-public interface SagaStep<T, S extends DomainEvent<?>, U extends DomainEvent<?>> {
+public interface SagaStep<SuccessResponseT extends Dto, SuccessEventT extends DomainEvent<?>,
+    FailureResponseT extends Dto, FailureEventT extends DomainEvent<?>> {
 
-  S process(T data);
+  SuccessEventT process(SuccessResponseT data);
 
-  U rollback(T data);
+  FailureEventT rollback(FailureResponseT data);
 }

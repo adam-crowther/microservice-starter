@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.order.service.data.access.order.mapper;
 
-import com.acroteq.ticketing.application.mapper.IdMapper;
+import com.acroteq.ticketing.application.mapper.id.IdMapper;
 import com.acroteq.ticketing.domain.valueobject.OrderItemId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

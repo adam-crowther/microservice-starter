@@ -1,46 +1,50 @@
 package com.acroteq.ticketing.order.service.messaging.listener.kafka;
 
-import static com.acroteq.ticketing.kafka.flight.approval.avro.model.OrderApprovalStatus.APPROVED;
-import static com.acroteq.ticketing.kafka.flight.approval.avro.model.OrderApprovalStatus.REJECTED;
 import static org.springframework.kafka.support.KafkaHeaders.OFFSET;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_KEY;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
 
-import com.acroteq.ticketing.kafka.consumer.KafkaConsumer;
-import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalResponseMessage;
-import com.acroteq.ticketing.kafka.flight.approval.avro.model.OrderApprovalStatus;
-import com.acroteq.ticketing.order.service.domain.dto.message.AirlineApprovalResponseDto;
+import com.acroteq.ticketing.kafka.consumer.KafkaMessageHandler;
+import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalApprovedResponseMessage;
+import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalRejectedResponseMessage;
 import com.acroteq.ticketing.order.service.domain.ports.input.message.listener.airlineapproval.AirlineApprovalResponseMessageListener;
-import com.acroteq.ticketing.order.service.messaging.mapper.AirlineApprovalResponseMessageMapper;
+import com.acroteq.ticketing.order.service.messaging.mapper.airline.AirlineApprovalApprovedResponseMessageMapper;
+import com.acroteq.ticketing.order.service.messaging.mapper.airline.AirlineApprovalRejectedResponseMessageMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.avro.specific.SpecificRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class AirlineApprovalResponseKafkaListener implements KafkaConsumer<AirlineApprovalResponseMessage> {
+public class AirlineApprovalResponseKafkaListener {
 
-  private final Map<OrderApprovalStatus, Consumer<AirlineApprovalResponseMessage>> messageHandlers = Map.of(APPROVED,
-                                                                                                            this::orderApprovedMessageHandler,
-                                                                                                            REJECTED,
-                                                                                                            this::orderRejectedMessageHandler);
-  private final AirlineApprovalResponseMessageListener messageListener;
-  private final AirlineApprovalResponseMessageMapper mapper;
+  private final KafkaMessageHandler kafkaMessageHandler;
 
-  @Override
-  @KafkaListener(id = "${kafka-consumer-config.airline-approval-consumer-group-id}",
-                 topics = "${order-service.airline-approval-response-topic-name}")
-  public void receive(@Payload final List<AirlineApprovalResponseMessage> messages,
+  public AirlineApprovalResponseKafkaListener(final AirlineApprovalApprovedResponseMessageMapper approvedResponseMapper,
+                                              final AirlineApprovalRejectedResponseMessageMapper rejectedResponseMapper,
+                                              final AirlineApprovalResponseMessageListener messageListener) {
+
+    kafkaMessageHandler = KafkaMessageHandler.builder()
+                                             .addMessageType(AirlineApprovalApprovedResponseMessage.SCHEMA$.getName(),
+                                                             approvedResponseMapper,
+                                                             messageListener::orderApproved)
+                                             .addMessageType(AirlineApprovalRejectedResponseMessage.SCHEMA$.getName(),
+                                                             rejectedResponseMapper,
+                                                             messageListener::orderRejected)
+                                             .build();
+  }
+
+  @KafkaListener(id = "${order-service.airline-approval.consumer-group-id}",
+                 topics = "${order-service.airline-approval.response-topic-name}")
+  public void receive(@Payload @Validated final List<? extends SpecificRecord> messages,
                       @Header(RECEIVED_KEY) final List<String> keys,
                       @Header(RECEIVED_PARTITION) final List<Integer> partitions,
                       @Header(OFFSET) final List<Long> offsets) {
@@ -50,38 +54,6 @@ public class AirlineApprovalResponseKafkaListener implements KafkaConsumer<Airli
              partitions,
              offsets);
 
-    messages.forEach(this::handleMessage);
-  }
-
-
-  private void handleMessage(final AirlineApprovalResponseMessage message) {
-    final Consumer<AirlineApprovalResponseMessage> messageHandler = Optional.of(message)
-                                                                            .map(AirlineApprovalResponseMessage::getOrderApprovalStatus)
-                                                                            .map(messageHandlers::get)
-                                                                            .orElseThrow(unsupportedOperationException(
-                                                                                message));
-
-    messageHandler.accept(message);
-  }
-
-  private static Supplier<UnsupportedOperationException> unsupportedOperationException(final AirlineApprovalResponseMessage message) {
-    return () -> createUnsupportedOperationException(message);
-  }
-
-  private static UnsupportedOperationException createUnsupportedOperationException(final AirlineApprovalResponseMessage message) {
-    final OrderApprovalStatus orderStatus = message.getOrderApprovalStatus();
-    return new UnsupportedOperationException("Unsupported order status " + orderStatus);
-  }
-
-  private void orderApprovedMessageHandler(final AirlineApprovalResponseMessage message) {
-    log.info("Processing approved order for order id {}", message.getOrderId());
-    final AirlineApprovalResponseDto airlineApprovalResponse = mapper.convertMessageToDto(message);
-    messageListener.orderApproved(airlineApprovalResponse);
-  }
-
-  private void orderRejectedMessageHandler(final AirlineApprovalResponseMessage message) {
-    log.info("Processing rejected order for order id {}", message.getOrderId());
-    final AirlineApprovalResponseDto airlineApprovalResponse = mapper.convertMessageToDto(message);
-    messageListener.orderRejected(airlineApprovalResponse);
+    kafkaMessageHandler.processMessages(messages, keys, partitions, offsets);
   }
 }

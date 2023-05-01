@@ -16,7 +16,7 @@ public class AirlineResolver implements Resolver<AirlineId, Airline> {
 
   @Override
   public Airline resolve(final AirlineId id) {
-    return airlineRepository.findAirline(id)
+    return airlineRepository.findById(id)
                             .orElseThrow(() -> new AirlineNotFoundException(id));
   }
 

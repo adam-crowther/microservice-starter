@@ -3,7 +3,8 @@ package com.acroteq.ticketing.order.service.domain;
 import com.acroteq.ticketing.domain.event.EmptyEvent;
 import com.acroteq.ticketing.domain.validation.ValidationResult;
 import com.acroteq.ticketing.domain.valueobject.OrderId;
-import com.acroteq.ticketing.order.service.domain.dto.message.AirlineApprovalResponseDto;
+import com.acroteq.ticketing.order.service.domain.dto.message.AirlineApprovalApprovedResponseDto;
+import com.acroteq.ticketing.order.service.domain.dto.message.AirlineApprovalRejectedResponseDto;
 import com.acroteq.ticketing.order.service.domain.entity.Order;
 import com.acroteq.ticketing.order.service.domain.event.OrderCancelledEvent;
 import com.acroteq.ticketing.order.service.domain.exception.OrderNotFoundException;
@@ -19,13 +20,15 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class OrderApprovalSaga implements SagaStep<AirlineApprovalResponseDto, EmptyEvent, OrderCancelledEvent> {
+public class OrderApprovalSaga
+    implements SagaStep<AirlineApprovalApprovedResponseDto, EmptyEvent, AirlineApprovalRejectedResponseDto,
+    OrderCancelledEvent> {
 
   private final OrderDomainService orderDomainService;
   private final OrderRepository orderRepository;
 
   @Override
-  public EmptyEvent process(final AirlineApprovalResponseDto approvalResponse) {
+  public EmptyEvent process(final AirlineApprovalApprovedResponseDto approvalResponse) {
     final OrderId orderId = OrderId.of(approvalResponse.getOrderId());
     log.info("Approving order with id {}", orderId);
     final Order order = orderRepository.findById(orderId)
@@ -41,7 +44,7 @@ public class OrderApprovalSaga implements SagaStep<AirlineApprovalResponseDto, E
   }
 
   @Override
-  public OrderCancelledEvent rollback(final AirlineApprovalResponseDto approvalResponse) {
+  public OrderCancelledEvent rollback(final AirlineApprovalRejectedResponseDto approvalResponse) {
     final OrderId orderId = OrderId.of(approvalResponse.getOrderId());
     log.info("Cancelling order with id {}", orderId);
     final Order order = orderRepository.findById(orderId)

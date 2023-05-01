@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.order.service.domain.dto.create;
 
+import com.acroteq.ticketing.application.dto.Dto;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -7,7 +8,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class OrderAddressDto {
+public class OrderAddressDto implements Dto {
 
   @NotNull
   @Max(50)

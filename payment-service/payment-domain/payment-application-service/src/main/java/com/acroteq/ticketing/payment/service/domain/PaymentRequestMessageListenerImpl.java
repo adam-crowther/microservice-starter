@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.payment.service.domain;
 
+import com.acroteq.ticketing.payment.service.domain.dto.payment.PaymentCancelRequestDto;
 import com.acroteq.ticketing.payment.service.domain.dto.payment.PaymentRequestDto;
 import com.acroteq.ticketing.payment.service.domain.event.PaymentEvent;
 import com.acroteq.ticketing.payment.service.domain.ports.input.message.listener.PaymentRequestMessageListener;
@@ -19,15 +20,15 @@ public class PaymentRequestMessageListenerImpl implements PaymentRequestMessageL
 
   @Override
   @Transactional
-  public void completePayment(final PaymentRequestDto paymentRequestDto) {
-    final PaymentEvent paymentEvent = paymentProcessor.processPayment(paymentRequestDto);
+  public void completePayment(final PaymentRequestDto dto) {
+    final PaymentEvent paymentEvent = paymentProcessor.processPayment(dto);
     paymentEvent.accept(paymentEventPublisherVisitor);
   }
 
   @Override
   @Transactional
-  public void cancelPayment(final PaymentRequestDto paymentRequestDto) {
-    final PaymentEvent paymentEvent = paymentProcessor.cancelPayment(paymentRequestDto);
+  public void cancelPayment(final PaymentCancelRequestDto dto) {
+    final PaymentEvent paymentEvent = paymentProcessor.cancelPayment(dto);
     paymentEvent.accept(paymentEventPublisherVisitor);
   }
 }

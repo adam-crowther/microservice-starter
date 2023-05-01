@@ -13,6 +13,4 @@ import lombok.experimental.SuperBuilder;
 public abstract class AirlineEvent extends DomainEvent<Airline> {
 
   public abstract AirlineId getAirlineId();
-
-  public abstract String getEventType();
 }

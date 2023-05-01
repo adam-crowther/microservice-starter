@@ -11,13 +11,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 public class AirlineDeletedEvent extends AirlineEvent {
 
-  private static final String EVENT_TYPE = AirlineDeletedEvent.class.getSimpleName();
-
   @NonNull
   private final AirlineId airlineId;
-
-  @Override
-  public String getEventType() {
-    return EVENT_TYPE;
-  }
 }

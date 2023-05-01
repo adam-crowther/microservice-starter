@@ -1,0 +1,11 @@
+{
+  "namespace": "com.acroteq.ticketing.kafka.airline.avro.model",
+  "type": "record",
+  "name": "AirlineDeletedEventMessage",
+  "fields": [
+    {
+      "name": "id",
+      "type": "long"
+    }
+  ]
+}

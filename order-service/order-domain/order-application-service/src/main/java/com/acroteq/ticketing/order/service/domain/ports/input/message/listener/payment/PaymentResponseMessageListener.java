@@ -1,10 +1,11 @@
 package com.acroteq.ticketing.order.service.domain.ports.input.message.listener.payment;
 
-import com.acroteq.ticketing.order.service.domain.dto.message.PaymentResponseDto;
+import com.acroteq.ticketing.order.service.domain.dto.message.PaymentCancelledResponseDto;
+import com.acroteq.ticketing.order.service.domain.dto.message.PaymentPaidResponseDto;
 
 public interface PaymentResponseMessageListener {
 
-  void paymentCompleted(PaymentResponseDto paymentResponse);
+  void paymentCompleted(PaymentPaidResponseDto paymentResponse);
 
-  void paymentCancelled(PaymentResponseDto paymentResponse);
+  void paymentCancelled(PaymentCancelledResponseDto paymentResponse);
 }

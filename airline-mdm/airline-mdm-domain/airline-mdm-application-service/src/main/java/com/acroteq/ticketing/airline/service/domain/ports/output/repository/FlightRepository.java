@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface FlightRepository {
 
-  Optional<Flight> loadFlight(FlightId id);
+  Optional<Flight> findById(FlightId id);
 }

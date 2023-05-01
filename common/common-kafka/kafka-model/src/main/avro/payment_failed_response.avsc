@@ -1,0 +1,55 @@
+{
+  "namespace": "com.acroteq.ticketing.kafka.payment.avro.model",
+  "type": "record",
+  "name": "PaymentFailedResponseMessage",
+  "fields": [
+    {
+      "name": "sagaId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "paymentId",
+      "type": "long"
+    },
+    {
+      "name": "customerId",
+      "type": "long"
+    },
+    {
+      "name": "orderId",
+      "type": "long"
+    },
+    {
+      "name": "valueCurrencyId",
+      "type": "string"
+    },
+    {
+      "name": "valueAmount",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 10,
+        "scale": 2
+      }
+    },
+    {
+      "name": "createdDateTime",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "failureMessages",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    }
+  ]
+}

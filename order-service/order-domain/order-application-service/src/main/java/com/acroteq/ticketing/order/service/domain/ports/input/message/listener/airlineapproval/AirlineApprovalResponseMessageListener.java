@@ -1,10 +1,11 @@
 package com.acroteq.ticketing.order.service.domain.ports.input.message.listener.airlineapproval;
 
-import com.acroteq.ticketing.order.service.domain.dto.message.AirlineApprovalResponseDto;
+import com.acroteq.ticketing.order.service.domain.dto.message.AirlineApprovalApprovedResponseDto;
+import com.acroteq.ticketing.order.service.domain.dto.message.AirlineApprovalRejectedResponseDto;
 
 public interface AirlineApprovalResponseMessageListener {
 
-  void orderApproved(AirlineApprovalResponseDto airlineApprovalResponse);
+  void orderApproved(AirlineApprovalApprovedResponseDto dto);
 
-  void orderRejected(AirlineApprovalResponseDto airlineApprovalResponse);
+  void orderRejected(AirlineApprovalRejectedResponseDto dto);
 }

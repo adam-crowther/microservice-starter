@@ -7,9 +7,11 @@ import java.util.Optional;
 
 public interface AirlineRepository {
 
-  Optional<Airline> findAirline(AirlineId airlineId);
+  Optional<Airline> findById(AirlineId airlineId);
 
-  Airline save(Airline airline);
+  Airline insert(Airline airline);
 
-  void delete(AirlineId airlineId);
+  Airline update(Airline airline);
+
+  void deleteById(AirlineId airlineId);
 }

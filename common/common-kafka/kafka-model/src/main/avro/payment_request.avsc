@@ -37,19 +37,6 @@
         "type": "long",
         "logicalType": "timestamp-millis"
       }
-    },
-    {
-      "name": "paymentStatus",
-      "type": {
-        "type": "enum",
-        "name": "PaymentStatus",
-        "symbols": [
-          "PENDING",
-          "COMPLETED",
-          "CANCELLED",
-          "FAILED"
-        ]
-      }
     }
   ]
 }

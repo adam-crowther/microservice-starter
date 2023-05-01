@@ -21,12 +21,14 @@ repositories {
 }
 
 dependencies {
-    implementation project(":common:common-domain")
     implementation project(":common:common-application")
-    implementation project(":order-service:order-domain:order-application-service")
-    implementation project(":order-service:order-domain:order-domain-core")
+    implementation project(":common:common-domain")
+    implementation project(":common:common-helper")
+    implementation project(":common:common-infrastructure")
     implementation project(":common:common-kafka:kafka-libs")
     implementation project(":common:common-kafka:kafka-model")
+    implementation project(":order-service:order-domain:order-application-service")
+    implementation project(":order-service:order-domain:order-domain-core")
 
     implementation libs.apache.avro
     implementation libs.google.guava

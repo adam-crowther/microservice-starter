@@ -5,7 +5,6 @@ import com.acroteq.ticketing.customer.service.domain.dto.update.UpdateCustomerCo
 import com.acroteq.ticketing.customer.service.domain.entity.Customer;
 import com.acroteq.ticketing.customer.service.domain.event.CustomerCreatedEvent;
 import com.acroteq.ticketing.customer.service.domain.event.CustomerDeletedEvent;
-import com.acroteq.ticketing.customer.service.domain.event.CustomerEvent;
 import com.acroteq.ticketing.customer.service.domain.event.CustomerUpdatedEvent;
 import com.acroteq.ticketing.customer.service.domain.mapper.CreateCustomerDtoToDomainMapper;
 import com.acroteq.ticketing.customer.service.domain.mapper.UpdateCustomerDtoToDomainMapper;
@@ -25,7 +24,7 @@ class CustomerCommandProcessor {
   private final CreateCustomerDtoToDomainMapper createCustomerMapper;
   private final UpdateCustomerDtoToDomainMapper updateCustomerMapper;
 
-  CustomerEvent createCustomer(final CreateCustomerCommandDto createCustomerCommandDto) {
+  CustomerCreatedEvent createCustomer(final CreateCustomerCommandDto createCustomerCommandDto) {
     log.info("Received create customer command");
     final Customer customer = createCustomerMapper.convertDtoToDomain(createCustomerCommandDto);
     customerDomainService.validate(customer);
@@ -36,7 +35,7 @@ class CustomerCommandProcessor {
                                .build();
   }
 
-  CustomerEvent updateCustomer(final UpdateCustomerCommandDto updateCustomerCommandDto) {
+  CustomerUpdatedEvent updateCustomer(final UpdateCustomerCommandDto updateCustomerCommandDto) {
     log.info("Received update customer command for id {}", updateCustomerCommandDto.getId());
     final Customer customer = updateCustomerMapper.convertDtoToDomain(updateCustomerCommandDto);
     customerDomainService.validate(customer);
@@ -47,7 +46,7 @@ class CustomerCommandProcessor {
                                .build();
   }
 
-  CustomerEvent deleteCustomer(final Long id) {
+  CustomerDeletedEvent deleteCustomer(final Long id) {
     final CustomerId customerId = CustomerId.of(id);
     log.info("Received delete customer command for id {}", customerId);
     customerRepository.deleteById(customerId);

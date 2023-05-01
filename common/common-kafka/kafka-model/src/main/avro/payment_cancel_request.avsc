@@ -1,0 +1,22 @@
+{
+  "namespace": "com.acroteq.ticketing.kafka.payment.avro.model",
+  "type": "record",
+  "name": "PaymentCancelRequestMessage",
+  "fields": [
+    {
+      "name": "sagaId",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      }
+    },
+    {
+      "name": "orderId",
+      "type": "long"
+    },
+    {
+      "name": "paymentId",
+      "type": "long"
+    }
+  ]
+}

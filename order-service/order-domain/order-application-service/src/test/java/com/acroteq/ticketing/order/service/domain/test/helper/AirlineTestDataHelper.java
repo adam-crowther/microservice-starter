@@ -32,7 +32,7 @@ public class AirlineTestDataHelper {
   private final AirlineRepository airlineRepository;
 
   public void initialiseMocks() {
-    lenient().when(airlineRepository.findAirline(AirlineId.of(AIRLINE_ID)))
+    lenient().when(airlineRepository.findById(AirlineId.of(AIRLINE_ID)))
              .thenReturn(Optional.of(AIRLINE));
   }
 }

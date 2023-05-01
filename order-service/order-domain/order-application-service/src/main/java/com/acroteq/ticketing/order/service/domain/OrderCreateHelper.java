@@ -8,7 +8,7 @@ import com.acroteq.ticketing.order.service.domain.entity.Airline;
 import com.acroteq.ticketing.order.service.domain.entity.Order;
 import com.acroteq.ticketing.order.service.domain.event.OrderCreatedEvent;
 import com.acroteq.ticketing.order.service.domain.exception.CustomerNotFoundException;
-import com.acroteq.ticketing.order.service.domain.mapper.CreateOrderCommandDtoToDomainMapper;
+import com.acroteq.ticketing.order.service.domain.mapper.order.CreateOrderCommandDtoToDomainMapper;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.CustomerRepository;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.OrderRepository;
 import com.acroteq.ticketing.order.service.domain.resolver.AirlineResolver;
@@ -49,6 +49,6 @@ public class OrderCreateHelper {
 
   private void checkCustomer(final Long id) {
     final CustomerId customerId = CustomerId.of(id);
-    checkPrecondition(customerRepository.customerExists(customerId), CustomerNotFoundException::new, customerId);
+    checkPrecondition(customerRepository.existsById(customerId), CustomerNotFoundException::new, customerId);
   }
 }

@@ -60,11 +60,11 @@ public class FlightTestDataHelper {
   private final FlightRepository flightRepository;
 
   public void initialiseMocks() {
-    lenient().when(flightRepository.findFlight(FlightId.of(FLIGHT_1_ID)))
+    lenient().when(flightRepository.findById(FlightId.of(FLIGHT_1_ID)))
              .thenReturn(Optional.of(FLIGHT_1));
-    lenient().when(flightRepository.findFlight(FlightId.of(FLIGHT_2_ID)))
+    lenient().when(flightRepository.findById(FlightId.of(FLIGHT_2_ID)))
              .thenReturn(Optional.of(FLIGHT_2));
-    lenient().when(flightRepository.findFlight(FlightId.of(FLIGHT_3_ID)))
+    lenient().when(flightRepository.findById(FlightId.of(FLIGHT_3_ID)))
              .thenReturn(Optional.of(FLIGHT_3));
   }
 }

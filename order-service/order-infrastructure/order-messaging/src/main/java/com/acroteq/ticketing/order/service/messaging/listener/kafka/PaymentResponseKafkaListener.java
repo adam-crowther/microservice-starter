@@ -1,51 +1,56 @@
 package com.acroteq.ticketing.order.service.messaging.listener.kafka;
 
-import static com.acroteq.ticketing.kafka.payment.avro.model.PaymentStatus.CANCELLED;
-import static com.acroteq.ticketing.kafka.payment.avro.model.PaymentStatus.COMPLETED;
-import static com.acroteq.ticketing.kafka.payment.avro.model.PaymentStatus.FAILED;
 import static org.springframework.kafka.support.KafkaHeaders.OFFSET;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_KEY;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
 
-import com.acroteq.ticketing.kafka.consumer.KafkaConsumer;
-import com.acroteq.ticketing.kafka.payment.avro.model.PaymentResponseMessage;
-import com.acroteq.ticketing.kafka.payment.avro.model.PaymentStatus;
-import com.acroteq.ticketing.order.service.domain.dto.message.PaymentResponseDto;
+import com.acroteq.ticketing.kafka.consumer.KafkaMessageHandler;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentCancelledResponseMessage;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentFailedResponseMessage;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentPaidResponseMessage;
 import com.acroteq.ticketing.order.service.domain.ports.input.message.listener.payment.PaymentResponseMessageListener;
-import com.acroteq.ticketing.order.service.messaging.mapper.PaymentResponseMessageToDtoMapper;
+import com.acroteq.ticketing.order.service.messaging.mapper.payment.PaymentCancelledResponseMessageToDtoMapper;
+import com.acroteq.ticketing.order.service.messaging.mapper.payment.PaymentFailedResponseMessageToDtoMapper;
+import com.acroteq.ticketing.order.service.messaging.mapper.payment.PaymentPaidResponseMessageToDtoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.avro.specific.SpecificRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class PaymentResponseKafkaListener implements KafkaConsumer<PaymentResponseMessage> {
+public class PaymentResponseKafkaListener {
 
-  private final Map<PaymentStatus, Consumer<PaymentResponseMessage>> messageHandlers = Map.of(COMPLETED,
-                                                                                              this::paymentCompleteMessageHandler,
-                                                                                              CANCELLED,
-                                                                                              this::paymentCancelledMessageHandler,
-                                                                                              FAILED,
-                                                                                              this::paymentCancelledMessageHandler);
+  private final KafkaMessageHandler kafkaMessageHandler;
 
-  private final PaymentResponseMessageListener messageListener;
-  private final PaymentResponseMessageToDtoMapper mapper;
+  public PaymentResponseKafkaListener(final PaymentPaidResponseMessageToDtoMapper paidResponseMapper,
+                                      final PaymentCancelledResponseMessageToDtoMapper cancelledResponseMapper,
+                                      final PaymentFailedResponseMessageToDtoMapper failedResponseMapper,
+                                      final PaymentResponseMessageListener messageListener) {
 
+    kafkaMessageHandler = KafkaMessageHandler.builder()
+                                             .addMessageType(PaymentPaidResponseMessage.SCHEMA$.getName(),
+                                                             paidResponseMapper,
+                                                             messageListener::paymentCompleted)
+                                             .addMessageType(PaymentCancelledResponseMessage.SCHEMA$.getName(),
+                                                             cancelledResponseMapper,
+                                                             messageListener::paymentCancelled)
+                                             .addMessageType(PaymentFailedResponseMessage.SCHEMA$.getName(),
+                                                             failedResponseMapper,
+                                                             messageListener::paymentCancelled)
+                                             .build();
+  }
 
-  @Override
-  @KafkaListener(id = "${kafka-consumer-config.payment-consumer-group-id}",
-                 topics = "${order-service.payment-response-topic-name}")
-  public void receive(@Payload final List<PaymentResponseMessage> messages,
+  @KafkaListener(id = "${order-service.payment.consumer-group-id}",
+                 topics = "${order-service.payment.response-topic-name}")
+  public void receive(@Payload @Validated final List<? extends SpecificRecord> messages,
                       @Header(RECEIVED_KEY) final List<String> keys,
                       @Header(RECEIVED_PARTITION) final List<Integer> partitions,
                       @Header(OFFSET) final List<Long> offsets) {
@@ -55,35 +60,6 @@ public class PaymentResponseKafkaListener implements KafkaConsumer<PaymentRespon
              partitions,
              offsets);
 
-    messages.forEach(this::handleMessage);
-  }
-
-  private void handleMessage(final PaymentResponseMessage message) {
-    final Consumer<PaymentResponseMessage> messageHandler = Optional.of(message)
-                                                                    .map(PaymentResponseMessage::getPaymentStatus)
-                                                                    .map(messageHandlers::get)
-                                                                    .orElseThrow(unsupportedOperationException(message));
-    messageHandler.accept(message);
-  }
-
-  private static Supplier<UnsupportedOperationException> unsupportedOperationException(final PaymentResponseMessage message) {
-    return () -> createUnsupportedOperationException(message);
-  }
-
-  private static UnsupportedOperationException createUnsupportedOperationException(final PaymentResponseMessage message) {
-    final PaymentStatus orderStatus = message.getPaymentStatus();
-    return new UnsupportedOperationException("Unsupported order status " + orderStatus);
-  }
-
-  private void paymentCompleteMessageHandler(final PaymentResponseMessage message) {
-    log.info("Processing successful payment for order id {}", message.getOrderId());
-    final PaymentResponseDto paymentResponse = mapper.convertMessageToDto(message);
-    messageListener.paymentCompleted(paymentResponse);
-  }
-
-  private void paymentCancelledMessageHandler(final PaymentResponseMessage message) {
-    log.info("Processing unsuccessful payment for order id {}", message.getOrderId());
-    final PaymentResponseDto paymentResponse = mapper.convertMessageToDto(message);
-    messageListener.paymentCancelled(paymentResponse);
+    kafkaMessageHandler.processMessages(messages, keys, partitions, offsets);
   }
 }

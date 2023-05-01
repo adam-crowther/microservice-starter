@@ -1,12 +1,14 @@
 package com.acroteq.ticketing.payment.service.domain.ports.input.message.listener;
 
-import com.acroteq.ticketing.payment.service.domain.dto.customer.CustomerDto;
+import com.acroteq.ticketing.payment.service.domain.dto.customer.CustomerCreatedDto;
+import com.acroteq.ticketing.payment.service.domain.dto.customer.CustomerDeletedDto;
+import com.acroteq.ticketing.payment.service.domain.dto.customer.CustomerUpdatedDto;
 
 public interface CustomerEventMessageListener {
 
-  void customerCreated(CustomerDto customerCreatedDto);
+  void customerCreated(CustomerCreatedDto dto);
 
-  void customerUpdated(CustomerDto customerUpdatedDto);
+  void customerUpdated(CustomerUpdatedDto dto);
 
-  void customerDeleted(Long customerId);
+  void customerDeleted(CustomerDeletedDto dto);
 }

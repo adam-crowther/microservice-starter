@@ -4,7 +4,7 @@ import com.acroteq.ticketing.order.service.domain.dto.track.TrackOrderQueryDto;
 import com.acroteq.ticketing.order.service.domain.dto.track.TrackOrderResponseDto;
 import com.acroteq.ticketing.order.service.domain.entity.Order;
 import com.acroteq.ticketing.order.service.domain.exception.OrderNotFoundException;
-import com.acroteq.ticketing.order.service.domain.mapper.TrackOrderResponseDomainToDtoMapper;
+import com.acroteq.ticketing.order.service.domain.mapper.order.TrackOrderResponseDomainToDtoMapper;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.OrderRepository;
 import com.acroteq.ticketing.order.service.domain.valueobject.TrackingId;
 import lombok.RequiredArgsConstructor;

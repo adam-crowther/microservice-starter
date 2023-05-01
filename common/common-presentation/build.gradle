@@ -11,6 +11,7 @@ compileJava {
 }
 
 dependencies {
+    implementation project(":common:common-application")
     implementation project(":common:common-domain")
     implementation project(":common:common-helper")
 
@@ -20,7 +21,9 @@ dependencies {
     implementation libs.lombok.core
     implementation libs.slf4j.api
     implementation libs.spotbugs.annotations
+    implementation libs.spring.context
     implementation libs.spring.web
+    implementation libs.spring.webmvc
 
     annotationProcessor libs.lombok.core
 }

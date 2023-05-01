@@ -1,8 +1,12 @@
 package com.acroteq.ticketing.approval.service.domain;
 
-import com.acroteq.ticketing.approval.service.domain.dto.AirlineDto;
+import com.acroteq.ticketing.approval.service.domain.dto.AirlineCreatedDto;
+import com.acroteq.ticketing.approval.service.domain.dto.AirlineDeletedDto;
+import com.acroteq.ticketing.approval.service.domain.dto.AirlineUpdatedDto;
 import com.acroteq.ticketing.approval.service.domain.entity.airline.Airline;
-import com.acroteq.ticketing.approval.service.domain.mapper.AirlineDtoToDomainMapper;
+import com.acroteq.ticketing.approval.service.domain.mapper.AirlineCreatedDtoToDomainMapper;
+import com.acroteq.ticketing.approval.service.domain.mapper.AirlineDeletedDtoToDomainMapper;
+import com.acroteq.ticketing.approval.service.domain.mapper.AirlineUpdatedDtoToDomainMapper;
 import com.acroteq.ticketing.approval.service.domain.ports.input.message.listener.airline.AirlineEventMessageListener;
 import com.acroteq.ticketing.approval.service.domain.ports.output.repository.AirlineRepository;
 import com.acroteq.ticketing.domain.valueobject.AirlineId;
@@ -17,29 +21,31 @@ import org.springframework.transaction.annotation.Transactional;
 public class AirlineEventMessageListenerImpl implements AirlineEventMessageListener {
 
   private final AirlineRepository airlineRepository;
-  private final AirlineDtoToDomainMapper airlineDtoToDomainMapper;
+  private final AirlineCreatedDtoToDomainMapper createdMapper;
+  private final AirlineUpdatedDtoToDomainMapper updatedMapper;
+  private final AirlineDeletedDtoToDomainMapper deletedMapper;
 
   @Transactional
   @Override
-  public void airlineCreated(final AirlineDto airlineDto) {
-    log.info("Creating Airline: {}", airlineDto.getId());
-    final Airline airline = airlineDtoToDomainMapper.convertDtoToDomain(airlineDto);
-    airlineRepository.save(airline);
+  public void airlineCreated(final AirlineCreatedDto dto) {
+    log.info("Creating Airline: {}", dto.getId());
+    final Airline airline = createdMapper.convertDtoToDomain(dto);
+    airlineRepository.insert(airline);
   }
 
   @Transactional
   @Override
-  public void airlineUpdated(final AirlineDto airlineDto) {
-    log.info("Updating Airline: {}", airlineDto.getId());
-    final Airline airline = airlineDtoToDomainMapper.convertDtoToDomain(airlineDto);
-    airlineRepository.save(airline);
+  public void airlineUpdated(final AirlineUpdatedDto dto) {
+    log.info("Updating Airline: {}", dto.getId());
+    final Airline airline = updatedMapper.convertDtoToDomain(dto);
+    airlineRepository.update(airline);
   }
 
   @Transactional
   @Override
-  public void airlineDeleted(final Long id) {
-    log.info("Deleting Airline: {}", id);
-    final AirlineId airlineId = AirlineId.of(id);
+  public void airlineDeleted(final AirlineDeletedDto dto) {
+    final AirlineId airlineId = deletedMapper.convertDtoToDomain(dto);
+    log.info("Deleting Airline: {}", airlineId);
     airlineRepository.deleteById(airlineId);
   }
 }

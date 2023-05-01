@@ -21,7 +21,7 @@ public class AirlineRepositoryImpl implements AirlineRepository {
   private final AirlineDomainToJpaMapper domainToJpaMapper;
 
   @Override
-  public Optional<Airline> loadAirline(final AirlineId airlineId) {
+  public Optional<Airline> findById(final AirlineId airlineId) {
     return airlineJpaRepository.findById(airlineId.getValue())
                                .map(jpaToDomainMapper::convertJpaToDomain);
   }
@@ -31,12 +31,6 @@ public class AirlineRepositoryImpl implements AirlineRepository {
     final AirlineJpaEntity airlineJpaEntity = domainToJpaMapper.convertDomainToJpa(airline);
     final AirlineJpaEntity savedEntity = airlineJpaRepository.save(airlineJpaEntity);
     return jpaToDomainMapper.convertJpaToDomain(savedEntity);
-  }
-
-  @Override
-  public Optional<Airline> findById(final AirlineId airlineId) {
-    return airlineJpaRepository.findById(airlineId.getValue())
-                               .map(jpaToDomainMapper::convertJpaToDomain);
   }
 
   @Override

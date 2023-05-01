@@ -11,7 +11,10 @@ compileJava {
 }
 
 dependencies {
+    implementation project(':common:common-application')
     implementation project(':common:common-domain')
+    implementation project(':common:common-helper')
+    implementation project(':common:common-infrastructure')
 
     implementation libs.apache.avro
     implementation libs.google.guava
@@ -27,6 +30,8 @@ dependencies {
     implementation libs.spring.context
     implementation libs.spring.kafka
     implementation libs.spring.messaging
+    implementation libs.jakarta.validation.api
+    implementation project(path: ':common:common-application')
 
     annotationProcessor libs.lombok.core
     annotationProcessor libs.spring.boot.configuration.processor

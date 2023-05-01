@@ -62,7 +62,7 @@ class OrderApplicationServiceIntegrationTest {
     final Airline airline = AirlineTestDataHelper.AIRLINE.toBuilder()
                                                          .active(false)
                                                          .build();
-    when(airlineRepository.findAirline(AirlineId.of(AirlineTestDataHelper.AIRLINE_ID))).thenReturn(Optional.of(airline));
+    when(airlineRepository.findById(AirlineId.of(AirlineTestDataHelper.AIRLINE_ID))).thenReturn(Optional.of(airline));
     final CreateOrderCommandDto createOrderCommand = createCreateOrderCommandDto();
 
     // when:

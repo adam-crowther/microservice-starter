@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.airline.service.domain.dto.get;
 
+import com.acroteq.ticketing.application.dto.Dto;
 import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
@@ -11,10 +12,10 @@ import java.util.Optional;
 
 @Getter
 @Builder
-public class AirlineDto {
+public class AirlineDto implements Dto {
 
   @NotNull
-  private String id;
+  private Long id;
   @NotNull
   private String name;
   @NotNull
