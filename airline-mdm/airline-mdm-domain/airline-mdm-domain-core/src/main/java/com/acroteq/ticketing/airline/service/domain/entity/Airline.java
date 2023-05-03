@@ -26,9 +26,13 @@ public class Airline extends AggregateRoot<AirlineId> {
 
   private final ImmutableList<Flight> flights;
 
+  public void validate() {
+    checkPrecondition(isNotBlank(name), AirlineValidationException::new, "userName");
+  }
+
   @SuppressWarnings("PublicInnerClass")
-  public abstract static class AirlineBuilder<C extends Airline, B extends Airline.AirlineBuilder<C, B>>
-      extends AggregateRoot.AggregateRootBuilder<AirlineId, C, B> {
+  public abstract static class AirlineBuilder<C extends Airline, B extends AirlineBuilder<C, B>>
+      extends AggregateRootBuilder<AirlineId, C, B> {
 
     public B flights(@Nullable final List<Flight> flights) {
       this.flights = Optional.ofNullable(flights)
@@ -36,9 +40,5 @@ public class Airline extends AggregateRoot<AirlineId> {
                              .orElse(ImmutableList.of());
       return this.self();
     }
-  }
-
-  public void validate() {
-    checkPrecondition(isNotBlank(name), AirlineValidationException::new, "userName");
   }
 }

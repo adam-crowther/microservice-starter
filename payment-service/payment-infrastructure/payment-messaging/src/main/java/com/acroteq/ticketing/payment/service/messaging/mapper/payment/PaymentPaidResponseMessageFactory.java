@@ -24,11 +24,15 @@ import java.util.UUID;
 public interface PaymentPaidResponseMessageFactory
     extends EventToMessageMapper<PaymentCompletedEvent, PaymentPaidResponseMessage> {
 
-  @Mapping(target = "paymentId", source = "event.payment.id")
-  @Mapping(target = "customerId", source = "event.payment.customerId")
-  @Mapping(target = "orderId", source = "event.payment.orderId")
-  @Mapping(target = "valueAmount", source = "event.payment.value.amount")
-  @Mapping(target = "valueCurrencyId", source = "event.payment.value.currencyId")
+  @Mapping(target = "paymentId", source = "payment.id")
+  @Mapping(target = "paymentVersion", source = "payment.version")
+  @Mapping(target = "audit", source = "payment.audit")
+  @Mapping(target = "customerId", source = "payment.customerId")
+  @Mapping(target = "orderId", source = "payment.orderId")
+  @Mapping(target = "orderVersion", source = "payment.orderVersion")
+  @Mapping(target = "valueAmount", source = "payment.value.amount")
+  @Mapping(target = "valueCurrencyId", source = "payment.value.currencyId")
+  @Mapping(target = "auditBuilder", ignore = true)
   @Override
   PaymentPaidResponseMessage convertEventToMessage(PaymentCompletedEvent event);
 }

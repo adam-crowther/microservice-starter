@@ -1,16 +1,26 @@
 package com.acroteq.ticketing.customer.service.domain.event;
 
 import com.acroteq.ticketing.customer.service.domain.entity.Customer;
-import com.acroteq.ticketing.domain.event.DomainEvent;
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
-import lombok.Getter;
+import com.acroteq.ticketing.domain.event.EntityEvent;
+import com.acroteq.ticketing.domain.valueobject.BaseId;
+import lombok.Builder;
+import lombok.NonNull;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
+import lombok.Value;
 
-@Getter
+import java.util.Optional;
+
 @ToString
-@SuperBuilder(toBuilder = true)
-public abstract class CustomerEvent extends DomainEvent<Customer> {
+@Builder
+@Value
+public class CustomerEvent implements EntityEvent {
 
-  public abstract CustomerId getCustomerId();
+  @NonNull Customer customer;
+
+  @Override
+  public Optional<Long> getId() {
+    return Optional.of(customer)
+                   .map(Customer::getId)
+                   .map(BaseId::getValue);
+  }
 }

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1681920121253-1
+      id: 1683098069907-1
       author: micro (generated)
       changes:
         - createTable:
@@ -12,6 +12,23 @@ databaseChangeLog:
                     primaryKey: true
                     primaryKeyName: customersPK
                   name: id
+                  type: BIGINT
+              - column:
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  name: created_timestamp
+                  type: timestamp
+              - column:
+                  name: lasted_modified_by
+                  type: VARCHAR(255)
+              - column:
+                  name: last_modified_timestamp
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: version
                   type: BIGINT
               - column:
                   name: credit_limit_amount

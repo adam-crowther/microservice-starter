@@ -15,6 +15,7 @@ import com.acroteq.ticketing.order.service.domain.mapper.order.TrackingIdMapper;
 import com.acroteq.ticketing.order.service.domain.resolver.FlightResolver;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(uses = { OrderIdMapper.class,
                  OrderItemIdMapper.class,
@@ -26,9 +27,17 @@ import org.mapstruct.Mapping;
                  FlightResolver.class }, imports = { OrderItemId.class, OrderId.class, FlightId.class })
 public interface OrderItemDomainToJpaMapper extends DomainToJpaMapper<OrderItem, OrderItemJpaEntity> {
 
-  @Mapping(target = "id", source = "orderItem.id")
+  @Mapping(target = "audit", ignore = true)
+  @Mapping(target = "id", source = "entity.id")
   @Mapping(target = "orderId", ignore = true)
-  @Mapping(target = "flightId", source = "orderItem.flight.id")
+  @Mapping(target = "flightId", source = "entity.flight.id")
   @Override
-  OrderItemJpaEntity convertDomainToJpa(OrderItem orderItem);
+  OrderItemJpaEntity convertDomainToJpa(OrderItem entity);
+
+  @Mapping(target = "audit", ignore = true)
+  // @Mapping(target = "id", ignore = true)
+  @Mapping(target = "orderId", ignore = true)
+  @Mapping(target = "flightId", source = "entity.flight.id")
+  @Override
+  OrderItemJpaEntity convertDomainToJpa(OrderItem entity, @MappingTarget OrderItemJpaEntity jpaEntity);
 }

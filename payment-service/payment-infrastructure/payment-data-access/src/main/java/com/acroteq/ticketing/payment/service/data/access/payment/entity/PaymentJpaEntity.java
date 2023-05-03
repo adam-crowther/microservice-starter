@@ -1,45 +1,37 @@
 package com.acroteq.ticketing.payment.service.data.access.payment.entity;
 
 import static jakarta.persistence.EnumType.STRING;
-import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PROTECTED;
 
 import com.acroteq.ticketing.domain.valueobject.PaymentStatus;
+import com.acroteq.ticketing.infrastructure.data.access.entity.MasterJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor(access = PRIVATE)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Setter
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = PROTECTED)
 @Table(name = "payments")
 @Entity
-public class PaymentJpaEntity {
-
-  @EqualsAndHashCode.Include
-  @Id
-  @GeneratedValue(strategy = IDENTITY)
-  @Column(name = "id")
-  private Long id;
+public class PaymentJpaEntity extends MasterJpaEntity {
 
   @Column(name = "customer_id")
   private Long customerId;
 
   @Column(name = "order_id")
   private Long orderId;
+
+  @Column(name = "order_version")
+  private Long orderVersion;
 
   @Column(name = "value_currency_id")
   private String valueCurrencyId;
@@ -50,7 +42,4 @@ public class PaymentJpaEntity {
   @Enumerated(STRING)
   @Column(name = "status")
   private PaymentStatus status;
-
-  @Column(name = "created_date_time")
-  private ZonedDateTime createdDateTime;
 }

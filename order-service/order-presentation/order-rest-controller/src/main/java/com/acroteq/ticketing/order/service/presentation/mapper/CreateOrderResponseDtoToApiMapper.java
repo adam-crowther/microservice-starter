@@ -5,7 +5,7 @@ import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderResponse
 import com.acroteq.ticketing.order.service.presentation.model.CreateOrderResponse;
 import org.mapstruct.Mapper;
 
-@Mapper(uses = { OrderAddressDtoToApiMapper.class })
+@Mapper(uses = { OrderAddressDtoToApiMapper.class, AuditDtoToApiMapper.class })
 public interface CreateOrderResponseDtoToApiMapper extends DtoToApiMapper<CreateOrderResponseDto, CreateOrderResponse> {
 
   @Override

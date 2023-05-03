@@ -1,15 +1,12 @@
 plugins {
     id 'java'
     alias pluginLibs.plugins.avro
+    id 'checkstyle'
+    id 'jacoco'
+    alias pluginLibs.plugins.spotbugs
 }
 
-compileJava {
-    sourceCompatibility = javaSourceCompatibility
-    targetCompatibility = javaTargetCompatibility
-    options.compilerArgs += [
-            '-Xlint:deprecation'
-    ]
-}
+apply from: "${rootDir}/java.gradle"
 
 dependencies {
     implementation libs.apache.avro

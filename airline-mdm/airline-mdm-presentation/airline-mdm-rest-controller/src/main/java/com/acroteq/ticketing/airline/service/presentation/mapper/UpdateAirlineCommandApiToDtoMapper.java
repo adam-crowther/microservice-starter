@@ -5,7 +5,7 @@ import com.acroteq.ticketing.airline.service.presentation.model.UpdateAirlineCom
 import com.acroteq.ticketing.common.application.mapper.ApiToDtoMapper;
 import org.mapstruct.Mapper;
 
-@Mapper(uses = UpdateFlightCommandApiToDtoMapper.class)
+@Mapper(uses = { UpdateFlightCommandApiToDtoMapper.class })
 public interface UpdateAirlineCommandApiToDtoMapper
     extends ApiToDtoMapper<UpdateAirlineCommand, UpdateAirlineCommandDto> {
 

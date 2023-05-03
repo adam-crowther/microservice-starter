@@ -12,7 +12,7 @@ public class CreditHistoryNotFoundException extends DomainException {
 
   private final CustomerId customerId;
 
-  public static Supplier<CreditHistoryNotFoundException> newCreditHistoryNotFoundException(final CustomerId customerId) {
+  public static Supplier<CreditHistoryNotFoundException> creditHistoryNotFoundException(final CustomerId customerId) {
     return () -> new CreditHistoryNotFoundException(customerId);
   }
 

@@ -1,34 +1,18 @@
 plugins {
     id 'base'
     id 'maven-publish'
-    id 'checkstyle'
-    id 'jacoco'
-
-    alias pluginLibs.plugins.spotbugs
     alias pluginLibs.plugins.nebula.lint
 }
 
 allprojects {
-    apply plugin: 'java'
-    apply from: "${rootDir}/quality/checkstyle.gradle"
-    apply from: "${rootDir}/quality/pmd.gradle"
-    apply from: "${rootDir}/quality/spotbugs.gradle"
-    apply from: "${rootDir}/quality/gradlelint.gradle"
-    apply from: "${rootDir}/quality/jacoco.gradle"
-
-    group group
-    version version
-
-    configurations {
-        implementation {
-            transitive = false
-        }
-    }
-
     repositories {
         mavenCentral()
         maven {
             url "https://packages.confluent.io/maven/"
         }
     }
+}
+
+configurations.configureEach {
+    resolutionStrategy.failOnVersionConflict()
 }

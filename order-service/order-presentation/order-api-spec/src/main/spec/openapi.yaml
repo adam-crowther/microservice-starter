@@ -119,12 +119,15 @@ components:
       x-class-extra-annotation: "@lombok.Builder"
       required:
         - trackingId
+        - audit
         - status
         - message
       properties:
         trackingId:
           type: string
           format: uuid
+        audit:
+          $ref: "#/components/schemas/Audit"
         status:
           $ref: "#/components/schemas/OrderStatus"
         message:
@@ -136,6 +139,7 @@ components:
       x-class-extra-annotation: "@lombok.Builder"
       required:
         - trackingId
+        - audit
         - status
         - customerId
         - airlineId
@@ -146,6 +150,8 @@ components:
           type: string
           format: uuid
           readOnly: true
+        audit:
+          $ref: "#/components/schemas/Audit"
         status:
           $ref: "#/components/schemas/OrderStatus"
         customerId:
@@ -247,6 +253,22 @@ components:
         city:
           type: string
           maxLength: 50
+          readOnly: true
+
+    Audit:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - createdTimestamp
+        - lastModifiedTimestamp
+      properties:
+        createdTimestamp:
+          type: string
+          format: date-time
+          readOnly: true
+        lastModifiedTimestamp:
+          type: string
+          format: date-time
           readOnly: true
 
     Problem:

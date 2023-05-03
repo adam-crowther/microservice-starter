@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.order.service.domain.dto.create;
 
-import com.acroteq.ticketing.application.dto.Dto;
+import com.acroteq.ticketing.application.dto.DataTransferObject;
 import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Builder
 @Getter
-public class CreateOrderCommandDto implements Dto {
+public class CreateOrderCommandDto implements DataTransferObject {
 
   @NotNull
   private final Long customerId;

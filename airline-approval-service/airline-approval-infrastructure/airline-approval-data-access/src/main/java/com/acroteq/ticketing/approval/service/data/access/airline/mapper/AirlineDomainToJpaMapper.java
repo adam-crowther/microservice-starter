@@ -5,10 +5,14 @@ import com.acroteq.ticketing.approval.service.data.access.airline.entity.Airline
 import com.acroteq.ticketing.approval.service.domain.entity.airline.Airline;
 import com.acroteq.ticketing.infrastructure.mapper.DomainToJpaMapper;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 
 @Mapper(uses = { AirlineIdMapper.class, FlightDomainToJpaMapper.class })
 public interface AirlineDomainToJpaMapper extends DomainToJpaMapper<Airline, AirlineJpaEntity> {
 
   @Override
   AirlineJpaEntity convertDomainToJpa(Airline entity);
+
+  @Override
+  AirlineJpaEntity convertDomainToJpa(Airline entity, @MappingTarget AirlineJpaEntity jpaEntity);
 }

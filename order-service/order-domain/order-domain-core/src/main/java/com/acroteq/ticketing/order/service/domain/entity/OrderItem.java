@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.order.service.domain.entity;
 
-import com.acroteq.ticketing.domain.entity.BaseEntity;
+import com.acroteq.ticketing.domain.entity.MasterEntity;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
 import com.acroteq.ticketing.domain.valueobject.OrderId;
 import com.acroteq.ticketing.domain.valueobject.OrderItemId;
@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @ToString(callSuper = true)
 @SuperBuilder(toBuilder = true)
-public class OrderItem extends BaseEntity<OrderItemId> {
+public class OrderItem extends MasterEntity<OrderItemId> {
 
   private final OrderId orderId;
   @NonNull

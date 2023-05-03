@@ -9,6 +9,7 @@ import org.mapstruct.Mapping;
 @Mapper(uses = { OrderAddressDtoToApiMapper.class, OrderItemDtoToApiMapper.class })
 public interface TrackOrderResponseDtoToApiMapper extends DtoToApiMapper<TrackOrderResponseDto, Order> {
 
+  @Mapping(target = "audit", ignore = true)
   @Mapping(target = "address", source = "streetAddress")
   @Mapping(target = "status", source = "orderStatus")
   @Override

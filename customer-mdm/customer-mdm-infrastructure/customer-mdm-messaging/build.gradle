@@ -1,23 +1,21 @@
 plugins {
     id 'java'
+    id 'checkstyle'
+    id 'jacoco'
+    alias pluginLibs.plugins.spotbugs
 }
 
+apply from: "${rootDir}/java.gradle"
+
 compileJava {
-    sourceCompatibility = javaSourceCompatibility
-    targetCompatibility = javaTargetCompatibility
     options.compilerArgs += [
             '-Amapstruct.defaultComponentModel=spring',
             '-Amapstruct.defaultInjectionStrategy=constructor',
             '-Amapstruct.unmappedTargetPolicy=ERROR',
             '-Amapstruct.verbose=false',
             '-Amapstruct.suppressGeneratorVersionInfoComment=true',
-            '-Amapstruct.suppressGeneratorTimestamp=true',
-            '-Xlint:deprecation'
+            '-Amapstruct.suppressGeneratorTimestamp=true'
     ]
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {
@@ -36,6 +34,7 @@ dependencies {
     implementation libs.slf4j.api
     implementation libs.spotbugs.annotations
     implementation libs.spring.beans
+    implementation libs.spring.boot.core
     implementation libs.spring.context
     implementation libs.spring.kafka
 

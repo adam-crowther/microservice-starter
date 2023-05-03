@@ -1,30 +1,27 @@
 plugins {
     id 'java'
+    id 'checkstyle'
+    id 'jacoco'
+    alias pluginLibs.plugins.spotbugs
 }
 
+apply from: "${rootDir}/java.gradle"
+
 compileJava {
-    sourceCompatibility = javaSourceCompatibility
-    targetCompatibility = javaTargetCompatibility
     options.compilerArgs += [
             '-Amapstruct.defaultComponentModel=spring',
             '-Amapstruct.defaultInjectionStrategy=constructor',
             '-Amapstruct.unmappedTargetPolicy=ERROR',
             '-Amapstruct.verbose=false',
             '-Amapstruct.suppressGeneratorVersionInfoComment=true',
-            '-Amapstruct.suppressGeneratorTimestamp=true',
-            '-Xlint:deprecation'
+            '-Amapstruct.suppressGeneratorTimestamp=true'
     ]
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {
     implementation project(":common:common-domain")
     implementation project(":common:common-application")
     implementation project(":common:common-helper")
-    implementation project(":common:common-infrastructure")
     implementation project(":airline-mdm:airline-mdm-domain:airline-mdm-domain-core")
 
     implementation libs.google.guava

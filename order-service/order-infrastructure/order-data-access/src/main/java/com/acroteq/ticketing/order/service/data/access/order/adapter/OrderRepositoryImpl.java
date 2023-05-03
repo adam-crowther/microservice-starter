@@ -1,6 +1,7 @@
 package com.acroteq.ticketing.order.service.data.access.order.adapter;
 
 import com.acroteq.ticketing.domain.valueobject.OrderId;
+import com.acroteq.ticketing.infrastructure.data.access.repository.ReadWriteRepositoryImpl;
 import com.acroteq.ticketing.order.service.data.access.order.entity.OrderJpaEntity;
 import com.acroteq.ticketing.order.service.data.access.order.mapper.OrderDomainToJpaMapper;
 import com.acroteq.ticketing.order.service.data.access.order.mapper.OrderJpaToDomainMapper;
@@ -8,38 +9,31 @@ import com.acroteq.ticketing.order.service.data.access.order.repository.OrderJpa
 import com.acroteq.ticketing.order.service.domain.entity.Order;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.OrderRepository;
 import com.acroteq.ticketing.order.service.domain.valueobject.TrackingId;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @Component
-public class OrderRepositoryImpl implements OrderRepository {
+public class OrderRepositoryImpl extends ReadWriteRepositoryImpl<OrderId, Order, OrderJpaEntity>
+    implements OrderRepository {
 
-  private final OrderJpaRepository orderJpaRepository;
-  private final OrderDomainToJpaMapper orderDomainToJpaMapper;
-  private final OrderJpaToDomainMapper orderJpaToDomainMapper;
+  private final OrderJpaRepository jpaRepository;
+  private final OrderJpaToDomainMapper jpaToDomainMapper;
 
-  @Override
-  public Order save(final Order order) {
-    final OrderJpaEntity entity = orderDomainToJpaMapper.convertDomainToJpa(order);
-    final OrderJpaEntity saved = orderJpaRepository.save(entity);
-    return orderJpaToDomainMapper.convertJpaToDomain(saved);
-  }
+  public OrderRepositoryImpl(final OrderJpaRepository jpaRepository,
+                             final OrderJpaToDomainMapper jpaToDomainMapper,
+                             final OrderDomainToJpaMapper domainToJpaMapper) {
+    super(jpaRepository, jpaToDomainMapper, domainToJpaMapper);
 
-  @Override
-  public Optional<Order> findById(final OrderId orderId) {
-    final Long id = orderId.getValue();
-    return orderJpaRepository.findById(id)
-                             .map(orderJpaToDomainMapper::convertJpaToDomain);
+    this.jpaRepository = jpaRepository;
+    this.jpaToDomainMapper = jpaToDomainMapper;
   }
 
   @Override
   public Optional<Order> findByTrackingId(final TrackingId trackingId) {
     final String id = trackingId.getValue()
                                 .toString();
-    return orderJpaRepository.findByTrackingId(id)
-                             .map(orderJpaToDomainMapper::convertJpaToDomain);
+    return jpaRepository.findByTrackingId(id)
+                        .map(jpaToDomainMapper::convertJpaToDomain);
   }
 }

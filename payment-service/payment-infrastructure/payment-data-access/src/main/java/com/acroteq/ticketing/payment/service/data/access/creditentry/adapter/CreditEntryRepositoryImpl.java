@@ -1,36 +1,27 @@
 package com.acroteq.ticketing.payment.service.data.access.creditentry.adapter;
 
 import com.acroteq.ticketing.domain.valueobject.CustomerId;
+import com.acroteq.ticketing.infrastructure.data.access.repository.ReadWriteRepositoryImpl;
 import com.acroteq.ticketing.payment.service.data.access.creditentry.entity.CreditEntryJpaEntity;
 import com.acroteq.ticketing.payment.service.data.access.creditentry.mapper.CreditEntryDomainToJpaMapper;
 import com.acroteq.ticketing.payment.service.data.access.creditentry.mapper.CreditEntryJpaToDomainMapper;
 import com.acroteq.ticketing.payment.service.data.access.creditentry.repository.CreditEntryJpaRepository;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditEntry;
 import com.acroteq.ticketing.payment.service.domain.ports.output.repository.CreditEntryRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
-@RequiredArgsConstructor
 @Component
-public class CreditEntryRepositoryImpl implements CreditEntryRepository {
+public class CreditEntryRepositoryImpl extends ReadWriteRepositoryImpl<CustomerId, CreditEntry, CreditEntryJpaEntity>
+    implements CreditEntryRepository {
 
-  private final CreditEntryJpaRepository creditEntryJpaRepository;
-  private final CreditEntryJpaToDomainMapper creditEntryJpaToDomainMapper;
-  private final CreditEntryDomainToJpaMapper creditEntryDomainToJpaMapper;
+  private final CreditEntryJpaRepository jpaRepository;
+  private final CreditEntryJpaToDomainMapper jpaToDomainMapper;
 
-
-  @Override
-  public CreditEntry save(final CreditEntry creditEntry) {
-    final CreditEntryJpaEntity creditEntryJpaEntity = creditEntryDomainToJpaMapper.convertDomainToJpa(creditEntry);
-    final CreditEntryJpaEntity savedEntity = creditEntryJpaRepository.save(creditEntryJpaEntity);
-    return creditEntryJpaToDomainMapper.convertJpaToDomain(savedEntity);
-  }
-
-  @Override
-  public Optional<CreditEntry> findByCustomerId(final CustomerId customerId) {
-    return creditEntryJpaRepository.findByCustomerId(customerId.getValue())
-                                   .map(creditEntryJpaToDomainMapper::convertJpaToDomain);
+  public CreditEntryRepositoryImpl(final CreditEntryJpaRepository jpaRepository,
+                                   final CreditEntryJpaToDomainMapper jpaToDomainMapper,
+                                   final CreditEntryDomainToJpaMapper domainToJpaMapper) {
+    super(jpaRepository, jpaToDomainMapper, domainToJpaMapper);
+    this.jpaRepository = jpaRepository;
+    this.jpaToDomainMapper = jpaToDomainMapper;
   }
 }

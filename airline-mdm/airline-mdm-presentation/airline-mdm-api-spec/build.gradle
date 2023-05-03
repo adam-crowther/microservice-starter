@@ -1,16 +1,19 @@
 plugins {
     id 'java'
     alias pluginLibs.plugins.openapi.generator
+    id 'checkstyle'
+    id 'jacoco'
+    alias pluginLibs.plugins.spotbugs
 }
 
+apply from: "${rootDir}/java.gradle"
 apply plugin: "org.openapi.generator"
 
 dependencies {
     implementation libs.jackson.annotations
+    implementation libs.jakarta.annotation.api
+    implementation libs.jakarta.servlet.api
     implementation libs.jakarta.validation.api
-    implementation libs.javax.annotation.api
-    implementation libs.javax.servlet.api
-    implementation libs.javax.validation.api
     implementation libs.lombok.core
     implementation libs.openapitools.jackson.databind.nullable
     implementation libs.spotbugs.annotations
@@ -31,8 +34,9 @@ openApiGenerate {
     invokerPackage = "org.openapi.example.invoker"
     modelPackage = "com.acroteq.ticketing.airline.service.presentation.model"
     configOptions.putAll([
-            dateLibrary  : "java8",
-            interfaceOnly: "true"
+            dateLibrary   : "java8",
+            interfaceOnly : "true",
+            useSpringBoot3: "true"
     ])
 }
 
@@ -45,14 +49,6 @@ sourceSets {
             srcDirs += "${projectDir}/src/main/spec"
         }
     }
-}
-
-compileJava {
-    sourceCompatibility = javaSourceCompatibility
-    targetCompatibility = javaTargetCompatibility
-    options.compilerArgs += [
-            '-Xlint:deprecation'
-    ]
 }
 
 compileJava.dependsOn tasks.openApiGenerate

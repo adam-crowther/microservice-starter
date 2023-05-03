@@ -53,7 +53,7 @@ public class CustomersController implements CustomersApi {
     final CreateCustomerResponseDto responseDto = customerApplicationService.createCustomer(commandDto);
     final CreateCustomerResponse response = createResponseMapper.convertDtoToApi(responseDto);
 
-    log.info("Customer created with id {}", response.getCustomerId());
+    log.info("Customer created with id {}", response.getId());
     return ResponseEntity.ok(response);
   }
 

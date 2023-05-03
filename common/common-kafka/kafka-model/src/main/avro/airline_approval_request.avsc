@@ -19,6 +19,10 @@
       "type": "long"
     },
     {
+      "name": "orderVersion",
+      "type": "long"
+    },
+    {
       "name": "airlineOrderStatus",
       "type": {
         "type": "enum",
@@ -59,13 +63,6 @@
         "logicalType": "decimal",
         "precision": 10,
         "scale": 2
-      }
-    },
-    {
-      "name": "createdDateTime",
-      "type": {
-        "type": "long",
-        "logicalType": "timestamp-millis"
       }
     }
   ]

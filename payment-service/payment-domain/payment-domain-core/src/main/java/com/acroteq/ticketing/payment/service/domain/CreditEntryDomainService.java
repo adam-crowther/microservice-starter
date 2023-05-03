@@ -10,7 +10,7 @@ public interface CreditEntryDomainService {
 
   CreditEntryOutput createCreditEntry(CreditEntry newCredit);
 
-  CreditEntryOutput updateCreditEntry(CreditEntry updatedCredit,
-                                      CreditEntry currentCredit,
+  CreditEntryOutput updateCreditEntry(CreditEntry currentCredit,
+                                      CreditEntry updatedCredit,
                                       List<CreditHistory> creditHistoryList);
 }

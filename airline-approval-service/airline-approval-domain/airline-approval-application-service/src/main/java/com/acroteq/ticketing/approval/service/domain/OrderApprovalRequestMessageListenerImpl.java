@@ -30,7 +30,7 @@ public class OrderApprovalRequestMessageListenerImpl implements OrderApprovalReq
       orderApprovalEvent.accept(eventPublisher);
       log.debug("Checking order with id {}", orderId);
     } catch (final Exception exception) {
-      log.error("Exception while checking order with id {}.  Sending REJECTED response.", orderId);
+      log.error("Exception while checking order with id {}. Sending REJECTED response.", orderId, exception);
       final OrderApprovalEvent rejectedEvent = exceptionEventFactory.createOrderRejectedEvent(airlineApprovalRequest,
                                                                                               exception);
       rejectedEvent.accept(eventPublisher);

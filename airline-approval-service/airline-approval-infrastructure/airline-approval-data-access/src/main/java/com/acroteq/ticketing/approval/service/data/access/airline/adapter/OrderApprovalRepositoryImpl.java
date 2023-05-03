@@ -6,22 +6,18 @@ import com.acroteq.ticketing.approval.service.data.access.airline.mapper.OrderAp
 import com.acroteq.ticketing.approval.service.data.access.airline.repository.OrderApprovalJpaRepository;
 import com.acroteq.ticketing.approval.service.domain.entity.order.OrderApproval;
 import com.acroteq.ticketing.approval.service.domain.ports.output.repository.OrderApprovalRepository;
-import lombok.RequiredArgsConstructor;
+import com.acroteq.ticketing.approval.service.domain.valueobject.OrderApprovalId;
+import com.acroteq.ticketing.infrastructure.data.access.repository.WriteRepositoryImpl;
 import org.springframework.stereotype.Component;
 
-@RequiredArgsConstructor
 @Component
-public class OrderApprovalRepositoryImpl implements OrderApprovalRepository {
+public class OrderApprovalRepositoryImpl
+    extends WriteRepositoryImpl<OrderApprovalId, OrderApproval, OrderApprovalJpaEntity>
+    implements OrderApprovalRepository {
 
-  private final OrderApprovalJpaRepository orderApprovalJpaRepository;
-  private final OrderApprovalJpaToDomainMapper orderApprovalJpaToDomainMapper;
-  private final OrderApprovalDomainToJpaMapper orderApprovalDomainToJpaMapper;
-
-  @Override
-  public OrderApproval save(final OrderApproval orderApproval) {
-    final OrderApprovalJpaEntity entity = orderApprovalDomainToJpaMapper.convertDomainToJpa(orderApproval);
-    final OrderApprovalJpaEntity savedEntity = orderApprovalJpaRepository.save(entity);
-
-    return orderApprovalJpaToDomainMapper.convertJpaToDomain(savedEntity);
+  public OrderApprovalRepositoryImpl(final OrderApprovalJpaRepository jpaRepository,
+                                     final OrderApprovalJpaToDomainMapper jpaToDomainMapper,
+                                     final OrderApprovalDomainToJpaMapper domainToJpaMapper) {
+    super(jpaRepository, jpaToDomainMapper, domainToJpaMapper);
   }
 }

@@ -1,16 +1,14 @@
 package com.acroteq.ticketing.payment.service.domain.dto.payment;
 
-import com.acroteq.ticketing.application.dto.Dto;
-import lombok.Builder;
+import com.acroteq.ticketing.application.dto.SagaDto;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-
-import java.util.UUID;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Builder
-public class PaymentCancelRequestDto implements Dto {
+@SuperBuilder
+public class PaymentCancelRequestDto extends SagaDto {
 
-  private final UUID sagaId;
+  @NotNull
   private final Long orderId;
-  private final Long paymentId;
 }

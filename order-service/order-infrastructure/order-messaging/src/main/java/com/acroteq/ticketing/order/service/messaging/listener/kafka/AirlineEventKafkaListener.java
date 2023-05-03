@@ -4,15 +4,10 @@ import static org.springframework.kafka.support.KafkaHeaders.OFFSET;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_KEY;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
 
-import com.acroteq.ticketing.kafka.airline.avro.model.AirlineCreatedEventMessage;
-import com.acroteq.ticketing.kafka.airline.avro.model.AirlineDeletedEventMessage;
-import com.acroteq.ticketing.kafka.airline.avro.model.AirlineUpdatedEventMessage;
-import com.acroteq.ticketing.kafka.consumer.KafkaMessageHandler;
+import com.acroteq.ticketing.kafka.airline.avro.model.AirlineEventMessage;
+import com.acroteq.ticketing.kafka.consumer.KafkaEntityEventMessageHandler;
 import com.acroteq.ticketing.order.service.domain.ports.input.message.listener.airline.AirlineEventMessageListener;
-import com.acroteq.ticketing.order.service.messaging.mapper.airline.AirlineCreatedEventMessageToDtoMapper;
-import com.acroteq.ticketing.order.service.messaging.mapper.airline.AirlineDeletedEventMessageToDtoMapper;
-import com.acroteq.ticketing.order.service.messaging.mapper.airline.AirlineUpdatedEventMessageToDtoMapper;
-import lombok.RequiredArgsConstructor;
+import com.acroteq.ticketing.order.service.messaging.mapper.airline.AirlineEventMessageToDtoMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecord;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -24,28 +19,17 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 
 @Slf4j
-@RequiredArgsConstructor
 @Component
 public class AirlineEventKafkaListener {
 
-  private final KafkaMessageHandler kafkaMessageHandler;
+  private final KafkaEntityEventMessageHandler messageHandler;
 
-  public AirlineEventKafkaListener(final AirlineCreatedEventMessageToDtoMapper createdEventMapper,
-                                   final AirlineUpdatedEventMessageToDtoMapper updatedEventMapper,
-                                   final AirlineDeletedEventMessageToDtoMapper deletedEventMapper,
+  public AirlineEventKafkaListener(final AirlineEventMessageToDtoMapper airlineEventMapper,
                                    final AirlineEventMessageListener listener) {
-
-    kafkaMessageHandler = KafkaMessageHandler.builder()
-                                             .addMessageType(AirlineCreatedEventMessage.SCHEMA$.getName(),
-                                                             createdEventMapper,
-                                                             listener::airlineCreated)
-                                             .addMessageType(AirlineUpdatedEventMessage.SCHEMA$.getName(),
-                                                             updatedEventMapper,
-                                                             listener::airlineUpdated)
-                                             .addMessageType(AirlineDeletedEventMessage.SCHEMA$.getName(),
-                                                             deletedEventMapper,
-                                                             listener::airlineDeleted)
-                                             .build();
+    messageHandler = new KafkaEntityEventMessageHandler(AirlineEventMessage.SCHEMA$.getName(),
+                                                        airlineEventMapper,
+                                                        listener::airlineCreatedOrUpdated,
+                                                        listener::airlineDeleted);
   }
 
   @KafkaListener(id = "${order-service.airline-event.consumer-group-id}",
@@ -60,6 +44,6 @@ public class AirlineEventKafkaListener {
              partitions,
              offsets);
 
-    kafkaMessageHandler.processMessages(messages, keys, partitions, offsets);
+    messageHandler.processMessages(messages, keys, partitions, offsets);
   }
 }

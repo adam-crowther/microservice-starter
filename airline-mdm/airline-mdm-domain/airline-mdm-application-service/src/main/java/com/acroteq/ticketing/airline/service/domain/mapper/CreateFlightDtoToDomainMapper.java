@@ -12,6 +12,7 @@ import org.mapstruct.Mapping;
 public interface CreateFlightDtoToDomainMapper extends DtoToDomainMapper<CreateFlightCommandDto, Flight> {
 
   @Mapping(target = "id", ignore = true)
+  @Mapping(target = "version", ignore = true)
   @Override
   Flight convertDtoToDomain(CreateFlightCommandDto createFlightCommandDto);
 }

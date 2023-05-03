@@ -11,11 +11,11 @@
     <!--     <Package name="~com.acroteq.ticketing.[a-z\-]+.service.presentation.model"/> -->
     <!-- </Match> -->
 
-    <!-- Spring IOC/injection does not do a deep copy of the injected instances, which means we can't meet this rule.  -->
+    <!-- Spring IOC/injection does not do a deep copy of the injected instances, which means we can't meet this rule. -->
     <Match>
         <!-- TODO Replace Class filter with Annotation  -->
-        <!-- The new Annotation matcher was only merged to Spotbugs master in April 2023.  It should be available with the next release. -->
-        <!-- Until then, we need to specify the Spring component and service classes by name.  -->
+        <!-- The new Annotation matcher was only merged to Spotbugs master in April 2023. It should be available with the next release. -->
+        <!-- Until then, we need to specify the Spring component and service classes by name. -->
         <!-- <Or> -->
         <!--     <Annotation name="javax.annotation.processing.Generated"/> -->
         <!--     <Annotation name="org.springframework.stereotype.Service"/> -->

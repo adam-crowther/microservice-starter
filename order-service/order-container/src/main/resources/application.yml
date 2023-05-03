@@ -18,6 +18,9 @@ order-service:
     consumer-group-id: customer-event-consumer-group
     topic-name: customer-event
 
+#management.endpoints.web.exposure.include: *
+management.endpoint.shutdown.enabled: true
+#endpoints.shutdown.enabled: true
 
 spring:
   main:
@@ -45,7 +48,6 @@ spring:
 
 kafka:
   bootstrap-servers: localhost:19092, localhost:29092, localhost:39092
-  schema-registry-url-key: schema.registry.url
   schema-registry-url: http://localhost:8081
   num-of-partitions: 3
   replication-factor: 3
@@ -68,7 +70,6 @@ kafka:
     deserialisation:
       key-deserializer-class: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer-class: io.confluent.kafka.serializers.KafkaAvroDeserializer
-      specific-avro-reader-key: specific.avro.reader
       specific-avro-reader: true
     group-management:
       session-timeout-ms: 10000

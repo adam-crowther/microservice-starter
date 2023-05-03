@@ -2,21 +2,22 @@ plugins {
     id 'java'
     alias pluginLibs.plugins.docker.compose
     alias pluginLibs.plugins.liquibase
+    id 'checkstyle'
+    id 'jacoco'
+    alias pluginLibs.plugins.spotbugs
 }
 
-apply from: 'liquibase.gradle'
+apply from: "${rootDir}/java.gradle"
+apply from: "${rootDir}/liquibase.gradle"
 
 compileJava {
-    sourceCompatibility = javaSourceCompatibility
-    targetCompatibility = javaTargetCompatibility
     options.compilerArgs += [
             '-Amapstruct.defaultComponentModel=spring',
             '-Amapstruct.defaultInjectionStrategy=constructor',
             '-Amapstruct.unmappedTargetPolicy=ERROR',
             '-Amapstruct.verbose=false',
             '-Amapstruct.suppressGeneratorVersionInfoComment=true',
-            '-Amapstruct.suppressGeneratorTimestamp=true',
-            '-Xlint:deprecation'
+            '-Amapstruct.suppressGeneratorTimestamp=true'
     ]
 }
 
@@ -39,6 +40,7 @@ dependencies {
     implementation libs.mapstruct.core
     implementation libs.spotbugs.annotations
     implementation libs.spring.beans
+    implementation libs.spring.boot.autoconfigure
     implementation libs.spring.context
     implementation libs.spring.data.commons
     implementation libs.spring.data.jpa

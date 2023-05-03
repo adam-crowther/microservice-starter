@@ -11,6 +11,7 @@ import org.mapstruct.Mapping;
 public interface UpdateCustomerCommandApiToDtoMapper
     extends ApiToDtoMapper<UpdateCustomerCommand, UpdateCustomerCommandDto> {
 
+
   @Mapping(target = "creditLimit.currencyId", source = "creditLimitCurrencyId")
   @Mapping(target = "creditLimit.amount", source = "creditLimitAmount")
   @Override

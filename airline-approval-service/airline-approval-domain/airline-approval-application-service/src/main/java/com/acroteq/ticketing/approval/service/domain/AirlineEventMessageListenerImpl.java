@@ -1,12 +1,9 @@
 package com.acroteq.ticketing.approval.service.domain;
 
-import com.acroteq.ticketing.approval.service.domain.dto.AirlineCreatedDto;
-import com.acroteq.ticketing.approval.service.domain.dto.AirlineDeletedDto;
-import com.acroteq.ticketing.approval.service.domain.dto.AirlineUpdatedDto;
+import com.acroteq.ticketing.approval.service.domain.dto.AirlineEventDto;
 import com.acroteq.ticketing.approval.service.domain.entity.airline.Airline;
-import com.acroteq.ticketing.approval.service.domain.mapper.AirlineCreatedDtoToDomainMapper;
-import com.acroteq.ticketing.approval.service.domain.mapper.AirlineDeletedDtoToDomainMapper;
-import com.acroteq.ticketing.approval.service.domain.mapper.AirlineUpdatedDtoToDomainMapper;
+import com.acroteq.ticketing.approval.service.domain.exception.AirlineEventProcessingOrderException;
+import com.acroteq.ticketing.approval.service.domain.mapper.AirlineEventDtoToDomainMapper;
 import com.acroteq.ticketing.approval.service.domain.ports.input.message.listener.airline.AirlineEventMessageListener;
 import com.acroteq.ticketing.approval.service.domain.ports.output.repository.AirlineRepository;
 import com.acroteq.ticketing.domain.valueobject.AirlineId;
@@ -15,36 +12,57 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.function.Function;
+
 @Slf4j
 @RequiredArgsConstructor
 @Component
 public class AirlineEventMessageListenerImpl implements AirlineEventMessageListener {
 
   private final AirlineRepository airlineRepository;
-  private final AirlineCreatedDtoToDomainMapper createdMapper;
-  private final AirlineUpdatedDtoToDomainMapper updatedMapper;
-  private final AirlineDeletedDtoToDomainMapper deletedMapper;
+  private final AirlineEventDtoToDomainMapper mapper;
 
   @Transactional
   @Override
-  public void airlineCreated(final AirlineCreatedDto dto) {
+  public void airlineCreatedOrUpdated(final AirlineEventDto dto) {
     log.info("Creating Airline: {}", dto.getId());
-    final Airline airline = createdMapper.convertDtoToDomain(dto);
-    airlineRepository.insert(airline);
+    final Airline airline = mapper.convertDtoToDomain(dto);
+    if (!eventAlreadyProcessed(airline)) {
+      airlineRepository.save(airline);
+    }
+  }
+
+  private boolean eventAlreadyProcessed(final Airline newAirline) {
+    final AirlineId airlineId = newAirline.getId();
+    return airlineRepository.findById(airlineId)
+                            .map(alreadyProcessed(newAirline))
+                            .orElse(false);
+  }
+
+  private Function<Airline, Boolean> alreadyProcessed(final Airline newAirline) {
+    return existingAirline -> alreadyProcessed(existingAirline, newAirline);
+  }
+
+  private Boolean alreadyProcessed(final Airline existingAirline, final Airline newAirline) {
+
+    if (newAirline.isFromAnEarlierEventThan(existingAirline)) {
+      throw new AirlineEventProcessingOrderException(newAirline.getId());
+    }
+
+    final boolean isAlreadyProcessed = newAirline.isFromTheSameEventAs(existingAirline);
+    if (isAlreadyProcessed) {
+      log.debug("AirlineUpdatedEvent for Airline {} with eventId {} was already processed.",
+                newAirline.getId(),
+                newAirline.getEventId());
+    }
+
+    return isAlreadyProcessed;
   }
 
   @Transactional
   @Override
-  public void airlineUpdated(final AirlineUpdatedDto dto) {
-    log.info("Updating Airline: {}", dto.getId());
-    final Airline airline = updatedMapper.convertDtoToDomain(dto);
-    airlineRepository.update(airline);
-  }
-
-  @Transactional
-  @Override
-  public void airlineDeleted(final AirlineDeletedDto dto) {
-    final AirlineId airlineId = deletedMapper.convertDtoToDomain(dto);
+  public void airlineDeleted(final Long id) {
+    final AirlineId airlineId = AirlineId.of(id);
     log.info("Deleting Airline: {}", airlineId);
     airlineRepository.deleteById(airlineId);
   }

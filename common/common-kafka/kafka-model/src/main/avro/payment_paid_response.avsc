@@ -15,11 +15,42 @@
       "type": "long"
     },
     {
+      "name": "paymentVersion",
+      "type": "long"
+    },
+    {
+      "name": "audit",
+      "type": {
+        "name": "AuditRecord",
+        "type": "record",
+        "fields": [
+          {
+            "name": "createdTimestamp",
+            "type": {
+              "type": "long",
+              "logicalType": "timestamp-millis"
+            }
+          },
+          {
+            "name": "lastModifiedTimestamp",
+            "type": {
+              "type": "long",
+              "logicalType": "timestamp-millis"
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "customerId",
       "type": "long"
     },
     {
       "name": "orderId",
+      "type": "long"
+    },
+    {
+      "name": "orderVersion",
       "type": "long"
     },
     {
@@ -33,13 +64,6 @@
         "logicalType": "decimal",
         "precision": 10,
         "scale": 2
-      }
-    },
-    {
-      "name": "createdDateTime",
-      "type": {
-        "type": "long",
-        "logicalType": "timestamp-millis"
       }
     }
   ]

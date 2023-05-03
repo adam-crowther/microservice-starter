@@ -12,5 +12,5 @@ public interface PaymentCancelRequestMessageToDtoMapper
     extends MessageToDtoMapper<PaymentCancelRequestMessage, PaymentCancelRequestDto> {
 
   @Override
-  PaymentCancelRequestDto convertMessageToDto(PaymentCancelRequestMessage paymentRequestMessage);
+  PaymentCancelRequestDto convertMessageToDto(PaymentCancelRequestMessage message, Integer partition, Long offset);
 }

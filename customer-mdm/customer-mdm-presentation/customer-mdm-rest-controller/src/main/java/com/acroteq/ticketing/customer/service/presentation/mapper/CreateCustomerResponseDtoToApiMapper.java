@@ -5,7 +5,7 @@ import com.acroteq.ticketing.customer.service.domain.dto.create.CreateCustomerRe
 import com.acroteq.ticketing.customer.service.presentation.model.CreateCustomerResponse;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(uses = AuditDtoToApiMapper.class)
 public interface CreateCustomerResponseDtoToApiMapper
     extends DtoToApiMapper<CreateCustomerResponseDto, CreateCustomerResponse> {
 

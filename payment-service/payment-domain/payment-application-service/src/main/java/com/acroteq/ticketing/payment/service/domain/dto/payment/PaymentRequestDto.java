@@ -1,20 +1,21 @@
 package com.acroteq.ticketing.payment.service.domain.dto.payment;
 
-import com.acroteq.ticketing.application.dto.Dto;
+import com.acroteq.ticketing.application.dto.SagaDto;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
-import lombok.Builder;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-
-import java.time.Instant;
-import java.util.UUID;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Builder
-public class PaymentRequestDto implements Dto {
+@SuperBuilder
+public class PaymentRequestDto extends SagaDto {
 
-  private final UUID sagaId;
+  @NotNull
   private final Long orderId;
+  @NotNull
+  private final Long orderVersion;
+  @NotNull
   private final Long customerId;
+  @NotNull
   private final CashValue value;
-  private final Instant createdDateTime;
 }

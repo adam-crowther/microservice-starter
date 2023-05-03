@@ -10,7 +10,6 @@ import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalRej
 import com.acroteq.ticketing.order.service.domain.ports.input.message.listener.airlineapproval.AirlineApprovalResponseMessageListener;
 import com.acroteq.ticketing.order.service.messaging.mapper.airline.AirlineApprovalApprovedResponseMessageMapper;
 import com.acroteq.ticketing.order.service.messaging.mapper.airline.AirlineApprovalRejectedResponseMessageMapper;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecord;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -22,24 +21,23 @@ import org.springframework.validation.annotation.Validated;
 import java.util.List;
 
 @Slf4j
-@RequiredArgsConstructor
 @Component
 public class AirlineApprovalResponseKafkaListener {
 
-  private final KafkaMessageHandler kafkaMessageHandler;
+  private final KafkaMessageHandler messageHandler;
 
   public AirlineApprovalResponseKafkaListener(final AirlineApprovalApprovedResponseMessageMapper approvedResponseMapper,
                                               final AirlineApprovalRejectedResponseMessageMapper rejectedResponseMapper,
                                               final AirlineApprovalResponseMessageListener messageListener) {
 
-    kafkaMessageHandler = KafkaMessageHandler.builder()
-                                             .addMessageType(AirlineApprovalApprovedResponseMessage.SCHEMA$.getName(),
-                                                             approvedResponseMapper,
-                                                             messageListener::orderApproved)
-                                             .addMessageType(AirlineApprovalRejectedResponseMessage.SCHEMA$.getName(),
-                                                             rejectedResponseMapper,
-                                                             messageListener::orderRejected)
-                                             .build();
+    messageHandler = KafkaMessageHandler.builder()
+                                        .addMessageType(AirlineApprovalApprovedResponseMessage.SCHEMA$.getName(),
+                                                        approvedResponseMapper,
+                                                        messageListener::orderApproved)
+                                        .addMessageType(AirlineApprovalRejectedResponseMessage.SCHEMA$.getName(),
+                                                        rejectedResponseMapper,
+                                                        messageListener::orderRejected)
+                                        .build();
   }
 
   @KafkaListener(id = "${order-service.airline-approval.consumer-group-id}",
@@ -54,6 +52,6 @@ public class AirlineApprovalResponseKafkaListener {
              partitions,
              offsets);
 
-    kafkaMessageHandler.processMessages(messages, keys, partitions, offsets);
+    messageHandler.processMessages(messages, keys, partitions, offsets);
   }
 }

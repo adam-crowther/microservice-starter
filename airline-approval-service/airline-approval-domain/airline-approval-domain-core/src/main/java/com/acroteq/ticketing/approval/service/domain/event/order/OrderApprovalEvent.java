@@ -20,6 +20,10 @@ public abstract class OrderApprovalEvent extends SagaEvent<OrderApproval> {
   @NonNull
   private final ValidationResult result;
 
+  public static PolymorphicOrderApprovalEventBuilder polymorphicBuilder() {
+    return new PolymorphicOrderApprovalEventBuilder();
+  }
+
   public abstract void accept(OrderApprovalEventVisitor visitor);
 
   public OrderId getOrderId() {

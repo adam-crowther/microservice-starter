@@ -1,5 +1,8 @@
 package com.acroteq.ticketing.kafka.consumer.config;
 
+import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG;
+import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.VALUE_SUBJECT_NAME_STRATEGY;
+import static io.confluent.kafka.serializers.KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.AUTO_OFFSET_RESET_CONFIG;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.HEARTBEAT_INTERVAL_MS_CONFIG;
@@ -16,6 +19,7 @@ import com.acroteq.ticketing.kafka.config.KafkaConfig;
 import com.acroteq.ticketing.kafka.consumer.exception.EventListenerMissingException;
 import com.acroteq.ticketing.kafka.consumer.exception.MessageToDtoMapperMissingException;
 import com.google.common.collect.ImmutableMap;
+import io.confluent.kafka.serializers.subject.TopicRecordNameStrategy;
 import lombok.RequiredArgsConstructor;
 import org.apache.avro.SchemaValidationException;
 import org.apache.avro.specific.SpecificRecordBase;
@@ -88,9 +92,9 @@ public class KafkaConsumerConfiguration<K extends Serializable, V extends Specif
                        .put(KEY_DESERIALIZER_CLASS_CONFIG, deserialisationConfig.getKeyDeserializerClass())
                        .put(VALUE_DESERIALIZER_CLASS_CONFIG, deserialisationConfig.getValueDeserializerClass())
                        .put(AUTO_OFFSET_RESET_CONFIG, kafkaConsumerConfig.getAutoOffsetReset())
-                       .put(kafkaConfig.getSchemaRegistryUrlKey(), kafkaConfig.getSchemaRegistryUrl())
-                       .put(deserialisationConfig.getSpecificAvroReaderKey(),
-                            deserialisationConfig.getSpecificAvroReader())
+                       .put(VALUE_SUBJECT_NAME_STRATEGY, TopicRecordNameStrategy.class.getName())
+                       .put(SCHEMA_REGISTRY_URL_CONFIG, kafkaConfig.getSchemaRegistryUrl())
+                       .put(SPECIFIC_AVRO_READER_CONFIG, deserialisationConfig.getSpecificAvroReader())
                        .put(SESSION_TIMEOUT_MS_CONFIG, groupManagementConfig.getSessionTimeoutMs())
                        .put(HEARTBEAT_INTERVAL_MS_CONFIG, groupManagementConfig.getHeartbeatIntervalMs())
                        .put(MAX_POLL_INTERVAL_MS_CONFIG, pollingConfig.getMaxPollIntervalMs())

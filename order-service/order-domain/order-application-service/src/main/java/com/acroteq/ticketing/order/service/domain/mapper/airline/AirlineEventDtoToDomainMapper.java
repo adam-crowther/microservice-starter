@@ -1,0 +1,14 @@
+package com.acroteq.ticketing.order.service.domain.mapper.airline;
+
+import com.acroteq.ticketing.application.mapper.DtoToDomainMapper;
+import com.acroteq.ticketing.application.mapper.id.AirlineIdMapper;
+import com.acroteq.ticketing.order.service.domain.dto.airline.AirlineEventDto;
+import com.acroteq.ticketing.order.service.domain.entity.Airline;
+import org.mapstruct.Mapper;
+
+@Mapper(uses = { AirlineIdMapper.class, FlightDtoToDomainMapper.class })
+public interface AirlineEventDtoToDomainMapper extends DtoToDomainMapper<AirlineEventDto, Airline> {
+
+  @Override
+  Airline convertDtoToDomain(AirlineEventDto airline);
+}

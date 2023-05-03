@@ -12,9 +12,11 @@ import org.mapstruct.Mapping;
 public interface PaymentCancelledResponseMessageToDtoMapper
     extends MessageToDtoMapper<PaymentCancelledResponseMessage, PaymentCancelledResponseDto> {
 
-  @Mapping(target = "value.currencyId", source = "valueCurrencyId")
-  @Mapping(target = "value.amount", source = "valueAmount")
-  @Mapping(target = "result", source = "failureMessages")
+  @Mapping(target = "value.currencyId", source = "message.valueCurrencyId")
+  @Mapping(target = "value.amount", source = "message.valueAmount")
+  @Mapping(target = "result", source = "message.failureMessages")
   @Override
-  PaymentCancelledResponseDto convertMessageToDto(PaymentCancelledResponseMessage message);
+  PaymentCancelledResponseDto convertMessageToDto(PaymentCancelledResponseMessage message,
+                                                  Integer partition,
+                                                  Long offset);
 }

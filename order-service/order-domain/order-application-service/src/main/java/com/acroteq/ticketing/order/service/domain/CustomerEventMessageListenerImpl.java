@@ -1,13 +1,10 @@
 package com.acroteq.ticketing.order.service.domain;
 
 import com.acroteq.ticketing.domain.valueobject.CustomerId;
-import com.acroteq.ticketing.order.service.domain.dto.customer.CustomerCreatedDto;
-import com.acroteq.ticketing.order.service.domain.dto.customer.CustomerDeletedDto;
-import com.acroteq.ticketing.order.service.domain.dto.customer.CustomerUpdatedDto;
+import com.acroteq.ticketing.order.service.domain.dto.customer.CustomerEventDto;
 import com.acroteq.ticketing.order.service.domain.entity.Customer;
-import com.acroteq.ticketing.order.service.domain.mapper.customer.CustomerCreatedDtoToDomainMapper;
-import com.acroteq.ticketing.order.service.domain.mapper.customer.CustomerDeletedDtoToDomainMapper;
-import com.acroteq.ticketing.order.service.domain.mapper.customer.CustomerUpdatedDtoToDomainMapper;
+import com.acroteq.ticketing.order.service.domain.exception.CustomerEventProcessingOrderException;
+import com.acroteq.ticketing.order.service.domain.mapper.customer.CustomerEventDtoToDomainMapper;
 import com.acroteq.ticketing.order.service.domain.ports.input.message.listener.customer.CustomerEventMessageListener;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,36 +12,58 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.function.Function;
+
 @Slf4j
 @RequiredArgsConstructor
 @Component
 public class CustomerEventMessageListenerImpl implements CustomerEventMessageListener {
 
   private final CustomerRepository customerRepository;
-  private final CustomerCreatedDtoToDomainMapper createdMapper;
-  private final CustomerUpdatedDtoToDomainMapper updatedMapper;
-  private final CustomerDeletedDtoToDomainMapper deletedMapper;
+  private final CustomerEventDtoToDomainMapper createdMapper;
 
   @Transactional
   @Override
-  public void customerCreated(final CustomerCreatedDto dto) {
+  public void customerCreatedOrUpdated(final CustomerEventDto dto) {
     log.info("Creating Customer: {}", dto.getId());
     final Customer customer = createdMapper.convertDtoToDomain(dto);
-    customerRepository.insert(customer);
+    if (!eventAlreadyProcessed(customer)) {
+      customerRepository.save(customer);
+    }
   }
+
+  private boolean eventAlreadyProcessed(final Customer newCustomer) {
+    final CustomerId customerId = newCustomer.getId();
+    return customerRepository.findById(customerId)
+                             .map(alreadyProcessed(newCustomer))
+                             .orElse(false);
+  }
+
+  private Function<Customer, Boolean> alreadyProcessed(final Customer newCustomer) {
+    return existingCustomer -> alreadyProcessed(existingCustomer, newCustomer);
+  }
+
+  private Boolean alreadyProcessed(final Customer existingCustomer, final Customer newCustomer) {
+
+    if (newCustomer.isFromAnEarlierEventThan(existingCustomer)) {
+      throw new CustomerEventProcessingOrderException(newCustomer.getId());
+    }
+
+    final boolean isAlreadyProcessed = newCustomer.isFromTheSameEventAs(existingCustomer);
+    if (isAlreadyProcessed) {
+      log.debug("CustomerUpdatedEvent for Customer {} with eventId {} was already processed.",
+                newCustomer.getId(),
+                newCustomer.getEventId());
+    }
+
+    return isAlreadyProcessed;
+  }
+
 
   @Transactional
   @Override
-  public void customerUpdated(final CustomerUpdatedDto dto) {
-    log.info("Updating Customer: {}", dto.getId());
-    final Customer customer = updatedMapper.convertDtoToDomain(dto);
-    customerRepository.update(customer);
-  }
-
-  @Transactional
-  @Override
-  public void customerDeleted(final CustomerDeletedDto dto) {
-    final CustomerId customerId = deletedMapper.convertDtoToDomain(dto);
+  public void customerDeleted(final Long id) {
+    final CustomerId customerId = CustomerId.of(id);
     log.info("Deleting Customer: {}", customerId);
     customerRepository.deleteById(customerId);
   }

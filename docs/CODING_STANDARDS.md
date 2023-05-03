@@ -89,7 +89,7 @@
 
 - Lambdas can get unreadable very quickly, and therefore need to be kept simple. E.g. this is ok:<br>
   `.map(totalMassKg -> totalMassKg + luggageMassKg)`
-- Lambda variables must be named according to the naming conventions.  `a` is not ok.  `aircraft` is ok.
+- Lambda variables must be named according to the naming conventions. `a` is not ok. `aircraft` is ok.
 - Use method references where possible:
   ```java
   final int passengersOnBoardCount = passengers.stream()

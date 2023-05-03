@@ -1,6 +1,7 @@
 package com.acroteq.ticketing.order.service.domain.dto.create;
 
-import com.acroteq.ticketing.application.dto.Dto;
+import com.acroteq.ticketing.application.dto.AuditDto;
+import com.acroteq.ticketing.application.dto.DataTransferObject;
 import com.acroteq.ticketing.domain.valueobject.OrderStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -10,10 +11,12 @@ import java.util.UUID;
 
 @Builder
 @Getter
-public class CreateOrderResponseDto implements Dto {
+public class CreateOrderResponseDto implements DataTransferObject {
 
   @NotNull
   private final UUID trackingId;
+  @NotNull
+  private final AuditDto audit;
   @NotNull
   private final OrderStatus status;
   @NotNull

@@ -19,7 +19,10 @@ public interface AirlineApprovalApprovedResponseMessageFactory
     extends EventToMessageMapper<OrderApprovedEvent, AirlineApprovalApprovedResponseMessage> {
 
   @Mapping(target = "orderId", source = "orderApproval.orderId")
+  @Mapping(target = "orderVersion", source = "orderApproval.orderVersion")
+  @Mapping(target = "audit", source = "orderApproval.audit")
   @Mapping(target = "airlineId", source = "orderApproval.airline.id")
+  @Mapping(target = "auditBuilder", ignore = true)
   @Override
   AirlineApprovalApprovedResponseMessage convertEventToMessage(OrderApprovedEvent event);
 }

@@ -19,8 +19,6 @@ public class KafkaDeserialisationConfig {
   @NotNull
   private final String valueDeserializerClass;
   @NotNull
-  private final String specificAvroReaderKey;
-  @NotNull
   private final String specificAvroReader;
 
 }

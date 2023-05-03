@@ -1,14 +1,13 @@
 package com.acroteq.ticketing.kafka.consumer.config;
 
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
-import javax.annotation.Nullable;
 
 @Getter
 @RequiredArgsConstructor

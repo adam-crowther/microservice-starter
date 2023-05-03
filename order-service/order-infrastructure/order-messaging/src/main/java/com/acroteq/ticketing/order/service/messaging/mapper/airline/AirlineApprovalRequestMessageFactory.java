@@ -25,11 +25,12 @@ import java.util.UUID;
 public interface AirlineApprovalRequestMessageFactory
     extends EventToMessageMapper<OrderEvent, AirlineApprovalRequestMessage> {
 
-  @Mapping(target = "orderId", source = "event.order.id")
-  @Mapping(target = "airlineId", source = "event.order.airlineId")
-  @Mapping(target = "flights", source = "event.order.items")
-  @Mapping(target = "priceCurrencyId", source = "event.order.price.currencyId")
-  @Mapping(target = "priceAmount", source = "event.order.price.amount")
+  @Mapping(target = "orderId", source = "order.id")
+  @Mapping(target = "orderVersion", source = "order.version")
+  @Mapping(target = "airlineId", source = "order.airlineId")
+  @Mapping(target = "flights", source = "order.items")
+  @Mapping(target = "priceCurrencyId", source = "order.price.currencyId")
+  @Mapping(target = "priceAmount", source = "order.price.amount")
   @Mapping(target = "airlineOrderStatus", constant = "PAID")
   @Override
   AirlineApprovalRequestMessage convertEventToMessage(OrderEvent event);

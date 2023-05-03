@@ -14,6 +14,8 @@ import org.mapstruct.Mapping;
 public interface PaymentDtoToDomainMapper extends DtoToDomainMapper<PaymentRequestDto, Payment> {
 
   @Mapping(target = "id", ignore = true)
+  @Mapping(target = "version", ignore = true)
+  @Mapping(target = "audit", ignore = true)
   @Mapping(target = "paymentStatus", constant = "PENDING")
   @Override
   Payment convertDtoToDomain(PaymentRequestDto paymentRequestDto);

@@ -5,14 +5,15 @@ import com.acroteq.ticketing.payment.service.domain.entity.CreditEntry;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditHistory;
 import com.acroteq.ticketing.payment.service.domain.entity.Payment;
 import lombok.Builder;
+import lombok.NonNull;
 import lombok.Value;
 
 @Builder
 @Value
 public class PaymentOutput {
 
-  Payment payment;
-  CreditEntry creditEntry;
-  CreditHistory creditHistory;
-  ValidationResult validationResult;
+  @NonNull Payment payment;
+  @NonNull CreditEntry creditEntry;
+  @NonNull CreditHistory creditHistory;
+  @NonNull ValidationResult validationResult;
 }

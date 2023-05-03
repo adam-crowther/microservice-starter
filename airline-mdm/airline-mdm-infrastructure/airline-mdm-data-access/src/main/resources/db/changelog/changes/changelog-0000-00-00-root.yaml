@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1681920118949-1
+      id: 1683098067308-1
       author: micro (generated)
       changes:
         - createTable:
@@ -14,6 +14,23 @@ databaseChangeLog:
                   name: id
                   type: BIGINT
               - column:
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  name: created_timestamp
+                  type: timestamp
+              - column:
+                  name: lasted_modified_by
+                  type: VARCHAR(255)
+              - column:
+                  name: last_modified_timestamp
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: version
+                  type: BIGINT
+              - column:
                   name: active
                   type: BOOLEAN
               - column:
@@ -21,7 +38,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: airlines
   - changeSet:
-      id: 1681920118949-2
+      id: 1683098067308-2
       author: micro (generated)
       changes:
         - createTable:
@@ -33,6 +50,23 @@ databaseChangeLog:
                     primaryKey: true
                     primaryKeyName: flightsPK
                   name: id
+                  type: BIGINT
+              - column:
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  name: created_timestamp
+                  type: timestamp
+              - column:
+                  name: lasted_modified_by
+                  type: VARCHAR(255)
+              - column:
+                  name: last_modified_timestamp
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: version
                   type: BIGINT
               - column:
                   name: available
@@ -51,31 +85,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: flights
   - changeSet:
-      id: 1681920118949-3
-      author: micro (generated)
-      changes:
-        - createTable:
-            columns:
-              - column:
-                  autoIncrement: true
-                  constraints:
-                    nullable: false
-                    primaryKey: true
-                    primaryKeyName: order_approvalPK
-                  name: id
-                  type: BIGINT
-              - column:
-                  name: airline_id
-                  type: BIGINT
-              - column:
-                  name: order_id
-                  type: BIGINT
-              - column:
-                  name: status
-                  type: VARCHAR(255)
-            tableName: order_approval
-  - changeSet:
-      id: 1681920118949-4
+      id: 1683098067308-3
       author: micro (generated)
       changes:
         - addForeignKeyConstraint:
@@ -87,3 +97,4 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: airlines
             validate: true
+

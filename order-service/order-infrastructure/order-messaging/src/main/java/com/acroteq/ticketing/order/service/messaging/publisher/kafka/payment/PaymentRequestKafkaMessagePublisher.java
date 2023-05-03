@@ -1,6 +1,5 @@
 package com.acroteq.ticketing.order.service.messaging.publisher.kafka.payment;
 
-import com.acroteq.ticketing.domain.valueobject.OrderId;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentRequestMessage;
 import com.acroteq.ticketing.kafka.producer.service.KafkaProducer;
 import com.acroteq.ticketing.kafka.producer.service.callback.KafkaPublisherCallbackHandler;
@@ -18,14 +17,15 @@ import org.springframework.stereotype.Component;
 public class PaymentRequestKafkaMessagePublisher implements PaymentRequestMessagePublisher {
 
   private final PaymentRequestMessageFactory messageFactory;
-  private final KafkaProducer<OrderId, PaymentRequestMessage> kafkaProducer;
+  private final KafkaProducer<PaymentRequestMessage> kafkaProducer;
   private final KafkaPublisherCallbackHandler<PaymentRequestMessage> callbackHandler;
   private final OrderServiceConfig config;
 
   @Override
   public void publish(final OrderCreatedEvent event) {
-    final OrderId orderId = event.getOrder()
-                                 .getId();
+    final Long orderId = event.getOrder()
+                              .getId()
+                              .getValue();
     log.info("Publishing OrderCreatedEvent for order id {}", orderId);
 
     final PaymentRequestMessage message = messageFactory.convertEventToMessage(event);

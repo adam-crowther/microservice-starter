@@ -51,7 +51,7 @@ public class CashValue implements Serializable {
     if (amount.compareTo(BigDecimal.ZERO) != 0 && other.getAmount()
                                                        .compareTo(BigDecimal.ZERO) != 0) {
       checkArgument(Objects.equals(currencyId, other.getCurrencyId()),
-                    "The other Money object does not have a matching currency.  this: %s, other: %s",
+                    "The other Money object does not have a matching currency. this: %s, other: %s",
                     this,
                     other);
     }

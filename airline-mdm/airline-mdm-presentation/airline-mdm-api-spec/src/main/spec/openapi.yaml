@@ -339,11 +339,20 @@ components:
       type: object
       x-class-extra-annotation: "@lombok.Builder"
       required:
-        - airlineId
+        - id
+        - version
+        - audit
       properties:
-        airlineId:
+        id:
           type: integer
           format: int64
+          readOnly: true
+        version:
+          type: integer
+          format: int64
+          readOnly: true
+        audit:
+          $ref: "#/components/schemas/Audit"
 
     UpdateAirlineCommand:
       allOf:
@@ -351,8 +360,12 @@ components:
       x-class-extra-annotation: "@lombok.Builder @lombok.AllArgsConstructor"
       required:
         - id
+        - version
       properties:
         id:
+          type: integer
+          format: int64
+        version:
           type: integer
           format: int64
         flights:
@@ -367,6 +380,8 @@ components:
       x-class-extra-annotation: "@lombok.Builder @lombok.AllArgsConstructor"
       required:
         - id
+        - version
+        - audit
         - name
         - active
       properties:
@@ -374,6 +389,12 @@ components:
           type: integer
           format: int64
           readOnly: true
+        version:
+          type: integer
+          format: int64
+          readOnly: true
+        audit:
+          $ref: "#/components/schemas/Audit"
         name:
           type: string
           readOnly: true
@@ -410,11 +431,17 @@ components:
       type: object
       x-class-extra-annotation: "@lombok.Builder"
       required:
-        - flightId
+        - id
+        - version
       properties:
-        flightId:
+        id:
           type: integer
           format: int64
+          readOnly: true
+        version:
+          type: integer
+          format: int64
+          readOnly: true
 
     UpdateFlightCommand:
       allOf:
@@ -422,8 +449,12 @@ components:
       x-class-extra-annotation: "@lombok.Builder"
       required:
         - id
+        - version
       properties:
         id:
+          type: integer
+          format: int64
+        version:
           type: integer
           format: int64
 
@@ -432,11 +463,16 @@ components:
       x-class-extra-annotation: "@lombok.Builder"
       required:
         - id
+        - version
         - flightNumber
         - price
         - available
       properties:
         id:
+          type: integer
+          format: int64
+          readOnly: true
+        version:
           type: integer
           format: int64
           readOnly: true
@@ -485,6 +521,21 @@ components:
           format: double
           readOnly: true
 
+    Audit:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - createdTimestamp
+        - lastModifiedTimestamp
+      properties:
+        createdTimestamp:
+          type: string
+          format: date-time
+          readOnly: true
+        lastModifiedTimestamp:
+          type: string
+          format: date-time
+          readOnly: true
 
     Problem:
       type: object

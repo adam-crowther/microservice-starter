@@ -53,4 +53,4 @@ Configuration:
       - name: org.springframework.kafka
         level: info
       - name: org.apache.kafka
-        level: info
+        level: warn

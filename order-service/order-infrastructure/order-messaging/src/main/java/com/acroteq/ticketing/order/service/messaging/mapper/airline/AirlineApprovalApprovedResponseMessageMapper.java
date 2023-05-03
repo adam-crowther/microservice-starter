@@ -13,5 +13,7 @@ public interface AirlineApprovalApprovedResponseMessageMapper
     extends MessageToDtoMapper<AirlineApprovalApprovedResponseMessage, AirlineApprovalApprovedResponseDto> {
 
   @Override
-  AirlineApprovalApprovedResponseDto convertMessageToDto(AirlineApprovalApprovedResponseMessage message);
+  AirlineApprovalApprovedResponseDto convertMessageToDto(AirlineApprovalApprovedResponseMessage message,
+                                                         Integer partition,
+                                                         Long offset);
 }

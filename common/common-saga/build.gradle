@@ -1,6 +1,11 @@
 plugins {
     id 'java'
+    id 'checkstyle'
+    id 'jacoco'
+    alias pluginLibs.plugins.spotbugs
 }
+
+apply from: "${rootDir}/java.gradle"
 
 dependencies {
     implementation project(':common:common-application')

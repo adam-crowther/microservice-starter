@@ -169,11 +169,20 @@ components:
       type: object
       x-class-extra-annotation: "@lombok.Builder"
       required:
-        - customerId
+        - id
+        - version
+        - audit
       properties:
-        customerId:
+        id:
           type: integer
           format: int64
+          readOnly: true
+        version:
+          type: integer
+          format: int64
+          readOnly: true
+        audit:
+          $ref: "#/components/schemas/Audit"
 
     UpdateCustomerCommand:
       allOf:
@@ -181,8 +190,12 @@ components:
       x-class-extra-annotation: "@lombok.Builder"
       required:
         - id
+        - version
       properties:
         id:
+          type: integer
+          format: int64
+        version:
           type: integer
           format: int64
 
@@ -191,6 +204,8 @@ components:
       x-class-extra-annotation: "@lombok.Builder"
       required:
         - id
+        - version
+        - audit
         - userName
         - firstName
         - lastName
@@ -201,6 +216,12 @@ components:
           type: integer
           format: int64
           readOnly: true
+        version:
+          type: integer
+          format: int64
+          readOnly: true
+        audit:
+          $ref: "#/components/schemas/Audit"
         userName:
           type: string
           readOnly: true
@@ -225,6 +246,22 @@ components:
       readOnly: true
       items:
         $ref: "#/components/schemas/Customer"
+
+    Audit:
+      type: object
+      x-class-extra-annotation: "@lombok.Builder"
+      required:
+        - createdTimestamp
+        - lastModifiedTimestamp
+      properties:
+        createdTimestamp:
+          type: string
+          format: date-time
+          readOnly: true
+        lastModifiedTimestamp:
+          type: string
+          format: date-time
+          readOnly: true
 
     Problem:
       type: object

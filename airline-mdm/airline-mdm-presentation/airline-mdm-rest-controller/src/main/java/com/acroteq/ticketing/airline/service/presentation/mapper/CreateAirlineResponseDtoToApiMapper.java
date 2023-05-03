@@ -5,7 +5,7 @@ import com.acroteq.ticketing.airline.service.presentation.model.CreateAirlineRes
 import com.acroteq.ticketing.common.application.mapper.DtoToApiMapper;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(uses = AuditDtoToApiMapper.class)
 public interface CreateAirlineResponseDtoToApiMapper
     extends DtoToApiMapper<CreateAirlineResponseDto, CreateAirlineResponse> {
 

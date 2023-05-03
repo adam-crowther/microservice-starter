@@ -1,17 +1,15 @@
 package com.acroteq.ticketing.customer.service.domain.dto.get;
 
-import com.acroteq.ticketing.application.dto.Dto;
+import com.acroteq.ticketing.application.dto.AuditedEntityDto;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Builder
-public class CustomerDto implements Dto {
+@SuperBuilder
+public class CustomerDto extends AuditedEntityDto {
 
-  @NonNull
-  private String id;
   @NonNull
   private String userName;
   @NonNull

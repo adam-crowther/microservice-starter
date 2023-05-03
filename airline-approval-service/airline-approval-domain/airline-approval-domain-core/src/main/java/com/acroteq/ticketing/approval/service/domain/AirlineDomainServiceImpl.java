@@ -15,6 +15,7 @@ public class AirlineDomainServiceImpl implements AirlineDomainService {
   @Override
   public OrderApprovalOutput validateOrder(final Order order) {
     final OrderId orderId = order.getId();
+    final Long orderVersion = order.getVersion();
     log.info("Validating order with orderId: {}", orderId);
 
     final ValidationResult result = order.validate();
@@ -24,6 +25,7 @@ public class AirlineDomainServiceImpl implements AirlineDomainService {
     log.info("Order is {} for order id: {}", approvalStatus, orderId);
     final OrderApproval orderApproval = OrderApproval.builder()
                                                      .orderId(orderId)
+                                                     .orderVersion(orderVersion)
                                                      .airline(airline)
                                                      .approvalStatus(approvalStatus)
                                                      .build();

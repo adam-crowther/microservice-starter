@@ -1,14 +1,11 @@
 plugins {
     id 'java'
+    id 'checkstyle'
+    id 'jacoco'
+    alias pluginLibs.plugins.spotbugs
 }
 
-compileJava {
-    sourceCompatibility = javaSourceCompatibility
-    targetCompatibility = javaTargetCompatibility
-    options.compilerArgs += [
-            '-Xlint:deprecation'
-    ]
-}
+apply from: "${rootDir}/java.gradle"
 
 test {
     useJUnitPlatform()

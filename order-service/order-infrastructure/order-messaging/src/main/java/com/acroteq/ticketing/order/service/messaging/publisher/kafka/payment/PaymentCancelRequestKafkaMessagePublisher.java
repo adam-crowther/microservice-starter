@@ -1,6 +1,5 @@
 package com.acroteq.ticketing.order.service.messaging.publisher.kafka.payment;
 
-import com.acroteq.ticketing.domain.valueobject.OrderId;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentCancelRequestMessage;
 import com.acroteq.ticketing.kafka.producer.service.KafkaProducer;
 import com.acroteq.ticketing.kafka.producer.service.callback.KafkaPublisherCallbackHandler;
@@ -18,14 +17,15 @@ import org.springframework.stereotype.Component;
 public class PaymentCancelRequestKafkaMessagePublisher implements PaymentCancelRequestMessagePublisher {
 
   private final PaymentCancelRequestMessageFactory messageFactory;
-  private final KafkaProducer<OrderId, PaymentCancelRequestMessage> kafkaProducer;
+  private final KafkaProducer<PaymentCancelRequestMessage> kafkaProducer;
   private final KafkaPublisherCallbackHandler<PaymentCancelRequestMessage> callbackHandler;
   private final OrderServiceConfig config;
 
   @Override
   public void publish(final OrderCancelledEvent event) {
-    final OrderId orderId = event.getOrder()
-                                 .getId();
+    final Long orderId = event.getOrder()
+                              .getId()
+                              .getValue();
     log.info("Publishing OrderCancelledEvent for order id {}", orderId);
 
     final PaymentCancelRequestMessage message = messageFactory.convertEventToMessage(event);

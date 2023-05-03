@@ -4,7 +4,7 @@ import static com.acroteq.ticketing.domain.validation.ValidationResult.fail;
 import static com.acroteq.ticketing.domain.valueobject.OrderStatus.PAID;
 
 import com.acroteq.ticketing.approval.service.domain.entity.airline.Airline;
-import com.acroteq.ticketing.domain.entity.BaseEntity;
+import com.acroteq.ticketing.domain.entity.MasterEntity;
 import com.acroteq.ticketing.domain.validation.ValidationResult;
 import com.acroteq.ticketing.domain.validation.ValidationResult.ValidationResultBuilder;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @Getter
 @ToString(callSuper = true)
 @SuperBuilder(toBuilder = true)
-public class Order extends BaseEntity<OrderId> {
+public class Order extends MasterEntity<OrderId> {
 
   @NonNull
   private final OrderStatus orderStatus;
@@ -35,7 +35,7 @@ public class Order extends BaseEntity<OrderId> {
   public ValidationResult validate() {
     final ValidationResultBuilder result = ValidationResult.builder();
     if (orderStatus != PAID) {
-      result.addFailure("Payment is not completed for order: %s", id);
+      result.addFailure("Payment is not completed for order: %s", getId());
     }
 
     items.stream()
@@ -48,7 +48,6 @@ public class Order extends BaseEntity<OrderId> {
   }
 
   public CashValue getTotalAmount() {
-    // TODO
     return items.stream()
                 .map(OrderItem::getAmount)
                 .reduce(CashValue.ZERO, CashValue::add);
@@ -56,7 +55,7 @@ public class Order extends BaseEntity<OrderId> {
 
   @SuppressWarnings("PublicInnerClass")
   public abstract static class OrderBuilder<C extends Order, B extends OrderBuilder<C, B>>
-      extends BaseEntity.BaseEntityBuilder<OrderId, C, B> {
+      extends MasterEntityBuilder<OrderId, C, B> {
 
     public B items(@Nullable final List<OrderItem> items) {
       this.items = Optional.ofNullable(items)

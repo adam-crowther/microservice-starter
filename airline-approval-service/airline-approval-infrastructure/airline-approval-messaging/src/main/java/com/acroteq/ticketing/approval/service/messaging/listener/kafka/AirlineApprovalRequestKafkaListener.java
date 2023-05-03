@@ -21,15 +21,15 @@ import java.util.List;
 @Component
 public class AirlineApprovalRequestKafkaListener {
 
-  private final KafkaMessageHandler kafkaMessageHandler;
+  private final KafkaMessageHandler messageHandler;
 
   public AirlineApprovalRequestKafkaListener(final OrderApprovalRequestMessageListener listener,
                                              final AirlineApprovalRequestMessageToDtoMapper requestMapper) {
-    kafkaMessageHandler = KafkaMessageHandler.builder()
-                                             .addMessageType(AirlineApprovalRequestMessage.SCHEMA$.getName(),
-                                                             requestMapper,
-                                                             listener::checkOrder)
-                                             .build();
+    messageHandler = KafkaMessageHandler.builder()
+                                        .addMessageType(AirlineApprovalRequestMessage.SCHEMA$.getName(),
+                                                        requestMapper,
+                                                        listener::checkOrder)
+                                        .build();
   }
 
   @KafkaListener(id = "${airline-approval-service.airline-approval.consumer-group-id}",
@@ -45,6 +45,6 @@ public class AirlineApprovalRequestKafkaListener {
              partitions.toString(),
              offsets.toString());
 
-    kafkaMessageHandler.processMessages(messages, keys, partitions, offsets);
+    messageHandler.processMessages(messages, keys, partitions, offsets);
   }
 }

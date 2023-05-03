@@ -11,9 +11,9 @@ import java.util.UUID;
 
 @Getter
 @ToString
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @SuperBuilder(toBuilder = true)
-public abstract class SagaEvent<T> extends DomainEvent<T> {
+public abstract class SagaEvent<T> implements Event {
 
   @Builder.Default
   @NonNull

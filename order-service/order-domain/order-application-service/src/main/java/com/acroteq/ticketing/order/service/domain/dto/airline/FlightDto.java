@@ -1,15 +1,17 @@
 package com.acroteq.ticketing.order.service.domain.dto.airline;
 
-import com.acroteq.ticketing.application.dto.Dto;
+import com.acroteq.ticketing.application.dto.ReplicatedEntityDto;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
-import lombok.Builder;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
-@Builder
+@SuperBuilder(toBuilder = true)
 @Getter
-public class FlightDto implements Dto {
+public class FlightDto extends ReplicatedEntityDto {
 
-  private Long id;
+  @NotNull
   private String flightNumber;
+  @NotNull
   private CashValue price;
 }

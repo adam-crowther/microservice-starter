@@ -1,5 +1,7 @@
 package com.acroteq.ticketing.kafka.producer.config;
 
+import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG;
+import static io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig.VALUE_SUBJECT_NAME_STRATEGY;
 import static org.apache.kafka.clients.producer.ProducerConfig.ACKS_CONFIG;
 import static org.apache.kafka.clients.producer.ProducerConfig.BATCH_SIZE_CONFIG;
 import static org.apache.kafka.clients.producer.ProducerConfig.BOOTSTRAP_SERVERS_CONFIG;
@@ -12,6 +14,7 @@ import static org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_
 
 import com.acroteq.ticketing.kafka.config.KafkaConfig;
 import com.google.common.collect.ImmutableMap;
+import io.confluent.kafka.serializers.subject.TopicRecordNameStrategy;
 import lombok.RequiredArgsConstructor;
 import org.apache.avro.specific.SpecificRecordBase;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -45,7 +48,8 @@ public class KafkaProducerConfiguration<K extends Serializable, V extends Specif
     final KafkaSerialisationConfig serialisationConfig = kafkaProducerConfig.getSerialisation();
     return ImmutableMap.<String, Object>builder()
                        .put(BOOTSTRAP_SERVERS_CONFIG, kafkaConfig.getBootstrapServers())
-                       .put(kafkaConfig.getSchemaRegistryUrlKey(), kafkaConfig.getSchemaRegistryUrl())
+                       .put(SCHEMA_REGISTRY_URL_CONFIG, kafkaConfig.getSchemaRegistryUrl())
+                       .put(VALUE_SUBJECT_NAME_STRATEGY, TopicRecordNameStrategy.class.getName())
                        .put(KEY_SERIALIZER_CLASS_CONFIG, serialisationConfig.getKeySerializerClass())
                        .put(VALUE_SERIALIZER_CLASS_CONFIG, serialisationConfig.getValueSerializerClass())
                        .put(BATCH_SIZE_CONFIG, kafkaProducerConfig.getBatchSize())

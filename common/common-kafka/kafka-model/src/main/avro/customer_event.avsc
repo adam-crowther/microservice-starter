@@ -1,0 +1,63 @@
+{
+  "namespace": "com.acroteq.ticketing.kafka.customer.avro.model",
+  "type": "record",
+  "name": "CustomerEventMessage",
+  "fields": [
+    {
+      "name": "id",
+      "type": "long"
+    },
+    {
+      "name": "version",
+      "type": "long"
+    },
+    {
+      "name": "audit",
+      "type": {
+        "name": "AuditRecord",
+        "type": "record",
+        "fields": [
+          {
+            "name": "createdTimestamp",
+            "type": {
+              "type": "long",
+              "logicalType": "timestamp-millis"
+            }
+          },
+          {
+            "name": "lastModifiedTimestamp",
+            "type": {
+              "type": "long",
+              "logicalType": "timestamp-millis"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "userName",
+      "type": "string"
+    },
+    {
+      "name": "firstName",
+      "type": "string"
+    },
+    {
+      "name": "lastName",
+      "type": "string"
+    },
+    {
+      "name": "creditLimitCurrencyId",
+      "type": "string"
+    },
+    {
+      "name": "creditLimitAmount",
+      "type": {
+        "type": "bytes",
+        "logicalType": "decimal",
+        "precision": 10,
+        "scale": 2
+      }
+    }
+  ]
+}

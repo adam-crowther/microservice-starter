@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.order.service.domain.entity;
 
-import com.acroteq.ticketing.domain.entity.AggregateRoot;
+import com.acroteq.ticketing.domain.entity.ReplicatedEntity;
 import com.acroteq.ticketing.domain.valueobject.CustomerId;
 import lombok.Getter;
 import lombok.NonNull;
@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @ToString(callSuper = true)
 @SuperBuilder(toBuilder = true)
-public class Customer extends AggregateRoot<CustomerId> {
+public class Customer extends ReplicatedEntity<CustomerId> {
 
   @NonNull
   private final String userName;

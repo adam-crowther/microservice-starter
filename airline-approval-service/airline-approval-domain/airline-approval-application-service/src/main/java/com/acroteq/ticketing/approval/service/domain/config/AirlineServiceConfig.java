@@ -15,8 +15,5 @@ public class AirlineServiceConfig {
   private AirlineEventConfig airlineEvent;
 
   @NotNull
-  private AirlineApprovalRequestConfig airlineApprovalRequest;
-
-  @NotNull
-  private AirlineApprovalResponseConfig airlineApprovalResponse;
+  private AirlineApprovalConfig airlineApproval;
 }

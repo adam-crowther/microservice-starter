@@ -1,6 +1,7 @@
 package com.acroteq.ticketing.order.service.domain;
 
 import static com.acroteq.ticketing.precondition.Precondition.checkPrecondition;
+import static java.util.UUID.randomUUID;
 
 import com.acroteq.ticketing.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderCommandDto;
@@ -16,12 +17,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class OrderCreateHelper {
+class OrderCreateHelper {
 
   private final OrderDomainService orderDomainService;
   private final OrderRepository orderRepository;
@@ -42,7 +41,7 @@ public class OrderCreateHelper {
 
     log.info("Created order {}", savedOrder.getId());
     return OrderCreatedEvent.builder()
-                            .sagaId(UUID.randomUUID())
+                            .sagaId(randomUUID())
                             .order(savedOrder)
                             .build();
   }

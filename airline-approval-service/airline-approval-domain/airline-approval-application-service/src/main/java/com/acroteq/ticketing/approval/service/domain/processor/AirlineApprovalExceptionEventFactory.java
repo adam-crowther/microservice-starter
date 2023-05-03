@@ -28,10 +28,11 @@ public class AirlineApprovalExceptionEventFactory {
                                                      final Exception exception) {
     final UUID sagaId = airlineApprovalRequest.getSagaId();
     final OrderId orderId = OrderId.of(airlineApprovalRequest.getOrderId());
+    final Long orderVersion = airlineApprovalRequest.getOrderVersion();
     final AirlineId airlineId = AirlineId.of(airlineApprovalRequest.getAirlineId());
 
     final ValidationResult result = createValidationResult(exception, orderId);
-    final OrderApproval orderApproval = createOrderApproval(orderId, airlineId);
+    final OrderApproval orderApproval = createOrderApproval(orderId, orderVersion, airlineId);
     return OrderRejectedEvent.builder()
                              .sagaId(sagaId)
                              .result(result)
@@ -43,10 +44,11 @@ public class AirlineApprovalExceptionEventFactory {
     return ValidationResult.fail("Exception while checking order with id %s: %s", orderId, exception.getMessage());
   }
 
-  private OrderApproval createOrderApproval(final OrderId orderId, final AirlineId airlineId) {
+  private OrderApproval createOrderApproval(final OrderId orderId, final Long orderVersion, final AirlineId airlineId) {
     final Airline airline = airlineResolver.resolve(airlineId);
     return OrderApproval.builder()
                         .orderId(orderId)
+                        .orderVersion(orderVersion)
                         .airline(airline)
                         .approvalStatus(REJECTED)
                         .build();

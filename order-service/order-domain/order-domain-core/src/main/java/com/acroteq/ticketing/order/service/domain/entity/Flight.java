@@ -2,7 +2,7 @@ package com.acroteq.ticketing.order.service.domain.entity;
 
 import static com.acroteq.ticketing.precondition.Precondition.checkPrecondition;
 
-import com.acroteq.ticketing.domain.entity.BaseEntity;
+import com.acroteq.ticketing.domain.entity.ReplicatedEntity;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
 import com.acroteq.ticketing.domain.valueobject.FlightId;
 import com.acroteq.ticketing.order.service.domain.exception.FlightNumberMismatchException;
@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @ToString(callSuper = true)
 @SuperBuilder(toBuilder = true)
-public class Flight extends BaseEntity<FlightId> {
+public class Flight extends ReplicatedEntity<FlightId> {
 
   @NonNull
   private final String flightNumber;

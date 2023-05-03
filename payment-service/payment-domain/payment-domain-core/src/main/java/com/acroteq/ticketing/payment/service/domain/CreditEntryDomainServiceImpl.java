@@ -9,6 +9,7 @@ import com.acroteq.ticketing.domain.valueobject.CashValue;
 import com.acroteq.ticketing.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditEntry;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditHistory;
+import com.acroteq.ticketing.payment.service.domain.entity.Customer;
 import com.acroteq.ticketing.payment.service.domain.exception.CreditEntryWithNullCustomerIdException;
 import com.acroteq.ticketing.payment.service.domain.valueobject.CreditEntryOutput;
 import com.acroteq.ticketing.payment.service.domain.valueobject.TransactionType;
@@ -22,7 +23,8 @@ public class CreditEntryDomainServiceImpl implements CreditEntryDomainService {
   public CreditEntryOutput createCreditEntry(final CreditEntry newCredit) {
     final CashValue newTotalCredit = newCredit.getTotalCredit();
     final CustomerId customerId = Optional.of(newCredit)
-                                          .map(CreditEntry::getId)
+                                          .map(CreditEntry::getCustomer)
+                                          .map(Customer::getId)
                                           .orElseThrow(CreditEntryWithNullCustomerIdException::new);
     final CreditHistory creditHistory = CreditHistory.builder()
                                                      .customerId(customerId)
@@ -37,8 +39,8 @@ public class CreditEntryDomainServiceImpl implements CreditEntryDomainService {
   }
 
   @Override
-  public CreditEntryOutput updateCreditEntry(final CreditEntry updatedCredit,
-                                             final CreditEntry currentCredit,
+  public CreditEntryOutput updateCreditEntry(final CreditEntry currentCredit,
+                                             final CreditEntry updatedCredit,
                                              final List<CreditHistory> creditHistoryList) {
     final CashValue creditLimitDelta = calculateCreditLimitDelta(updatedCredit, creditHistoryList);
     final CashValue currentTotalCredit = currentCredit.getTotalCredit();

@@ -8,7 +8,7 @@ import com.acroteq.ticketing.customer.service.presentation.model.Customer;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(uses = { CustomerIdMapper.class, CurrencyIdMapper.class })
+@Mapper(uses = { CustomerIdMapper.class, CurrencyIdMapper.class, AuditDtoToApiMapper.class })
 public interface CustomerDtoToApiMapper extends DtoToApiMapper<CustomerDto, Customer> {
 
   @Mapping(target = "creditLimitCurrencyId", source = "creditLimit.currencyId")

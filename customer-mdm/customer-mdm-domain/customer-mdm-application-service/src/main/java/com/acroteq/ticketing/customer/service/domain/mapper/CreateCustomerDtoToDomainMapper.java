@@ -12,6 +12,8 @@ import org.mapstruct.Mapping;
 public interface CreateCustomerDtoToDomainMapper extends DtoToDomainMapper<CreateCustomerCommandDto, Customer> {
 
   @Mapping(target = "id", ignore = true)
+  @Mapping(target = "version", ignore = true)
+  @Mapping(target = "audit", ignore = true)
   @Override
   Customer convertDtoToDomain(CreateCustomerCommandDto createCustomerCommandDto);
 }

@@ -1,17 +1,15 @@
 package com.acroteq.ticketing.airline.service.domain.dto.update;
 
-import com.acroteq.ticketing.application.dto.Dto;
+import com.acroteq.ticketing.application.dto.EntityDto;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Builder
-public class UpdateFlightCommandDto implements Dto {
+@SuperBuilder(toBuilder = true)
+public class UpdateFlightCommandDto extends EntityDto {
 
-  @NotNull
-  private String id;
   @NotNull
   private String flightNumber;
   @NotNull

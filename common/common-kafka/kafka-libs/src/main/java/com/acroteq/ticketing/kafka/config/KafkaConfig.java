@@ -19,8 +19,6 @@ public class KafkaConfig {
   @NotNull
   private final String bootstrapServers;
   @NotNull
-  private final String schemaRegistryUrlKey;
-  @NotNull
   private final String schemaRegistryUrl;
   @NotNull
   private final Integer numOfPartitions;

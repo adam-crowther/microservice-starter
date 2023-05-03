@@ -23,19 +23,19 @@ import java.util.List;
 @Component
 public class PaymentRequestKafkaListener {
 
-  private final KafkaMessageHandler kafkaMessageHandler;
+  private final KafkaMessageHandler messageHandler;
 
   public PaymentRequestKafkaListener(final PaymentRequestMessageListener listener,
                                      final PaymentRequestMessageToDtoMapper requestMapper,
                                      final PaymentCancelRequestMessageToDtoMapper cancelRequestMapper) {
-    kafkaMessageHandler = KafkaMessageHandler.builder()
-                                             .addMessageType(PaymentRequestMessage.SCHEMA$.getName(),
-                                                             requestMapper,
-                                                             listener::completePayment)
-                                             .addMessageType(PaymentCancelRequestMessage.SCHEMA$.getName(),
-                                                             cancelRequestMapper,
-                                                             listener::cancelPayment)
-                                             .build();
+    messageHandler = KafkaMessageHandler.builder()
+                                        .addMessageType(PaymentRequestMessage.SCHEMA$.getName(),
+                                                        requestMapper,
+                                                        listener::completePayment)
+                                        .addMessageType(PaymentCancelRequestMessage.SCHEMA$.getName(),
+                                                        cancelRequestMapper,
+                                                        listener::cancelPayment)
+                                        .build();
   }
 
   @KafkaListener(id = "${payment-service.payment.consumer-group-id}",
@@ -50,6 +50,6 @@ public class PaymentRequestKafkaListener {
              partitions.toString(),
              offsets.toString());
 
-    kafkaMessageHandler.processMessages(messages, keys, partitions, offsets);
+    messageHandler.processMessages(messages, keys, partitions, offsets);
   }
 }

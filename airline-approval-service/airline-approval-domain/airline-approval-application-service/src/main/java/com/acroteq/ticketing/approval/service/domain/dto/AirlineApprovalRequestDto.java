@@ -1,51 +1,45 @@
 package com.acroteq.ticketing.approval.service.domain.dto;
 
-import static lombok.AccessLevel.PRIVATE;
-
-import com.acroteq.ticketing.application.dto.Dto;
+import com.acroteq.ticketing.application.dto.SagaDto;
 import com.acroteq.ticketing.domain.valueobject.OrderStatus;
 import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Getter
-@Builder
-@AllArgsConstructor(access = PRIVATE)
-public class AirlineApprovalRequestDto implements Dto {
+@SuperBuilder
+public class AirlineApprovalRequestDto extends SagaDto {
 
-  @NotNull
-  private final UUID sagaId;
   @NotNull
   private final Long airlineId;
   @NotNull
   private final Long orderId;
   @NotNull
+  private final Long orderVersion;
+  @NotNull
   private final OrderStatus orderStatus;
   @NotNull
   private final ImmutableList<OrderItemDto> items;
-  @NotNull
-  private final Instant createdDateTime;
 
   public Long getId() {
     return orderId;
   }
 
   @SuppressWarnings("PublicInnerClass")
-  public static class AirlineApprovalRequestDtoBuilder {
+  public abstract static class AirlineApprovalRequestDtoBuilder<C extends AirlineApprovalRequestDto,
+      B extends AirlineApprovalRequestDtoBuilder<C, B>>
+      extends SagaDtoBuilder<C, B> {
 
-    public AirlineApprovalRequestDtoBuilder items(@Nullable final List<OrderItemDto> items) {
+    public AirlineApprovalRequestDtoBuilder<C, B> items(@Nullable final List<OrderItemDto> items) {
       this.items = Optional.ofNullable(items)
                            .map(ImmutableList::copyOf)
                            .orElse(ImmutableList.of());
-      return this;
+      return this.self();
     }
   }
 }

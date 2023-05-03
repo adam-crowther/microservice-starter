@@ -1,18 +1,20 @@
 plugins {
     id 'java'
+    id 'checkstyle'
+    id 'jacoco'
+    alias pluginLibs.plugins.spotbugs
 }
 
+apply from: "${rootDir}/java.gradle"
+
 compileJava {
-    sourceCompatibility = javaSourceCompatibility
-    targetCompatibility = javaTargetCompatibility
     options.compilerArgs += [
             '-Amapstruct.defaultComponentModel=spring',
             '-Amapstruct.defaultInjectionStrategy=constructor',
             '-Amapstruct.unmappedTargetPolicy=ERROR',
             '-Amapstruct.verbose=false',
             '-Amapstruct.suppressGeneratorVersionInfoComment=true',
-            '-Amapstruct.suppressGeneratorTimestamp=true',
-            '-Xlint:deprecation'
+            '-Amapstruct.suppressGeneratorTimestamp=true'
     ]
 }
 

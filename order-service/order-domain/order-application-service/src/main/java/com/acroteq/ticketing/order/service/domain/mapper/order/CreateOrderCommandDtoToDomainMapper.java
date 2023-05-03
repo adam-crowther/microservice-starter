@@ -17,6 +17,8 @@ import org.mapstruct.Mapping;
 public interface CreateOrderCommandDtoToDomainMapper extends DtoToDomainMapper<CreateOrderCommandDto, Order> {
 
   @Mapping(target = "id", ignore = true)
+  @Mapping(target = "version", ignore = true)
+  @Mapping(target = "audit", ignore = true)
   @Mapping(target = "streetAddress", source = "address")
   @Mapping(target = "trackingId", ignore = true)
   @Mapping(target = "orderStatus", ignore = true)

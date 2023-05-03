@@ -1,19 +1,39 @@
 plugins {
     id 'java'
+    id 'checkstyle'
+    id 'jacoco'
+    alias pluginLibs.plugins.spotbugs
 }
 
+apply from: "${rootDir}/java.gradle"
+
 compileJava {
-    sourceCompatibility = javaSourceCompatibility
-    targetCompatibility = javaTargetCompatibility
     options.compilerArgs += [
-            '-Xlint:deprecation'
+            '-Amapstruct.defaultComponentModel=spring',
+            '-Amapstruct.defaultInjectionStrategy=constructor',
+            '-Amapstruct.unmappedTargetPolicy=ERROR',
+            '-Amapstruct.verbose=false',
+            '-Amapstruct.suppressGeneratorVersionInfoComment=true',
+            '-Amapstruct.suppressGeneratorTimestamp=true'
     ]
 }
 
 dependencies {
     implementation project(":common:common-domain")
     implementation project(":common:common-application")
+
     implementation libs.apache.avro
+    implementation libs.jakarta.persistence.api
+    implementation libs.lombok.core
+    implementation libs.mapstruct.core
+    implementation libs.spring.boot.autoconfigure
+    implementation libs.spring.context
+    implementation libs.spring.data.commons
+    implementation libs.spring.data.jpa
+
+    annotationProcessor libs.lombok.core
+    annotationProcessor libs.lombok.mapstruct.binding
+    annotationProcessor libs.mapstruct.processor
 }
 
 test {

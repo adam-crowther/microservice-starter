@@ -18,9 +18,12 @@ import java.util.UUID;
 public interface AirlineApprovalRejectedResponseMessageFactory
     extends EventToMessageMapper<OrderRejectedEvent, AirlineApprovalRejectedResponseMessage> {
 
-  @Mapping(target = "orderId", source = "event.orderApproval.orderId")
-  @Mapping(target = "airlineId", source = "event.orderApproval.airline.id")
-  @Mapping(target = "failureMessages", source = "event.result")
+  @Mapping(target = "orderId", source = "orderApproval.orderId")
+  @Mapping(target = "orderVersion", source = "orderApproval.orderVersion")
+  @Mapping(target = "audit", source = "orderApproval.audit")
+  @Mapping(target = "airlineId", source = "orderApproval.airline.id")
+  @Mapping(target = "failureMessages", source = "result")
+  @Mapping(target = "auditBuilder", ignore = true)
   @Override
   AirlineApprovalRejectedResponseMessage convertEventToMessage(OrderRejectedEvent event);
 }

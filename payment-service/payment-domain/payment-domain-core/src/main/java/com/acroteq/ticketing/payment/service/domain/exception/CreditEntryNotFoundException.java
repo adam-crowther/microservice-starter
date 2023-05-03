@@ -13,7 +13,7 @@ public class CreditEntryNotFoundException extends DomainException {
   private final String i18nCode;
   private final CustomerId customerId;
 
-  public static Supplier<CreditEntryNotFoundException> newCreditEntryNotFoundException(final CustomerId customerId) {
+  public static Supplier<CreditEntryNotFoundException> creditEntryNotFoundException(final CustomerId customerId) {
     return () -> new CreditEntryNotFoundException(customerId);
   }
 

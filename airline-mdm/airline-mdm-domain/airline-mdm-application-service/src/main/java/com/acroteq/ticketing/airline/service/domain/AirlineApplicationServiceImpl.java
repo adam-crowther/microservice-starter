@@ -5,16 +5,12 @@ import com.acroteq.ticketing.airline.service.domain.dto.create.CreateAirlineResp
 import com.acroteq.ticketing.airline.service.domain.dto.get.AirlineDto;
 import com.acroteq.ticketing.airline.service.domain.dto.update.UpdateAirlineCommandDto;
 import com.acroteq.ticketing.airline.service.domain.entity.Airline;
-import com.acroteq.ticketing.airline.service.domain.event.AirlineCreatedEvent;
-import com.acroteq.ticketing.airline.service.domain.event.AirlineDeletedEvent;
-import com.acroteq.ticketing.airline.service.domain.event.AirlineUpdatedEvent;
+import com.acroteq.ticketing.airline.service.domain.event.AirlineEvent;
 import com.acroteq.ticketing.airline.service.domain.exception.AirlineNotFoundException;
 import com.acroteq.ticketing.airline.service.domain.mapper.AirlineCreatedEventToResponseDtoMapper;
 import com.acroteq.ticketing.airline.service.domain.mapper.AirlineDomainToDtoMapper;
 import com.acroteq.ticketing.airline.service.domain.ports.input.service.AirlineApplicationService;
-import com.acroteq.ticketing.airline.service.domain.ports.output.message.publisher.AirlineCreatedEventMessagePublisher;
-import com.acroteq.ticketing.airline.service.domain.ports.output.message.publisher.AirlineDeletedEventMessagePublisher;
-import com.acroteq.ticketing.airline.service.domain.ports.output.message.publisher.AirlineUpdatedEventMessagePublisher;
+import com.acroteq.ticketing.airline.service.domain.ports.output.message.publisher.AirlineEventMessagePublisher;
 import com.acroteq.ticketing.airline.service.domain.ports.output.repository.AirlineRepository;
 import com.acroteq.ticketing.domain.valueobject.AirlineId;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +28,7 @@ public class AirlineApplicationServiceImpl implements AirlineApplicationService 
   private final AirlineCommandProcessor commandProcessor;
   private final AirlineRepository repository;
 
-  private final AirlineCreatedEventMessagePublisher createEventPublisher;
-  private final AirlineUpdatedEventMessagePublisher updateEventPublisher;
-  private final AirlineDeletedEventMessagePublisher deleteEventPublisher;
+  private final AirlineEventMessagePublisher eventPublisher;
   private final AirlineDomainToDtoMapper domainDtoMapper;
   private final AirlineCreatedEventToResponseDtoMapper eventDtoMapper;
 
@@ -50,22 +44,22 @@ public class AirlineApplicationServiceImpl implements AirlineApplicationService 
   @Override
   @Transactional
   public CreateAirlineResponseDto createAirline(final CreateAirlineCommandDto createAirlineCommandDto) {
-    final AirlineCreatedEvent airlineEvent = commandProcessor.createAirline(createAirlineCommandDto);
-    createEventPublisher.publish(airlineEvent);
+    final AirlineEvent airlineEvent = commandProcessor.createAirline(createAirlineCommandDto);
+    eventPublisher.publish(airlineEvent);
     return eventDtoMapper.convertEventToDto(airlineEvent);
   }
 
   @Override
   @Transactional
   public void updateAirline(final UpdateAirlineCommandDto updateAirlineCommandDto) {
-    final AirlineUpdatedEvent airlineEvent = commandProcessor.updateAirline(updateAirlineCommandDto);
-    updateEventPublisher.publish(airlineEvent);
+    final AirlineEvent airlineEvent = commandProcessor.updateAirline(updateAirlineCommandDto);
+    eventPublisher.publish(airlineEvent);
   }
 
   @Override
   @Transactional
   public void deleteAirline(final Long airlineId) {
-    final AirlineDeletedEvent airlineEvent = commandProcessor.deleteAirline(airlineId);
-    deleteEventPublisher.publish(airlineEvent);
+    commandProcessor.deleteAirline(airlineId);
+    eventPublisher.publishDelete(airlineId);
   }
 }

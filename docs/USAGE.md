@@ -7,7 +7,7 @@ of `infrastructure/docker-compose/build`.
 
 |     |                                       | Shell script / Gradle task                                                    |
 |----:|---------------------------------------|-------------------------------------------------------------------------------|
-|     | Change directory to docker_compose.   | `$ cd infrastructure/docker-compose/`                                         |
+|     | Change directory to docker_compose.  | `$ cd infrastructure/docker-compose/`                                         |
 |  1. | Start Zookeeper                       | `$ ./start_zookeeper.sh`                                                      |
 |  2. | Start PostgreSQL                      | `$ ./start_postgres.sh`                                                       |
 |  3. | Start Kafka                           | `$ ./start_kafka.sh`                                                          |

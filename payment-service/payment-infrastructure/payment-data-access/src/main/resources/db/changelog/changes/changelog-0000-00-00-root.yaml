@@ -1,16 +1,34 @@
 databaseChangeLog:
   - changeSet:
-      id: 1682526373901-1
+      id: 1683098252301-1
       author: micro (generated)
       changes:
         - createTable:
             columns:
               - column:
+                  autoIncrement: true
                   constraints:
                     nullable: false
                     primaryKey: true
                     primaryKeyName: credit_entryPK
-                  name: customer_id
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  name: created_timestamp
+                  type: timestamp
+              - column:
+                  name: lasted_modified_by
+                  type: VARCHAR(255)
+              - column:
+                  name: last_modified_timestamp
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: version
                   type: BIGINT
               - column:
                   name: total_credit_amount
@@ -18,9 +36,12 @@ databaseChangeLog:
               - column:
                   name: total_credit_currency_id
                   type: VARCHAR(255)
+              - column:
+                  name: customer_id
+                  type: BIGINT
             tableName: credit_entry
   - changeSet:
-      id: 1682526373901-2
+      id: 1683098252301-2
       author: micro (generated)
       changes:
         - createTable:
@@ -32,6 +53,23 @@ databaseChangeLog:
                     primaryKey: true
                     primaryKeyName: credit_historyPK
                   name: id
+                  type: BIGINT
+              - column:
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  name: created_timestamp
+                  type: timestamp
+              - column:
+                  name: lasted_modified_by
+                  type: VARCHAR(255)
+              - column:
+                  name: last_modified_timestamp
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: version
                   type: BIGINT
               - column:
                   name: credit_amount
@@ -50,7 +88,42 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: credit_history
   - changeSet:
-      id: 1682526373901-3
+      id: 1683098252301-3
+      author: micro (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: customerPK
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: kafka_offset
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: kafka_partition
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: version
+                  type: BIGINT
+              - column:
+                  name: credit_limit_amount
+                  type: NUMBER(38, 2)
+              - column:
+                  name: credit_limit_currency_id
+                  type: VARCHAR(255)
+            tableName: customer
+  - changeSet:
+      id: 1683098252301-4
       author: micro (generated)
       changes:
         - createTable:
@@ -64,13 +137,30 @@ databaseChangeLog:
                   name: id
                   type: BIGINT
               - column:
-                  name: created_date_time
+                  name: created_by
+                  type: VARCHAR(255)
+              - column:
+                  name: created_timestamp
                   type: timestamp
+              - column:
+                  name: lasted_modified_by
+                  type: VARCHAR(255)
+              - column:
+                  name: last_modified_timestamp
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: version
+                  type: BIGINT
               - column:
                   name: customer_id
                   type: BIGINT
               - column:
                   name: order_id
+                  type: BIGINT
+              - column:
+                  name: order_version
                   type: BIGINT
               - column:
                   name: status
@@ -82,4 +172,17 @@ databaseChangeLog:
                   name: value_currency_id
                   type: VARCHAR(255)
             tableName: payments
+  - changeSet:
+      id: 1683098252301-5
+      author: micro (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: customer_id
+            baseTableName: credit_entry
+            constraintName: FK9ryeml5lotqwuiq9myq1dshs0
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: customer
+            validate: true
 

@@ -20,5 +20,7 @@ public class OrderApproval extends AggregateRoot<OrderApprovalId> {
   @NonNull
   private final OrderId orderId;
   @NonNull
+  private final Long orderVersion;
+  @NonNull
   private final OrderApprovalStatus approvalStatus;
 }

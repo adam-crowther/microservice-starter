@@ -1,15 +1,13 @@
 package com.acroteq.ticketing.domain.event;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Builder;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
+import lombok.Value;
 
-@Getter
 @ToString
-@EqualsAndHashCode(callSuper = true)
-@SuperBuilder(toBuilder = true)
-public final class EmptyEvent extends DomainEvent<Void> {
+@Builder
+@Value
+public class EmptyEvent implements Event {
 
   public static final EmptyEvent INSTANCE = EmptyEvent.builder()
                                                       .build();

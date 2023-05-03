@@ -1,20 +1,19 @@
 plugins {
     id 'java'
+    id 'checkstyle'
+    id 'jacoco'
+    alias pluginLibs.plugins.spotbugs
     alias pluginLibs.plugins.spring.boot
     alias pluginLibs.plugins.swagger
 }
 
-compileJava {
-    sourceCompatibility = javaSourceCompatibility
-    targetCompatibility = javaTargetCompatibility
-    options.compilerArgs += [
-            '-Xlint:deprecation'
-    ]
-}
+apply from: "${rootDir}/java.gradle"
 
 dependencies {
+    implementation libs.spring.boot.actuator
     implementation libs.spring.boot.autoconfigure
     implementation libs.spring.boot.core
+    implementation libs.spring.context
     implementation libs.spring.webmvc
     implementation libs.google.guava
 

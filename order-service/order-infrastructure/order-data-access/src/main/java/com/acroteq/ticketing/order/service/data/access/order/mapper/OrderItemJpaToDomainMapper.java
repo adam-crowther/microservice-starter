@@ -22,7 +22,6 @@ import org.mapstruct.Mapping;
                  FlightResolver.class }, imports = { OrderItemId.class, OrderId.class, FlightId.class })
 public interface OrderItemJpaToDomainMapper extends JpaToDomainMapper<OrderItemJpaEntity, OrderItem> {
 
-  @Mapping(target = "id", source = "id")
   @Mapping(target = "flight", source = "flightId")
   @Override
   OrderItem convertJpaToDomain(OrderItemJpaEntity orderItem);

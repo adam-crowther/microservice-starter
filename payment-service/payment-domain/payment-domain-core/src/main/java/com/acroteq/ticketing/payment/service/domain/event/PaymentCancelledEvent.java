@@ -8,7 +8,6 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @ToString
 @SuperBuilder(toBuilder = true)
-
 public class PaymentCancelledEvent extends PaymentEvent {
 
   @Override

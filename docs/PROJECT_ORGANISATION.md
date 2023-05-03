@@ -10,13 +10,16 @@
   ### `common-domain`
     - Contains shared code that is used by the `xxxx-domain` submodules of the microservices.
     - Must not contain business logic or models.
+  ### `common-helper`
+    - Contains very basic shared code that can be used anywhere in the application.
+    - Along the lines of Apache Commons or Google Guava
+  ### `common-infrastructure`
+    - Contains shared code that is used by the `xxx-infrastructure` submodules of the microservices.
+    - Must not contain business logic or models.
   ### `common-presentation`
     - Contains shared code that is used by the `xxxx-presentation` submodules of the microservices. Mainly mapping and
       resolvers.
     - Must not contain business logic or models.
-  ### `common-helper`
-    - Contains very basic shared code that can be used anywhere in the application.
-    - Along the lines of Apache Commons or Google Guava
   ### `common-kafka`
     - Contains 2 submodules
       #### `kafka-libs`
@@ -109,7 +112,7 @@
         - Implements the REST API that is defined in the neighbouring `xxx-api-spec` submodule.
         - The REST API is implemented as a Spring `@RestController`.
         - The controller implementation converts the external API model to the internal DTO model, which is used to
-          invoke the application service.  (We do **not** want the external API model bleeding in to the Domain layer.)
+          invoke the application service. (We do **not** want the external API model bleeding in to the Domain layer.)
         - The application service implementation is injected in to the REST controller. (No inversion of control here).
         - The REST API is configured on port 818x.
       #### `xxxx-swagger`
@@ -187,6 +190,7 @@ ticketing
 │   ├── common-application
 │   ├── common-domain
 │   ├── common-helper
+│   ├── common-infrastructure
 │   ├── common-kafka
 │   │   ├── kafka-libs
 │   │   └── kafka-model

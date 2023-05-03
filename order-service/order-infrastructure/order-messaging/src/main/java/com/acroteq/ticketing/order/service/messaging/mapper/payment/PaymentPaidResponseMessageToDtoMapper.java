@@ -12,8 +12,8 @@ import org.mapstruct.Mapping;
 public interface PaymentPaidResponseMessageToDtoMapper
     extends MessageToDtoMapper<PaymentPaidResponseMessage, PaymentPaidResponseDto> {
 
-  @Mapping(target = "value.currencyId", source = "valueCurrencyId")
-  @Mapping(target = "value.amount", source = "valueAmount")
+  @Mapping(target = "value.currencyId", source = "message.valueCurrencyId")
+  @Mapping(target = "value.amount", source = "message.valueAmount")
   @Override
-  PaymentPaidResponseDto convertMessageToDto(PaymentPaidResponseMessage message);
+  PaymentPaidResponseDto convertMessageToDto(PaymentPaidResponseMessage message, Integer partition, Long offset);
 }

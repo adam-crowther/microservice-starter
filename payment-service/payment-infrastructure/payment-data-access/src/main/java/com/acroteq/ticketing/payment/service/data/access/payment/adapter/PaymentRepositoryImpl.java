@@ -1,35 +1,36 @@
 package com.acroteq.ticketing.payment.service.data.access.payment.adapter;
 
 import com.acroteq.ticketing.domain.valueobject.OrderId;
+import com.acroteq.ticketing.domain.valueobject.PaymentId;
+import com.acroteq.ticketing.infrastructure.data.access.repository.ReadWriteRepositoryImpl;
 import com.acroteq.ticketing.payment.service.data.access.payment.entity.PaymentJpaEntity;
 import com.acroteq.ticketing.payment.service.data.access.payment.mapper.PaymentDomainToJpaMapper;
 import com.acroteq.ticketing.payment.service.data.access.payment.mapper.PaymentJpaToDomainMapper;
 import com.acroteq.ticketing.payment.service.data.access.payment.repository.PaymentJpaRepository;
 import com.acroteq.ticketing.payment.service.domain.entity.Payment;
 import com.acroteq.ticketing.payment.service.domain.ports.output.repository.PaymentRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @Component
-public class PaymentRepositoryImpl implements PaymentRepository {
+public class PaymentRepositoryImpl extends ReadWriteRepositoryImpl<PaymentId, Payment, PaymentJpaEntity>
+    implements PaymentRepository {
 
-  private final PaymentJpaRepository paymentJpaRepository;
-  private final PaymentJpaToDomainMapper paymentJpaToDomainMapper;
-  private final PaymentDomainToJpaMapper paymentDomainToJpaMapper;
+  private final PaymentJpaRepository jpaRepository;
+  private final PaymentJpaToDomainMapper jpaToDomainMapper;
 
-  @Override
-  public Payment save(final Payment payment) {
-    final PaymentJpaEntity paymentJpaEntity = paymentDomainToJpaMapper.convertDomainToJpa(payment);
-    final PaymentJpaEntity savedEntity = paymentJpaRepository.save(paymentJpaEntity);
-    return paymentJpaToDomainMapper.convertJpaToDomain(savedEntity);
+  public PaymentRepositoryImpl(final PaymentJpaRepository jpaRepository,
+                               final PaymentJpaToDomainMapper jpaToDomainMapper,
+                               final PaymentDomainToJpaMapper domainToJpaMapper) {
+    super(jpaRepository, jpaToDomainMapper, domainToJpaMapper);
+    this.jpaRepository = jpaRepository;
+    this.jpaToDomainMapper = jpaToDomainMapper;
   }
 
   @Override
   public Optional<Payment> findByOrderId(final OrderId orderId) {
-    return paymentJpaRepository.findByOrderId(orderId.getValue())
-                               .map(paymentJpaToDomainMapper::convertJpaToDomain);
+    return jpaRepository.findByOrderId(orderId.getValue())
+                        .map(jpaToDomainMapper::convertJpaToDomain);
   }
 }

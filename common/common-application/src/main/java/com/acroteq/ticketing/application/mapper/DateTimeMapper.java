@@ -11,11 +11,15 @@ import java.time.ZonedDateTime;
 @Component
 public class DateTimeMapper {
 
-  public Instant convert(final OffsetDateTime offsetDateTime) {
+  public Instant convertToInstant(final OffsetDateTime offsetDateTime) {
     return offsetDateTime.toInstant();
   }
 
-  public ZonedDateTime convert(final Instant instant) {
+  public ZonedDateTime convertToZoned(final Instant instant) {
     return instant.atZone(UTC);
+  }
+
+  public OffsetDateTime convertToOffsetDateTime(final Instant instant) {
+    return instant.atOffset(UTC);
   }
 }

@@ -12,6 +12,7 @@ import org.mapstruct.Mapping;
 public interface OrderItemDtoToDomainMapper extends DtoToDomainMapper<OrderItemDto, OrderItem> {
 
   @Mapping(target = "id", ignore = true)
+  @Mapping(target = "version", ignore = true)
   @Mapping(target = "flight", source = "flightId")
   @Override
   OrderItem convertDtoToDomain(OrderItemDto airlineApprovalRequest);

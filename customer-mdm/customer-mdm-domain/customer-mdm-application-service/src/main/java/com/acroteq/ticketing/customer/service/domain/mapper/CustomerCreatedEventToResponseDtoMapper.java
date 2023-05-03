@@ -11,6 +11,10 @@ import org.mapstruct.Mapping;
 public interface CustomerCreatedEventToResponseDtoMapper
     extends EventToDtoMapper<CustomerEvent, CreateCustomerResponseDto> {
 
+
+  @Mapping(target = "id", source = "customer.id")
+  @Mapping(target = "version", source = "customer.version")
+  @Mapping(target = "audit", source = "customer.audit")
   @Mapping(target = "message", constant = "")
   @Override
   CreateCustomerResponseDto convertEventToDto(CustomerEvent event);

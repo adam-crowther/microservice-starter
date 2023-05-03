@@ -11,19 +11,39 @@
       }
     },
     {
-      "name": "airlineId",
-      "type": "long"
-    },
-    {
       "name": "orderId",
       "type": "long"
     },
     {
-      "name": "createdDateTime",
+      "name": "orderVersion",
+      "type": "long"
+    },
+    {
+      "name": "audit",
       "type": {
-        "type": "long",
-        "logicalType": "timestamp-millis"
+        "name": "AuditRecord",
+        "type": "record",
+        "fields": [
+          {
+            "name": "createdTimestamp",
+            "type": {
+              "type": "long",
+              "logicalType": "timestamp-millis"
+            }
+          },
+          {
+            "name": "lastModifiedTimestamp",
+            "type": {
+              "type": "long",
+              "logicalType": "timestamp-millis"
+            }
+          }
+        ]
       }
+    },
+    {
+      "name": "airlineId",
+      "type": "long"
     }
   ]
 }

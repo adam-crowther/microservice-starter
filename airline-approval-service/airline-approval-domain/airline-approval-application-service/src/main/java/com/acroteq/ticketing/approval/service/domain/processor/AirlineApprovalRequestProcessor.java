@@ -5,8 +5,6 @@ import com.acroteq.ticketing.approval.service.domain.dto.AirlineApprovalRequestD
 import com.acroteq.ticketing.approval.service.domain.entity.order.Order;
 import com.acroteq.ticketing.approval.service.domain.entity.order.OrderApproval;
 import com.acroteq.ticketing.approval.service.domain.event.order.OrderApprovalEvent;
-import com.acroteq.ticketing.approval.service.domain.event.order.OrderApprovedEvent;
-import com.acroteq.ticketing.approval.service.domain.event.order.OrderRejectedEvent;
 import com.acroteq.ticketing.approval.service.domain.mapper.OrderRequestDtoToOrderDomainMapper;
 import com.acroteq.ticketing.approval.service.domain.ports.output.repository.OrderApprovalRepository;
 import com.acroteq.ticketing.approval.service.domain.valueobject.OrderApprovalOutput;
@@ -32,26 +30,14 @@ public class AirlineApprovalRequestProcessor {
 
     final OrderApprovalOutput orderApprovalOutput = airlineDomainService.validateOrder(order);
     final OrderApproval orderApproval = orderApprovalOutput.getOrderApproval();
-
     final ValidationResult result = orderApprovalOutput.getValidationResult();
     final UUID sagaId = request.getSagaId();
+    final OrderApproval savedOrderApproval = orderApprovalRepository.save(orderApproval);
 
-    final OrderApprovalEvent responseEvent;
-    if (result.isPass()) {
-      final OrderApproval savedOrderApproval = orderApprovalRepository.save(orderApproval);
-      responseEvent = OrderApprovedEvent.builder()
-                                        .sagaId(sagaId)
-                                        .result(result)
-                                        .orderApproval(savedOrderApproval)
-                                        .build();
-    } else {
-      responseEvent = OrderRejectedEvent.builder()
-                                        .sagaId(sagaId)
-                                        .result(result)
-                                        .orderApproval(orderApproval)
-                                        .build();
-    }
-
-    return responseEvent;
+    return OrderApprovalEvent.polymorphicBuilder()
+                             .sagaId(sagaId)
+                             .result(result)
+                             .orderApproval(savedOrderApproval)
+                             .build();
   }
 }

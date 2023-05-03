@@ -31,6 +31,6 @@ public class OrderApprovalEventPublisherVisitor implements OrderApprovalEventVis
   }
 
   private void logEvent(final String eventType, final OrderApprovalEvent event) {
-    log.info("Publishing order {} event with order id: {}", eventType, event.getOrderId());
+    log.info("Publishing order {} event with id: {}", eventType, event.getOrderId());
   }
 }

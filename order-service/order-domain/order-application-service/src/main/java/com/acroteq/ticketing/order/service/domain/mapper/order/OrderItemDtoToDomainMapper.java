@@ -14,6 +14,7 @@ import java.util.List;
 public interface OrderItemDtoToDomainMapper extends DtoToDomainMapper<OrderItemDto, OrderItem> {
 
   @Mapping(target = "id", ignore = true)
+  @Mapping(target = "version", ignore = true)
   @Mapping(target = "orderId", ignore = true)
   @Mapping(target = "flight", source = "flightId")
   @Override

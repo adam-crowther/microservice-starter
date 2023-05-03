@@ -37,7 +37,7 @@
     <rule ref="category/java/codestyle.xml/ShortVariable">
         <properties>
             <property name="xpath">
-                <!-- Exceptions to the rule.  "id" is ok as a variable name. -->
+                <!-- Exceptions to the rule. "id" is ok as a variable name. -->
                 <value>
                     //VariableDeclaratorId[(string-length(@Name) &lt; 3) and (not (@Name='id'))]
                     [not(ancestor::ForInit)]
@@ -50,7 +50,7 @@
     <rule ref="category/java/codestyle.xml/ShortMethodName">
         <properties>
             <property name="xpath">
-                <!-- Exceptions to the rule.  "of" is ok as a method name for static constructor methods. -->
+                <!-- Exceptions to the rule. "of" is ok as a method name for static constructor methods. -->
                 <value>
                     //MethodDeclarator[(string-length(@Image) &lt; 3) and (not (@Image='of'))]
                 </value>

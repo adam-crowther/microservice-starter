@@ -1,14 +1,11 @@
 plugins {
     id 'java'
+    id 'checkstyle'
+    id 'jacoco'
+    alias pluginLibs.plugins.spotbugs
 }
 
-compileJava {
-    sourceCompatibility = javaSourceCompatibility
-    targetCompatibility = javaTargetCompatibility
-    options.compilerArgs += [
-            '-Xlint:deprecation'
-    ]
-}
+apply from: "${rootDir}/java.gradle"
 
 dependencies {
     implementation project(':common:common-application')
@@ -18,9 +15,11 @@ dependencies {
 
     implementation libs.apache.avro
     implementation libs.google.guava
-    implementation libs.javax.annotation.api
+    implementation libs.jakarta.annotation.api
+    implementation libs.jakarta.validation.api
     implementation libs.kafka.avro.serializer
     implementation libs.kafka.clients
+    implementation libs.kafka.schema.serializer
     implementation libs.lombok.core
     implementation libs.slf4j.api
     implementation libs.spotbugs.annotations
@@ -28,13 +27,11 @@ dependencies {
     implementation libs.spring.boot.autoconfigure
     implementation libs.spring.boot.core
     implementation libs.spring.context
+    implementation libs.spring.core
     implementation libs.spring.kafka
     implementation libs.spring.messaging
-    implementation libs.jakarta.validation.api
-    implementation project(path: ':common:common-application')
 
     annotationProcessor libs.lombok.core
-    annotationProcessor libs.spring.boot.configuration.processor
 }
 
 test {

@@ -20,8 +20,8 @@ import java.util.UUID;
 public interface PaymentCancelRequestMessageFactory
     extends EventToMessageMapper<OrderEvent, PaymentCancelRequestMessage> {
 
-  @Mapping(target = "orderId", source = "event.order.id")
-  @Mapping(target = "paymentId", source = "event.order.customerId")
+  @Mapping(target = "orderId", source = "order.id")
+  @Mapping(target = "orderVersion", source = "order.version")
   @Override
   PaymentCancelRequestMessage convertEventToMessage(OrderEvent event);
 }

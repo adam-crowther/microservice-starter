@@ -132,6 +132,41 @@ or bounded contexts.
 - A Saga is a chain of local transactions that updates each service in sequence and publishes a message or event to
   trigger the next transaction step.
 - Leverages event-driven architecture and domain events for coordination.
-- Each step in the Saga is implemented by a local ACID transaction.
+- Each step in the Saga is implemented by a request message and one or more response messages, and by a local ACID
+  transaction.
 - Errors are handled by Rollbacks: compensating local ACID transactions which reverse the effect of a previous event in
   the Saga.
+- Exception handling: unexpected exceptions in Saga request listeners are handled by sending a corresponding semantic
+  response message. Eg if the Request is `PaymentRequestMessage` then the exception handler should log the error and
+  send a `PaymentFailedResponseMessage`.
+
+> Important: We do **not** allow microservices to cascade a request to more requests to other microservices. Cascading
+> requests generate exponential complexity in the asynchronous message API design and error handling, and when things
+> go wrong they make troubleshooting extremely difficult.
+
+# CQRS - Command Query Responsibility Segregation
+
+- For each Entity, we define a 'Master' (="**Command**") microservice that is allowed to change that entity.
+- We are strict that there can only be one 'Master' microservice for each Entity.
+- All other microservices can only perform read operations (="**Query**").
+- Each Microservice can only access its own data repository. No Microservice can access the data repository of another
+  microservice across the domain boundary.
+- Data entities are 'replicated' across the domain boundaries (ie from the data repository of a 'Master'
+  microservice to that of the other microservices) through _Entity Domain Events_.
+- Each microservice therefore has a data entity model which is divided into two parts: 'Master Data' and 'Replicated
+  Data'.
+- Microservices listen on Entity Domain Event topics, and maintain a local store of the required entities and
+  attributes.
+- Exception handling: unexpected exceptions in the Entity Domain Event listeners are handled by the standard Spring
+  retry mechanism, with exponential backoff. (`DefaultErrorHandler` with `ExponentialBackOffWithMaxRetries`
+  and `DeadLetterPublishingRecoverer`). The behaviour is configurable - e.g. max 3 retries, with a delay that
+  starts at 10 seconds, and doubles with each attempt. If all retries fail, then the message is forwarded to a dead
+  letter queue, which is has the same name as the original topic, with an added suffix (e.g. '-dlt').
+- Entity Domain Events follow the `Kafka Streams KTable`/`KSQL query` conventions:
+    - The message key is the Entity's unique numeric primary key.
+    - The message is serialised using Avro and the Schema is validated using Schema Registry.
+    - The message value contains the Entity's full schema, including all attributes, id and version, and including the
+      audit createdTimestamp and lastModified Timestamp from the Master database. For security reasons, it does NOT
+      include the createdBy and lastModifiedBy data, however these could easily be added to the event model if required.
+    - By following the Kafka Streams KTable/KSQL query conventions, we have the option of implementing a Kafka 
+      Streams application that could transform or join streams for consumption by a microservice. 

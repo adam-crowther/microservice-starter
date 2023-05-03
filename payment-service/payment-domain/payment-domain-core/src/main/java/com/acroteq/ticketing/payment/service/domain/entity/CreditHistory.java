@@ -2,7 +2,7 @@ package com.acroteq.ticketing.payment.service.domain.entity;
 
 import static com.acroteq.ticketing.payment.service.domain.valueobject.CreditHistoryEventType.CREDIT_LIMIT_CHANGE;
 
-import com.acroteq.ticketing.domain.entity.BaseEntity;
+import com.acroteq.ticketing.domain.entity.MasterEntity;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
 import com.acroteq.ticketing.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.payment.service.domain.valueobject.CreditHistoryEventType;
@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @ToString(callSuper = true)
 @SuperBuilder(toBuilder = true)
-public class CreditHistory extends BaseEntity<CreditHistoryId> {
+public class CreditHistory extends MasterEntity<CreditHistoryId> {
 
   @NonNull
   private final CustomerId customerId;

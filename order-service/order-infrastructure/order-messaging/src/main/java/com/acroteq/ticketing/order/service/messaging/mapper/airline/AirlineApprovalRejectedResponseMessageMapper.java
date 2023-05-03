@@ -14,6 +14,8 @@ public interface AirlineApprovalRejectedResponseMessageMapper
     extends MessageToDtoMapper<AirlineApprovalRejectedResponseMessage, AirlineApprovalRejectedResponseDto> {
 
   @Override
-  @Mapping(target = "result", source = "failureMessages")
-  AirlineApprovalRejectedResponseDto convertMessageToDto(AirlineApprovalRejectedResponseMessage message);
+  @Mapping(target = "result", source = "message.failureMessages")
+  AirlineApprovalRejectedResponseDto convertMessageToDto(AirlineApprovalRejectedResponseMessage message,
+                                                         Integer partition,
+                                                         Long offset);
 }

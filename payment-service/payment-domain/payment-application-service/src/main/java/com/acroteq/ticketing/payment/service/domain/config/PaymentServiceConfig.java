@@ -11,8 +11,5 @@ import org.springframework.context.annotation.Configuration;
 public class PaymentServiceConfig {
 
   @NotNull
-  private PaymentRequestConfig paymentRequest;
-
-  @NotNull
-  private PaymentResponseConfig paymentResponse;
+  private PaymentConfig payment;
 }

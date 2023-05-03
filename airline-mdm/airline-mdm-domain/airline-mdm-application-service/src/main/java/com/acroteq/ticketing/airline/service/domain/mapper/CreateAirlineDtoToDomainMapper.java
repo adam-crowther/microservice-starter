@@ -12,6 +12,8 @@ import org.mapstruct.Mapping;
 public interface CreateAirlineDtoToDomainMapper extends DtoToDomainMapper<CreateAirlineCommandDto, Airline> {
 
   @Mapping(target = "id", ignore = true)
+  @Mapping(target = "version", ignore = true)
+  @Mapping(target = "audit", ignore = true)
   @Override
   Airline convertDtoToDomain(CreateAirlineCommandDto createAirlineCommandDto);
 }

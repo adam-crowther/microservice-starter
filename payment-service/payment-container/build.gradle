@@ -1,24 +1,17 @@
 plugins {
     id 'java'
+    id 'checkstyle'
+    id 'jacoco'
+    alias pluginLibs.plugins.spotbugs
     alias pluginLibs.plugins.spring.boot
     alias pluginLibs.plugins.graphfity
 }
 
-compileJava {
-    sourceCompatibility = javaSourceCompatibility
-    targetCompatibility = javaTargetCompatibility
-    options.compilerArgs += [
-            '-Xlint:deprecation'
-    ]
-}
+apply from: "${rootDir}/java.gradle"
 
 configurations {
     runtimeOnly.exclude group: 'ch.qos.logback'
     runtimeOnly.exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {
@@ -29,6 +22,7 @@ dependencies {
     implementation project(":payment-service:payment-infrastructure:payment-messaging")
 
     implementation libs.spring.beans
+    implementation libs.spring.boot.actuator
     implementation libs.spring.boot.autoconfigure
     implementation libs.spring.boot.core
     implementation libs.spring.context

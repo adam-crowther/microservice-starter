@@ -84,6 +84,6 @@
 | Order Service | http://localhost:8181 | http://localhost:8281 |
 
 - To allow the Swagger UI client to make requests to the REST container, we need to enable **CORS**, using
-  the `@CrossOrigin` annotation in the `@RestController` classes in the `xxxx-rest-controller` submodule.  
+  the `@CrossOrigin` annotation in the `@RestController` classes in the `xxxx-rest-controller` submodule. 
   The CORS configuration only allows cross-domain requests from `http://localhost:828x`, so it's not a security
   risk.

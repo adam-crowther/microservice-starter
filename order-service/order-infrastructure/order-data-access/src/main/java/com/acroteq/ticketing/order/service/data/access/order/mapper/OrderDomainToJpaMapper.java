@@ -24,12 +24,21 @@ import org.mapstruct.MappingTarget;
                  AddressDomainToJpaMapper.class })
 public abstract class OrderDomainToJpaMapper implements DomainToJpaMapper<Order, OrderJpaEntity> {
 
+  @Mapping(target = "audit", ignore = true)
   @Mapping(target = "address", source = "streetAddress")
   @Mapping(target = "priceCurrencyId", source = "price.currencyId")
   @Mapping(target = "priceAmount", source = "price.amount")
   @Mapping(target = "failureMessages", source = "result")
   @Override
-  public abstract OrderJpaEntity convertDomainToJpa(Order order);
+  public abstract OrderJpaEntity convertDomainToJpa(Order entity);
+
+  @Mapping(target = "audit", ignore = true)
+  @Mapping(target = "address", source = "entity.streetAddress")
+  @Mapping(target = "priceCurrencyId", source = "entity.price.currencyId")
+  @Mapping(target = "priceAmount", source = "entity.price.amount")
+  @Mapping(target = "failureMessages", source = "entity.result")
+  @Override
+  public abstract OrderJpaEntity convertDomainToJpa(Order entity, @MappingTarget OrderJpaEntity jpaEntity);
 
   @AfterMapping
   void setOrderBackReferences(@MappingTarget final OrderJpaEntity orderJpaEntity) {

@@ -1,16 +1,26 @@
 package com.acroteq.ticketing.approval.service.domain.event.airline;
 
 import com.acroteq.ticketing.approval.service.domain.entity.airline.Airline;
-import com.acroteq.ticketing.domain.event.DomainEvent;
-import com.acroteq.ticketing.domain.valueobject.AirlineId;
-import lombok.Getter;
+import com.acroteq.ticketing.domain.event.EntityEvent;
+import com.acroteq.ticketing.domain.valueobject.BaseId;
+import lombok.Builder;
+import lombok.NonNull;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
+import lombok.Value;
 
-@Getter
+import java.util.Optional;
+
 @ToString
-@SuperBuilder(toBuilder = true)
-public abstract class AirlineEvent extends DomainEvent<Airline> {
+@Builder
+@Value
+public class AirlineEvent implements EntityEvent {
 
-  public abstract AirlineId getAirlineId();
+  @NonNull Airline airline;
+
+  @Override
+  public Optional<Long> getId() {
+    return Optional.of(airline)
+                   .map(Airline::getId)
+                   .map(BaseId::getValue);
+  }
 }

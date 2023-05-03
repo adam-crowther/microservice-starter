@@ -1,36 +1,24 @@
 package com.acroteq.ticketing.order.service.data.access.order.entity;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PROTECTED;
 
+import com.acroteq.ticketing.infrastructure.data.access.entity.MasterJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor(access = PRIVATE)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Setter
+@SuperBuilder(toBuilder = true)
+@NoArgsConstructor(access = PROTECTED)
 @Table(name = "order_items")
 @Entity
-public class OrderItemJpaEntity {
+public class OrderItemJpaEntity extends MasterJpaEntity {
 
-  @EqualsAndHashCode.Include
-  @Id
-  @GeneratedValue(strategy = IDENTITY)
-  @Column(name = "id")
-  private Long id;
-
-  @Setter
   @Column(name = "owner_id")
   private Long orderId;
 

@@ -7,34 +7,16 @@ import com.acroteq.ticketing.customer.service.data.access.customer.repository.Cu
 import com.acroteq.ticketing.customer.service.domain.entity.Customer;
 import com.acroteq.ticketing.customer.service.domain.ports.output.repository.CustomerRepository;
 import com.acroteq.ticketing.domain.valueobject.CustomerId;
-import lombok.RequiredArgsConstructor;
+import com.acroteq.ticketing.infrastructure.data.access.repository.ReadWriteRepositoryImpl;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
-@RequiredArgsConstructor
 @Component
-public class CustomerRepositoryImpl implements CustomerRepository {
+public class CustomerRepositoryImpl extends ReadWriteRepositoryImpl<CustomerId, Customer, CustomerJpaEntity>
+    implements CustomerRepository {
 
-  private final CustomerJpaRepository customerJpaRepository;
-  private final CustomerJpaToDomainMapper customerJpaToDomainMapper;
-  private final CustomerDomainToJpaMapper customerDomainToJpaMapper;
-
-  @Override
-  public Customer save(final Customer customer) {
-    final CustomerJpaEntity customerJpaEntity = customerDomainToJpaMapper.convertDomainToJpa(customer);
-    final CustomerJpaEntity savedEntity = customerJpaRepository.save(customerJpaEntity);
-    return customerJpaToDomainMapper.convertJpaToDomain(savedEntity);
-  }
-
-  @Override
-  public Optional<Customer> findById(final CustomerId customerId) {
-    return customerJpaRepository.findById(customerId.getValue())
-                                .map(customerJpaToDomainMapper::convertJpaToDomain);
-  }
-
-  @Override
-  public void deleteById(final CustomerId customerId) {
-    customerJpaRepository.deleteById(customerId.getValue());
+  public CustomerRepositoryImpl(final CustomerJpaRepository jpaRepository,
+                                final CustomerJpaToDomainMapper jpaToDomainMapper,
+                                final CustomerDomainToJpaMapper domainToJpaMapper) {
+    super(jpaRepository, jpaToDomainMapper, domainToJpaMapper);
   }
 }

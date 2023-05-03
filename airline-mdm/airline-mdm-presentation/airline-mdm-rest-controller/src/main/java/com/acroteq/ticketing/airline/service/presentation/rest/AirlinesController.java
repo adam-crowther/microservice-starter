@@ -53,7 +53,7 @@ public class AirlinesController implements AirlinesApi {
     final CreateAirlineResponseDto responseDto = airlineApplicationService.createAirline(commandDto);
     final CreateAirlineResponse response = createResponseMapper.convertDtoToApi(responseDto);
 
-    log.info("Airline created with id {}", response.getAirlineId());
+    log.info("Airline created with id {}", response.getId());
     return ResponseEntity.ok(response);
   }
 

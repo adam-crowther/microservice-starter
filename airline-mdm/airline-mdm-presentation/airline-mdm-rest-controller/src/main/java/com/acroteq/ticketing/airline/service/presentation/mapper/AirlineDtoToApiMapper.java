@@ -6,7 +6,7 @@ import com.acroteq.ticketing.application.mapper.id.AirlineIdMapper;
 import com.acroteq.ticketing.common.application.mapper.DtoToApiMapper;
 import org.mapstruct.Mapper;
 
-@Mapper(uses = { AirlineIdMapper.class, FlightDtoToApiMapper.class })
+@Mapper(uses = { AirlineIdMapper.class, FlightDtoToApiMapper.class, AuditDtoToApiMapper.class })
 public interface AirlineDtoToApiMapper extends DtoToApiMapper<AirlineDto, Airline> {
 
   @Override

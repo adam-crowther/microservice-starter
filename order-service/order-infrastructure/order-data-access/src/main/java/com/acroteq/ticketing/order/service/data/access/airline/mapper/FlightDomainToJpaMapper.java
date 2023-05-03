@@ -7,6 +7,7 @@ import com.acroteq.ticketing.order.service.data.access.airline.entity.FlightJpaE
 import com.acroteq.ticketing.order.service.domain.entity.Flight;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(uses = { FlightIdMapper.class, CurrencyIdMapper.class })
 public interface FlightDomainToJpaMapper extends DomainToJpaMapper<Flight, FlightJpaEntity> {
@@ -14,5 +15,10 @@ public interface FlightDomainToJpaMapper extends DomainToJpaMapper<Flight, Fligh
   @Mapping(target = "priceAmount", source = "price.amount")
   @Mapping(target = "priceCurrencyId", source = "price.currencyId")
   @Override
-  FlightJpaEntity convertDomainToJpa(Flight flight);
+  FlightJpaEntity convertDomainToJpa(Flight entity);
+
+  @Mapping(target = "priceAmount", source = "entity.price.amount")
+  @Mapping(target = "priceCurrencyId", source = "entity.price.currencyId")
+  @Override
+  FlightJpaEntity convertDomainToJpa(Flight entity, @MappingTarget FlightJpaEntity jpaEntity);
 }
