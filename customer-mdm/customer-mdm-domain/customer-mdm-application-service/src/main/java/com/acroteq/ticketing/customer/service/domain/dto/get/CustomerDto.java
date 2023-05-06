@@ -2,20 +2,20 @@ package com.acroteq.ticketing.customer.service.domain.dto.get;
 
 import com.acroteq.ticketing.application.dto.AuditedEntityDto;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder
 public class CustomerDto extends AuditedEntityDto {
 
-  @NonNull
+  @NotNull
   private String userName;
-  @NonNull
+  @NotNull
   private String firstName;
-  @NonNull
+  @NotNull
   private String lastName;
-  @NonNull
+  @NotNull
   private CashValue creditLimit;
 }

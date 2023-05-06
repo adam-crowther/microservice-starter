@@ -1,18 +1,18 @@
 package com.acroteq.ticketing.order.service.domain.dto.customer;
 
 import com.acroteq.ticketing.application.dto.ReplicatedEntityDto;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder(toBuilder = true)
 @Getter
 public class CustomerEventDto extends ReplicatedEntityDto {
 
-  @NonNull
+  @NotNull
   private final String userName;
-  @NonNull
+  @NotNull
   private final String firstName;
-  @NonNull
+  @NotNull
   private final String lastName;
 }
