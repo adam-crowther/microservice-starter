@@ -27,7 +27,7 @@ public interface AirlineApprovalRequestMessageFactory
 
   @Mapping(target = "orderId", source = "order.id")
   @Mapping(target = "orderVersion", source = "order.version")
-  @Mapping(target = "airlineId", source = "order.airlineId")
+  @Mapping(target = "airlineId", source = "order.airline.id")
   @Mapping(target = "flights", source = "order.items")
   @Mapping(target = "priceCurrencyId", source = "order.price.currencyId")
   @Mapping(target = "priceAmount", source = "order.price.amount")

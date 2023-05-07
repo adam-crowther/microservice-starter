@@ -77,10 +77,13 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
     if (payment.getValue()
                .isGreaterThan(creditEntry.getTotalCredit())) {
       log.error("Customer with id: {} doesn't have enough credit for payment! Required {}, Actual {}",
-                payment.getCustomerId(),
+                payment.getCustomer()
+                       .getId(),
                 payment.getValue(),
                 creditEntry.getTotalCredit());
-      result = fail("Customer with id %s  doesn't have enough credit for payment!", payment.getCustomerId());
+      result = fail("Customer with id %s  doesn't have enough credit for payment!",
+                    payment.getCustomer()
+                           .getId());
     } else {
       result = pass();
     }
@@ -94,7 +97,7 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
 
   private CreditHistory updateCreditHistory(final Payment payment, final TransactionType transactionType) {
     return CreditHistory.builder()
-                        .customerId(payment.getCustomerId())
+                        .customer(payment.getCustomer())
                         .credit(payment.getValue())
                         .transactionType(transactionType)
                         .creditHistoryEventType(PAYMENT)
@@ -118,12 +121,11 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
 
     if (!creditEntry.getTotalCredit()
                     .equals(totalCreditHistory.subtract(totalDebitHistory))) {
-      log.error(
-          "Credit history total is not equal to current credit for customer id: {}! According Credit Entry: {}, "
-          + "According Credit History: {}",
-          creditEntry.getId(),
-          creditEntry.getTotalCredit(),
-          totalCreditHistory.subtract(totalDebitHistory));
+      log.error("Credit history total is not equal to current credit for customer id: {}! According Credit Entry: {}, "
+                + "According Credit History: {}",
+                creditEntry.getId(),
+                creditEntry.getTotalCredit(),
+                totalCreditHistory.subtract(totalDebitHistory));
       validationResult.addFailure("Credit history total is not equal to current credit for customer id: %s",
                                   creditEntry.getId());
     }

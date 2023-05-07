@@ -4,6 +4,9 @@ import static org.springframework.kafka.KafkaException.Level.ERROR;
 
 import com.acroteq.ticketing.kafka.consumer.exception.EventListenerMissingException;
 import com.acroteq.ticketing.kafka.consumer.exception.MessageToDtoMapperMissingException;
+import com.acroteq.ticketing.kafka.consumer.properties.KafkaBackoffConfig;
+import com.acroteq.ticketing.kafka.consumer.properties.KafkaConsumerConfig;
+import com.acroteq.ticketing.kafka.consumer.properties.KafkaDeadLetterConfig;
 import lombok.RequiredArgsConstructor;
 import org.apache.avro.SchemaValidationException;
 import org.apache.avro.specific.SpecificRecordBase;
@@ -23,15 +26,16 @@ import java.io.Serializable;
 import java.util.function.BiFunction;
 
 @RequiredArgsConstructor
+@ConditionalOnProperty(prefix = "kafka.consumer", name = "auto-offset-reset")
 @Configuration
 public class KafkaErrorHandlerConfiguration<K extends Serializable, V extends SpecificRecordBase> {
 
   private final KafkaOperations<Object, Object> operations;
   private final KafkaConsumerConfig kafkaConsumerConfig;
 
-  @ConditionalOnProperty(prefix = "kafka.consumer", name = "auto-offset-reset")
   @Bean
-  public DefaultErrorHandler kafkaErrorHandler(final KafkaDeadLetterConfig deadLetterConfig) {
+  public DefaultErrorHandler kafkaErrorHandler() {
+    final KafkaDeadLetterConfig deadLetterConfig = kafkaConsumerConfig.getDeadLetter();
     final var recoverer = new DeadLetterPublishingRecoverer(operations, getTopicPartitionSupplier(deadLetterConfig));
 
     final KafkaBackoffConfig backoffConfig = kafkaConsumerConfig.getBackoff();

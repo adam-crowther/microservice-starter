@@ -6,7 +6,6 @@ import static com.acroteq.ticketing.payment.service.domain.valueobject.Transacti
 import static com.acroteq.ticketing.payment.service.domain.valueobject.TransactionType.DEBIT;
 
 import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditEntry;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditHistory;
 import com.acroteq.ticketing.payment.service.domain.entity.Customer;
@@ -22,12 +21,11 @@ public class CreditEntryDomainServiceImpl implements CreditEntryDomainService {
   @Override
   public CreditEntryOutput createCreditEntry(final CreditEntry newCredit) {
     final CashValue newTotalCredit = newCredit.getTotalCredit();
-    final CustomerId customerId = Optional.of(newCredit)
-                                          .map(CreditEntry::getCustomer)
-                                          .map(Customer::getId)
-                                          .orElseThrow(CreditEntryWithNullCustomerIdException::new);
+    final Customer customer = Optional.of(newCredit)
+                                      .map(CreditEntry::getCustomer)
+                                      .orElseThrow(CreditEntryWithNullCustomerIdException::new);
     final CreditHistory creditHistory = CreditHistory.builder()
-                                                     .customerId(customerId)
+                                                     .customer(customer)
                                                      .credit(newTotalCredit)
                                                      .transactionType(CREDIT)
                                                      .creditHistoryEventType(CREDIT_LIMIT_CHANGE)
@@ -46,7 +44,7 @@ public class CreditEntryDomainServiceImpl implements CreditEntryDomainService {
     final CashValue currentTotalCredit = currentCredit.getTotalCredit();
     final CashValue newTotalCredit = currentTotalCredit.add(creditLimitDelta);
 
-    final CreditEntry creditEntry = updatedCredit.toBuilder()
+    final CreditEntry creditEntry = currentCredit.toBuilder()
                                                  .totalCredit(newTotalCredit)
                                                  .build();
 

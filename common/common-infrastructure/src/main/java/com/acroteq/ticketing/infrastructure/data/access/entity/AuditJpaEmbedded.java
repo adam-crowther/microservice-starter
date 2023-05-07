@@ -24,18 +24,18 @@ import java.time.Instant;
 public class AuditJpaEmbedded {
 
   @CreatedDate
-  @Column(name = "created_timestamp")
+  @Column(name = "created_timestamp", nullable = false, updatable = false)
   private Instant createdTimestamp;
 
   @CreatedBy
-  @Column(name = "created_by")
+  @Column(name = "created_by", nullable = false, updatable = false)
   private String createdBy;
 
   @LastModifiedDate
-  @Column(name = "last_modified_timestamp")
+  @Column(name = "last_modified_timestamp", nullable = false)
   private Instant lastModifiedTimestamp;
 
   @LastModifiedBy
-  @Column(name = "lasted_modified_by")
+  @Column(name = "lasted_modified_by", nullable = false)
   private String lastModifiedBy;
 }

@@ -24,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -42,7 +41,8 @@ public class PaymentProcessor {
   public PaymentEvent processPayment(final PaymentRequestDto dto) {
     log.info("Received payment requested event for order id: {}", dto.getOrderId());
     final Payment payment = paymentDtoToDomainMapper.convertDtoToDomain(dto);
-    final CustomerId customerId = payment.getCustomerId();
+    final CustomerId customerId = payment.getCustomer()
+                                         .getId();
     final CreditEntry creditEntry = getCreditEntry(customerId);
     final List<CreditHistory> creditHistories = getCreditHistory(customerId);
 
@@ -63,13 +63,10 @@ public class PaymentProcessor {
     final OrderId orderId = idMapper.convertLongToId(dto.getOrderId());
 
     log.info("Received payment rollback event for order id: {}", orderId);
-    final Optional<Payment> paymentResponse = paymentRepository.findByOrderId(orderId);
-    if (paymentResponse.isEmpty()) {
-      log.error("Payment with order id: {} could not be found!", orderId);
-      throw new PaymentNotFoundException(orderId);
-    }
-    final Payment payment = paymentResponse.get();
-    final CreditEntry creditEntry = getCreditEntry(payment.getCustomerId());
+    final Payment payment = paymentRepository.findByOrderId(orderId)
+                                             .orElseThrow(() -> new PaymentNotFoundException(orderId));
+    final CreditEntry creditEntry = getCreditEntry(payment.getCustomer()
+                                                          .getId());
 
     final PaymentOutput paymentOutput = paymentDomainService.cancelPayment(payment, creditEntry);
     final Payment savedPayment = persistDbObjects(paymentOutput);
@@ -84,21 +81,13 @@ public class PaymentProcessor {
   }
 
   private CreditEntry getCreditEntry(final CustomerId customerId) {
-    final Optional<CreditEntry> creditEntry = creditEntryRepository.findById(customerId);
-    if (creditEntry.isEmpty()) {
-      log.error("Could not find credit entry for customer: {}", customerId);
-      throw new CreditEntryNotFoundException(customerId);
-    }
-    return creditEntry.get();
+    return creditEntryRepository.findByCustomerId(customerId)
+                                .orElseThrow(() -> new CreditEntryNotFoundException(customerId));
   }
 
   private List<CreditHistory> getCreditHistory(final CustomerId customerId) {
-    final Optional<List<CreditHistory>> creditHistories = creditHistoryRepository.findByCustomerId(customerId);
-    if (creditHistories.isEmpty()) {
-      log.error("Could not find credit history for customer: {}", customerId);
-      throw new CreditHistoryNotFoundException(customerId);
-    }
-    return creditHistories.get();
+    return creditHistoryRepository.findByCustomerId(customerId)
+                                  .orElseThrow(() -> new CreditHistoryNotFoundException(customerId));
   }
 
   private Payment persistDbObjects(final PaymentOutput paymentOutput) {

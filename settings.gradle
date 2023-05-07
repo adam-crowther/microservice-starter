@@ -127,9 +127,10 @@ dependencyResolutionManagement {
             bundle('jackson', List.of('jackson-core', 'jackson-annotations', 'jackson-databind', 'jackson-jdk8', 'jackson-jsr310'))
 
             // Slf4j
-            version('slf4j', '2.0.6')
+            version('slf4j', '2.0.7')
             library('slf4j-api', 'org.slf4j', 'slf4j-api').versionRef('slf4j')
             library('slf4j-simple', 'org.slf4j', 'slf4j-simple').versionRef('slf4j')
+            library('jul-to-slf4j', 'org.slf4j', 'jul-to-slf4j').versionRef('slf4j')
 
             // Log4j2
             version('log4j', '2.19.0')
@@ -170,7 +171,6 @@ dependencyResolutionManagement {
             library('spring-boot-validation', 'org.springframework.boot', 'spring-boot-starter-validation').versionRef('springBoot')
             library('spring-boot-security', 'org.springframework.boot', 'spring-boot-starter-security').versionRef('springBoot')
             library('spring-boot-web', 'org.springframework.boot', 'spring-boot-starter-web').versionRef('springBoot')
-            library('spring-boot-configuration-processor', 'org.springframework.boot', 'spring-boot-configuration-processor').versionRef('springBoot')
             library('spring-boot-test', 'org.springframework.boot', 'spring-boot-test').versionRef('springBoot')
             library('spring-boot-configuration-processor', 'org.springframework.boot', 'spring-boot-configuration-processor').versionRef('springBoot')
             library('spring-boot-actuator', 'org.springframework.boot', 'spring-boot-starter-actuator').versionRef('springBoot')
@@ -188,6 +188,7 @@ dependencyResolutionManagement {
             library('liquibase-core', 'org.liquibase', 'liquibase-core').versionRef('liquibase')
             library('liquibase-hibernate', 'org.liquibase.ext', 'liquibase-hibernate6').versionRef('liquibase')
             library('liquibase-groovy-dsl', 'org.liquibase', 'liquibase-groovy-dsl').version('3.0.3')
+            library('liquibase-slf4j', 'com.mattbertolini', 'liquibase-slf4j').version('5.0.0')
 
             // Kafka
             library('kafka-clients', 'org.apache.kafka', 'kafka-clients').version('3.3.1')

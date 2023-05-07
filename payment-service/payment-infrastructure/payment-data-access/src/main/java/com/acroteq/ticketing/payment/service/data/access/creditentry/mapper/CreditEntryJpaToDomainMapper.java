@@ -9,7 +9,10 @@ import com.acroteq.ticketing.payment.service.domain.entity.CreditEntry;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(uses = { CurrencyIdMapper.class, CustomerIdMapper.class, CustomerJpaToDomainMapper.class })
+@Mapper(uses = { CurrencyIdMapper.class,
+                 CustomerIdMapper.class,
+                 CreditEntryIdMapper.class,
+                 CustomerJpaToDomainMapper.class })
 public interface CreditEntryJpaToDomainMapper extends JpaToDomainMapper<CreditEntryJpaEntity, CreditEntry> {
 
   @Mapping(target = "totalCredit.currencyId", source = "totalCreditCurrencyId")

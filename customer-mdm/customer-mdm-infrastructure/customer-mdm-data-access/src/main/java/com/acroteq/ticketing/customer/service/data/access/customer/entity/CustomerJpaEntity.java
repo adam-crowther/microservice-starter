@@ -21,18 +21,18 @@ import java.math.BigDecimal;
 @Entity
 public class CustomerJpaEntity extends MasterJpaEntity {
 
-  @Column(name = "user_name")
+  @Column(name = "user_name", nullable = false)
   private String userName;
 
-  @Column(name = "first_name")
+  @Column(name = "first_name", nullable = false)
   private String firstName;
 
-  @Column(name = "last_name")
+  @Column(name = "last_name", nullable = false)
   private String lastName;
 
-  @Column(name = "credit_limit_currency_id")
+  @Column(name = "credit_limit_currency_id", nullable = false)
   private String creditLimitCurrencyId;
 
-  @Column(name = "credit_limit_amount")
+  @Column(name = "credit_limit_amount", nullable = false)
   private BigDecimal creditLimitAmount;
 }

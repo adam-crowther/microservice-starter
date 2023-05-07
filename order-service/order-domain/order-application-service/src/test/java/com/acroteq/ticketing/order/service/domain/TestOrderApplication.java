@@ -8,11 +8,9 @@ import com.acroteq.ticketing.order.service.domain.ports.output.repository.Custom
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.FlightRepository;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.OrderRepository;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 
-@ConfigurationPropertiesScan
 @SpringBootApplication(scanBasePackages = "com.acroteq.ticketing")
 public class TestOrderApplication {
 

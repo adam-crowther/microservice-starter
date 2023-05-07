@@ -6,6 +6,8 @@ import com.acroteq.ticketing.application.mapper.id.CustomerIdMapper;
 import com.acroteq.ticketing.application.mapper.id.OrderIdMapper;
 import com.acroteq.ticketing.domain.validation.ValidationResult;
 import com.acroteq.ticketing.infrastructure.mapper.JpaToDomainMapper;
+import com.acroteq.ticketing.order.service.data.access.airline.mapper.AirlineJpaToDomainMapper;
+import com.acroteq.ticketing.order.service.data.access.customer.mapper.CustomerJpaToDomainMapper;
 import com.acroteq.ticketing.order.service.data.access.order.entity.OrderJpaEntity;
 import com.acroteq.ticketing.order.service.domain.entity.Order;
 import com.acroteq.ticketing.order.service.domain.mapper.order.TrackingIdMapper;
@@ -18,7 +20,9 @@ import org.mapstruct.Mapping;
                  AirlineIdMapper.class,
                  ValidationResultMapper.class,
                  OrderItemJpaToDomainMapper.class,
-                 AddressJpaToDomainMapper.class }, imports = ValidationResult.class)
+                 AddressJpaToDomainMapper.class,
+                 CustomerJpaToDomainMapper.class,
+                 AirlineJpaToDomainMapper.class }, imports = ValidationResult.class)
 public interface OrderJpaToDomainMapper extends JpaToDomainMapper<OrderJpaEntity, Order> {
 
   @Mapping(target = "streetAddress", source = "address")

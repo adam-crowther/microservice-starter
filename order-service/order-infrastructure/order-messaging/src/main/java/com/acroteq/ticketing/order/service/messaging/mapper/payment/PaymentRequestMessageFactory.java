@@ -19,7 +19,7 @@ import java.util.UUID;
         imports = { UUID.class, Instant.class })
 public interface PaymentRequestMessageFactory extends EventToMessageMapper<OrderEvent, PaymentRequestMessage> {
 
-  @Mapping(target = "customerId", source = "order.customerId")
+  @Mapping(target = "customerId", source = "order.customer.id")
   @Mapping(target = "orderId", source = "order.id")
   @Mapping(target = "orderVersion", source = "order.version")
   @Mapping(target = "valueAmount", source = "order.price.amount")

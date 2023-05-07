@@ -14,12 +14,12 @@ import lombok.experimental.SuperBuilder;
 @Embeddable
 public class OrderAddressJpaEmbedded {
 
-  @Column(name = "street")
+  @Column(name = "street", nullable = false)
   private String street;
 
-  @Column(name = "postal_code")
+  @Column(name = "postal_code", nullable = false)
   private String postalCode;
 
-  @Column(name = "city")
+  @Column(name = "city", nullable = false)
   private String city;
 }

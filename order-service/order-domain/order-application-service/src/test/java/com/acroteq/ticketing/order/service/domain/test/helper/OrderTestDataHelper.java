@@ -3,8 +3,6 @@ package com.acroteq.ticketing.order.service.domain.test.helper;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
 
-import com.acroteq.ticketing.domain.valueobject.AirlineId;
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.domain.valueobject.OrderId;
 import com.acroteq.ticketing.domain.valueobject.OrderItemId;
 import com.acroteq.ticketing.order.service.domain.entity.Order;
@@ -43,7 +41,6 @@ public class OrderTestDataHelper {
   public static final Integer ORDER_1_ITEM_1_QUANTITY = 11;
   public static final OrderItem ORDER_1_ITEM_1 = OrderItem.builder()
                                                           .id(OrderItemId.of(ORDER_1_ITEM_1_ID))
-                                                          .orderId(OrderId.of(ORDER_1_ID))
                                                           .flight(FlightTestDataHelper.FLIGHT_1)
                                                           .quantity(ORDER_1_ITEM_1_QUANTITY)
                                                           .build();
@@ -53,7 +50,6 @@ public class OrderTestDataHelper {
   public static final Integer ORDER_2_ITEM_1_QUANTITY = 21;
   public static final OrderItem ORDER_2_ITEM_1 = OrderItem.builder()
                                                           .id(OrderItemId.of(ORDER_2_ITEM_1_ID))
-                                                          .orderId(OrderId.of(ORDER_2_ID))
                                                           .flight(FlightTestDataHelper.FLIGHT_2)
                                                           .quantity(ORDER_2_ITEM_1_QUANTITY)
                                                           .build();
@@ -61,7 +57,6 @@ public class OrderTestDataHelper {
   public static final Integer ORDER_2_ITEM_2_QUANTITY = 22;
   public static final OrderItem ORDER_2_ITEM_2 = OrderItem.builder()
                                                           .id(OrderItemId.of(ORDER_2_ITEM_2_ID))
-                                                          .orderId(OrderId.of(ORDER_2_ID))
                                                           .flight(FlightTestDataHelper.FLIGHT_2)
                                                           .quantity(ORDER_2_ITEM_2_QUANTITY)
                                                           .build();
@@ -71,7 +66,6 @@ public class OrderTestDataHelper {
   public static final Integer ORDER_3_ITEM_1_QUANTITY = 31;
   public static final OrderItem ORDER_3_ITEM_1 = OrderItem.builder()
                                                           .id(OrderItemId.of(ORDER_3_ITEM_1_ID))
-                                                          .orderId(OrderId.of(ORDER_3_ID))
                                                           .flight(FlightTestDataHelper.FLIGHT_3)
                                                           .quantity(ORDER_3_ITEM_1_QUANTITY)
                                                           .build();
@@ -79,7 +73,6 @@ public class OrderTestDataHelper {
   public static final Integer ORDER_3_ITEM_2_QUANTITY = 32;
   public static final OrderItem ORDER_3_ITEM_2 = OrderItem.builder()
                                                           .id(OrderItemId.of(ORDER_3_ITEM_2_ID))
-                                                          .orderId(OrderId.of(ORDER_3_ID))
                                                           .flight(FlightTestDataHelper.FLIGHT_3)
                                                           .quantity(ORDER_3_ITEM_2_QUANTITY)
                                                           .build();
@@ -87,7 +80,6 @@ public class OrderTestDataHelper {
   public static final Integer ORDER_3_ITEM_3_QUANTITY = 33;
   public static final OrderItem ORDER_3_ITEM_3 = OrderItem.builder()
                                                           .id(OrderItemId.of(ORDER_3_ITEM_3_ID))
-                                                          .orderId(OrderId.of(ORDER_3_ID))
                                                           .flight(FlightTestDataHelper.FLIGHT_3)
                                                           .quantity(ORDER_3_ITEM_3_QUANTITY)
                                                           .build();
@@ -108,8 +100,8 @@ public class OrderTestDataHelper {
     return Order.builder()
                 .id(OrderId.of(orderId))
                 .trackingId(TrackingId.of(trackingId))
-                .customerId(CustomerId.of(CustomerTestDataHelper.CUSTOMER_ID))
-                .airlineId(AirlineId.of(AirlineTestDataHelper.AIRLINE_ID))
+                .customer(CustomerTestDataHelper.CUSTOMER)
+                .airline(AirlineTestDataHelper.AIRLINE)
                 .streetAddress(ADDRESS)
                 .items(List.of(items))
                 .build();

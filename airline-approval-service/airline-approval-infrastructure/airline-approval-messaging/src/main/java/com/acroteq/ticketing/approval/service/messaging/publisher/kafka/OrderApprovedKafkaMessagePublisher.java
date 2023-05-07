@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.approval.service.messaging.publisher.kafka;
 
-import com.acroteq.ticketing.approval.service.domain.config.AirlineServiceConfig;
 import com.acroteq.ticketing.approval.service.domain.event.order.OrderApprovedEvent;
 import com.acroteq.ticketing.approval.service.domain.ports.output.message.publisher.OrderApprovedMessagePublisher;
+import com.acroteq.ticketing.approval.service.domain.properties.AirlineApprovalServiceConfig;
 import com.acroteq.ticketing.approval.service.messaging.mapper.approval.AirlineApprovalApprovedResponseMessageFactory;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalApprovedResponseMessage;
 import com.acroteq.ticketing.kafka.producer.service.KafkaProducer;
@@ -19,7 +19,7 @@ public class OrderApprovedKafkaMessagePublisher implements OrderApprovedMessageP
   private final AirlineApprovalApprovedResponseMessageFactory messageFactory;
   private final KafkaProducer<AirlineApprovalApprovedResponseMessage> kafkaProducer;
   private final KafkaPublisherCallbackHandler<AirlineApprovalApprovedResponseMessage> callbackHandler;
-  private final AirlineServiceConfig config;
+  private final AirlineApprovalServiceConfig config;
 
   @Override
   public void publish(final OrderApprovedEvent event) {

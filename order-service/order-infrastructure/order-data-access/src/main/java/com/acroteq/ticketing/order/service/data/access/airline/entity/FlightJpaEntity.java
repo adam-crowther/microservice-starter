@@ -21,12 +21,12 @@ import java.math.BigDecimal;
 @Entity
 public class FlightJpaEntity extends ReplicatedJpaEntity {
 
-  @Column(name = "flight_number")
+  @Column(name = "flight_number", nullable = false)
   private String flightNumber;
 
-  @Column(name = "flight_price_currency_id")
+  @Column(name = "flight_price_currency_id", nullable = false)
   private String priceCurrencyId;
 
-  @Column(name = "flight_price_amount")
+  @Column(name = "flight_price_amount", nullable = false)
   private BigDecimal priceAmount;
 }

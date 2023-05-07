@@ -13,7 +13,11 @@ import static org.apache.kafka.clients.consumer.ConsumerConfig.MAX_POLL_RECORDS_
 import static org.apache.kafka.clients.consumer.ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG;
 
-import com.acroteq.ticketing.kafka.config.KafkaConfig;
+import com.acroteq.ticketing.kafka.consumer.properties.KafkaConsumerConfig;
+import com.acroteq.ticketing.kafka.consumer.properties.KafkaDeserialisationConfig;
+import com.acroteq.ticketing.kafka.consumer.properties.KafkaGroupManagementConfig;
+import com.acroteq.ticketing.kafka.consumer.properties.KafkaPollingConfig;
+import com.acroteq.ticketing.kafka.properties.KafkaConfig;
 import com.google.common.collect.ImmutableMap;
 import io.confluent.kafka.serializers.subject.TopicRecordNameStrategy;
 import lombok.RequiredArgsConstructor;

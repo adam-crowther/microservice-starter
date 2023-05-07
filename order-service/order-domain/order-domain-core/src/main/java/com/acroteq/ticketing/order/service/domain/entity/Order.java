@@ -11,9 +11,7 @@ import static com.acroteq.ticketing.precondition.Precondition.checkPrecondition;
 
 import com.acroteq.ticketing.domain.entity.AggregateRoot;
 import com.acroteq.ticketing.domain.validation.ValidationResult;
-import com.acroteq.ticketing.domain.valueobject.AirlineId;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.domain.valueobject.OrderId;
 import com.acroteq.ticketing.domain.valueobject.OrderStatus;
 import com.acroteq.ticketing.order.service.domain.exception.InvalidOrderPrestateException;
@@ -37,9 +35,9 @@ import java.util.Set;
 public class Order extends AggregateRoot<OrderId> {
 
   @NonNull
-  private final CustomerId customerId;
+  private final Customer customer;
   @NonNull
-  private final AirlineId airlineId;
+  private final Airline airline;
   @NonNull
   private final StreetAddress streetAddress;
   @NonNull

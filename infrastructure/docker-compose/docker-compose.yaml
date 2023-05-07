@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
   postgres:
     image: postgres:15.2-alpine
@@ -6,6 +6,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - ./build/postgresql:/var/lib/postgresql/data
       - ./init-schemas.sql:/docker-entrypoint-initdb.d/init-schemas.sql
@@ -15,7 +16,7 @@ services:
       - app-tier
 
   pgadmin:
-    image: dpage/pgadmin4:2023-04-04-1
+    image: dpage/pgadmin4:7.1
     depends_on:
       - postgres
     environment:

@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.airline.service.messaging.publisher.kafka;
 
-import com.acroteq.ticketing.airline.service.domain.config.AirlineServiceConfig;
 import com.acroteq.ticketing.airline.service.domain.event.AirlineEvent;
 import com.acroteq.ticketing.airline.service.domain.ports.output.message.publisher.AirlineEventMessagePublisher;
+import com.acroteq.ticketing.airline.service.domain.properties.AirlineServiceConfig;
 import com.acroteq.ticketing.airline.service.messaging.mapper.AirlineEventMessageFactory;
 import com.acroteq.ticketing.kafka.airline.avro.model.AirlineEventMessage;
 import com.acroteq.ticketing.kafka.producer.service.KafkaProducer;

@@ -21,15 +21,15 @@ import java.math.BigDecimal;
 @Entity
 public class FlightJpaEntity extends MasterJpaEntity {
 
-  @Column(name = "flight_number")
+  @Column(name = "flight_number", nullable = false)
   private String flightNumber;
 
-  @Column(name = "price_currency_id")
+  @Column(name = "price_currency_id", nullable = false)
   private String priceCurrencyId;
 
-  @Column(name = "price_amount")
+  @Column(name = "price_amount", nullable = false)
   private BigDecimal priceAmount;
 
-  @Column(name = "available")
+  @Column(name = "available", nullable = false)
   private Boolean available;
 }

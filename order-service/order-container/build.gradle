@@ -21,6 +21,7 @@ dependencies {
     implementation project(":order-service:order-infrastructure:order-data-access")
     implementation project(":order-service:order-infrastructure:order-messaging")
 
+    implementation libs.jul.to.slf4j
     implementation libs.spring.beans
     implementation libs.spring.boot.actuator
     implementation libs.spring.boot.autoconfigure

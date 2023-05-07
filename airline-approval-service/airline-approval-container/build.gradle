@@ -21,6 +21,7 @@ dependencies {
     implementation project(":airline-approval-service:airline-approval-infrastructure:airline-approval-data-access")
     implementation project(":airline-approval-service:airline-approval-infrastructure:airline-approval-messaging")
 
+    implementation libs.jul.to.slf4j
     implementation libs.spring.beans
     implementation libs.spring.boot.actuator
     implementation libs.spring.boot.autoconfigure

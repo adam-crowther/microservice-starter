@@ -6,7 +6,6 @@ import static com.acroteq.ticketing.domain.validation.ValidationResult.pass;
 import com.acroteq.ticketing.domain.entity.AggregateRoot;
 import com.acroteq.ticketing.domain.validation.ValidationResult;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.domain.valueobject.OrderId;
 import com.acroteq.ticketing.domain.valueobject.PaymentId;
 import com.acroteq.ticketing.domain.valueobject.PaymentStatus;
@@ -25,7 +24,7 @@ public class Payment extends AggregateRoot<PaymentId> {
   @NonNull
   private final Long orderVersion;
   @NonNull
-  private final CustomerId customerId;
+  private final Customer customer;
   @NonNull
   private final CashValue value;
 

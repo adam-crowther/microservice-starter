@@ -4,7 +4,7 @@ import static com.acroteq.ticketing.domain.valueobject.CashValue.ZERO;
 
 import com.acroteq.ticketing.domain.entity.MasterEntity;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
+import com.acroteq.ticketing.payment.service.domain.valueobject.CreditEntryId;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @ToString(callSuper = true)
 @SuperBuilder(toBuilder = true)
-public class CreditEntry extends MasterEntity<CustomerId> {
+public class CreditEntry extends MasterEntity<CreditEntryId> {
 
   @NonNull
   private final CashValue totalCredit;

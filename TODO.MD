@@ -1,38 +1,35 @@
-* Dockerfile for the containers/services
+# Implementation
 
-* Configure all logging so that it includes the correlationId from the Session. 
-  CorrelationId must be enriched in all messages using an interceptor, and stored in the Session.
+- ValidationResult needs to be translatable, include i18n keys.
+- Exception Types: DomainException, ApplicationException, PresentationException, InfrastructureException
+- Eventual Consistency
+- Dockerfile for the containers/services
 
-* Logical delete
+# Testing
 
-* Entity level security for Authorisation
+- Spock unit tests
+- Integration tests
 
-* Historized data
+# Spring
 
-* Expose the openApi.yaml spec from the REST Controller
+- Clean shutdown in Intellij
 
-* Spring: Clean shutdown in Intellij
+# Database
 
-* Spring Security: Authentication and Authorisation
+- Logical delete / Historized data
+- Relationship mapping in Entity model
 
-* Security/Vulnerability dependency audit
+# Security
 
-* Spock unit tests
+- Spring Security: Authentication and Authorisation
+- Entity level security for Authorisation
+- Security/Vulnerability dependency audit
 
-* Cascade and delete orphans
+# Logging
 
-* ValidationResult needs to be translatable, include i18n keys. 
+- Configure all logging so that it includes the correlationId from the Session. CorrelationId must be enriched in all
+  messages using an interceptor, and stored in the Session.
 
-* Exception Types: DomainException, ApplicationException, PresentationException, InfrastructureException
 
-* Relationship mapping in Entity model
 
-* Nullable in Entity model
-
-* Duplicate entry for alias 'spring.boot.configuration.processor'
-
-* Liquibase and Hibernate are logging via console, not via Slf4j
-
-* Eventual Consistency
-
-* Static code analysis: Don't abort the build immediately, but fail it at the end
+ 

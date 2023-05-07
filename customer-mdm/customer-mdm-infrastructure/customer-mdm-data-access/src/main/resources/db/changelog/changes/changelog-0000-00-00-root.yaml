@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1683098069907-1
+      id: 1683469998909-1
       author: micro (generated)
       changes:
         - createTable:
@@ -14,15 +14,23 @@ databaseChangeLog:
                   name: id
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: created_by
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: created_timestamp
                   type: timestamp
               - column:
+                  constraints:
+                    nullable: false
                   name: lasted_modified_by
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: last_modified_timestamp
                   type: timestamp
               - column:
@@ -31,18 +39,28 @@ databaseChangeLog:
                   name: version
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: credit_limit_amount
                   type: NUMBER(38, 2)
               - column:
+                  constraints:
+                    nullable: false
                   name: credit_limit_currency_id
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: first_name
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: last_name
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: user_name
                   type: VARCHAR(255)
             tableName: customers

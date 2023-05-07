@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1683098067308-1
+      id: 1683469996250-1
       author: micro (generated)
       changes:
         - createTable:
@@ -14,15 +14,23 @@ databaseChangeLog:
                   name: id
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: created_by
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: created_timestamp
                   type: timestamp
               - column:
+                  constraints:
+                    nullable: false
                   name: lasted_modified_by
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: last_modified_timestamp
                   type: timestamp
               - column:
@@ -31,14 +39,18 @@ databaseChangeLog:
                   name: version
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: active
                   type: BOOLEAN
               - column:
+                  constraints:
+                    nullable: false
                   name: name
                   type: VARCHAR(255)
             tableName: airlines
   - changeSet:
-      id: 1683098067308-2
+      id: 1683469996250-2
       author: micro (generated)
       changes:
         - createTable:
@@ -52,15 +64,23 @@ databaseChangeLog:
                   name: id
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: created_by
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: created_timestamp
                   type: timestamp
               - column:
+                  constraints:
+                    nullable: false
                   name: lasted_modified_by
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: last_modified_timestamp
                   type: timestamp
               - column:
@@ -69,23 +89,33 @@ databaseChangeLog:
                   name: version
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: available
                   type: BOOLEAN
               - column:
+                  constraints:
+                    nullable: false
                   name: flight_number
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: price_amount
                   type: NUMBER(38, 2)
               - column:
+                  constraints:
+                    nullable: false
                   name: price_currency_id
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: airline_id
                   type: BIGINT
             tableName: flights
   - changeSet:
-      id: 1683098067308-3
+      id: 1683469996250-3
       author: micro (generated)
       changes:
         - addForeignKeyConstraint:

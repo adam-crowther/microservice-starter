@@ -42,6 +42,7 @@ dependencies {
 
     runtimeOnly libs.liquibase.core
     runtimeOnly libs.liquibase.hibernate
+    runtimeOnly libs.liquibase.slf4j
     runtimeOnly libs.postgresql.driver
 
     annotationProcessor libs.lombok.core

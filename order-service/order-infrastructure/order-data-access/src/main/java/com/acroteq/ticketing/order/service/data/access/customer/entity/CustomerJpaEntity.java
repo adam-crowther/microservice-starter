@@ -19,12 +19,12 @@ import lombok.experimental.SuperBuilder;
 @Entity
 public class CustomerJpaEntity extends ReplicatedJpaEntity {
 
-  @Column(name = "user_name")
+  @Column(name = "user_name", nullable = false)
   private String userName;
 
-  @Column(name = "first_name")
+  @Column(name = "first_name", nullable = false)
   private String firstName;
 
-  @Column(name = "last_name")
+  @Column(name = "last_name", nullable = false)
   private String lastName;
 }

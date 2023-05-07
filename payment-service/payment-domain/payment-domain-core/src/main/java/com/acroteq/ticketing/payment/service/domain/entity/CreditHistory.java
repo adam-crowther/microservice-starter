@@ -4,7 +4,6 @@ import static com.acroteq.ticketing.payment.service.domain.valueobject.CreditHis
 
 import com.acroteq.ticketing.domain.entity.MasterEntity;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.payment.service.domain.valueobject.CreditHistoryEventType;
 import com.acroteq.ticketing.payment.service.domain.valueobject.CreditHistoryId;
 import com.acroteq.ticketing.payment.service.domain.valueobject.TransactionType;
@@ -19,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 public class CreditHistory extends MasterEntity<CreditHistoryId> {
 
   @NonNull
-  private final CustomerId customerId;
+  private final Customer customer;
   @NonNull
   private final CashValue credit;
   @NonNull

@@ -7,9 +7,10 @@ import com.acroteq.ticketing.application.mapper.id.CustomerIdMapper;
 import com.acroteq.ticketing.application.mapper.id.OrderIdMapper;
 import com.acroteq.ticketing.infrastructure.mapper.DomainToJpaMapper;
 import com.acroteq.ticketing.order.service.data.access.order.entity.OrderJpaEntity;
+import com.acroteq.ticketing.order.service.data.access.order.resolver.AirlineJpaResolver;
+import com.acroteq.ticketing.order.service.data.access.order.resolver.CustomerJpaResolver;
 import com.acroteq.ticketing.order.service.domain.entity.Order;
 import com.acroteq.ticketing.order.service.domain.mapper.order.TrackingIdMapper;
-import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -20,29 +21,29 @@ import org.mapstruct.MappingTarget;
                  CustomerIdMapper.class,
                  AirlineIdMapper.class,
                  ValidationResultMapper.class,
+                 AddressDomainToJpaMapper.class,
                  OrderItemDomainToJpaMapper.class,
-                 AddressDomainToJpaMapper.class })
-public abstract class OrderDomainToJpaMapper implements DomainToJpaMapper<Order, OrderJpaEntity> {
+                 CustomerJpaResolver.class,
+                 AirlineJpaResolver.class })
+public interface OrderDomainToJpaMapper extends DomainToJpaMapper<Order, OrderJpaEntity> {
 
   @Mapping(target = "audit", ignore = true)
+  @Mapping(target = "airline", source = "airline.id")
+  @Mapping(target = "customer", source = "customer.id")
   @Mapping(target = "address", source = "streetAddress")
   @Mapping(target = "priceCurrencyId", source = "price.currencyId")
   @Mapping(target = "priceAmount", source = "price.amount")
   @Mapping(target = "failureMessages", source = "result")
   @Override
-  public abstract OrderJpaEntity convertDomainToJpa(Order entity);
+  OrderJpaEntity convertDomainToJpa(Order entity);
 
   @Mapping(target = "audit", ignore = true)
+  @Mapping(target = "airline", source = "airline.id")
+  @Mapping(target = "customer", source = "customer.id")
   @Mapping(target = "address", source = "entity.streetAddress")
   @Mapping(target = "priceCurrencyId", source = "entity.price.currencyId")
   @Mapping(target = "priceAmount", source = "entity.price.amount")
   @Mapping(target = "failureMessages", source = "entity.result")
   @Override
-  public abstract OrderJpaEntity convertDomainToJpa(Order entity, @MappingTarget OrderJpaEntity jpaEntity);
-
-  @AfterMapping
-  void setOrderBackReferences(@MappingTarget final OrderJpaEntity orderJpaEntity) {
-    orderJpaEntity.getItems()
-                  .forEach(entity -> entity.setOrderId(orderJpaEntity.getId()));
-  }
+  OrderJpaEntity convertDomainToJpa(Order entity, @MappingTarget OrderJpaEntity jpaEntity);
 }

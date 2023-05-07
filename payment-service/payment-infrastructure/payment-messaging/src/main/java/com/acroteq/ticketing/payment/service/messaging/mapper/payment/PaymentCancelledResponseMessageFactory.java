@@ -27,7 +27,7 @@ public interface PaymentCancelledResponseMessageFactory
   @Mapping(target = "paymentId", source = "payment.id")
   @Mapping(target = "paymentVersion", source = "payment.version")
   @Mapping(target = "audit", source = "payment.audit")
-  @Mapping(target = "customerId", source = "payment.customerId")
+  @Mapping(target = "customerId", source = "payment.customer.id")
   @Mapping(target = "orderId", source = "payment.orderId")
   @Mapping(target = "orderVersion", source = "payment.orderVersion")
   @Mapping(target = "valueAmount", source = "payment.value.amount")

@@ -33,12 +33,12 @@ public class WriteRepositoryImpl<IdT extends BaseId, EntityT extends Entity<IdT>
   }
 
   private Function<JpaT, EntityT> updateExistingEntity(final EntityT entity) {
-    return jpaEntity -> updateExistingEntity(jpaEntity, entity);
+    return existingEntity -> updateExistingEntity(existingEntity, entity);
   }
 
-  private EntityT updateExistingEntity(final JpaT jpaEntity, final EntityT entity) {
-    final JpaT jpaT = domainToJpaMapper.convertDomainToJpa(entity, jpaEntity);
-    final JpaT savedEntity = jpaRepository.saveAndFlush(jpaT);
+  private EntityT updateExistingEntity(final JpaT existingEntity, final EntityT entity) {
+    final JpaT updatedEntity = domainToJpaMapper.convertDomainToJpa(entity, existingEntity);
+    final JpaT savedEntity = jpaRepository.saveAndFlush(updatedEntity);
     return jpaToDomainMapper.convertJpaToDomain(savedEntity);
   }
 
@@ -47,8 +47,8 @@ public class WriteRepositoryImpl<IdT extends BaseId, EntityT extends Entity<IdT>
   }
 
   private EntityT insertEntity(final EntityT entity) {
-    final JpaT jpaT = domainToJpaMapper.convertDomainToJpa(entity);
-    final JpaT savedEntity = jpaRepository.saveAndFlush(jpaT);
+    final JpaT newEntity = domainToJpaMapper.convertDomainToJpa(entity);
+    final JpaT savedEntity = jpaRepository.saveAndFlush(newEntity);
     return jpaToDomainMapper.convertJpaToDomain(savedEntity);
   }
 

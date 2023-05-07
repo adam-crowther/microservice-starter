@@ -12,13 +12,14 @@ import static org.apache.kafka.clients.producer.ProducerConfig.REQUEST_TIMEOUT_M
 import static org.apache.kafka.clients.producer.ProducerConfig.RETRIES_CONFIG;
 import static org.apache.kafka.clients.producer.ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG;
 
-import com.acroteq.ticketing.kafka.config.KafkaConfig;
+import com.acroteq.ticketing.kafka.producer.properties.KafkaProducerConfig;
+import com.acroteq.ticketing.kafka.producer.properties.KafkaSerialisationConfig;
+import com.acroteq.ticketing.kafka.properties.KafkaConfig;
 import com.google.common.collect.ImmutableMap;
 import io.confluent.kafka.serializers.subject.TopicRecordNameStrategy;
 import lombok.RequiredArgsConstructor;
 import org.apache.avro.specific.SpecificRecordBase;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -29,7 +30,6 @@ import java.io.Serializable;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@ConfigurationPropertiesScan
 @Configuration
 public class KafkaProducerConfiguration<K extends Serializable, V extends SpecificRecordBase> {
 

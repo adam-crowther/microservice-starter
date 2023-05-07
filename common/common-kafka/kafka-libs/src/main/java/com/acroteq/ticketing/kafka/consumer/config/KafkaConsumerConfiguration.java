@@ -2,10 +2,11 @@ package com.acroteq.ticketing.kafka.consumer.config;
 
 import static org.springframework.kafka.listener.ContainerProperties.AckMode.BATCH;
 
+import com.acroteq.ticketing.kafka.consumer.properties.KafkaConsumerConfig;
+import com.acroteq.ticketing.kafka.consumer.properties.KafkaPollingConfig;
 import lombok.RequiredArgsConstructor;
 import org.apache.avro.specific.SpecificRecordBase;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
@@ -20,7 +21,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 @RequiredArgsConstructor
-@ConfigurationPropertiesScan
+@ConditionalOnProperty(prefix = "kafka.consumer", name = "auto-offset-reset")
 @Configuration
 public class KafkaConsumerConfiguration<K extends Serializable, V extends SpecificRecordBase> {
 
@@ -28,7 +29,6 @@ public class KafkaConsumerConfiguration<K extends Serializable, V extends Specif
   private final KafkaConsumerConfigFactory kafkaConsumerConfigFactory;
   private final DefaultErrorHandler kafkaErrorHandler;
 
-  @ConditionalOnProperty(prefix = "kafka.consumer", name = "auto-offset-reset")
   @Bean
   public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<K, V>> kafkaListenerContainerFactory() {
     final Map<String, Object> configMap = kafkaConsumerConfigFactory.createKafkaConsumerConfigMap();

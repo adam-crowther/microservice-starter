@@ -11,7 +11,7 @@ spring:
     banner-mode: off
   jpa:
     open-in-view: false
-    show-sql: true
+    show-sql: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
       default_schema: customer_master
@@ -20,7 +20,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres?currentSchema=customer_master&binaryTransfer=true&reWriteBatchedInserts=true&stringType=unspecified
     username: postgres
-    password: password
+    password: ""
     driver-class-name: org.postgresql.Driver
   sql:
     init:

@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1683097474926-1
+      id: 1683556275700-1
       author: micro (generated)
       changes:
         - createTable:
@@ -28,14 +28,18 @@ databaseChangeLog:
                   name: version
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: active
                   type: BOOLEAN
               - column:
+                  constraints:
+                    nullable: false
                   name: name
                   type: VARCHAR(255)
             tableName: airlines
   - changeSet:
-      id: 1683097474926-2
+      id: 1683556275700-2
       author: micro (generated)
       changes:
         - createTable:
@@ -63,17 +67,23 @@ databaseChangeLog:
                   name: version
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: first_name
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: last_name
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: user_name
                   type: VARCHAR(255)
             tableName: customers
   - changeSet:
-      id: 1683097474926-3
+      id: 1683556275700-3
       author: micro (generated)
       changes:
         - createTable:
@@ -101,20 +111,28 @@ databaseChangeLog:
                   name: version
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: flight_number
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: flight_price_amount
                   type: NUMBER(38, 2)
               - column:
+                  constraints:
+                    nullable: false
                   name: flight_price_currency_id
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: airline_id
                   type: BIGINT
             tableName: flights
   - changeSet:
-      id: 1683097474926-4
+      id: 1683556275700-4
       author: micro (generated)
       changes:
         - createTable:
@@ -125,11 +143,13 @@ databaseChangeLog:
                   name: order_id
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: failure_message
                   type: VARCHAR(255)
             tableName: order_failure_messages
   - changeSet:
-      id: 1683097474926-5
+      id: 1683556275700-5
       author: micro (generated)
       changes:
         - createTable:
@@ -143,15 +163,23 @@ databaseChangeLog:
                   name: id
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: created_by
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: created_timestamp
                   type: timestamp
               - column:
+                  constraints:
+                    nullable: false
                   name: lasted_modified_by
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: last_modified_timestamp
                   type: timestamp
               - column:
@@ -160,17 +188,23 @@ databaseChangeLog:
                   name: version
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
+                  name: quantity
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
                   name: flight_id
                   type: BIGINT
               - column:
-                  name: owner_id
+                  constraints:
+                    nullable: false
+                  name: order_id
                   type: BIGINT
-              - column:
-                  name: quantity
-                  type: INT
             tableName: order_items
   - changeSet:
-      id: 1683097474926-6
+      id: 1683556275700-6
       author: micro (generated)
       changes:
         - createTable:
@@ -184,15 +218,23 @@ databaseChangeLog:
                   name: id
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: created_by
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: created_timestamp
                   type: timestamp
               - column:
+                  constraints:
+                    nullable: false
                   name: lasted_modified_by
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: last_modified_timestamp
                   type: timestamp
               - column:
@@ -201,35 +243,53 @@ databaseChangeLog:
                   name: version
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: city
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: postal_code
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: street
                   type: VARCHAR(255)
               - column:
-                  name: airline_id
-                  type: BIGINT
-              - column:
-                  name: customer_id
-                  type: BIGINT
-              - column:
+                  constraints:
+                    nullable: false
                   name: order_status
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: price_amount
                   type: NUMBER(38, 2)
               - column:
+                  constraints:
+                    nullable: false
                   name: price_currency_id
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: tracking_id
                   type: VARCHAR(36)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: airline_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: customer_id
+                  type: BIGINT
             tableName: orders
   - changeSet:
-      id: 1683097474926-7
+      id: 1683556275700-7
       author: micro (generated)
       changes:
         - addForeignKeyConstraint:
@@ -242,20 +302,46 @@ databaseChangeLog:
             referencedTableName: orders
             validate: true
   - changeSet:
-      id: 1683097474926-8
+      id: 1683556275700-8
       author: micro (generated)
       changes:
         - addForeignKeyConstraint:
-            baseColumnNames: owner_id
+            baseColumnNames: flight_id
             baseTableName: order_items
-            constraintName: FKg5lu5i310tyh4chh1ao0ycl2o
+            constraintName: FK7ckqr1fyr5n8cayr87pdm7h8j
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: flights
+            validate: true
+  - changeSet:
+      id: 1683556275700-9
+      author: micro (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: order_id
+            baseTableName: order_items
+            constraintName: FKbioxgbv59vetrxe0ejfubep1w
             deferrable: false
             initiallyDeferred: false
             referencedColumnNames: id
             referencedTableName: orders
             validate: true
   - changeSet:
-      id: 1683097474926-9
+      id: 1683556275700-10
+      author: micro (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: airline_id
+            baseTableName: orders
+            constraintName: FKf63129gwastf9wejt1rxigy0t
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: airlines
+            validate: true
+  - changeSet:
+      id: 1683556275700-11
       author: micro (generated)
       changes:
         - addForeignKeyConstraint:
@@ -266,5 +352,18 @@ databaseChangeLog:
             initiallyDeferred: false
             referencedColumnNames: id
             referencedTableName: airlines
+            validate: true
+  - changeSet:
+      id: 1683556275700-12
+      author: micro (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: customer_id
+            baseTableName: orders
+            constraintName: FKpxtb8awmi0dk6smoh2vp1litg
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: customers
             validate: true
 

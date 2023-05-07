@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1683097466443-1
+      id: 1683556267329-1
       author: micro (generated)
       changes:
         - createTable:
@@ -28,14 +28,18 @@ databaseChangeLog:
                   name: version
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: active
                   type: BOOLEAN
               - column:
+                  constraints:
+                    nullable: false
                   name: name
                   type: VARCHAR(255)
             tableName: airlines
   - changeSet:
-      id: 1683097466443-2
+      id: 1683556267329-2
       author: micro (generated)
       changes:
         - createTable:
@@ -63,23 +67,33 @@ databaseChangeLog:
                   name: version
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: available
                   type: BOOLEAN
               - column:
+                  constraints:
+                    nullable: false
                   name: flight_number
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: price_amount
                   type: NUMBER(38, 2)
               - column:
+                  constraints:
+                    nullable: false
                   name: price_currency_id
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: airline_id
                   type: BIGINT
             tableName: flights
   - changeSet:
-      id: 1683097466443-3
+      id: 1683556267329-3
       author: micro (generated)
       changes:
         - createTable:
@@ -93,15 +107,23 @@ databaseChangeLog:
                   name: id
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: created_by
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: created_timestamp
                   type: timestamp
               - column:
+                  constraints:
+                    nullable: false
                   name: lasted_modified_by
                   type: VARCHAR(255)
               - column:
+                  constraints:
+                    nullable: false
                   name: last_modified_timestamp
                   type: timestamp
               - column:
@@ -110,20 +132,41 @@ databaseChangeLog:
                   name: version
                   type: BIGINT
               - column:
-                  name: airline_id
-                  type: BIGINT
-              - column:
+                  constraints:
+                    nullable: false
                   name: order_id
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: order_version
                   type: BIGINT
               - column:
+                  constraints:
+                    nullable: false
                   name: status
                   type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: airline_id
+                  type: BIGINT
             tableName: order_approval
   - changeSet:
-      id: 1683097466443-4
+      id: 1683556267329-4
+      author: micro (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: airline_id
+            baseTableName: order_approval
+            constraintName: FKhg0onp3q1eavwcqrh7y435kqq
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: airlines
+            validate: true
+  - changeSet:
+      id: 1683556267329-5
       author: micro (generated)
       changes:
         - addForeignKeyConstraint:

@@ -6,6 +6,8 @@ import com.acroteq.ticketing.application.mapper.id.CustomerIdMapper;
 import com.acroteq.ticketing.application.mapper.id.OrderIdMapper;
 import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderCommandDto;
 import com.acroteq.ticketing.order.service.domain.entity.Order;
+import com.acroteq.ticketing.order.service.domain.resolver.AirlineResolver;
+import com.acroteq.ticketing.order.service.domain.resolver.CustomerResolver;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -13,10 +15,14 @@ import org.mapstruct.Mapping;
                  OrderIdMapper.class,
                  CustomerIdMapper.class,
                  AirlineIdMapper.class,
-                 AddressDtoToDomainMapper.class })
+                 AddressDtoToDomainMapper.class,
+                 AirlineResolver.class,
+                 CustomerResolver.class })
 public interface CreateOrderCommandDtoToDomainMapper extends DtoToDomainMapper<CreateOrderCommandDto, Order> {
 
   @Mapping(target = "id", ignore = true)
+  @Mapping(target = "airline", source = "airlineId")
+  @Mapping(target = "customer", source = "customerId")
   @Mapping(target = "version", ignore = true)
   @Mapping(target = "audit", ignore = true)
   @Mapping(target = "streetAddress", source = "address")

@@ -21,6 +21,7 @@ dependencies {
     implementation project(":payment-service:payment-infrastructure:payment-data-access")
     implementation project(":payment-service:payment-infrastructure:payment-messaging")
 
+    implementation libs.jul.to.slf4j
     implementation libs.spring.beans
     implementation libs.spring.boot.actuator
     implementation libs.spring.boot.autoconfigure

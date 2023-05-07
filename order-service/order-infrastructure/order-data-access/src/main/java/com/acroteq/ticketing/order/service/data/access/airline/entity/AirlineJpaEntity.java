@@ -24,13 +24,13 @@ import java.util.List;
 @Entity
 public class AirlineJpaEntity extends ReplicatedJpaEntity {
 
-  @Column(name = "name")
+  @Column(name = "name", nullable = false)
   private String name;
 
-  @Column(name = "active")
+  @Column(name = "active", nullable = false)
   private boolean active;
 
-  @OneToMany(cascade = ALL)
-  @JoinColumn(name = "airline_id", referencedColumnName = "id")
+  @OneToMany(cascade = ALL, orphanRemoval = true)
+  @JoinColumn(name = "airline_id", referencedColumnName = "id", nullable = false)
   private List<FlightJpaEntity> flights;
 }

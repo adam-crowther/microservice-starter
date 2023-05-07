@@ -43,32 +43,23 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
     log.info("Creating CreditEntry and adding CreditHistory for customer: {}", id);
 
     final Customer customer = customerEventMapper.convertDtoToDomain(dto);
-    final CreditEntry newCreditEntry = customerEventMapper.convertDtoToCreditEntry(dto);
     final Optional<CreditEntryOutput> output;
-    if (!alreadyExists(customer)) {
-      output = Optional.of(newCreditEntry)
-                       .map(creditEntryDomainService::createCreditEntry);
+
+    final boolean alreadyExists = alreadyExists(customer);
+    customerRepository.save(customer);
+
+    if (!alreadyExists) {
+      output = customerCreated(dto, customer);
     } else if (!alreadyProcessed(customer)) {
-      final CreditEntry currentCreditEntry = creditEntryRepository.findById(id)
-                                                                  .orElseThrow(creditEntryNotFoundException(id));
-      final List<CreditHistory> historyList = creditHistoryRepository.findByCustomerId(id)
-                                                                     .orElseThrow(creditHistoryNotFoundException(id));
-      output = Optional.of(newCreditEntry)
-                       .map(updateCreditEntry(currentCreditEntry, historyList));
+      output = customerUpdated(dto, id, customer);
     } else {
       output = Optional.empty();
     }
 
-    customerRepository.save(customer);
     output.map(CreditEntryOutput::getCreditEntry)
           .ifPresent(creditEntryRepository::save);
     output.map(CreditEntryOutput::getCreditHistory)
           .ifPresent(creditHistoryRepository::save);
-  }
-
-  private Function<CreditEntry, CreditEntryOutput> updateCreditEntry(final CreditEntry currentCredit,
-                                                                     final List<CreditHistory> historyList) {
-    return updatedCredit -> creditEntryDomainService.updateCreditEntry(currentCredit, updatedCredit, historyList);
   }
 
   private boolean alreadyExists(final Customer customer) {
@@ -95,6 +86,34 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
     return isAlreadyProcessed;
   }
 
+  private Optional<CreditEntryOutput> customerCreated(final CustomerEventDto dto, final Customer customer) {
+    final Optional<CreditEntryOutput> output;
+    final CreditEntry newCreditEntry = customerEventMapper.convertDtoToCreditEntry(dto);
+    output = Optional.of(newCreditEntry)
+                     .map(creditEntryDomainService::createCreditEntry);
+    return output;
+  }
+
+  private Optional<CreditEntryOutput> customerUpdated(final CustomerEventDto dto,
+                                                      final CustomerId id,
+                                                      final Customer customer) {
+    final Optional<CreditEntryOutput> output;
+    customerRepository.save(customer);
+    final CreditEntry updatedCreditEntry = customerEventMapper.convertDtoToCreditEntry(dto);
+    final CreditEntry currentCreditEntry = creditEntryRepository.findByCustomerId(id)
+                                                                .orElseThrow(creditEntryNotFoundException(id));
+    final List<CreditHistory> historyList = creditHistoryRepository.findByCustomerId(id)
+                                                                   .orElseThrow(creditHistoryNotFoundException(id));
+    output = Optional.of(updatedCreditEntry)
+                     .map(updateCreditEntry(currentCreditEntry, historyList));
+    return output;
+  }
+
+  private Function<CreditEntry, CreditEntryOutput> updateCreditEntry(final CreditEntry currentCredit,
+                                                                     final List<CreditHistory> historyList) {
+    return updatedCredit -> creditEntryDomainService.updateCreditEntry(currentCredit, updatedCredit, historyList);
+  }
+
   @Transactional
   @Override
   public void customerDeleted(final Long id) {
@@ -103,7 +122,7 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
     customerRepository.findById(customerId)
                       .map(Customer::zeroCreditLimit)
                       .ifPresent(customerRepository::save);
-    creditEntryRepository.findById(customerId)
+    creditEntryRepository.findByCustomerId(customerId)
                          .map(CreditEntry::zeroCredit)
                          .ifPresent(creditEntryRepository::save);
   }

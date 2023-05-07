@@ -3,8 +3,11 @@ package com.acroteq.ticketing.order.service.data.access.order.entity;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.acroteq.ticketing.infrastructure.data.access.entity.MasterJpaEntity;
+import com.acroteq.ticketing.order.service.data.access.airline.entity.FlightJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,12 +22,10 @@ import lombok.experimental.SuperBuilder;
 @Entity
 public class OrderItemJpaEntity extends MasterJpaEntity {
 
-  @Column(name = "owner_id")
-  private Long orderId;
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "flight_id", nullable = false)
+  private FlightJpaEntity flight;
 
-  @Column(name = "flight_id")
-  private Long flightId;
-
-  @Column(name = "quantity")
+  @Column(name = "quantity", nullable = false)
   private Integer quantity;
 }

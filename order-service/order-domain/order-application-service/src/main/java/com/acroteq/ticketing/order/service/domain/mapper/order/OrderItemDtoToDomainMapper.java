@@ -15,7 +15,6 @@ public interface OrderItemDtoToDomainMapper extends DtoToDomainMapper<OrderItemD
 
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "version", ignore = true)
-  @Mapping(target = "orderId", ignore = true)
   @Mapping(target = "flight", source = "flightId")
   @Override
   OrderItem convertDtoToDomain(OrderItemDto orderItems);
