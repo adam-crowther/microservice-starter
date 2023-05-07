@@ -32,6 +32,7 @@ dependencies {
     implementation libs.spring.messaging
 
     annotationProcessor libs.lombok.core
+    annotationProcessor libs.spring.boot.configuration.processor
 }
 
 test {

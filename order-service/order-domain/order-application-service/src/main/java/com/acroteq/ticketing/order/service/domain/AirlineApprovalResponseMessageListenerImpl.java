@@ -29,15 +29,18 @@ public class AirlineApprovalResponseMessageListenerImpl implements AirlineApprov
     log.info("Order with order id {} is approved", orderId);
   }
 
+  // This is OK in a message listener.  We have to catch, log and rethrow everything, that's the point.
+  @SuppressWarnings("PMD.AvoidCatchingGenericException")
   @Override
   @Transactional
   public void orderRejected(final AirlineApprovalRejectedResponseDto response) {
-    final OrderCancelledEvent orderCancelledEvent = saga.rollback(response);
+
     final Long orderId = response.getOrderId();
+    final OrderCancelledEvent cancelledEvent = saga.rollback(response);
     final ValidationResult result = response.getResult();
     log.info("Publishing order payment cancelled event for order id {} with failure messages {}",
              orderId,
              result.getLogOutput());
-    messagePublisher.publish(orderCancelledEvent);
+    messagePublisher.publish(cancelledEvent);
   }
 }

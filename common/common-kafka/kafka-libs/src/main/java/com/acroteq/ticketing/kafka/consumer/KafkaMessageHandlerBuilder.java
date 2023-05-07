@@ -10,8 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecord;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 @Slf4j
@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 public class KafkaMessageHandlerBuilder implements HandlerBuilder<KafkaMessageHandlerBuilder> {
 
   private final Map<String, MessageConsumer<? extends SpecificRecord, ? extends DataTransferObject>> consumers =
-      new HashMap<>();
+      new ConcurrentHashMap<>();
 
   public <MessageT extends SpecificRecord, DtoT extends DataTransferObject> KafkaMessageHandlerBuilder addMessageType(
       final String messageType,

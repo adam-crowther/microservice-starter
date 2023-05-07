@@ -3,37 +3,24 @@ package com.acroteq.ticketing.kafka.consumer.config;
 
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@Getter
-@RequiredArgsConstructor
-@ToString
-@EqualsAndHashCode
+@Value
 @ConfigurationProperties(prefix = "kafka.consumer")
 public class KafkaConsumerConfig {
 
-  @NotNull
-  private final String autoOffsetReset;
-  @NotNull
-  private final Boolean batchListener;
-  @NotNull
-  private final Boolean autoStartup;
-  @NotNull
-  private final Integer concurrencyLevel;
+  @NotNull String autoOffsetReset;
+  @NotNull Boolean batchListener;
+  @NotNull Boolean autoStartup;
+  @NotNull Integer concurrencyLevel;
 
-  @NotNull
-  private final KafkaPollingConfig polling;
-  @NotNull
-  final KafkaGroupManagementConfig groupManagement;
-  @NotNull
-  final KafkaDeserialisationConfig deserialisation;
+  @NotNull KafkaPollingConfig polling;
+  @NotNull KafkaGroupManagementConfig groupManagement;
+  @NotNull KafkaDeserialisationConfig deserialisation;
 
   @Nullable
-  private final KafkaDeadLetterConfig deadLetter;
+  KafkaDeadLetterConfig deadLetter;
   @Nullable
-  private final KafkaBackoffConfig backoff;
+  KafkaBackoffConfig backoff;
 }

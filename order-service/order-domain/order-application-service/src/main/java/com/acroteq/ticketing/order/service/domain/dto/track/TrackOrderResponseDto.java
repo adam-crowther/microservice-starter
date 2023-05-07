@@ -12,14 +12,18 @@ import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Builder
+@Builder(toBuilder = true)
 @Getter
+@ToString(callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class TrackOrderResponseDto implements DataTransferObject {
 
   @NotNull
@@ -31,11 +35,11 @@ public class TrackOrderResponseDto implements DataTransferObject {
   @NotNull
   private final ImmutableList<OrderItemDto> items;
   @NotNull
-  private UUID trackingId;
+  private final UUID trackingId;
   @NotNull
   private final AuditDto audit;
   @NotNull
-  private OrderStatus orderStatus;
+  private final OrderStatus orderStatus;
 
   @Builder.Default
   @NotNull

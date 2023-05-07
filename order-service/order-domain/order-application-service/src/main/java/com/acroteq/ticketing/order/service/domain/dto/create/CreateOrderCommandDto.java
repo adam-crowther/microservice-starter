@@ -5,13 +5,17 @@ import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 import java.util.Optional;
 
-@Builder
+@Builder(toBuilder = true)
 @Getter
+@ToString
+@EqualsAndHashCode
 public class CreateOrderCommandDto implements DataTransferObject {
 
   @NotNull

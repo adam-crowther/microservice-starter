@@ -7,11 +7,15 @@ import com.acroteq.ticketing.domain.validation.ValidationResult;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+@SuperBuilder(toBuilder = true)
 @Getter
-@SuperBuilder
+@ToString(callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class PaymentCancelledResponseDto extends AuditedSagaDto {
 
   @NotNull

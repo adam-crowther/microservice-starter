@@ -34,3 +34,5 @@
 * Liquibase and Hibernate are logging via console, not via Slf4j
 
 * Eventual Consistency
+
+* Static code analysis: Don't abort the build immediately, but fail it at the end

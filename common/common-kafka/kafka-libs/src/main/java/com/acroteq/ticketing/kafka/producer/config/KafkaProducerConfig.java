@@ -1,32 +1,19 @@
 package com.acroteq.ticketing.kafka.producer.config;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@Getter
-@RequiredArgsConstructor
-@ToString
-@EqualsAndHashCode
+@Value
 @ConfigurationProperties(prefix = "kafka.producer")
 public class KafkaProducerConfig {
 
-  @NotNull
-  private final String acks;
-  @NotNull
-  private final Integer batchSize;
-  @NotNull
-  private final Integer batchSizeBoostFactor;
-  @NotNull
-  private final Integer lingerMs;
-  @NotNull
-  private final Integer requestTimeoutMs;
-  @NotNull
-  private final Integer retryCount;
+  @NotNull String acks;
+  @NotNull Integer batchSize;
+  @NotNull Integer batchSizeBoostFactor;
+  @NotNull Integer lingerMs;
+  @NotNull Integer requestTimeoutMs;
+  @NotNull Integer retryCount;
 
-  @NotNull
-  private final KafkaSerialisationConfig serialisation;
+  @NotNull KafkaSerialisationConfig serialisation;
 }

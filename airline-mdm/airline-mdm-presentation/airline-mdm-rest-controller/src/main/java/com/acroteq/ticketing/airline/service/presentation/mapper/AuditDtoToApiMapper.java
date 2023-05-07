@@ -8,5 +8,5 @@ import org.mapstruct.Mapper;
 @Mapper(uses = DateTimeMapper.class)
 public interface AuditDtoToApiMapper {
 
-  Audit convertDtoToApi(final AuditDto dto);
+  Audit convertDtoToApi(AuditDto dto);
 }

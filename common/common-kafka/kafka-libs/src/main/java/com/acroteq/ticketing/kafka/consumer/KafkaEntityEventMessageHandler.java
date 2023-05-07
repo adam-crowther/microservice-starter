@@ -23,6 +23,7 @@ public class KafkaEntityEventMessageHandler extends MessageHandler {
                                                                               extends SpecificRecord, DtoT> mapper,
                                                                           final Consumer<DtoT> createOrUpdateConsumer,
                                                                           final Consumer<Long> deleteConsumer) {
+    super();
     this.messageType = messageType;
     // Upcast is OK
     // noinspection unchecked
@@ -31,10 +32,12 @@ public class KafkaEntityEventMessageHandler extends MessageHandler {
     this.deleteConsumer = deleteConsumer;
   }
 
+  @Override
   String getMessageType(final SpecificRecord message) {
     return messageType;
   }
 
+  @Override
   void consumeMessage(final SpecificRecord message, final String key, final Integer partition, final Long offset) {
     if (message != null) {
       createOrUpdateEntity(message, partition, offset);

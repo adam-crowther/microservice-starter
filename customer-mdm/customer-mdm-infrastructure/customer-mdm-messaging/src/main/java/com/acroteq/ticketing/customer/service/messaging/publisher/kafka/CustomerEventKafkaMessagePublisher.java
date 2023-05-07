@@ -27,7 +27,7 @@ public class CustomerEventKafkaMessagePublisher implements CustomerEventMessageP
                                  .getId()
                                  .getValue();
 
-    log.info("Received CustomerCreatedEvent for order id: {}", customerId);
+    log.info("Publishing CustomerEvent for order id: {}", customerId);
 
     final CustomerEventMessage message = messageFactory.convertEventToMessage(event);
     final String topic = config.getCustomerEvent()
@@ -39,13 +39,13 @@ public class CustomerEventKafkaMessagePublisher implements CustomerEventMessageP
 
   @Override
   public void publishDelete(final Long customerId) {
-    log.info("Received CustomerCreatedEvent for order id: {}", customerId);
+    log.info("Publishing CustomerEvent (delete) for order id: {}", customerId);
 
     final String topic = config.getCustomerEvent()
                                .getTopicName();
     // By convention, sending a null value constitutes a 'terminal' event, which deletes the entity.
     kafkaProducer.send(topic, customerId, null, callbackHandler::callback);
 
-    log.info("CustomerCreatedEventMessage sent to kafka for order id: {}", customerId);
+    log.info("CustomerEventMessage (delete) sent to kafka for order id: {}", customerId);
   }
 }

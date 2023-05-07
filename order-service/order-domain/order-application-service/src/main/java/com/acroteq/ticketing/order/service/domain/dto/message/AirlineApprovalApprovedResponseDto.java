@@ -2,11 +2,15 @@ package com.acroteq.ticketing.order.service.domain.dto.message;
 
 import com.acroteq.ticketing.application.dto.AuditedSagaDto;
 import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+@SuperBuilder(toBuilder = true)
 @Getter
-@SuperBuilder
+@ToString(callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class AirlineApprovalApprovedResponseDto extends AuditedSagaDto {
 
   @NotNull

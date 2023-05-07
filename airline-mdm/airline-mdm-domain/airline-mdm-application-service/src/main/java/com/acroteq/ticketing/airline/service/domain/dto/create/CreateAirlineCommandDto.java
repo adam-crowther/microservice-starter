@@ -5,21 +5,25 @@ import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 import java.util.Optional;
 
+@Builder(toBuilder = true)
 @Getter
-@Builder
+@ToString
+@EqualsAndHashCode
 public class CreateAirlineCommandDto implements DataTransferObject {
 
   @NotNull
-  private String name;
+  private final String name;
   @NotNull
-  private boolean active;
+  private final boolean active;
   @NotNull
-  private ImmutableList<CreateFlightCommandDto> flights;
+  private final ImmutableList<CreateFlightCommandDto> flights;
 
 
   @SuppressWarnings("PublicInnerClass")

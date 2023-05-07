@@ -7,6 +7,7 @@ import static com.acroteq.ticketing.order.service.domain.test.helper.OrderTestDa
 import static org.mockito.Mockito.lenient;
 
 import com.acroteq.ticketing.domain.valueobject.CustomerId;
+import com.acroteq.ticketing.domain.valueobject.EventId;
 import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderCommandDto;
 import com.acroteq.ticketing.order.service.domain.dto.create.OrderAddressDto;
 import com.acroteq.ticketing.order.service.domain.dto.create.OrderItemDto;
@@ -29,6 +30,11 @@ public class CustomerTestDataHelper {
 
   public static final Customer CUSTOMER = Customer.builder()
                                                   .id(CustomerId.of(CUSTOMER_ID))
+                                                  .version(0L)
+                                                  .eventId(EventId.builder()
+                                                                  .partition(0)
+                                                                  .offset(0L)
+                                                                  .build())
                                                   .firstName(CUSTOMER_FIRST_NAME)
                                                   .lastName(CUSTOMER_LAST_NAME)
                                                   .userName(CUSTOMER_USER_NAME)

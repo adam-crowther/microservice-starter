@@ -20,19 +20,20 @@ public class OrderApprovalRequestMessageListenerImpl implements OrderApprovalReq
   private final AirlineApprovalExceptionEventFactory exceptionEventFactory;
   private final OrderApprovalEventPublisherVisitor eventPublisher;
 
+  // This is OK in a message listener.  We have to catch, log and rethrow everything, that's the point.
+  @SuppressWarnings("PMD.AvoidCatchingGenericException")
   @Transactional
   @Override
-  public void checkOrder(final AirlineApprovalRequestDto airlineApprovalRequest) {
-    final Long orderId = airlineApprovalRequest.getOrderId();
+  public void checkOrder(final AirlineApprovalRequestDto request) {
+    final Long orderId = request.getOrderId();
     try {
       log.info("Checking order with id {}", orderId);
-      final OrderApprovalEvent orderApprovalEvent = requestProcessor.checkOrder(airlineApprovalRequest);
+      final OrderApprovalEvent orderApprovalEvent = requestProcessor.checkOrder(request);
       orderApprovalEvent.accept(eventPublisher);
-      log.debug("Checking order with id {}", orderId);
+      log.debug("Finished checking order with id {}", orderId);
     } catch (final Exception exception) {
       log.error("Exception while checking order with id {}. Sending REJECTED response.", orderId, exception);
-      final OrderApprovalEvent rejectedEvent = exceptionEventFactory.createOrderRejectedEvent(airlineApprovalRequest,
-                                                                                              exception);
+      final OrderApprovalEvent rejectedEvent = exceptionEventFactory.createOrderRejectedEvent(request, exception);
       rejectedEvent.accept(eventPublisher);
     }
   }

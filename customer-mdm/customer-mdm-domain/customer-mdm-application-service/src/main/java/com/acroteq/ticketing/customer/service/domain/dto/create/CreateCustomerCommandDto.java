@@ -4,18 +4,22 @@ import com.acroteq.ticketing.application.dto.DataTransferObject;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
+@Builder(toBuilder = true)
 @Getter
-@Builder
+@ToString
+@EqualsAndHashCode
 public class CreateCustomerCommandDto implements DataTransferObject {
 
   @NotNull
-  private String userName;
+  private final String userName;
   @NotNull
-  private String firstName;
+  private final String firstName;
   @NotNull
-  private String lastName;
+  private final String lastName;
   @NotNull
-  private CashValue creditLimit;
+  private final CashValue creditLimit;
 }

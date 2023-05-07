@@ -19,11 +19,13 @@
         <!-- <Or> -->
         <!--     <Annotation name="javax.annotation.processing.Generated"/> -->
         <!--     <Annotation name="org.springframework.stereotype.Service"/> -->
+        <!--     <Annotation name="org.springframework.context.annotation.Configuration"/> -->
         <!-- </Or> -->
         <Or>
             <Class name="~.*Mapper"/>
             <Class name="~.*Helper"/>
             <Class name="~.*Controller"/>
+            <Class name="~.*Configuration"/>
             <Class name="~.*Resolver"/>
             <Class name="~.*ApplicationServiceImpl"/>
             <Class name="~.*KafkaProducerImpl"/>
@@ -37,12 +39,36 @@
         <Bug pattern="EI_EXPOSE_REP2"/>
     </Match>
 
-    <!-- Mapstruct checks everything for null, even if it is not nullable. -->
+    <!-- Spring IOC/injection does not do a deep copy of the injected instances, which means we can't meet this rule. -->
+    <Match>
+        <!-- TODO Replace Class filter with Annotation  -->
+        <!-- The new Annotation matcher was only merged to Spotbugs master in April 2023. It should be available with the next release. -->
+        <!-- Until then, we need to specify the Spring component and service classes by name. -->
+        <!-- <Or> -->
+        <!--     <Annotation name="javax.annotation.processing.Generated"/> -->
+        <!--     <Annotation name="org.springframework.stereotype.Service"/> -->
+        <!-- </Or> -->
+        <Or>
+            <Class name="~.*JpaEntity"/>
+            <Class name="~.*JpaEntityBuilder"/>
+        </Or>
+
+        <Or>
+            <Bug pattern="EI_EXPOSE_REP"/>
+            <Bug pattern="EI_EXPOSE_REP2"/>
+        </Or>
+    </Match>
+
+    <!-- Mapstruct checks everything for null, even if it is not nullable, and it passes null in to a method, even if it is not nullable. -->
     <Match>
         <!-- TODO Replace Class filter with Annotation  -->
         <Class name="~.*MapperImpl"/>
         <!-- <Annotation name="javax.annotation.processing.Generated"/> -->
-        <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"/>
+        <Or>
+            <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE"/>
+            <Bug pattern="NP_NULL_PARAM_DEREF_ALL_TARGETS_DANGEROUS"/>
+            <Bug pattern="NP_NULL_ON_SOME_PATH"/>
+        </Or>
     </Match>
 
 </FindBugsFilter>

@@ -4,9 +4,9 @@ import static org.mockito.Mockito.lenient;
 
 import com.acroteq.ticketing.domain.valueobject.CashValue;
 import com.acroteq.ticketing.domain.valueobject.CurrencyId;
+import com.acroteq.ticketing.domain.valueobject.EventId;
 import com.acroteq.ticketing.domain.valueobject.FlightId;
 import com.acroteq.ticketing.order.service.domain.entity.Flight;
-import com.acroteq.ticketing.order.service.domain.ports.output.repository.AirlineRepository;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.FlightRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.test.context.TestComponent;
@@ -24,6 +24,11 @@ public class FlightTestDataHelper {
   public static final BigDecimal FLIGHT_1_PRICE = new BigDecimal("10.00");
   public static final Flight FLIGHT_1 = Flight.builder()
                                               .id(FlightId.of(FLIGHT_1_ID))
+                                              .version(0L)
+                                              .eventId(EventId.builder()
+                                                              .partition(0)
+                                                              .offset(0L)
+                                                              .build())
                                               .flightNumber(FLIGHT_1_NAME)
                                               .price(CashValue.builder()
                                                               .amount(FLIGHT_1_PRICE)
@@ -37,6 +42,11 @@ public class FlightTestDataHelper {
   public static final BigDecimal FLIGHT_2_PRICE = new BigDecimal("20.00");
   public static final Flight FLIGHT_2 = Flight.builder()
                                               .id(FlightId.of(FLIGHT_2_ID))
+                                              .version(0L)
+                                              .eventId(EventId.builder()
+                                                              .partition(0)
+                                                              .offset(1L)
+                                                              .build())
                                               .flightNumber(FLIGHT_2_NAME)
                                               .price(CashValue.builder()
                                                               .amount(FLIGHT_2_PRICE)
@@ -49,6 +59,11 @@ public class FlightTestDataHelper {
   public static final BigDecimal FLIGHT_3_PRICE = new BigDecimal("30.00");
   public static final Flight FLIGHT_3 = Flight.builder()
                                               .id(FlightId.of(FLIGHT_3_ID))
+                                              .version(0L)
+                                              .eventId(EventId.builder()
+                                                              .partition(0)
+                                                              .offset(2L)
+                                                              .build())
                                               .flightNumber(FLIGHT_3_NAME)
                                               .price(CashValue.builder()
                                                               .amount(FLIGHT_3_PRICE)
@@ -56,7 +71,6 @@ public class FlightTestDataHelper {
                                                               .build())
                                               .build();
 
-  private final AirlineRepository airlineRepository;
   private final FlightRepository flightRepository;
 
   public void initialiseMocks() {

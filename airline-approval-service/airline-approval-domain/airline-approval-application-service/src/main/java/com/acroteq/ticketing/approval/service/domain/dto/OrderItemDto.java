@@ -1,23 +1,23 @@
 package com.acroteq.ticketing.approval.service.domain.dto;
 
-import static lombok.AccessLevel.PRIVATE;
-
 import com.acroteq.ticketing.application.dto.DataTransferObject;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
-@Builder
+@Builder(toBuilder = true)
 @Getter
-@AllArgsConstructor(access = PRIVATE)
+@ToString(callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class OrderItemDto implements DataTransferObject {
 
   @NotNull
-  public Long flightId;
-  public int quantity;
+  public final Long flightId;
+  public final int quantity;
 
-  public Long getId() {
+  public final Long getId() {
     return flightId;
   }
 }

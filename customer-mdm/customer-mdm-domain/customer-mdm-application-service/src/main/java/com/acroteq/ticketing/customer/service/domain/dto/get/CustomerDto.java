@@ -3,19 +3,23 @@ package com.acroteq.ticketing.customer.service.domain.dto.get;
 import com.acroteq.ticketing.application.dto.AuditedEntityDto;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
 import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+@SuperBuilder(toBuilder = true)
 @Getter
-@SuperBuilder
+@ToString(callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class CustomerDto extends AuditedEntityDto {
 
   @NotNull
-  private String userName;
+  private final String userName;
   @NotNull
-  private String firstName;
+  private final String firstName;
   @NotNull
-  private String lastName;
+  private final String lastName;
   @NotNull
-  private CashValue creditLimit;
+  private final CashValue creditLimit;
 }

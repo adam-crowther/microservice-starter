@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Supplier;
 
+@SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")  // OK for builder pattern
 @NoArgsConstructor(access = PACKAGE)
 public class PolymorphicOrderApprovalEventBuilder {
 

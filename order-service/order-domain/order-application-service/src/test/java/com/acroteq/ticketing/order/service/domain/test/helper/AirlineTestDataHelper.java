@@ -3,6 +3,7 @@ package com.acroteq.ticketing.order.service.domain.test.helper;
 import static org.mockito.Mockito.lenient;
 
 import com.acroteq.ticketing.domain.valueobject.AirlineId;
+import com.acroteq.ticketing.domain.valueobject.EventId;
 import com.acroteq.ticketing.order.service.domain.entity.Airline;
 import com.acroteq.ticketing.order.service.domain.entity.Flight;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.AirlineRepository;
@@ -21,6 +22,11 @@ public class AirlineTestDataHelper {
 
   public static final Airline AIRLINE = Airline.builder()
                                                .id(AirlineId.of(AIRLINE_ID))
+                                               .version(0L)
+                                               .eventId(EventId.builder()
+                                                               .partition(0)
+                                                               .offset(0L)
+                                                               .build())
                                                .name(AIRLINE_NAME)
                                                .active(true)
                                                .flights(List.of(new Flight[]{ FlightTestDataHelper.FLIGHT_1,

@@ -5,14 +5,18 @@ import com.acroteq.ticketing.domain.valueobject.OrderStatus;
 import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 import java.util.Optional;
 
+@SuperBuilder(toBuilder = true)
 @Getter
-@SuperBuilder
+@ToString(callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class AirlineApprovalRequestDto extends SagaDto {
 
   @NotNull

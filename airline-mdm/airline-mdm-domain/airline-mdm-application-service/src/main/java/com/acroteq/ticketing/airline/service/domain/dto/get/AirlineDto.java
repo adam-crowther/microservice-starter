@@ -4,22 +4,26 @@ import com.acroteq.ticketing.application.dto.AuditedEntityDto;
 import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 import java.util.Optional;
 
-@Getter
 @SuperBuilder(toBuilder = true)
+@Getter
+@ToString(callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class AirlineDto extends AuditedEntityDto {
 
   @NotNull
-  private String name;
+  private final String name;
   @NotNull
-  private boolean active;
+  private final boolean active;
   @NotNull
-  private ImmutableList<FlightDto> flights;
+  private final ImmutableList<FlightDto> flights;
 
   @SuppressWarnings("PublicInnerClass")
   public abstract static class AirlineDtoBuilder<C extends AirlineDto, B extends AirlineDtoBuilder<C, B>>

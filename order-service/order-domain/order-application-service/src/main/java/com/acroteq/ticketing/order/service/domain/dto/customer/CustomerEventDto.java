@@ -2,11 +2,15 @@ package com.acroteq.ticketing.order.service.domain.dto.customer;
 
 import com.acroteq.ticketing.application.dto.ReplicatedEntityDto;
 import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder(toBuilder = true)
 @Getter
+@ToString(callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class CustomerEventDto extends ReplicatedEntityDto {
 
   @NotNull

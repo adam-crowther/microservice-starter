@@ -34,6 +34,8 @@ public abstract class MessageHandler {
     return (counter, message) -> processMessage(counter, message, keys, partitions, offsets);
   }
 
+  // This is OK in a message listener.  We have to catch, log and rethrow everything, that's the point.
+  @SuppressWarnings("PMD.AvoidCatchingGenericException")
   private void processMessage(final int counter,
                               final SpecificRecord message,
                               final List<String> keys,
@@ -75,10 +77,7 @@ public abstract class MessageHandler {
     return key;
   }
 
-  abstract String getMessageType(final SpecificRecord message);
+  abstract String getMessageType(SpecificRecord message);
 
-  abstract void consumeMessage(final SpecificRecord message,
-                               final String key,
-                               final Integer partition,
-                               final Long offset);
+  abstract void consumeMessage(SpecificRecord message, String key, Integer partition, Long offset);
 }

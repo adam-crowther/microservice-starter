@@ -2,33 +2,23 @@ package com.acroteq.ticketing.kafka.consumer.config;
 
 
 import jakarta.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@Getter
-@RequiredArgsConstructor
-@ToString
-@EqualsAndHashCode
+@Value
 @ConfigurationProperties(prefix = "kafka.consumer.backoff")
 public class KafkaBackoffConfig {
 
-  @NotNull
-  private final Integer maxRetries;
-  @NotNull
-  private final Integer initialIntervalInSeconds;
-  @NotNull
-  private final Double multiplier;
-  @NotNull
-  private final Integer maxIntervalInSeconds;
+  @NotNull Integer maxRetries;
+  @NotNull Integer initialIntervalInSeconds;
+  @NotNull Double multiplier;
+  @NotNull Integer maxIntervalInSeconds;
 
-  public final long getInitialIntervalInMilliseconds() {
+  public long getInitialIntervalInMilliseconds() {
     return initialIntervalInSeconds * 1000;
   }
 
-  public final long getMaxIntervalInMilliSeconds() {
+  public long getMaxIntervalInMilliSeconds() {
     return maxIntervalInSeconds * 1000;
   }
 }

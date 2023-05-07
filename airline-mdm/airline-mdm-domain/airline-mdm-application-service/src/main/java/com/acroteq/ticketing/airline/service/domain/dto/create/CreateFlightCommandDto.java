@@ -4,16 +4,20 @@ import com.acroteq.ticketing.application.dto.DataTransferObject;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
+@Builder(toBuilder = true)
 @Getter
-@Builder
+@ToString
+@EqualsAndHashCode
 public class CreateFlightCommandDto implements DataTransferObject {
 
   @NotNull
-  private String flightNumber;
+  private final String flightNumber;
   @NotNull
-  private CashValue price;
+  private final CashValue price;
 
-  private boolean available;
+  private final boolean available;
 }

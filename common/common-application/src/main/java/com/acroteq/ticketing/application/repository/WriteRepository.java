@@ -5,7 +5,7 @@ import com.acroteq.ticketing.domain.valueobject.BaseId;
 
 public interface WriteRepository<IdT extends BaseId, EntityT extends Entity<IdT>> {
 
-  EntityT save(final EntityT entity);
+  EntityT save(EntityT entity);
 
-  void deleteById(final IdT entityId);
+  void deleteById(IdT entityId);
 }

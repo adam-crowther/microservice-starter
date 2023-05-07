@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface ReadRepository<IdT extends BaseId, EntityT extends Entity<IdT>> {
 
-  Optional<EntityT> findById(final IdT entityId);
+  Optional<EntityT> findById(IdT entityId);
 
   boolean existsById(IdT entityId);
 }

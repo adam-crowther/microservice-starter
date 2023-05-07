@@ -26,26 +26,25 @@ public class AirlineEventKafkaMessagePublisher implements AirlineEventMessagePub
     final Long airlineId = event.getAirline()
                                 .getId()
                                 .getValue();
-
-    log.info("Received AirlineCreatedEvent for order id: {}", airlineId);
+    log.info("Publishing AirlineEvent for order id: {}", airlineId);
 
     final AirlineEventMessage message = messageFactory.convertEventToMessage(event);
     final String topic = config.getAirlineEvent()
                                .getTopicName();
     kafkaProducer.send(topic, airlineId, message, callbackHandler::callback);
 
-    log.info("AirlineCreatedEventMessage sent to kafka for order id: {}", airlineId);
+    log.info("AirlineEventMessage sent to kafka for order id: {}", airlineId);
   }
 
   @Override
   public void publishDelete(final Long airlineId) {
-    log.info("Received AirlineCreatedEvent for order id: {}", airlineId);
+    log.info("Publishing AirlineEvent (delete) for order id: {}", airlineId);
 
     final String topic = config.getAirlineEvent()
                                .getTopicName();
     // By convention, sending a null value constitutes a 'terminal' event, which deletes the entity.
     kafkaProducer.send(topic, airlineId, null, callbackHandler::callback);
 
-    log.info("AirlineCreatedEventMessage sent to kafka for order id: {}", airlineId);
+    log.info("AirlineEventMessage (delete) sent to kafka for order id: {}", airlineId);
   }
 }

@@ -25,6 +25,7 @@ public class KafkaMessageHandler extends MessageHandler {
     return new KafkaMessageHandlerBuilder();
   }
 
+  @Override
   void consumeMessage(final SpecificRecord message, final String key, final Integer partition, final Long offset) {
     final String messageType = getMessageType(message);
     final MessageConsumer<SpecificRecord, DataTransferObject> consumer = getConsumer(messageType);
@@ -41,6 +42,7 @@ public class KafkaMessageHandler extends MessageHandler {
                    .orElseThrow(() -> new MessageToDtoMapperMissingException(messageType));
   }
 
+  @Override
   String getMessageType(final SpecificRecord message) {
     return Optional.of(message)
                    .map(SpecificRecord::getSchema)

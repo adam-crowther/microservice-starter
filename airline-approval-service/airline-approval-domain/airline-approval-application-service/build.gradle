@@ -40,6 +40,7 @@ dependencies {
     annotationProcessor libs.lombok.core
     annotationProcessor libs.lombok.mapstruct.binding
     annotationProcessor libs.mapstruct.processor
+    annotationProcessor libs.spring.boot.configuration.processor
 
     testImplementation libs.hamcrest.core
     testImplementation libs.junit.jupiter.api
