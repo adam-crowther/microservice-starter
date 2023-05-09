@@ -1,9 +1,8 @@
 server:
   port: 8183
 
-
 airline-service:
-  swagger-port: 8283
+  permit-cross-origin-from: http://localhost:8283
   airline-event:
     topic-name: airline-event
 
@@ -11,6 +10,7 @@ spring:
   main:
     banner-mode: off
   jpa:
+    # defer-datasource-initialization: true
     open-in-view: false
     show-sql: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -30,6 +30,21 @@ spring:
   liquibase:
     change-log: "classpath:db/changelog/changelog-master.yaml"
     default-schema: airline_master
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: ticketing-login
+            authorization-grant-type: authorization_code
+            scope: openid
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/acroteq
+            user-name-attribute: preferred_username
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/acroteq
 
 kafka:
   bootstrap-servers: localhost:19092, localhost:29092, localhost:39092

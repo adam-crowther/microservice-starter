@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+    id 'checkstyle'
+    id 'jacoco'
+    alias pluginLibs.plugins.spotbugs
+}
+
+apply from: "${rootDir}/java.gradle"
+
+dependencies {
+    implementation libs.spring.boot.security
+    implementation libs.spring.context
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}

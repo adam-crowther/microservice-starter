@@ -31,6 +31,8 @@ findProject(':airline-approval-service:airline-approval-infrastructure:airline-a
 include 'common'
 include 'common:common-application'
 findProject(':common:common-application')?.name = 'common-application'
+include 'common:common-container'
+findProject(':common:common-container')?.name = 'common-container'
 include 'common:common-domain'
 findProject(':common:common-domain')?.name = 'common-domain'
 include 'common:common-helper'
@@ -163,17 +165,21 @@ dependencyResolutionManagement {
             library('spring-data-jpa', 'org.springframework.data', 'spring-data-jpa').versionRef('springData')
 
             // Spring Boot
-            version('springBoot', '3.0.5')
+            version('springBoot', '3.0.6')
             library('spring-boot-core', 'org.springframework.boot', 'spring-boot').versionRef('springBoot')
             library('spring-boot-autoconfigure', 'org.springframework.boot', 'spring-boot-autoconfigure').versionRef('springBoot')
             library('spring-boot-data-jpa', 'org.springframework.boot', 'spring-boot-starter-data-jpa').versionRef('springBoot')
             library('spring-boot-thymeleaf', 'org.springframework.boot', 'spring-boot-starter-thymeleaf').versionRef('springBoot')
             library('spring-boot-validation', 'org.springframework.boot', 'spring-boot-starter-validation').versionRef('springBoot')
-            library('spring-boot-security', 'org.springframework.boot', 'spring-boot-starter-security').versionRef('springBoot')
             library('spring-boot-web', 'org.springframework.boot', 'spring-boot-starter-web').versionRef('springBoot')
             library('spring-boot-test', 'org.springframework.boot', 'spring-boot-test').versionRef('springBoot')
             library('spring-boot-configuration-processor', 'org.springframework.boot', 'spring-boot-configuration-processor').versionRef('springBoot')
             library('spring-boot-actuator', 'org.springframework.boot', 'spring-boot-starter-actuator').versionRef('springBoot')
+
+            // Spring Boot Security
+            library('spring-boot-security', 'org.springframework.boot', 'spring-boot-starter-security').versionRef('springBoot')
+            library('spring-boot-oauth2-client', 'org.springframework.boot', 'spring-boot-starter-oauth2-client').versionRef('springBoot')
+            library('spring-boot-oauth2-resource-server', 'org.springframework.boot', 'spring-boot-starter-oauth2-resource-server').versionRef('springBoot')
 
             // Springfox / Swagger
             library('springfox.boot.starter', 'io.springfox', 'springfox-boot-starter').version('3.0.0')

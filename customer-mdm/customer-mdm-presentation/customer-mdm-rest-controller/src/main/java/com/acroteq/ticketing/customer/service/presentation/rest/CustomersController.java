@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:${customer-service.swagger-port}")
+@CrossOrigin(origins = "${customer-service.permit-cross-origin-from}")
 public class CustomersController implements CustomersApi {
 
   private final CustomerDtoToApiMapper createMapper;

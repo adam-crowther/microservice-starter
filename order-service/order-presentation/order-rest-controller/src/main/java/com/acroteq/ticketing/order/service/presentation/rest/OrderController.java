@@ -27,7 +27,7 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:${order-service.swagger-port}")
+@CrossOrigin(origins = "${order-service.permit-cross-origin-from}")
 public class OrderController implements OrdersApi {
 
   private final CreateOrderCommandApiToDtoMapper createOrderCommandApiToDtoMapper;

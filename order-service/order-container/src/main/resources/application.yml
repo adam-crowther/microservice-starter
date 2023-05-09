@@ -2,7 +2,7 @@ server:
   port: 8181
 
 order-service:
-  swagger-port: 8281
+  permit-cross-origin-from: http://localhost:8281
   payment:
     consumer-group-id: payment-consumer-group
     request-topic-name: payment-request
@@ -22,6 +22,7 @@ spring:
   main:
     banner-mode: off
   jpa:
+    # defer-datasource-initialization: true
     open-in-view: false
     show-sql: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -41,10 +42,28 @@ spring:
   liquibase:
     change-log: "classpath:db/changelog/changelog-master.yaml"
     default-schema: orders
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: ticketing-login
+            authorization-grant-type: authorization_code
+            scope: openid
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/acroteq
+            user-name-attribute: preferred_username
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/acroteq
 
 kafka:
   bootstrap-servers: localhost:19092, localhost:29092, localhost:39092
   schema-registry-url: http://localhost:8081
+  auto.register.schemas: false
+  use.latest.version: true
+  value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
   num-of-partitions: 3
   replication-factor: 3
   producer:

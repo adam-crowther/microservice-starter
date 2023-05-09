@@ -15,6 +15,7 @@ configurations {
 }
 
 dependencies {
+    implementation project(":common:common-container")
     implementation project(":order-service:order-domain:order-domain-core")
     implementation project(":order-service:order-domain:order-application-service")
     implementation project(":order-service:order-presentation:order-rest-controller")
@@ -39,6 +40,9 @@ dependencies {
     runtimeOnly libs.spring.boot.data.jpa
     runtimeOnly libs.spring.boot.validation
     runtimeOnly libs.spring.boot.web
+    runtimeOnly libs.spring.boot.security
+    runtimeOnly libs.spring.boot.oauth2.client
+    runtimeOnly libs.spring.boot.oauth2.resource.server
 }
 
 springBoot {

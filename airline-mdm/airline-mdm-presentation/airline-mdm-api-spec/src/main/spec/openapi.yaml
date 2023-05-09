@@ -2,6 +2,8 @@ openapi: "3.0.0"
 info:
   title: Airline Master Data Management
   version: 1.0.0
+security:
+  - keycloak: [ ]
 paths:
   /airlines:
     get:
@@ -316,6 +318,14 @@ paths:
                 $ref: "#/components/schemas/Problem"
 
 components:
+  securitySchemes:
+    keycloak:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: http://localhost:8080/realms/acroteq/protocol/openid-connect/auth
+          scopes: { }
+
   schemas:
     CreateAirlineCommand:
       type: object

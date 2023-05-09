@@ -15,6 +15,7 @@ configurations {
 }
 
 dependencies {
+    implementation project(":common:common-container")
     implementation project(":common:common-domain")
     implementation project(":airline-approval-service:airline-approval-domain:airline-approval-domain-core")
     implementation project(":airline-approval-service:airline-approval-domain:airline-approval-application-service")
@@ -39,6 +40,9 @@ dependencies {
     runtimeOnly libs.spring.boot.data.jpa
     runtimeOnly libs.spring.boot.validation
     runtimeOnly libs.spring.boot.web
+    runtimeOnly libs.spring.boot.security
+    runtimeOnly libs.spring.boot.oauth2.client
+    runtimeOnly libs.spring.boot.oauth2.resource.server
 }
 
 springBoot {

@@ -48,7 +48,7 @@ Configuration:
         level: debug
       - name: org.springframework.web
         level: debug
-      - name: org.springframework.web
+      - name: org.springframework.security
         level: info
       - name: org.springframework.kafka
         level: info

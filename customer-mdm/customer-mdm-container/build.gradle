@@ -15,7 +15,7 @@ configurations {
 }
 
 dependencies {
-    implementation project(":common:common-domain")
+    implementation project(":common:common-container")
     implementation project(":customer-mdm:customer-mdm-presentation:customer-mdm-rest-controller")
     implementation project(":customer-mdm:customer-mdm-domain:customer-mdm-domain-core")
     implementation project(":customer-mdm:customer-mdm-domain:customer-mdm-application-service")
@@ -40,6 +40,9 @@ dependencies {
     runtimeOnly libs.spring.boot.data.jpa
     runtimeOnly libs.spring.boot.validation
     runtimeOnly libs.spring.boot.web
+    runtimeOnly libs.spring.boot.security
+    runtimeOnly libs.spring.boot.oauth2.client
+    runtimeOnly libs.spring.boot.oauth2.resource.server
 }
 
 springBoot {

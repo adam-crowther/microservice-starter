@@ -17,17 +17,15 @@
 # Database
 
 - Logical delete / Historized data
-- Relationship mapping in Entity model
 
 # Security
 
-- Spring Security: Authentication and Authorisation
 - Entity level security for Authorisation
 - Security/Vulnerability dependency audit
 
 # Logging
 
-- Configure all logging so that it includes the correlationId from the Session. CorrelationId must be enriched in all
+- Configure all logging so that it includes the sagaId from the Session. CorrelationId must be enriched in all
   messages using an interceptor, and stored in the Session.
 
 
