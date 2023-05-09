@@ -16,7 +16,10 @@ public class JwtSecurityConfiguration {
   @SuppressWarnings("PMD.SignatureDeclareThrowsException")
   @Bean
   public SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
-    http.cors()
+    http
+        .cors()
+        .and()
+        .csrf()
         .and()
         .authorizeHttpRequests()
         .anyRequest()
