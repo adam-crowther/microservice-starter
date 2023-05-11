@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.kafka.consumer;
+package com.acroteq.ticketing.kafka.consumer.service;
 
 import static com.acroteq.ticketing.helper.StreamHelper.withCounter;
 import static lombok.AccessLevel.PACKAGE;

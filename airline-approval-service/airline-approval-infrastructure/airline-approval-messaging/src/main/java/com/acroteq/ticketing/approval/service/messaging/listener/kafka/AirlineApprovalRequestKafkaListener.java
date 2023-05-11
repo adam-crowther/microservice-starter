@@ -6,7 +6,7 @@ import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
 
 import com.acroteq.ticketing.approval.service.domain.ports.input.message.listener.order.OrderApprovalRequestMessageListener;
 import com.acroteq.ticketing.approval.service.messaging.mapper.approval.AirlineApprovalRequestMessageToDtoMapper;
-import com.acroteq.ticketing.kafka.consumer.KafkaMessageHandler;
+import com.acroteq.ticketing.kafka.consumer.service.KafkaMessageHandler;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalRequestMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;

@@ -9,6 +9,7 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Getter
@@ -21,10 +22,12 @@ public abstract class ReplicatedJpaEntity implements JpaEntity {
   @Column(name = "id", nullable = false)
   private Long id;
 
+  @Setter
   @Column(name = "version", nullable = false)
   private Long version;
 
   @Builder.Default
+  @Setter
   @Embedded
   private EventIdJpaEmbedded eventId = new EventIdJpaEmbedded();
 }

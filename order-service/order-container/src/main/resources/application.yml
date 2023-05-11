@@ -57,44 +57,47 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/realms/acroteq
+  kafka:
+    bootstrap-servers: localhost:19092,localhost:29092,localhost:39092
+    #    security:
+    #      protocol: "SSL"
+    #    ssl:
+    #      key-store-location: classpath:/client-certs/airline-mdm.keystore.jks
+    #      key-store-password: acroteq
+    #      trust-store-location: classpath:/client-certs/airline-mdm.truststore.jks
+    #      trust-store-password: acroteq
+    producer:
+      acks: all
+      batch-size: 16384
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      compression-type: snappy
+      retries: 5
+      properties:
+        linger.ms: 5
+        schema.registry.url: http://localhost:8081
+    listener:
+      type: batch
+      ack-mode: batch
+      concurrency: 1
+      poll-timeout: 150
+    consumer:
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      heartbeat-interval: 3000
+      max-poll-records: 500
+      properties:
+        schema.registry.url: http://localhost:8081
+        value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
+        specific.avro.reader: true
+        session.timeout.ms: 60000
+        max.poll.interval.ms: 10000
+        max.partition.fetch.bytes: 1048576
+        max.poll.records: 10
 
 kafka:
-  bootstrap-servers: localhost:19092, localhost:29092, localhost:39092
-  schema-registry-url: http://localhost:8081
-  auto.register.schemas: false
-  use.latest.version: true
-  value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
-  num-of-partitions: 3
-  replication-factor: 3
-  producer:
-    acks: all
-    batch-size: 16384
-    batch-size-boost-factor: 100
-    linger-ms: 5
-    request-timeout-ms: 60000
-    retry-count: 5
-    serialisation:
-      key-serializer-class: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer-class: io.confluent.kafka.serializers.KafkaAvroSerializer
-      compression-type: snappy
   consumer:
-    auto-offset-reset: earliest
-    batch-listener: true
-    auto-startup: true
-    concurrency-level: 3
-    deserialisation:
-      key-deserializer-class: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer-class: io.confluent.kafka.serializers.KafkaAvroDeserializer
-      specific-avro-reader: true
-    group-management:
-      session-timeout-ms: 10000
-      heartbeat-interval-ms: 3000
-    polling:
-      max-poll-interval-ms: 300000
-      max-poll-records: 500
-      max-partition-fetch-bytes-default: 1048576
-      max-partition-fetch-bytes-boost-factor: 1
-      poll-timeout-ms: 150
     dead-letter:
       suffix: -dlt
     backoff:

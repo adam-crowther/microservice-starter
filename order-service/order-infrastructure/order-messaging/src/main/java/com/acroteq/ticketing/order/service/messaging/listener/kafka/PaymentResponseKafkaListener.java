@@ -4,7 +4,7 @@ import static org.springframework.kafka.support.KafkaHeaders.OFFSET;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_KEY;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
 
-import com.acroteq.ticketing.kafka.consumer.KafkaMessageHandler;
+import com.acroteq.ticketing.kafka.consumer.service.KafkaMessageHandler;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentCancelledResponseMessage;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentFailedResponseMessage;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentPaidResponseMessage;

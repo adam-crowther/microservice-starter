@@ -9,7 +9,6 @@ import com.acroteq.ticketing.kafka.consumer.properties.KafkaConsumerConfig;
 import com.acroteq.ticketing.kafka.consumer.properties.KafkaDeadLetterConfig;
 import lombok.RequiredArgsConstructor;
 import org.apache.avro.SchemaValidationException;
-import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.TopicPartition;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -22,13 +21,12 @@ import org.springframework.kafka.support.ExponentialBackOffWithMaxRetries;
 import org.springframework.util.backoff.BackOff;
 import org.springframework.util.backoff.FixedBackOff;
 
-import java.io.Serializable;
 import java.util.function.BiFunction;
 
 @RequiredArgsConstructor
-@ConditionalOnProperty(prefix = "kafka.consumer", name = "auto-offset-reset")
+@ConditionalOnProperty(prefix = "kafka.consumer.dead-letter", name = "suffix")
 @Configuration
-public class KafkaErrorHandlerConfiguration<K extends Serializable, V extends SpecificRecordBase> {
+public class KafkaErrorHandlerConfiguration {
 
   private final KafkaOperations<Object, Object> operations;
   private final KafkaConsumerConfig kafkaConsumerConfig;

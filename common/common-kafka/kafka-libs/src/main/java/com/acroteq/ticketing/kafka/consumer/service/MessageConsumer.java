@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.kafka.consumer;
+package com.acroteq.ticketing.kafka.consumer.service;
 
 import com.acroteq.ticketing.application.dto.DataTransferObject;
 import com.acroteq.ticketing.infrastructure.mapper.MessageToDtoMapper;
