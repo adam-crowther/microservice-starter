@@ -7,5 +7,5 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface EventIdDomainToJpaMapper {
 
-  EventIdJpaEmbedded convertMessageToDto(final EventId eventId);
+  EventIdJpaEmbedded convertMessageToDto(EventId eventId);
 }

@@ -45,13 +45,12 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
     final Customer customer = customerEventMapper.convertDtoToDomain(dto);
     final Optional<CreditEntryOutput> output;
 
-    final boolean alreadyExists = alreadyExists(customer);
     customerRepository.save(customer);
 
-    if (!alreadyExists) {
-      output = customerCreated(dto, customer);
-    } else if (!alreadyProcessed(customer)) {
-      output = customerUpdated(dto, id, customer);
+    if (doesNotAlreadyExist(customer)) {
+      output = customerCreated(dto);
+    } else if (isNotAlreadyProcessed(customer)) {
+      output = customerUpdated(dto, id);
     } else {
       output = Optional.empty();
     }
@@ -62,12 +61,12 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
           .ifPresent(creditHistoryRepository::save);
   }
 
-  private boolean alreadyExists(final Customer customer) {
+  private boolean doesNotAlreadyExist(final Customer customer) {
     final CustomerId customerId = customer.getId();
-    return customerRepository.existsById(customerId);
+    return !customerRepository.existsById(customerId);
   }
 
-  private boolean alreadyProcessed(final Customer newCustomer) {
+  private boolean isNotAlreadyProcessed(final Customer newCustomer) {
     final CustomerId customerId = newCustomer.getId();
     final Customer existingEntity = customerRepository.findById(customerId)
                                                       .orElseThrow(() -> new CustomerNotFoundException(customerId));
@@ -76,17 +75,17 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
       throw new CustomerEventProcessingOrderException(newCustomer.getId());
     }
 
-    final boolean isAlreadyProcessed = newCustomer.isFromTheSameEventAs(existingEntity);
-    if (isAlreadyProcessed) {
+    final boolean alreadyProcessed = newCustomer.isFromTheSameEventAs(existingEntity);
+    if (alreadyProcessed) {
       log.debug("CustomerUpdatedEvent for Customer {} with eventId {} was already processed.",
                 newCustomer.getId(),
                 newCustomer.getEventId());
     }
 
-    return isAlreadyProcessed;
+    return !alreadyProcessed;
   }
 
-  private Optional<CreditEntryOutput> customerCreated(final CustomerEventDto dto, final Customer customer) {
+  private Optional<CreditEntryOutput> customerCreated(final CustomerEventDto dto) {
     final Optional<CreditEntryOutput> output;
     final CreditEntry newCreditEntry = customerEventMapper.convertDtoToCreditEntry(dto);
     output = Optional.of(newCreditEntry)
@@ -94,11 +93,8 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
     return output;
   }
 
-  private Optional<CreditEntryOutput> customerUpdated(final CustomerEventDto dto,
-                                                      final CustomerId id,
-                                                      final Customer customer) {
+  private Optional<CreditEntryOutput> customerUpdated(final CustomerEventDto dto, final CustomerId id) {
     final Optional<CreditEntryOutput> output;
-    customerRepository.save(customer);
     final CreditEntry updatedCreditEntry = customerEventMapper.convertDtoToCreditEntry(dto);
     final CreditEntry currentCreditEntry = creditEntryRepository.findByCustomerId(id)
                                                                 .orElseThrow(creditEntryNotFoundException(id));

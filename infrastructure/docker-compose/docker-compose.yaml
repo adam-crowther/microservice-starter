@@ -12,6 +12,8 @@ services:
       - ./init-schemas.sql:/docker-entrypoint-initdb.d/init-schemas.sql
     ports:
       - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", " netstat -an | grep -q 5432" ]
     networks:
       - app-tier
 
@@ -60,9 +62,17 @@ services:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_LISTENERS: http://schema-registry:8081
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
-      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-broker:9092
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: SSL://kafka-broker:9093
+      SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL: SSL
+      SCHEMA_REGISTRY_KAFKASTORE_SSL_TRUSTSTORE_LOCATION: /var/private/ssl/schema-registry.truststore.jks
+      SCHEMA_REGISTRY_KAFKASTORE_SSL_TRUSTSTORE_PASSWORD: acroteq
+      SCHEMA_REGISTRY_KAFKASTORE_SSL_KEYSTORE_LOCATION: /var/private/ssl/schema-registry.keystore.jks
+      SCHEMA_REGISTRY_KAFKASTORE_SSL_KEYSTORE_PASSWORD: acroteq
+      SCHEMA_REGISTRY_KAFKASTORE_SSL_KEY_PASSWORD: acroteq
       SCHEMA_REGISTRY_KAFKASTORE_TOPIC_REPLICATION_FACTOR: 1
       SCHEMA_REGISTRY_DEBUG: 'true'
+    volumes:
+      - "./kafka/certs/schema-registry:/var/private/ssl"
     networks:
       - app-tier
 
@@ -71,18 +81,29 @@ services:
     depends_on:
       - zookeeper
     hostname: kafka-broker
+    user: root
     ports:
       - "19092:19092"
+      - "19093:19093"
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker:9092,LISTENER_LOCAL://localhost:19092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,LISTENER_LOCAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker:9092,SSL://kafka-broker:9093,LOCAL_PLAINTEXT://localhost:19092,LOCAL_SSL://localhost:19093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,LOCAL_PLAINTEXT:PLAINTEXT,SSL:SSL,LOCAL_SSL:SSL
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_COMPRESSION_TYPE: producer
+      KAFKA_SSL_CLIENT_AUTH: 'required'
+      KAFKA_SSL_KEYSTORE_FILENAME: '/certs/kafka-broker.keystore.jks'
+      KAFKA_SSL_KEYSTORE_CREDENTIALS: '/certs/kafka-broker_keystore_creds'
+      KAFKA_SSL_KEY_CREDENTIALS: '/certs/kafka-broker_sslkey_creds'
+      KAFKA_SSL_TRUSTSTORE_FILENAME: '/certs/kafka-broker.truststore.jks'
+      KAFKA_SSL_TRUSTSTORE_CREDENTIALS: '/certs/kafka-broker_truststore_creds'
+      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: ''
     volumes:
-      - "./build/kafka/broker-1:/var/lib/kafka/data"
+      - "./build/kafka/broker:/var/lib/kafka/mount"
+      - "./kafka/certs/kafka-broker:/etc/kafka/secrets/certs"
+      - "./kafka/create_topics.sh:/home/appuser/create_topics.sh"
     networks:
       - app-tier
 
@@ -97,46 +118,11 @@ services:
     networks:
       - app-tier
 
-  init-kafka:
-    image: confluentinc/cp-kafka:${KAFKA_VERSION}
-    depends_on:
-      - kafka-broker
-    entrypoint: [ '/bin/sh', '-c' ]
-    command: |
-      "
-      # block until kafka is reachable
-      kafka-topics --bootstrap-server kafka-broker:9092 --list
-      
-      echo -e 'Deleting kafka topics'
-      kafka-topics --bootstrap-server kafka-broker:9092 --topic airline-event --delete --if-exists
-      kafka-topics --bootstrap-server kafka-broker:9092 --topic airline-event-dlt --delete --if-exists
-      kafka-topics --bootstrap-server kafka-broker:9092 --topic customer-event --delete --if-exists
-      kafka-topics --bootstrap-server kafka-broker:9092 --topic customer-event-dlt --delete --if-exists
-      kafka-topics --bootstrap-server kafka-broker:9092 --topic payment-request --delete --if-exists
-      kafka-topics --bootstrap-server kafka-broker:9092 --topic payment-response --delete --if-exists
-      kafka-topics --bootstrap-server kafka-broker:9092 --topic airline-approval-request --delete --if-exists
-      kafka-topics --bootstrap-server kafka-broker:9092 --topic airline-approval-response --delete --if-exists
-      
-      echo -e 'Creating kafka topics'
-      kafka-topics --bootstrap-server kafka-broker:9092 --topic airline-event --create --if-not-exists --replication-factor 1 --partitions 1
-      kafka-topics --bootstrap-server kafka-broker:9092 --topic airline-event-dlt --create --if-not-exists --replication-factor 1 --partitions 1
-      kafka-topics --bootstrap-server kafka-broker:9092 --topic customer-event --create --if-not-exists --replication-factor 1 --partitions 1
-      kafka-topics --bootstrap-server kafka-broker:9092 --topic customer-event-dlt --create --if-not-exists --replication-factor 1 --partitions 1
-      kafka-topics --bootstrap-server kafka-broker:9092 --topic payment-request --create --if-not-exists --replication-factor 1 --partitions 1
-      kafka-topics --bootstrap-server kafka-broker:9092 --topic payment-response --create --if-not-exists --replication-factor 1 --partitions 1
-      kafka-topics --bootstrap-server kafka-broker:9092 --topic airline-approval-request --create --if-not-exists --replication-factor 1 --partitions 1
-      kafka-topics --bootstrap-server kafka-broker:9092 --topic airline-approval-response --create --if-not-exists --replication-factor 1 --partitions 1
-      
-      echo -e 'Successfully created the following topics:'
-      kafka-topics --bootstrap-server kafka-broker:9092 --list
-      "
-    networks:
-      - app-tier
-
   keycloak:
     image: quay.io/keycloak/keycloak:21.1.1
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     hostname: keycloak
     ports:
       - "8080:8080"

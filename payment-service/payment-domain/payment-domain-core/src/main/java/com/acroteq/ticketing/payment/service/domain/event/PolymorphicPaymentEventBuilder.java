@@ -20,6 +20,7 @@ import java.util.function.Supplier;
 /**
  * Returns the correct event type based on the status of the given payment.
  */
+@SuppressWarnings("PMD.AvoidFieldNameMatchingMethodName")
 @NoArgsConstructor(access = PACKAGE)
 public class PolymorphicPaymentEventBuilder {
 

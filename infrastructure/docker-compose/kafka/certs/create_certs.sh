@@ -1,47 +1,58 @@
 #!/bin/bash
 
-set MSYS_NO_PATHCONV=1
-
 set -o nounset \
-    -o errexit \
-    -o verbose \
-    -o xtrace
+    -o errexit
 
-# Generate CA key
-openssl req -new -x509 -keyout snakeoil-ca-1.key -out snakeoil-ca-1.crt -days 365 -subj '//x=1/CN=ca1.test.acroteq.ch/OU=TEST/O=Acroteq/L=Zurich/S=ZH/C=CH' -passin pass:acroteq -passout pass:acroteq
-# openssl req -new -x509 -keyout snakeoil-ca-2.key -out snakeoil-ca-2.crt -days 365 -subj '/CN=ca2.test.acroteq.ch/OU=TEST/O=Acroteq/L=Zurich/S=ZH/C=CH' -passin pass:acroteq -passout pass:acroteq
+PASS=acroteq
 
-# Kafkacat
-openssl genrsa -des3 -passout "pass:acroteq" -out kafkacat.client.key 1024
-openssl req -passin "pass:acroteq" -passout "pass:acroteq" -key kafkacat.client.key -new -out kafkacat.client.req -subj '//x=1/CN=kafkaclient/OU=TEST/O=Acroteq/L=Zurich/S=ZH/C=CH'
-openssl x509 -req -CA snakeoil-ca-1.crt -CAkey snakeoil-ca-1.key -in kafkacat.client.req -out kafkacat-ca1-signed.pem -days 9999 -CAcreateserial -passin "pass:acroteq"
+create_certificates () {
 
+  echo
+  echo "=================================================================="
+	echo "${1}"
+  echo
 
-for i in kafka-broker airline-approval airline-mdm customer-mdm order-service payment-service
+  mkdir -p "${1}"
+
+  # Generate a keystore
+  keytool -genkey -noprompt \
+         -alias "${1}" \
+         -dname "CN=${1}, OU=TEST, O=Acroteq, L=Zurich, S=ZH, C=CH" \
+         -keystore "${1}/${1}.keystore.jks" \
+         -keyalg RSA \
+         -storepass ${PASS} \
+         -keypass ${PASS}
+
+  # Create truststore and import the CA cert.
+  keytool -keystore "${1}/${1}.truststore.jks" -alias CARoot -import -file ca.crt -storepass ${PASS} -keypass ${PASS} -noprompt
+
+  # Generate a certificate
+  keytool -keystore "${1}/${1}.keystore.jks" -alias "${1}" -certreq -file "${1}/${1}.csr" -storepass ${PASS} -keypass ${PASS}
+
+  # Sign the certificate using the CA.
+  openssl x509 -req -CA ca.crt -CAkey ca.key -in "${1}/${1}.csr" -out "${1}/${1}-ca1-signed.crt" -days 9999 -CAcreateserial -passin pass:${PASS}
+
+  # Import CA Certificate into the keystore.
+  keytool -keystore "${1}/${1}.keystore.jks" -alias CARoot -import -file ca.crt -storepass ${PASS} -keypass ${PASS} -noprompt
+
+  # Import Signed Certificate to the keystore.
+  keytool -keystore "${1}/${1}.keystore.jks" -alias "${1}" -import -file "${1}/${1}-ca1-signed.crt" -storepass ${PASS} -keypass ${PASS} -noprompt
+
+  # Export the certificate into the binary DER file.
+  keytool -exportcert -keystore "${1}/${1}.keystore.jks" -alias "${1}" -file "${1}/${1}.der" -storepass ${PASS} -keypass ${PASS} -noprompt
+
+  echo "${PASS}" > "${1}/${1}_sslkey_creds"
+  echo "${PASS}" > "${1}/${1}_keystore_creds"
+  echo "${PASS}" > "${1}/${1}_truststore_creds"
+}
+
+# Create a certificate authority for signing.
+openssl req -new -x509 -keyout ca.key -out ca.crt -days 365 -subj '//x=1/CN=ca1.test.acroteq.ch/OU=TEST/O=Acroteq/L=Zurich/S=ZH/C=CH' -passin pass:${PASS} -passout pass:${PASS}
+
+create_certificates "kafka-broker"
+
+# Create client keystores
+for i in localhost airline-approval airline-mdm customer-mdm order-service payment-service schema-registry kafkacat
 do
-	echo $i
-	# Create keystores
-	keytool -genkey -noprompt \
-				 -alias $i \
-				 -dname "CN=localhost, OU=TEST, O=Acroteq, L=Zurich, S=ZH, C=CH" \
-				 -keystore $i.keystore.jks \
-				 -keyalg RSA \
-				 -storepass acroteq \
-				 -keypass acroteq
-
-	# Create CSR, sign the key and import back into keystore
-	keytool -keystore $i.keystore.jks -alias $i -certreq -file $i.csr -storepass acroteq -keypass acroteq
-
-	openssl x509 -req -CA snakeoil-ca-1.crt -CAkey snakeoil-ca-1.key -in $i.csr -out $i-ca1-signed.crt -days 9999 -CAcreateserial -passin pass:acroteq
-
-	keytool -keystore $i.keystore.jks -alias CARoot -import -file snakeoil-ca-1.crt -storepass acroteq -keypass acroteq -noprompt
-
-	keytool -keystore $i.keystore.jks -alias $i -import -file $i-ca1-signed.crt -storepass acroteq -keypass acroteq -noprompt
-
-	# Create truststore and import the CA cert.
-	keytool -keystore $i.truststore.jks -alias CARoot -import -file snakeoil-ca-1.crt -storepass acroteq -keypass acroteq -noprompt
-
-  echo "acroteq" > ${i}_sslkey_creds
-  echo "acroteq" > ${i}_keystore_creds
-  echo "acroteq" > ${i}_truststore_creds
+  create_certificates "${i}"
 done

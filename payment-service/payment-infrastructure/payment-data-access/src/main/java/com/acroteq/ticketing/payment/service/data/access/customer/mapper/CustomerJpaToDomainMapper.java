@@ -10,9 +10,7 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(uses = { CustomerIdMapper.class,
-                 CurrencyIdMapper.class,
-                 com.acroteq.ticketing.application.mapper.id.CustomerIdMapper.class })
+@Mapper(uses = { CustomerIdMapper.class, CurrencyIdMapper.class })
 public interface CustomerJpaToDomainMapper extends JpaToDomainMapper<CustomerJpaEntity, Customer> {
 
   @Mapping(target = "creditLimit.currencyId", source = "creditLimitCurrencyId")

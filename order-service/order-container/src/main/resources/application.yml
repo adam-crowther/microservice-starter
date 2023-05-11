@@ -58,14 +58,14 @@ spring:
         jwt:
           issuer-uri: http://localhost:8080/realms/acroteq
   kafka:
-    bootstrap-servers: localhost:19092,localhost:29092,localhost:39092
-    #    security:
-    #      protocol: "SSL"
-    #    ssl:
-    #      key-store-location: classpath:/client-certs/airline-mdm.keystore.jks
-    #      key-store-password: acroteq
-    #      trust-store-location: classpath:/client-certs/airline-mdm.truststore.jks
-    #      trust-store-password: acroteq
+    bootstrap-servers: localhost:19093
+    security:
+      protocol: "SSL"
+    ssl:
+      key-store-location: file:infrastructure/docker-compose/kafka/certs/order-service/order-service.keystore.jks
+      key-store-password: acroteq
+      trust-store-location: file:infrastructure/docker-compose/kafka/certs/order-service/order-service.truststore.jks
+      trust-store-password: acroteq
     producer:
       acks: all
       batch-size: 16384
@@ -76,6 +76,7 @@ spring:
       properties:
         linger.ms: 5
         schema.registry.url: http://localhost:8081
+        ssl.endpoint.identification.algorithm: ""
     listener:
       type: batch
       ack-mode: batch
@@ -95,6 +96,7 @@ spring:
         max.poll.interval.ms: 10000
         max.partition.fetch.bytes: 1048576
         max.poll.records: 10
+        ssl.endpoint.identification.algorithm: ""
 
 kafka:
   consumer:

@@ -17,15 +17,14 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 public abstract class PaymentEvent extends SagaEvent<Payment> {
 
+  @NonNull
+  private final Payment payment;
+  @Builder.Default
+  private final ValidationResult result = pass();
+
   public static PolymorphicPaymentEventBuilder polymorphicBuilder() {
     return new PolymorphicPaymentEventBuilder();
   }
-
-  @NonNull
-  private final Payment payment;
-
-  @Builder.Default
-  private final ValidationResult result = pass();
 
   public abstract void accept(PaymentEventVisitor visitor);
 }
