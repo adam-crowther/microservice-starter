@@ -35,6 +35,8 @@
     {
       "clientId": "ticketing-login",
       "enabled": true,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": true,
       "publicClient": true,
       "redirectUris": [
         "*"

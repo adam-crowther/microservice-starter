@@ -23,6 +23,7 @@
 - Propagate JWT token (and sagaId) from sender to recipient via Kafka messages
 - Entity level security for Authorisation
 - Security/Vulnerability dependency audit
+- Override authorisationUrl in openapi.yaml 
 
 # Logging
 
