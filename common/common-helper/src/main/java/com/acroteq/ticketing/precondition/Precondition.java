@@ -1,13 +1,15 @@
 package com.acroteq.ticketing.precondition;
 
+import static lombok.AccessLevel.PRIVATE;
+
+import lombok.NoArgsConstructor;
+
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+@NoArgsConstructor(access = PRIVATE)
 public final class Precondition {
-
-  private Precondition() {
-  }
 
   public static <T extends RuntimeException> void checkPrecondition(final boolean expression,
                                                                     final Object errorMessage,

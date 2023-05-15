@@ -1,16 +1,17 @@
 package com.acroteq.ticketing.helper;
 
+import static lombok.AccessLevel.PRIVATE;
+
 import com.acroteq.ticketing.exception.MoreThanOneItemInStreamException;
+import lombok.NoArgsConstructor;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 
+@NoArgsConstructor(access = PRIVATE)
 public final class StreamHelper {
-
-  private StreamHelper() {
-  }
 
   public static <T> BinaryOperator<T> toSingleItem() {
     return (item1, item2) -> {

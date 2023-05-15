@@ -1,9 +1,9 @@
 package com.acroteq.ticketing.application.repository;
 
 import com.acroteq.ticketing.domain.entity.Entity;
-import com.acroteq.ticketing.domain.valueobject.BaseId;
+import com.acroteq.ticketing.domain.valueobject.EntityId;
 
-public interface WriteRepository<IdT extends BaseId, EntityT extends Entity<IdT>> {
+public interface WriteRepository<IdT extends EntityId, EntityT extends Entity<IdT>> {
 
   EntityT save(EntityT entity);
 

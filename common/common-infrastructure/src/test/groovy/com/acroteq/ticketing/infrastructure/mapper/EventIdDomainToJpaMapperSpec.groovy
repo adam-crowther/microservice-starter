@@ -1,0 +1,35 @@
+package com.acroteq.ticketing.infrastructure.mapper
+
+import com.acroteq.ticketing.domain.valueobject.EventId
+import org.mapstruct.factory.Mappers
+import spock.lang.Specification
+
+class EventIdDomainToJpaMapperSpec extends Specification {
+
+  static final Integer PARTITION = 3L
+  static final Long OFFSET = 7447
+
+  EventIdDomainToJpaMapper mapper = Mappers.getMapper(EventIdDomainToJpaMapper)
+
+  def "all attributes in eventId should be converted from domain to jpa model"() {
+    given:
+      def eventId = EventId.builder()
+            .partition(PARTITION)
+            .offset(OFFSET)
+            .build()
+    when:
+      def jpaEvent = mapper.convertMessageToDto(eventId)
+
+    then:
+      jpaEvent.getPartition() == PARTITION
+      jpaEvent.getOffset() == OFFSET
+  }
+
+  def "when convertMessageToDto is given a null reference, it should return null"() {
+    when:
+      def jpaEvent = mapper.convertMessageToDto(null)
+
+    then:
+      jpaEvent == null
+  }
+}

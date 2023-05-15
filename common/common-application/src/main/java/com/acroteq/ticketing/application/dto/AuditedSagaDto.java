@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class AuditedSagaDto extends SagaDto {
+public abstract class AuditedSagaDto extends SagaDto {
 
   @NotNull
   private final AuditDto audit;

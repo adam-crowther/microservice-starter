@@ -5,15 +5,17 @@ import com.acroteq.ticketing.approval.service.domain.event.order.visitor.OrderAp
 import com.acroteq.ticketing.domain.event.SagaEvent;
 import com.acroteq.ticketing.domain.validation.ValidationResult;
 import com.acroteq.ticketing.domain.valueobject.OrderId;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Getter
-@ToString
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder(toBuilder = true)
-public abstract class OrderApprovalEvent extends SagaEvent<OrderApproval> {
+public abstract class OrderApprovalEvent extends SagaEvent {
 
   @NonNull
   private final OrderApproval orderApproval;

@@ -3,18 +3,20 @@ package com.acroteq.ticketing.domain.valueobject;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.ToString;
 
 import java.io.Serializable;
 
 @EqualsAndHashCode
-@ToString
+@ToString(includeFieldNames = false)
 @Getter
 @Builder
 public class CurrencyId implements Serializable {
 
   public static final CurrencyId NONE = CurrencyId.of("NONE");
 
+  @NonNull
   private final String value;
 
   public static CurrencyId of(final String id) {

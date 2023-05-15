@@ -1,12 +1,17 @@
 package com.acroteq.ticketing.kafka.consumer.service;
 
+import static com.acroteq.ticketing.precondition.Precondition.checkPrecondition;
 import static java.lang.Long.parseLong;
 
 import com.acroteq.ticketing.application.dto.DataTransferObject;
 import com.acroteq.ticketing.infrastructure.mapper.MessageToDtoMapper;
+import com.acroteq.ticketing.kafka.consumer.exception.UnsupportedMessageTypeException;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.avro.Schema;
 import org.apache.avro.specific.SpecificRecord;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 @Slf4j
@@ -34,12 +39,20 @@ public class KafkaEntityEventMessageHandler extends MessageHandler {
 
   @Override
   String getMessageType(final SpecificRecord message) {
-    return messageType;
+    return Optional.ofNullable(message)
+                   .map(SpecificRecord::getSchema)
+                   .map(Schema::getName)
+                   .orElse(messageType);
   }
 
   @Override
-  void consumeMessage(final SpecificRecord message, final String key, final Integer partition, final Long offset) {
+  void consumeMessage(final SpecificRecord message,
+                      @NonNull final String key,
+                      @NonNull final Integer partition,
+                      @NonNull final Long offset) {
     if (message != null) {
+      final String actualType = getMessageType(message);
+      checkPrecondition(actualType.equals(messageType), actualType, UnsupportedMessageTypeException::new);
       createOrUpdateEntity(message, partition, offset);
     } else {
       deleteEntity(key);

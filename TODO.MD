@@ -8,11 +8,13 @@
 # Testing
 
 - Spock unit tests
+- Cucumber tests
 - Integration tests
 
 # Spring
 
 - Clean shutdown in Intellij
+- Try gradle dependency manager plugin
 
 # Database
 
@@ -20,10 +22,10 @@
 
 # Security
 
-- Propagate JWT token (and sagaId) from sender to recipient via Kafka messages
+- Propagate JWT token from sender to recipient via Kafka messages
 - Entity level security for Authorisation
 - Security/Vulnerability dependency audit
-- Override authorisationUrl in openapi.yaml 
+- Override authorisationUrl in openapi.yaml
 
 # Logging
 

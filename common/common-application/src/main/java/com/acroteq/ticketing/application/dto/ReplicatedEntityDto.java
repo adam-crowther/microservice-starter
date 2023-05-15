@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class ReplicatedEntityDto extends EntityDto {
+public abstract class ReplicatedEntityDto extends EntityDto {
 
   @NotNull
   private final EventIdDto eventId;

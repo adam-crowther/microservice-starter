@@ -9,8 +9,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @Getter
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class EventIdDto {
+@EqualsAndHashCode
+public final class EventIdDto {
 
   @NotNull
   private final Long offset;

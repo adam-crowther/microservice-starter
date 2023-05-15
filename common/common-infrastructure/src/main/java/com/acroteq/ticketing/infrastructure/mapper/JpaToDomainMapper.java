@@ -4,5 +4,5 @@ import com.acroteq.ticketing.infrastructure.data.access.entity.JpaEntity;
 
 public interface JpaToDomainMapper<JpaT extends JpaEntity, EntityT> {
 
-  EntityT convertJpaToDomain(JpaT event);
+  EntityT convertJpaToDomain(JpaT entity);
 }

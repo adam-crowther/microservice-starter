@@ -12,7 +12,7 @@ import java.util.UUID;
 public interface CurrencyIdMapper {
 
   @Nullable
-  default String convertBaseIdToString(@Nullable final CurrencyId id) {
+  default String convertEntityIdToString(@Nullable final CurrencyId id) {
     return Optional.ofNullable(id)
                    .map(CurrencyId::getValue)
                    .orElse(null);

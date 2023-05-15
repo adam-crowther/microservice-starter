@@ -21,7 +21,7 @@ import java.time.Instant;
 @AllArgsConstructor(access = PRIVATE)
 @NoArgsConstructor(access = PROTECTED)
 @Embeddable
-public class AuditJpaEmbedded {
+public final class AuditJpaEmbedded {
 
   @CreatedDate
   @Column(name = "created_timestamp", nullable = false, updatable = false)

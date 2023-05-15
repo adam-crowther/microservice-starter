@@ -2,13 +2,11 @@ package com.acroteq.ticketing.domain.validation;
 
 import static com.acroteq.ticketing.domain.valueobject.OrderApprovalStatus.APPROVED;
 import static com.acroteq.ticketing.domain.valueobject.OrderApprovalStatus.REJECTED;
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import com.acroteq.ticketing.domain.valueobject.OrderApprovalStatus;
 import com.google.common.collect.ImmutableList;
-import org.apache.commons.lang3.StringUtils;
+import lombok.NonNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,14 +20,14 @@ public final class ValidationResult {
     return new ValidationResultBuilder();
   }
 
-  public static ValidationResult combine(final ValidationResult left, final ValidationResult right) {
+  public static ValidationResult combine(@NonNull final ValidationResult left, @NonNull final ValidationResult right) {
     return ValidationResult.builder()
-                           .addValidationResult(left)
-                           .addValidationResult(right)
+                           .validationResult(left)
+                           .validationResult(right)
                            .build();
   }
 
-  public static ValidationResult of(final List<String> failureMessages) {
+  public static ValidationResult of(@NonNull final List<String> failureMessages) {
     return new ValidationResult(failureMessages);
   }
 
@@ -37,11 +35,11 @@ public final class ValidationResult {
     return new ValidationResult();
   }
 
-  public static ValidationResult fail(final String failureMessage) {
+  public static ValidationResult fail(@NonNull final String failureMessage) {
     return new ValidationResult(failureMessage);
   }
 
-  public static ValidationResult fail(final String failureMessage, final Object... parameters) {
+  public static ValidationResult fail(@NonNull final String failureMessage, final Object... parameters) {
     final String message = String.format(failureMessage, parameters);
     return new ValidationResult(message);
   }
@@ -50,14 +48,12 @@ public final class ValidationResult {
     this.failureMessages = ImmutableList.of();
   }
 
-  private ValidationResult(final String failureMessage) {
-    this.failureMessages = ImmutableList.of(failureMessage);
+  private ValidationResult(final List<String> failureMessages) {
+    this.failureMessages = ImmutableList.copyOf(failureMessages);
   }
 
-  private ValidationResult(final List<String> failureMessages) {
-    this.failureMessages = ImmutableList.<String>builder()
-                                        .addAll(failureMessages)
-                                        .build();
+  private ValidationResult(final String failureMessage) {
+    this.failureMessages = ImmutableList.of(failureMessage);
   }
 
   public List<String> getFailures() {
@@ -74,42 +70,5 @@ public final class ValidationResult {
 
   public OrderApprovalStatus getApprovalStatus() {
     return failureMessages.isEmpty() ? APPROVED : REJECTED;
-  }
-
-  public static class ValidationResultBuilder {
-
-    private final List<String> failureMessages = new ArrayList<>();
-
-    public ValidationResultBuilder addValidationResult(final ValidationResult other) {
-      final List<String> filteredMessages = other.getFailures()
-                                                 .stream()
-                                                 .filter(StringUtils::isNotBlank)
-                                                 .filter(message -> !failureMessages.contains(message))
-                                                 .distinct()
-                                                 .toList();
-
-      if (!filteredMessages.isEmpty()) {
-        failureMessages.addAll(filteredMessages);
-      }
-
-      return this;
-    }
-
-    public ValidationResultBuilder addFailure(final String failureMessage, final Object... parameters) {
-      final String message = String.format(failureMessage, parameters);
-      addFailure(message);
-      return this;
-    }
-
-    public ValidationResultBuilder addFailure(final String failureMessage) {
-      if (isNotBlank(failureMessage) && !failureMessages.contains(failureMessage)) {
-        failureMessages.add(failureMessage);
-      }
-      return this;
-    }
-
-    public ValidationResult build() {
-      return ValidationResult.of(failureMessages);
-    }
   }
 }

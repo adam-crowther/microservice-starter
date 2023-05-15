@@ -1,64 +1,74 @@
 plugins {
-    id 'java'
-    id 'checkstyle'
-    id 'jacoco'
-    alias pluginLibs.plugins.spotbugs
+  id 'java'
+  id 'checkstyle'
+  id 'jacoco'
+  alias pluginLibs.plugins.spotbugs
+  id 'groovy'
 }
 
 apply from: "${rootDir}/java.gradle"
+apply plugin: "groovy"
 
 compileJava {
-    options.compilerArgs += [
-            '-Amapstruct.defaultComponentModel=spring',
-            '-Amapstruct.defaultInjectionStrategy=constructor',
-            '-Amapstruct.unmappedTargetPolicy=ERROR',
-            '-Amapstruct.verbose=false',
-            '-Amapstruct.suppressGeneratorVersionInfoComment=true',
-            '-Amapstruct.suppressGeneratorTimestamp=true'
-    ]
+  options.compilerArgs += [
+        '-Amapstruct.defaultComponentModel=spring',
+        '-Amapstruct.defaultInjectionStrategy=constructor',
+        '-Amapstruct.unmappedTargetPolicy=ERROR',
+        '-Amapstruct.verbose=false',
+        '-Amapstruct.suppressGeneratorVersionInfoComment=true',
+        '-Amapstruct.suppressGeneratorTimestamp=true'
+  ]
 }
 
 dependencies {
-    implementation project(":common:common-domain")
-    implementation project(":common:common-application")
-    implementation project(":common:common-helper")
-    implementation project(":order-service:order-domain:order-domain-core")
-    implementation project("::common:common-saga")
+  implementation project(":common:common-domain")
+  implementation project(":common:common-application")
+  implementation project(":common:common-helper")
+  implementation project(":order-service:order-domain:order-domain-core")
+  implementation project("::common:common-saga")
 
-    implementation libs.google.guava
-    implementation libs.jakarta.annotation.api
-    implementation libs.jakarta.validation.api
-    implementation libs.lombok.core
-    implementation libs.mapstruct.core
-    implementation libs.slf4j.api
-    implementation libs.spotbugs.annotations
-    implementation libs.spring.beans
-    implementation libs.spring.boot.core
-    implementation libs.spring.context
-    implementation libs.spring.tx
+  implementation libs.google.guava
+  implementation libs.jakarta.annotation.api
+  implementation libs.jakarta.validation.api
+  implementation libs.lombok.core
+  implementation libs.mapstruct.core
+  implementation libs.slf4j.api
+  implementation libs.spotbugs.annotations
+  implementation libs.spring.beans
+  implementation libs.spring.boot.core
+  implementation libs.spring.context
+  implementation libs.spring.tx
 
-    annotationProcessor libs.lombok.core
-    annotationProcessor libs.lombok.mapstruct.binding
-    annotationProcessor libs.mapstruct.processor
-    annotationProcessor libs.spring.boot.configuration.processor
+  annotationProcessor libs.lombok.core
+  annotationProcessor libs.lombok.mapstruct.binding
+  annotationProcessor libs.mapstruct.processor
+  annotationProcessor libs.spring.boot.configuration.processor
 
-    testImplementation libs.hamcrest.core
-    testImplementation libs.junit.jupiter.api
-    testImplementation libs.mockito.core
-    testImplementation libs.mockito.junit.jupiter
-    testImplementation libs.spring.boot.autoconfigure
-    testImplementation libs.spring.boot.test
-    testImplementation libs.spring.test
+  testImplementation libs.hamcrest.core
+  testImplementation libs.junit.jupiter.api
+  testImplementation libs.mockito.core
+  testImplementation libs.mockito.junit.jupiter
+  testImplementation libs.spring.boot.autoconfigure
+  testImplementation libs.spring.boot.test.core
+  testImplementation libs.spring.test
 
-    testRuntimeOnly libs.junit.jupiter.engine
-    testRuntimeOnly libs.mockito.inline
+  testImplementation libs.groovy
+  testImplementation libs.jakarta.inject.api
+  testImplementation libs.spock.core
+  testImplementation libs.spock.spring
+  testImplementation libs.spring.test
+  testImplementation libs.equalsverifier
+  testImplementation libs.mockito.core
 
-    testAnnotationProcessor libs.lombok.core
+  testRuntimeOnly libs.junit.jupiter.engine
+  testRuntimeOnly libs.mockito.inline
+
+  testAnnotationProcessor libs.lombok.core
 }
 
 test {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
+  useJUnitPlatform()
+  testLogging {
+    events "passed", "skipped", "failed"
+  }
 }

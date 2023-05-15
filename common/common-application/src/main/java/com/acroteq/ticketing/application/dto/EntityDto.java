@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class EntityDto implements DataTransferObject {
+public abstract class EntityDto implements DataTransferObject {
 
   @EqualsAndHashCode.Include
   @NotNull

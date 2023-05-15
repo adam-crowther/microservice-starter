@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.kafka.producer.service.callback;
 
+import jakarta.annotation.Nullable;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.Schema;
 import org.apache.avro.specific.SpecificRecord;
@@ -15,8 +16,9 @@ import java.util.function.Function;
 @Component
 public class KafkaPublisherCallbackHandler<T extends SpecificRecord> {
 
-  public SendResult<String, T> callback(final SendResult<String, T> sendResult, final Throwable exception) {
-    final String messageType = Optional.of(sendResult)
+  public SendResult<String, T> callback(@Nullable final SendResult<String, T> sendResult,
+                                        @Nullable final Throwable exception) {
+    final String messageType = Optional.ofNullable(sendResult)
                                        .map(SendResult::getProducerRecord)
                                        .map(ProducerRecord::value)
                                        .map(SpecificRecord::getSchema)
@@ -40,7 +42,8 @@ public class KafkaPublisherCallbackHandler<T extends SpecificRecord> {
                 key,
                 topic,
                 partition,
-                offset);
+                offset,
+                exception);
     }
 
     return sendResult;
@@ -49,7 +52,7 @@ public class KafkaPublisherCallbackHandler<T extends SpecificRecord> {
   private <MessageT, OutputT, StructT> OutputT getNullSafeValue(final SendResult<String, MessageT> sendResult,
                                                                 final Function<SendResult<String, MessageT>, StructT> getStruct,
                                                                 final Function<StructT, OutputT> getValue) {
-    return Optional.of(sendResult)
+    return Optional.ofNullable(sendResult)
                    .map(getStruct)
                    .map(getValue)
                    .orElse(null);

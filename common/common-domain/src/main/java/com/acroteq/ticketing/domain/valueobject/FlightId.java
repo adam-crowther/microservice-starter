@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @SuperBuilder(toBuilder = true)
-public class FlightId extends BaseId {
+public class FlightId extends EntityId {
 
   public static FlightId of(final Long id) {
     return FlightId.builder()

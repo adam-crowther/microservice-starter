@@ -7,15 +7,17 @@ import com.acroteq.ticketing.domain.validation.ValidationResult;
 import com.acroteq.ticketing.payment.service.domain.entity.Payment;
 import com.acroteq.ticketing.payment.service.domain.event.visitor.PaymentEventVisitor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Getter
-@ToString
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder(toBuilder = true)
-public abstract class PaymentEvent extends SagaEvent<Payment> {
+public abstract class PaymentEvent extends SagaEvent {
 
   @NonNull
   private final Payment payment;

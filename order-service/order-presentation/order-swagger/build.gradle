@@ -1,70 +1,70 @@
 plugins {
-    id 'java'
-    id 'checkstyle'
-    id 'jacoco'
-    alias pluginLibs.plugins.spotbugs
-    alias pluginLibs.plugins.spring.boot
-    alias pluginLibs.plugins.swagger
+  id 'java'
+  id 'checkstyle'
+  id 'jacoco'
+  alias pluginLibs.plugins.spotbugs
+  alias pluginLibs.plugins.spring.boot
+  alias pluginLibs.plugins.swagger
 }
 
 apply from: "${rootDir}/java.gradle"
 
 dependencies {
-    implementation libs.spring.boot.actuator
-    implementation libs.spring.boot.autoconfigure
-    implementation libs.spring.boot.core
-    implementation libs.spring.context
-    implementation libs.spring.webmvc
-    implementation libs.google.guava
+  implementation libs.spring.boot.actuator
+  implementation libs.spring.boot.autoconfigure
+  implementation libs.spring.boot.core
+  implementation libs.spring.context
+  implementation libs.spring.webmvc
+  implementation libs.google.guava
 
-    runtimeOnly libs.spring.boot.web
+  runtimeOnly libs.spring.boot.web
 
-    swaggerUI libs.swagger.ui
+  swaggerUI libs.swagger.ui
 }
 
 springBoot {
-    mainClass = springApplicationClass
+  mainClass = springApplicationClass
 }
 
 bootBuildImage {
-    imageName = "${dockerNamespace}/${rootProject.name}/${project.name}:${project.version}"
+  imageName = "${dockerNamespace}/${rootProject.name}/${project.name}:${project.version}"
 }
 
 swaggerSources {
-    ticketing {
-        inputFile = file("${buildDir}/openapi/openapi.yaml")
-        ui {
-            outputDir = file("$buildDir/swagger-html/resources")
-        }
+  ticketing {
+    inputFile = file("${buildDir}/openapi/openapi.yaml")
+    ui {
+      outputDir = file("$buildDir/swagger-html/resources")
     }
+  }
 }
 
 tasks.register('copySpec', Copy) {
-    def specProject = project(openApiSpecSubmodule)
+  def specProject = project(openApiSpecSubmodule)
 
-    from specProject.layout.files('/src/main/spec/openapi.yaml')
-    into "${buildDir}/openapi"
+  from specProject.layout.files('/src/main/spec/openapi.yaml')
+  into "${buildDir}/openapi"
 
-    doLast {
-        def specFile = new File("${buildDir}/openapi/openapi.yaml")
-        specFile.append("\nservers:" +
-                "\n  - url: //${swaggerRestServerUrl}" +
-                "\n    description: ${swaggerRestServerDescription}\n")
-    }
+  doLast {
+    def specFile = new File("${buildDir}/openapi/openapi.yaml")
+    specFile.append("\nservers:" +
+          "\n  - url: //${swaggerRestServerUrl}" +
+          "\n    description: ${swaggerRestServerDescription}\n")
+  }
 }
 
 sourceSets {
-    main {
-        resources {
-            srcDirs "${buildDir}/openapi", "$buildDir/swagger-html"
-        }
+  main {
+    resources {
+      srcDirs "${buildDir}/openapi", "$buildDir/swagger-html"
     }
+  }
 }
 
 generateSwaggerUITicketing {
-    dependsOn tasks.named('copySpec')
+  dependsOn tasks.named('copySpec')
 }
 
 processResources {
-    dependsOn generateSwaggerUI
+  dependsOn generateSwaggerUI
 }

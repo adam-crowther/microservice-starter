@@ -9,20 +9,20 @@ group group
 version version
 
 compileJava {
-    sourceCompatibility = javaSourceCompatibility
-    targetCompatibility = javaTargetCompatibility
-    options.compilerArgs += [
-            '-Xlint:deprecation'
-    ]
+  sourceCompatibility = javaSourceCompatibility
+  targetCompatibility = javaTargetCompatibility
+  options.compilerArgs += [
+        '-Xlint:deprecation'
+  ]
 }
 
 configurations {
-    implementation {
-        transitive = false
-    }
+  implementation {
+    transitive = false
+  }
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.compilerArgs += ['-Xlint:all,-serial,-processing']
+  options.compilerArgs += ['-Xlint:all,-serial,-processing']
 }
 

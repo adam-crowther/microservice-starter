@@ -1,55 +1,65 @@
 plugins {
-    id 'java'
-    id 'checkstyle'
-    id 'jacoco'
-    alias pluginLibs.plugins.spotbugs
+  id 'java'
+  id 'checkstyle'
+  id 'jacoco'
+  alias pluginLibs.plugins.spotbugs
+  id 'groovy'
 }
 
 apply from: "${rootDir}/java.gradle"
+apply plugin: "groovy"
 
 compileJava {
-    options.compilerArgs += [
-            '-Amapstruct.defaultComponentModel=spring',
-            '-Amapstruct.defaultInjectionStrategy=constructor',
-            '-Amapstruct.unmappedTargetPolicy=ERROR',
-            '-Amapstruct.verbose=false',
-            '-Amapstruct.suppressGeneratorVersionInfoComment=true',
-            '-Amapstruct.suppressGeneratorTimestamp=true'
-    ]
+  options.compilerArgs += [
+        '-Amapstruct.defaultComponentModel=spring',
+        '-Amapstruct.defaultInjectionStrategy=constructor',
+        '-Amapstruct.unmappedTargetPolicy=ERROR',
+        '-Amapstruct.verbose=false',
+        '-Amapstruct.suppressGeneratorVersionInfoComment=true',
+        '-Amapstruct.suppressGeneratorTimestamp=true'
+  ]
 }
 
 dependencies {
-    implementation project(":common:common-domain")
-    implementation project(":common:common-application")
-    implementation project(":common:common-presentation")
-    implementation project(":order-service:order-domain:order-application-service")
-    implementation project(":order-service:order-domain:order-domain-core")
-    implementation project(":order-service:order-presentation:order-api-spec")
+  implementation project(":common:common-domain")
+  implementation project(":common:common-application")
+  implementation project(":common:common-presentation")
+  implementation project(":order-service:order-domain:order-application-service")
+  implementation project(":order-service:order-domain:order-domain-core")
+  implementation project(":order-service:order-presentation:order-api-spec")
 
-    implementation libs.google.gson
-    implementation libs.google.guava
-    implementation libs.jackson.annotations
-    implementation libs.jakarta.validation.api
-    implementation libs.lombok.core
-    implementation libs.mapstruct.core
-    implementation libs.slf4j.api
-    implementation libs.spotbugs.annotations
-    implementation libs.spring.beans
-    implementation libs.spring.boot.core
-    implementation libs.spring.context
-    implementation libs.spring.core
-    implementation libs.spring.web
-    implementation libs.spring.webmvc
-    implementation libs.swagger.annotations
+  implementation libs.google.gson
+  implementation libs.google.guava
+  implementation libs.jackson.annotations
+  implementation libs.jakarta.validation.api
+  implementation libs.lombok.core
+  implementation libs.mapstruct.core
+  implementation libs.slf4j.api
+  implementation libs.spotbugs.annotations
+  implementation libs.spring.beans
+  implementation libs.spring.boot.core
+  implementation libs.spring.context
+  implementation libs.spring.core
+  implementation libs.spring.web
+  implementation libs.spring.webmvc
+  implementation libs.swagger.annotations
 
-    annotationProcessor libs.lombok.core
-    annotationProcessor libs.lombok.mapstruct.binding
-    annotationProcessor libs.mapstruct.processor
+  annotationProcessor libs.lombok.core
+  annotationProcessor libs.lombok.mapstruct.binding
+  annotationProcessor libs.mapstruct.processor
+
+  testImplementation libs.groovy
+  testImplementation libs.jakarta.inject.api
+  testImplementation libs.spock.core
+  testImplementation libs.spock.spring
+  testImplementation libs.spring.test
+  testImplementation libs.equalsverifier
+  testImplementation libs.mockito.core
 }
 
 test {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
+  useJUnitPlatform()
+  testLogging {
+    events "passed", "skipped", "failed"
+  }
 }

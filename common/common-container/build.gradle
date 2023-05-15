@@ -1,20 +1,35 @@
 plugins {
-    id 'java'
-    id 'checkstyle'
-    id 'jacoco'
-    alias pluginLibs.plugins.spotbugs
+  id 'java'
+  id 'checkstyle'
+  id 'jacoco'
+  alias pluginLibs.plugins.spotbugs
+  id 'groovy'
 }
 
 apply from: "${rootDir}/java.gradle"
+apply plugin: "groovy"
 
 dependencies {
-    implementation libs.spring.boot.security
-    implementation libs.spring.context
+  implementation libs.lombok.core
+  implementation libs.spring.boot.security
+  implementation libs.spring.boot.oauth2.resource.server
+  implementation libs.spring.context
+
+  annotationProcessor libs.lombok.core
+
+  testImplementation libs.groovy
+  testImplementation libs.jakarta.inject.api
+  testImplementation libs.spock.core
+  testImplementation libs.spock.spring
+  testImplementation libs.spring.test
+  testImplementation libs.equalsverifier
+  testImplementation libs.mockito.core
+
 }
 
 test {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
+  useJUnitPlatform()
+  testLogging {
+    events "passed", "skipped", "failed"
+  }
 }

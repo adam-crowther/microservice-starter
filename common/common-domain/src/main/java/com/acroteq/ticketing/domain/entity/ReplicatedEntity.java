@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.domain.entity;
 
-import com.acroteq.ticketing.domain.valueobject.BaseId;
+import com.acroteq.ticketing.domain.valueobject.EntityId;
 import com.acroteq.ticketing.domain.valueobject.EventId;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 @SuperBuilder(toBuilder = true)
-public abstract class ReplicatedEntity<IdT extends BaseId> implements Entity<IdT> {
+public abstract class ReplicatedEntity<IdT extends EntityId> implements Entity<IdT> {
 
   @EqualsAndHashCode.Include
   @NonNull

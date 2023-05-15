@@ -1,18 +1,18 @@
 plugins {
-    id 'base'
-    id 'maven-publish'
-    alias pluginLibs.plugins.nebula.lint
+  id 'base'
+  id 'maven-publish'
+  alias pluginLibs.plugins.nebula.lint
 }
 
 allprojects {
-    repositories {
-        mavenCentral()
-        maven {
-            url "https://packages.confluent.io/maven/"
-        }
+  repositories {
+    mavenCentral()
+    maven {
+      url "https://packages.confluent.io/maven/"
     }
+  }
 }
 
 configurations.configureEach {
-    resolutionStrategy.failOnVersionConflict()
+  resolutionStrategy.failOnVersionConflict()
 }

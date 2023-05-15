@@ -10,6 +10,11 @@ airline-approval-service:
     request-topic-name: airline-approval-request
     response-topic-name: airline-approval-response
 
+security:
+  jwt:
+    authority-prefix: SCOPE_
+    principal-claim-name: "preferred_username"
+
 spring:
   main:
     banner-mode: off

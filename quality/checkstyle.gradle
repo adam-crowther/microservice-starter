@@ -1,16 +1,16 @@
 apply plugin: 'checkstyle'
 
 checkstyle {
-    toolVersion = '10.9.3'
-    configFile = file("${rootDir}/quality/checkstyle.xml")
-    ignoreFailures = false
-    maxWarnings = 0
-    maxErrors = 0
+  toolVersion = '10.9.3'
+  configFile = file("${rootDir}/quality/checkstyle.xml")
+  ignoreFailures = false
+  maxWarnings = 0
+  maxErrors = 0
 }
 
 tasks.withType(Checkstyle).configureEach {
-    outputs.upToDateWhen { false }
-    exclude '**/presentation/api/**'
-    exclude '**/presentation/model/**'
-    exclude '**/avro/model/**'
+  outputs.upToDateWhen { false }
+  exclude '**/presentation/api/**'
+  exclude '**/presentation/model/**'
+  exclude '**/avro/model/**'
 }

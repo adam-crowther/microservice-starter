@@ -10,8 +10,8 @@ import java.time.Instant;
 @SuperBuilder(toBuilder = true)
 @Getter
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class AuditDto {
+@EqualsAndHashCode
+public final class AuditDto {
 
   private final Instant createdTimestamp;
   private final Instant lastModifiedTimestamp;

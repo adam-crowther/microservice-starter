@@ -10,6 +10,11 @@ payment-service:
     request-topic-name: payment-request
     response-topic-name: payment-response
 
+security:
+  jwt:
+    authority-prefix: SCOPE_
+    principal-claim-name: "preferred_username"
+
 spring:
   main:
     banner-mode: off

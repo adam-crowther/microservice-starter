@@ -168,5 +168,5 @@ or bounded contexts.
     - The message value contains the Entity's full schema, including all attributes, id and version, and including the
       audit createdTimestamp and lastModified Timestamp from the Master database. For security reasons, it does NOT
       include the createdBy and lastModifiedBy data, however these could easily be added to the event model if required.
-    - By following the Kafka Streams KTable/KSQL query conventions, we have the option of implementing a Kafka 
+    - By following the Kafka Streams KTable/KSQL query conventions, we have the option of implementing a Kafka
       Streams application that could transform or join streams for consumption by a microservice. 

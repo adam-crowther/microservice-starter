@@ -11,7 +11,7 @@ import static com.acroteq.ticketing.payment.service.domain.valueobject.Transacti
 import static com.acroteq.ticketing.payment.service.domain.valueobject.TransactionType.DEBIT;
 
 import com.acroteq.ticketing.domain.validation.ValidationResult;
-import com.acroteq.ticketing.domain.validation.ValidationResult.ValidationResultBuilder;
+import com.acroteq.ticketing.domain.validation.ValidationResultBuilder;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
 import com.acroteq.ticketing.domain.valueobject.PaymentStatus;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditEntry;
@@ -31,13 +31,13 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
                                        final CreditEntry creditEntry,
                                        final List<CreditHistory> creditHistories) {
     final ValidationResultBuilder resultBuilder = ValidationResult.builder();
-    resultBuilder.addValidationResult(payment.validatePayment());
+    resultBuilder.validationResult(payment.validatePayment());
 
-    resultBuilder.addValidationResult(validateCreditEntry(payment, creditEntry));
+    resultBuilder.validationResult(validateCreditEntry(payment, creditEntry));
     final CreditEntry updatedCreditEntry = subtractCreditEntry(payment, creditEntry);
     final CreditHistory newCreditHistory = updateCreditHistory(payment, DEBIT);
     creditHistories.add(newCreditHistory);
-    resultBuilder.addValidationResult(validateCreditHistory(updatedCreditEntry, creditHistories));
+    resultBuilder.validationResult(validateCreditHistory(updatedCreditEntry, creditHistories));
 
     final ValidationResult result = resultBuilder.build();
     final PaymentStatus updatedStatus = result.isPass() ? COMPLETED : FAILED;
@@ -115,8 +115,8 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
       log.error("Customer with id: {} doesn't have enough credit according to credit history", creditEntry.getId());
 
 
-      validationResult.addFailure("Customer with id %s doesn't have enough credit according to credit history",
-                                  creditEntry.getId());
+      validationResult.failure("Customer with id %s doesn't have enough credit according to credit history",
+                               creditEntry.getId());
     }
 
     if (!creditEntry.getTotalCredit()
@@ -126,8 +126,8 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
                 creditEntry.getId(),
                 creditEntry.getTotalCredit(),
                 totalCreditHistory.subtract(totalDebitHistory));
-      validationResult.addFailure("Credit history total is not equal to current credit for customer id: %s",
-                                  creditEntry.getId());
+      validationResult.failure("Credit history total is not equal to current credit for customer id: %s",
+                               creditEntry.getId());
     }
 
     return validationResult.build();

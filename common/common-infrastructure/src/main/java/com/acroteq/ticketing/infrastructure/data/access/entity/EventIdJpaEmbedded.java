@@ -17,7 +17,7 @@ import lombok.Setter;
 @AllArgsConstructor(access = PRIVATE)
 @NoArgsConstructor(access = PROTECTED)
 @Embeddable
-public class EventIdJpaEmbedded {
+public final class EventIdJpaEmbedded {
 
   @Column(name = "kafka_partition", nullable = false)
   private Integer partition;

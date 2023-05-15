@@ -13,7 +13,7 @@ import java.util.UUID;
 @ToString
 @EqualsAndHashCode
 @SuperBuilder(toBuilder = true)
-public abstract class SagaEvent<T> implements Event {
+public abstract class SagaEvent implements Event {
 
   @Builder.Default
   @NonNull

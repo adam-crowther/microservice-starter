@@ -1,14 +1,11 @@
 package com.acroteq.ticketing.kafka.producer.service;
 
-import org.apache.avro.specific.SpecificRecordBase;
+import org.apache.avro.specific.SpecificRecord;
 import org.springframework.kafka.support.SendResult;
 
-import java.util.function.BiFunction;
+import java.util.function.BiConsumer;
 
-public interface KafkaProducer<V extends SpecificRecordBase> {
+public interface KafkaProducer<V extends SpecificRecord> {
 
-  void send(String topicName,
-            Long id,
-            V value,
-            BiFunction<SendResult<String, V>, Throwable, SendResult<String, V>> callback);
+  void send(String topicName, Long id, V value, BiConsumer<SendResult<String, V>, Throwable> callback);
 }

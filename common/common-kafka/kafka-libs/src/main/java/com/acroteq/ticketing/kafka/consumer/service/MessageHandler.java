@@ -1,9 +1,11 @@
 package com.acroteq.ticketing.kafka.consumer.service;
 
 import static com.acroteq.ticketing.helper.StreamHelper.withCounter;
+import static com.acroteq.ticketing.precondition.Precondition.checkPrecondition;
 import static lombok.AccessLevel.PACKAGE;
 
-import jakarta.annotation.Nullable;
+import com.acroteq.ticketing.kafka.consumer.exception.MessageHandlerParameterCountMismatchException;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecord;
@@ -16,15 +18,18 @@ import java.util.function.BiConsumer;
 @RequiredArgsConstructor(access = PACKAGE)
 public abstract class MessageHandler {
 
-  public static KafkaMessageHandlerBuilder builder() {
-    return new KafkaMessageHandlerBuilder();
-  }
-
-  public void processMessages(final List<? extends SpecificRecord> messages,
-                              final List<String> keys,
-                              final List<Integer> partitions,
-                              final List<Long> offsets) {
+  public void processMessages(@NonNull final List<? extends SpecificRecord> messages,
+                              @NonNull final List<String> keys,
+                              @NonNull final List<Integer> partitions,
+                              @NonNull final List<Long> offsets) {
     log.info("Handling {} messages", messages.size());
+
+    checkPrecondition(messages.size() == keys.size(), "keys", MessageHandlerParameterCountMismatchException::new);
+    checkPrecondition(messages.size() == partitions.size(),
+                      "partitions",
+                      MessageHandlerParameterCountMismatchException::new);
+    checkPrecondition(messages.size() == offsets.size(), "offsets", MessageHandlerParameterCountMismatchException::new);
+
     messages.forEach(withCounter(processMessage(keys, partitions, offsets)));
   }
 
@@ -41,9 +46,9 @@ public abstract class MessageHandler {
                               final List<String> keys,
                               final List<Integer> partitions,
                               final List<Long> offsets) {
-    final String key = getParameterSafely(keys, counter);
-    final Integer partition = getParameterSafely(partitions, counter);
-    final Long offset = getParameterSafely(offsets, counter);
+    final String key = keys.get(counter);
+    final Integer partition = partitions.get(counter);
+    final Long offset = offsets.get(counter);
     final String messageType = getMessageType(message);
 
     try {
@@ -66,18 +71,7 @@ public abstract class MessageHandler {
     }
   }
 
-  @Nullable
-  private <TypeT> TypeT getParameterSafely(final List<TypeT> parameters, final int counter) {
-    final TypeT key;
-    if (counter < parameters.size()) {
-      key = parameters.get(counter);
-    } else {
-      key = null;
-    }
-    return key;
-  }
-
   abstract String getMessageType(SpecificRecord message);
 
-  abstract void consumeMessage(SpecificRecord message, String key, Integer partition, Long offset);
+  abstract void consumeMessage(SpecificRecord message, String key, @NonNull Integer partition, @NonNull Long offset);
 }

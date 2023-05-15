@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.approval.service.domain.valueobject;
 
-import com.acroteq.ticketing.domain.valueobject.BaseId;
+import com.acroteq.ticketing.domain.valueobject.EntityId;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @SuperBuilder(toBuilder = true)
-public class OrderApprovalId extends BaseId {
+public class OrderApprovalId extends EntityId {
 
   public static OrderApprovalId of(final Long id) {
     return OrderApprovalId.builder()

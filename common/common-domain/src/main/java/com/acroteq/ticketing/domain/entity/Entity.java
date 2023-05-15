@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.domain.entity;
 
-import com.acroteq.ticketing.domain.valueobject.BaseId;
+import com.acroteq.ticketing.domain.valueobject.EntityId;
 
-public interface Entity<IdT extends BaseId> {
+public interface Entity<IdT extends EntityId> {
 
   IdT getId();
 

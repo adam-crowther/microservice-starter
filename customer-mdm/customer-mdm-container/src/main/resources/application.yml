@@ -7,6 +7,11 @@ customer-service:
   customer-event:
     topic-name: customer-event
 
+security:
+  jwt:
+    authority-prefix: SCOPE_
+    principal-claim-name: "preferred_username"
+
 spring:
   main:
     banner-mode: off

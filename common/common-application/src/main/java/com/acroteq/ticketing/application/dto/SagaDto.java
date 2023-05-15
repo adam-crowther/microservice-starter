@@ -12,7 +12,7 @@ import java.util.UUID;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class SagaDto implements DataTransferObject {
+public abstract class SagaDto implements DataTransferObject {
 
   @NotNull
   private final UUID sagaId;

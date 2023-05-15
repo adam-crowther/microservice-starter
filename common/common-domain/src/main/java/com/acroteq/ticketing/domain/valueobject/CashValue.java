@@ -11,6 +11,7 @@ import lombok.Value;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 @Value
@@ -25,21 +26,10 @@ public class CashValue implements Serializable {
   @NonNull BigDecimal amount;
   @NonNull CurrencyId currencyId;
 
-  public boolean isGreaterThanZero() {
-    return amount.compareTo(BigDecimal.ZERO) > 0;
-  }
 
   public boolean isGreaterThan(final CashValue other) {
     checkMatchingCurrency(other);
     return amount.compareTo(other.getAmount()) > 0;
-  }
-
-  public boolean isGreaterThanOrEqualToZero() {
-    return amount.compareTo(BigDecimal.ZERO) >= 0;
-  }
-
-  public boolean isLessThanZero() {
-    return amount.compareTo(BigDecimal.ZERO) < 0;
   }
 
   public boolean isGreaterThanOrEqualTo(final CashValue other) {
@@ -47,20 +37,46 @@ public class CashValue implements Serializable {
     return amount.compareTo(other.getAmount()) >= 0;
   }
 
+  public boolean isLessThan(final CashValue other) {
+    checkMatchingCurrency(other);
+    return amount.compareTo(other.getAmount()) < 0;
+  }
+
+  public boolean isLessThanOrEqualTo(final CashValue other) {
+    checkMatchingCurrency(other);
+    return amount.compareTo(other.getAmount()) <= 0;
+  }
+
   private CurrencyId checkMatchingCurrency(final CashValue other) {
-    if (amount.compareTo(BigDecimal.ZERO) != 0 && other.getAmount()
-                                                       .compareTo(BigDecimal.ZERO) != 0) {
+    if (amount.compareTo(BigDecimal.ZERO) != 0
+        && other.getAmount()
+                .compareTo(BigDecimal.ZERO) != 0) {
       checkArgument(Objects.equals(currencyId, other.getCurrencyId()),
                     "The other Money object does not have a matching currency. this: %s, other: %s",
                     this,
                     other);
     }
 
-    return Stream.of(currencyId, other.getCurrencyId())
-                 .filter(CurrencyId::isNotNone)
+    return Stream.of(this, other)
+                 .filter(this::isAmountNotZero)
+                 .map(CashValue::getCurrencyId)
                  .findFirst()
-                 .orElse(NONE);
+                 .orElseGet(getNotNoneCurrencyId(this, other));
   }
+
+  private boolean isAmountNotZero(final CashValue value) {
+    return value.getAmount()
+                .compareTo(BigDecimal.ZERO) != 0;
+  }
+
+  private Supplier<CurrencyId> getNotNoneCurrencyId(final CashValue left, final CashValue right) {
+    return () -> Stream.of(left, right)
+                       .map(CashValue::getCurrencyId)
+                       .filter(CurrencyId::isNotNone)
+                       .findFirst()
+                       .orElse(NONE);
+  }
+
 
   public CashValue add(final CashValue other) {
     final CurrencyId currencyId = checkMatchingCurrency(other);
@@ -83,30 +99,17 @@ public class CashValue implements Serializable {
                     .build();
   }
 
-  public CashValue multiply(final CashValue other) {
-    final CurrencyId currencyId = checkMatchingCurrency(other);
-    final BigDecimal flight = amount.multiply(other.getAmount());
-    final BigDecimal roundedFlight = round(flight);
+  public CashValue multiply(final BigDecimal quantity) {
+    final BigDecimal product = amount.multiply(quantity);
+    final BigDecimal roundedProduct = round(product);
     return CashValue.builder()
-                    .amount(roundedFlight)
+                    .amount(roundedProduct)
                     .currencyId(currencyId)
                     .build();
   }
 
-  public CashValue multiply(final int quantity) {
-    final BigDecimal otherAmount = BigDecimal.valueOf(quantity);
-    final BigDecimal flight = amount.multiply(otherAmount);
-    final BigDecimal roundedFlight = round(flight);
-    return CashValue.builder()
-                    .amount(roundedFlight)
-                    .currencyId(currencyId)
-                    .build();
-  }
-
-  public CashValue divide(final CashValue other) {
-    final CurrencyId currencyId = checkMatchingCurrency(other);
-    final BigDecimal quotient = amount.multiply(other.getAmount());
-    final BigDecimal roundedQuotient = round(quotient);
+  public CashValue divide(final BigDecimal quotient) {
+    final BigDecimal roundedQuotient = amount.divide(quotient, 2, HALF_EVEN);
     return CashValue.builder()
                     .amount(roundedQuotient)
                     .currencyId(currencyId)
@@ -123,5 +126,19 @@ public class CashValue implements Serializable {
 
   private BigDecimal round(final BigDecimal amount) {
     return amount.setScale(2, HALF_EVEN);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(amount.doubleValue(), currencyId);
+  }
+
+  @Override
+  @SuppressWarnings("PMD.OnlyOneReturn")
+  public boolean equals(final Object object) {
+    return object == this //
+           || object instanceof final CashValue other   //
+              && amount.compareTo(other.getAmount()) == 0 //
+              && currencyId.equals(other.getCurrencyId()); //
   }
 }

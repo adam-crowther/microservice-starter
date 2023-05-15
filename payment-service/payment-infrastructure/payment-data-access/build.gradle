@@ -1,62 +1,72 @@
 plugins {
-    id 'java'
-    alias pluginLibs.plugins.docker.compose
-    alias pluginLibs.plugins.liquibase
-    id 'checkstyle'
-    id 'jacoco'
-    alias pluginLibs.plugins.spotbugs
+  id 'java'
+  alias pluginLibs.plugins.docker.compose
+  alias pluginLibs.plugins.liquibase
+  id 'checkstyle'
+  id 'jacoco'
+  alias pluginLibs.plugins.spotbugs
+  id 'groovy'
 }
 
 apply from: "${rootDir}/java.gradle"
 apply from: "${rootDir}/liquibase.gradle"
+apply plugin: "groovy"
 
 compileJava {
-    options.compilerArgs += [
-            '-Amapstruct.defaultComponentModel=spring',
-            '-Amapstruct.defaultInjectionStrategy=constructor',
-            '-Amapstruct.unmappedTargetPolicy=ERROR',
-            '-Amapstruct.verbose=false',
-            '-Amapstruct.suppressGeneratorVersionInfoComment=true',
-            '-Amapstruct.suppressGeneratorTimestamp=true'
-    ]
+  options.compilerArgs += [
+        '-Amapstruct.defaultComponentModel=spring',
+        '-Amapstruct.defaultInjectionStrategy=constructor',
+        '-Amapstruct.unmappedTargetPolicy=ERROR',
+        '-Amapstruct.verbose=false',
+        '-Amapstruct.suppressGeneratorVersionInfoComment=true',
+        '-Amapstruct.suppressGeneratorTimestamp=true'
+  ]
 }
 
 configurations {
-    compileOnly.extendsFrom annotationProcessor
+  compileOnly.extendsFrom annotationProcessor
 }
 
 dependencies {
-    implementation project(":common:common-domain")
-    implementation project(":common:common-application")
-    implementation project(":common:common-helper")
-    implementation project(":common:common-infrastructure")
-    implementation project(":payment-service:payment-domain:payment-domain-core")
-    implementation project(":payment-service:payment-domain:payment-application-service")
+  implementation project(":common:common-domain")
+  implementation project(":common:common-application")
+  implementation project(":common:common-helper")
+  implementation project(":common:common-infrastructure")
+  implementation project(":payment-service:payment-domain:payment-domain-core")
+  implementation project(":payment-service:payment-domain:payment-application-service")
 
-    implementation libs.jakarta.annotation.api
-    implementation libs.jakarta.persistence.api
-    implementation libs.lombok.core
-    implementation libs.mapstruct.core
-    implementation libs.spotbugs.annotations
-    implementation libs.spring.beans
-    implementation libs.spring.boot.autoconfigure
-    implementation libs.spring.context
-    implementation libs.spring.data.commons
-    implementation libs.spring.data.jpa
+  implementation libs.jakarta.annotation.api
+  implementation libs.jakarta.persistence.api
+  implementation libs.lombok.core
+  implementation libs.mapstruct.core
+  implementation libs.spotbugs.annotations
+  implementation libs.spring.beans
+  implementation libs.spring.boot.autoconfigure
+  implementation libs.spring.context
+  implementation libs.spring.data.commons
+  implementation libs.spring.data.jpa
 
-    runtimeOnly libs.liquibase.core
-    runtimeOnly libs.liquibase.hibernate
-    runtimeOnly libs.liquibase.slf4j
-    runtimeOnly libs.postgresql.driver
+  runtimeOnly libs.liquibase.core
+  runtimeOnly libs.liquibase.hibernate
+  runtimeOnly libs.liquibase.slf4j
+  runtimeOnly libs.postgresql.driver
 
-    annotationProcessor libs.lombok.core
-    annotationProcessor libs.lombok.mapstruct.binding
-    annotationProcessor libs.mapstruct.processor
+  annotationProcessor libs.lombok.core
+  annotationProcessor libs.lombok.mapstruct.binding
+  annotationProcessor libs.mapstruct.processor
+
+  testImplementation libs.groovy
+  testImplementation libs.jakarta.inject.api
+  testImplementation libs.spock.core
+  testImplementation libs.spock.spring
+  testImplementation libs.spring.test
+  testImplementation libs.equalsverifier
+  testImplementation libs.mockito.core
 }
 
 test {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
+  useJUnitPlatform()
+  testLogging {
+    events "passed", "skipped", "failed"
+  }
 }

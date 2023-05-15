@@ -1,18 +1,29 @@
 package com.acroteq.ticketing.application.mapper;
 
+import static com.acroteq.ticketing.domain.validation.ValidationResult.pass;
+import static java.util.Collections.emptyList;
+
 import com.acroteq.ticketing.domain.validation.ValidationResult;
 import org.mapstruct.Mapper;
 
 import java.util.List;
+import java.util.Optional;
+import javax.annotation.Nullable;
 
 @Mapper
 public interface ValidationResultMapper {
 
-  default ValidationResult convert(final List<String> failureMessages) {
-    return ValidationResult.of(failureMessages);
+  @Nullable
+  default ValidationResult convert(@Nullable final List<String> failureMessages) {
+    return Optional.ofNullable(failureMessages)
+                   .map(ValidationResult::of)
+                   .orElse(pass());
   }
 
-  default List<String> convert(final ValidationResult result) {
-    return result.getFailures();
+  @Nullable
+  default List<String> convert(@Nullable final ValidationResult result) {
+    return Optional.ofNullable(result)
+                   .map(ValidationResult::getFailures)
+                   .orElse(emptyList());
   }
 }

@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.application.resolver;
 
-import com.acroteq.ticketing.domain.valueobject.BaseId;
+import com.acroteq.ticketing.domain.valueobject.EntityId;
 
-public interface Resolver<IdT extends BaseId, TypeT> {
+public interface Resolver<IdT extends EntityId, TypeT> {
 
   TypeT resolve(IdT id);
 

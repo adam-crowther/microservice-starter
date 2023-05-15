@@ -6,7 +6,7 @@ import static com.acroteq.ticketing.domain.valueobject.OrderStatus.PAID;
 import com.acroteq.ticketing.approval.service.domain.entity.airline.Airline;
 import com.acroteq.ticketing.domain.entity.MasterEntity;
 import com.acroteq.ticketing.domain.validation.ValidationResult;
-import com.acroteq.ticketing.domain.validation.ValidationResult.ValidationResultBuilder;
+import com.acroteq.ticketing.domain.validation.ValidationResultBuilder;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
 import com.acroteq.ticketing.domain.valueobject.OrderId;
 import com.acroteq.ticketing.domain.valueobject.OrderStatus;
@@ -35,14 +35,14 @@ public class Order extends MasterEntity<OrderId> {
   public ValidationResult validate() {
     final ValidationResultBuilder result = ValidationResult.builder();
     if (orderStatus != PAID) {
-      result.addFailure("Payment is not completed for order: %s", getId());
+      result.failure("Payment is not completed for order: %s", getId());
     }
 
     items.stream()
          .map(OrderItem::getFlight)
          .filter(flight -> !flight.isAvailable())
          .map(flight -> fail("Flight with id: %s is not available", flight.getId()))
-         .forEach(result::addValidationResult);
+         .forEach(result::validationResult);
 
     return result.build();
   }

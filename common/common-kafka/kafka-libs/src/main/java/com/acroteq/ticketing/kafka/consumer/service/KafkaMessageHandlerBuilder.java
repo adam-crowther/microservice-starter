@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 
 @Slf4j
 @RequiredArgsConstructor(access = PACKAGE)
-public class KafkaMessageHandlerBuilder implements HandlerBuilder<KafkaMessageHandlerBuilder> {
+public class KafkaMessageHandlerBuilder {
 
   private final Map<String, MessageConsumer<? extends SpecificRecord, ? extends DataTransferObject>> consumers =
       new ConcurrentHashMap<>();
@@ -25,7 +25,7 @@ public class KafkaMessageHandlerBuilder implements HandlerBuilder<KafkaMessageHa
       final String messageType,
       final MessageToDtoMapper<MessageT, DtoT> mapper,
       final Consumer<DtoT> listener) {
-    final MessageConsumer<MessageT, DtoT> consumer = new MessageConsumer<>(messageType, mapper, listener);
+    final MessageConsumer<MessageT, DtoT> consumer = new MessageConsumer<>(mapper, listener);
     consumers.put(messageType, consumer);
     return this;
   }
@@ -33,11 +33,5 @@ public class KafkaMessageHandlerBuilder implements HandlerBuilder<KafkaMessageHa
   public KafkaMessageHandler build() {
     return new KafkaMessageHandler(unmodifiableMap(consumers));
   }
-
-  @Override
-  public KafkaMessageHandlerBuilder self() {
-    return this;
-  }
 }
-
 

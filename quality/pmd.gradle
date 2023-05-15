@@ -1,12 +1,12 @@
 apply plugin: 'pmd'
 
 pmd {
-    consoleOutput = true
-    maxFailures = 0
-    ignoreFailures = false
-    incrementalAnalysis = true
-    toolVersion = "6.55.0"
-    rulesMinimumPriority = 5
-    ruleSets = []
-    ruleSetFiles = files("${rootDir}/quality/pmd_rules.xml")
+  consoleOutput = true
+  maxFailures = 0
+  ignoreFailures = false
+  incrementalAnalysis = true
+  toolVersion = "6.55.0"
+  rulesMinimumPriority = 5
+  ruleSets = []
+  ruleSetFiles = files("${rootDir}/quality/pmd_rules.xml")
 }

@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.customer.service.domain.entity;
 
+import static com.acroteq.ticketing.domain.valueobject.CashValue.ZERO;
 import static com.acroteq.ticketing.precondition.Precondition.checkPrecondition;
 
 import com.acroteq.ticketing.customer.service.domain.exception.CustomerCreditLimitException;
@@ -26,6 +27,6 @@ public class Customer extends AggregateRoot<CustomerId> {
   private final CashValue creditLimit;
 
   public void validate() {
-    checkPrecondition(creditLimit.isGreaterThanOrEqualToZero(), CustomerCreditLimitException::new, creditLimit);
+    checkPrecondition(creditLimit.isGreaterThanOrEqualTo(ZERO), CustomerCreditLimitException::new, creditLimit);
   }
 }

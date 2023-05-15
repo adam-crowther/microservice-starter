@@ -30,7 +30,7 @@
 - The `MasterJpaEntity` parent class includes 'Auditing' attributes, which is enriched by Spring-Data.
 
   | Type    | Field                 | Annotation          | Description                                        |
-    |---------|-----------------------|---------------------|----------------------------------------------------|
+      |---------|-----------------------|---------------------|----------------------------------------------------|
   | String  | createdBy             | `@CreatedBy`        | The principal (user) that created the entity       |
   | Instant | createdTimestamp      | `@CreatedDate`      | The date that the entity was created               |
   | String  | lastModifiedBy        | `@LastModifiedBy`   | The principal (user) that last modified the entity |
@@ -45,7 +45,8 @@
     - can be referenced by the microservice business model and business logic, but this is strictly limited to read-only
       access (= "Queries")
 - Replicated JPA Entities inherit from class `ReplicatedJpaEntity`.
-- The `ReplicatedJpaEntity` includes the `EventId` attributes, which are taken from the Kafka event: partition and offset.
+- The `ReplicatedJpaEntity` includes the `EventId` attributes, which are taken from the Kafka event: partition and
+  offset.
 - The `EventId` is used to recognise event ordering errors and implement idempotent event processing.
 
 # Optimistic Locking

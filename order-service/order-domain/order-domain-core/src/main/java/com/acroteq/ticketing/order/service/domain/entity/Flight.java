@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.order.service.domain.entity;
 
+import static com.acroteq.ticketing.domain.valueobject.CashValue.ZERO;
 import static com.acroteq.ticketing.precondition.Precondition.checkPrecondition;
 
 import com.acroteq.ticketing.domain.entity.ReplicatedEntity;
@@ -24,7 +25,7 @@ public class Flight extends ReplicatedEntity<FlightId> {
   private final CashValue price;
 
   void validatePrice() {
-    checkPrecondition(price.isGreaterThanZero(), InvalidPriceException::new);
+    checkPrecondition(price.isGreaterThan(ZERO), InvalidPriceException::new);
   }
 
   public void validateFlightNumberAndPriceEquality(final Flight other) {

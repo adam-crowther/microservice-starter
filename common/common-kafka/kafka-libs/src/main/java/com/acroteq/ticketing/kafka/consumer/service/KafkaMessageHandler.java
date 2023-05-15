@@ -4,7 +4,8 @@ package com.acroteq.ticketing.kafka.consumer.service;
 import static lombok.AccessLevel.PACKAGE;
 
 import com.acroteq.ticketing.application.dto.DataTransferObject;
-import com.acroteq.ticketing.kafka.consumer.exception.MessageToDtoMapperMissingException;
+import com.acroteq.ticketing.kafka.consumer.exception.UnsupportedMessageTypeException;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.Schema;
@@ -17,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor(access = PACKAGE)
 public class KafkaMessageHandler extends MessageHandler {
 
-  private static final String UNRECOGNISED_MESSAGE_TYPE = "UNRECOGNISED_MESSAGE_TYPE";
+  private static final String UNSUPPORTED_MESSAGE_TYPE = "unsupported-message-type";
 
   private final Map<String, MessageConsumer<? extends SpecificRecord, ? extends DataTransferObject>> consumers;
 
@@ -26,7 +27,10 @@ public class KafkaMessageHandler extends MessageHandler {
   }
 
   @Override
-  void consumeMessage(final SpecificRecord message, final String key, final Integer partition, final Long offset) {
+  void consumeMessage(final SpecificRecord message,
+                      final String key,
+                      @NonNull final Integer partition,
+                      @NonNull final Long offset) {
     final String messageType = getMessageType(message);
     final MessageConsumer<SpecificRecord, DataTransferObject> consumer = getConsumer(messageType);
     consumer.consumeMessage(message, partition, offset);
@@ -39,15 +43,15 @@ public class KafkaMessageHandler extends MessageHandler {
     return Optional.of(messageType)
                    .map(consumers::get)
                    .map(handler -> (MessageConsumer<SpecificRecord, DataTransferObject>) handler)
-                   .orElseThrow(() -> new MessageToDtoMapperMissingException(messageType));
+                   .orElseThrow(() -> new UnsupportedMessageTypeException(messageType));
   }
 
   @Override
   String getMessageType(final SpecificRecord message) {
-    return Optional.of(message)
+    return Optional.ofNullable(message)
                    .map(SpecificRecord::getSchema)
                    .map(Schema::getName)
-                   .orElse(UNRECOGNISED_MESSAGE_TYPE);
+                   .orElse(UNSUPPORTED_MESSAGE_TYPE);
   }
 }
 

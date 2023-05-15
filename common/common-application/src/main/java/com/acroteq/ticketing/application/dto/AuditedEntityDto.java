@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @ToString(callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class AuditedEntityDto extends EntityDto {
+public abstract class AuditedEntityDto extends EntityDto {
 
   @NotNull
   private final AuditDto audit;

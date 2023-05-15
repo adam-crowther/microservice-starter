@@ -2,7 +2,7 @@ package com.acroteq.ticketing.customer.service.domain.event;
 
 import com.acroteq.ticketing.customer.service.domain.entity.Customer;
 import com.acroteq.ticketing.domain.event.EntityEvent;
-import com.acroteq.ticketing.domain.valueobject.BaseId;
+import com.acroteq.ticketing.domain.valueobject.EntityId;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.ToString;
@@ -21,6 +21,6 @@ public class CustomerEvent implements EntityEvent {
   public Optional<Long> getId() {
     return Optional.of(customer)
                    .map(Customer::getId)
-                   .map(BaseId::getValue);
+                   .map(EntityId::getValue);
   }
 }

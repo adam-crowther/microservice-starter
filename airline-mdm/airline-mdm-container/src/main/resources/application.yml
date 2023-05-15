@@ -6,6 +6,11 @@ airline-service:
   airline-event:
     topic-name: airline-event
 
+security:
+  jwt:
+    authority-prefix: SCOPE_
+    principal-claim-name: "preferred_username"
+
 spring:
   main:
     banner-mode: off

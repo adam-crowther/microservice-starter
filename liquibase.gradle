@@ -1,160 +1,160 @@
 apply plugin: 'org.liquibase.gradle'
 
 configurations {
-    liquibaseRuntime.extendsFrom compileClasspath
-    liquibaseRuntime.exclude group: 'ch.qos.logback'
-    liquibaseRuntime.exclude group: 'org.apache.logging.log4j'
-    liquibaseRuntime.exclude group: 'org.slf4j', module: 'slf4j-reload4j'
+  liquibaseRuntime.extendsFrom compileClasspath
+  liquibaseRuntime.exclude group: 'ch.qos.logback'
+  liquibaseRuntime.exclude group: 'org.apache.logging.log4j'
+  liquibaseRuntime.exclude group: 'org.slf4j', module: 'slf4j-reload4j'
 }
 
 dependencies {
-    liquibaseRuntime libs.jakarta.annotation.api
-    liquibaseRuntime libs.liquibase.core
-    liquibaseRuntime libs.liquibase.groovy.dsl
-    liquibaseRuntime libs.liquibase.hibernate
-    liquibaseRuntime libs.picocli
-    liquibaseRuntime libs.postgresql.driver
-    liquibaseRuntime libs.slf4j.simple
-    liquibaseRuntime libs.snakeyaml
-    liquibaseRuntime libs.spring.boot.data.jpa
-    liquibaseRuntime sourceSets.main.output
+  liquibaseRuntime libs.jakarta.annotation.api
+  liquibaseRuntime libs.liquibase.core
+  liquibaseRuntime libs.liquibase.groovy.dsl
+  liquibaseRuntime libs.liquibase.hibernate
+  liquibaseRuntime libs.picocli
+  liquibaseRuntime libs.postgresql.driver
+  liquibaseRuntime libs.slf4j.simple
+  liquibaseRuntime libs.snakeyaml
+  liquibaseRuntime libs.spring.boot.data.jpa
+  liquibaseRuntime sourceSets.main.output
 }
 
 dockerCompose {
-    useComposeFiles = ["docker-compose.yaml"]
-    startedServices = ['postgres'] //, 'pgadmin']
-    dockerComposeWorkingDirectory = projectDir
+  useComposeFiles = ["docker-compose.yaml"]
+  startedServices = ['postgres'] //, 'pgadmin']
+  dockerComposeWorkingDirectory = projectDir
 }
 
 composeUp {
-    finalizedBy composeDown
-    doLast {
-        project.ext.postgresqlPort = dockerCompose.servicesInfos.postgres.ports[5432]
-    }
+  finalizedBy composeDown
+  doLast {
+    project.ext.postgresqlPort = dockerCompose.servicesInfos.postgres.ports[5432]
+  }
 }
 
 tasks.register('liquibaseInitialise') {
-    doFirst {
-        liquibase {
-            jvmArgs << "-Duser.dir=$projectDir"
-            project.ext.timestamp = new Date().format("yyyyMMdd-HHmmss")
-        }
+  doFirst {
+    liquibase {
+      jvmArgs << "-Duser.dir=$projectDir"
+      project.ext.timestamp = new Date().format("yyyyMMdd-HHmmss")
     }
+  }
 }
 
 liquibaseDropAll {
-    dependsOn liquibaseInitialise
-    dependsOn composeUp
-    finalizedBy composeDown
+  dependsOn liquibaseInitialise
+  dependsOn composeUp
+  finalizedBy composeDown
 
-    doFirst() {
-        liquibase {
-            activities {
-                dropSchema {
-                    url "jdbc:postgresql://localhost:${project.postgresqlPort}/postgres"
-                    driver "org.postgresql.Driver"
-                    username "postgres"
-                    password "password"
-                    logFile "build/liquibase/liquibase_dropall.log"
-                    logLevel "FINE"
-                    format "yaml"
-                    logLevel "FINE"
-                    showBanner "false"
-                    convertDataTypes "true"
-                    diffColumnOrder "false"
-                }
-                runList = 'dropSchema'
-            }
+  doFirst() {
+    liquibase {
+      activities {
+        dropSchema {
+          url "jdbc:postgresql://localhost:${project.postgresqlPort}/postgres"
+          driver "org.postgresql.Driver"
+          username "postgres"
+          password "password"
+          logFile "build/liquibase/liquibase_dropall.log"
+          logLevel "FINE"
+          format "yaml"
+          logLevel "FINE"
+          showBanner "false"
+          convertDataTypes "true"
+          diffColumnOrder "false"
         }
+        runList = 'dropSchema'
+      }
     }
+  }
 }
 
 liquibaseUpdate {
-    // Start up postgres docker container before running liquibaseDiffChangelog and shut it down after
-    dependsOn liquibaseInitialise
-    dependsOn liquibaseDropAll
-    dependsOn composeUp
-    finalizedBy composeDown
+  // Start up postgres docker container before running liquibaseDiffChangelog and shut it down after
+  dependsOn liquibaseInitialise
+  dependsOn liquibaseDropAll
+  dependsOn composeUp
+  finalizedBy composeDown
 
-    doFirst() {
-        liquibase {
-            activities {
-                deployChangeLog {
-                    changelogFile "src/main/resources/db/changelog/changelog-master.yaml"
-                    url "jdbc:postgresql://localhost:${project.postgresqlPort}/postgres"
-                    driver "org.postgresql.Driver"
-                    username "postgres"
-                    password "password"
-                    logFile "build/liquibase/liquibase_update.log"
-                    logLevel "FINE"
-                    format "yaml"
-                    logLevel "FINE"
-                    showBanner "false"
-                    convertDataTypes "true"
-                    diffColumnOrder "false"
-                }
-                runList = 'deployChangeLog'
-            }
+  doFirst() {
+    liquibase {
+      activities {
+        deployChangeLog {
+          changelogFile "src/main/resources/db/changelog/changelog-master.yaml"
+          url "jdbc:postgresql://localhost:${project.postgresqlPort}/postgres"
+          driver "org.postgresql.Driver"
+          username "postgres"
+          password "password"
+          logFile "build/liquibase/liquibase_update.log"
+          logLevel "FINE"
+          format "yaml"
+          logLevel "FINE"
+          showBanner "false"
+          convertDataTypes "true"
+          diffColumnOrder "false"
         }
+        runList = 'deployChangeLog'
+      }
     }
+  }
 }
 
 liquibaseDiffChangelog {
-    dependsOn liquibaseInitialise
-    dependsOn liquibaseUpdate
-    dependsOn compileJava
-    finalizedBy composeDown
+  dependsOn liquibaseInitialise
+  dependsOn liquibaseUpdate
+  dependsOn compileJava
+  finalizedBy composeDown
 
-    doFirst() {
-        liquibase {
-            activities {
-                generateDiffChangeLog {
-                    changelogFile "./build/liquibase/changelog-diff-${project.timestamp}.yaml"
-                    overwriteOutputFile true
-                    url "jdbc:postgresql://localhost:${project.postgresqlPort}/postgres"
-                    driver "org.postgresql.Driver"
-                    username "postgres"
-                    password "password"
-                    referenceUrl "hibernate:spring:com.acroteq.ticketing?dialect=org.hibernate.dialect.PostgreSQLDialect&" +
-                            "hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl&" +
-                            "hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
-                    referenceDriver "liquibase.ext.hibernate.database.connection.HibernateDriver"
-                    logFile "./build/liquibase/liquibase_diff.log"
-                    format "yaml"
-                    logLevel "FINE"
-                    showBanner "false"
-                    convertDataTypes "true"
-                    diffColumnOrder "false"
-                }
-                runList = 'generateDiffChangeLog'
-            }
+  doFirst() {
+    liquibase {
+      activities {
+        generateDiffChangeLog {
+          changelogFile "./build/liquibase/changelog-diff-${project.timestamp}.yaml"
+          overwriteOutputFile true
+          url "jdbc:postgresql://localhost:${project.postgresqlPort}/postgres"
+          driver "org.postgresql.Driver"
+          username "postgres"
+          password "password"
+          referenceUrl "hibernate:spring:com.acroteq.ticketing?dialect=org.hibernate.dialect.PostgreSQLDialect&" +
+                "hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl&" +
+                "hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
+          referenceDriver "liquibase.ext.hibernate.database.connection.HibernateDriver"
+          logFile "./build/liquibase/liquibase_diff.log"
+          format "yaml"
+          logLevel "FINE"
+          showBanner "false"
+          convertDataTypes "true"
+          diffColumnOrder "false"
         }
+        runList = 'generateDiffChangeLog'
+      }
     }
+  }
 }
 
 liquibaseGenerateChangelog {
-    dependsOn liquibaseInitialise
-    dependsOn compileJava
+  dependsOn liquibaseInitialise
+  dependsOn compileJava
 
-    doFirst() {
-        liquibase {
-            activities {
-                generateChangeLog {
-                    changelogFile "./build/liquibase/changelog-${project.timestamp}.yaml"
-                    overwriteOutputFile true
-                    url "hibernate:spring:com.acroteq.ticketing?dialect=org.hibernate.dialect.PostgreSQLDialect&" +
-                            "hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl&" +
-                            "hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
-                    driver "liquibase.ext.hibernate.database.connection.HibernateDriver"
-                    logFile "./build/liquibase/liquibase_gen.log"
-                    format "yaml"
-                    logLevel "FINE"
-                    showBanner "false"
-                    convertDataTypes "true"
-                    diffColumnOrder "false"
-                }
-                runList = 'generateChangeLog'
-            }
+  doFirst() {
+    liquibase {
+      activities {
+        generateChangeLog {
+          changelogFile "./build/liquibase/changelog-${project.timestamp}.yaml"
+          overwriteOutputFile true
+          url "hibernate:spring:com.acroteq.ticketing?dialect=org.hibernate.dialect.PostgreSQLDialect&" +
+                "hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl&" +
+                "hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
+          driver "liquibase.ext.hibernate.database.connection.HibernateDriver"
+          logFile "./build/liquibase/liquibase_gen.log"
+          format "yaml"
+          logLevel "FINE"
+          showBanner "false"
+          convertDataTypes "true"
+          diffColumnOrder "false"
         }
+        runList = 'generateChangeLog'
+      }
     }
+  }
 }

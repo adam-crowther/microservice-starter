@@ -9,6 +9,8 @@ import lombok.NonNull;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
+
 @Getter
 @ToString(callSuper = true)
 @SuperBuilder(toBuilder = true)
@@ -21,6 +23,6 @@ public class OrderItem extends MasterEntity<OrderItemId> {
 
   CashValue getAmount() {
     return flight.getPrice()
-                 .multiply(quantity);
+                 .multiply(BigDecimal.valueOf(quantity));
   }
 }

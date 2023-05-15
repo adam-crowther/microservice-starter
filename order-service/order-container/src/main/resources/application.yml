@@ -18,6 +18,11 @@ order-service:
     consumer-group-id: customer-event-consumer-group
     topic-name: customer-event
 
+security:
+  jwt:
+    authority-prefix: SCOPE_
+    principal-claim-name: "preferred_username"
+
 spring:
   main:
     banner-mode: off

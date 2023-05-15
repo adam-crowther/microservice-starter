@@ -1,24 +1,24 @@
 package com.acroteq.ticketing.application.mapper.id;
 
-import com.acroteq.ticketing.domain.valueobject.BaseId;
+import com.acroteq.ticketing.domain.valueobject.EntityId;
 import jakarta.annotation.Nullable;
 
 import java.util.Optional;
 
 @SuppressWarnings({ "PMD.AvoidDuplicateLiterals" })
-public interface IdMapper<IdT extends BaseId> {
+public interface IdMapper<IdT extends EntityId> {
 
   @Nullable
-  default Long convertBaseIdToLong(@Nullable final IdT id) {
+  default Long convertEntityIdToLong(@Nullable final IdT id) {
     return Optional.ofNullable(id)
-                   .map(BaseId::getValue)
+                   .map(EntityId::getValue)
                    .orElse(null);
   }
 
   @Nullable
-  default String convertBaseIdToString(@Nullable final IdT id) {
+  default String convertEntityIdToString(@Nullable final IdT id) {
     return Optional.ofNullable(id)
-                   .map(this::convertBaseIdToLong)
+                   .map(this::convertEntityIdToLong)
                    .map(Object::toString)
                    .orElse(null);
   }

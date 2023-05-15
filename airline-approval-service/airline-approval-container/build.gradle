@@ -1,67 +1,67 @@
 plugins {
-    id 'java'
-    id 'checkstyle'
-    id 'jacoco'
-    alias pluginLibs.plugins.spotbugs
-    alias pluginLibs.plugins.spring.boot
-    alias pluginLibs.plugins.graphfity
+  id 'java'
+  id 'checkstyle'
+  id 'jacoco'
+  alias pluginLibs.plugins.spotbugs
+  alias pluginLibs.plugins.spring.boot
+  alias pluginLibs.plugins.graphfity
 }
 
 apply from: "${rootDir}/java.gradle"
 
 configurations {
-    runtimeOnly.exclude group: 'ch.qos.logback'
-    runtimeOnly.exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+  runtimeOnly.exclude group: 'ch.qos.logback'
+  runtimeOnly.exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
 }
 
 dependencies {
-    implementation project(":common:common-container")
-    implementation project(":common:common-domain")
-    implementation project(":airline-approval-service:airline-approval-domain:airline-approval-domain-core")
-    implementation project(":airline-approval-service:airline-approval-domain:airline-approval-application-service")
-    implementation project(":airline-approval-service:airline-approval-infrastructure:airline-approval-data-access")
-    implementation project(":airline-approval-service:airline-approval-infrastructure:airline-approval-messaging")
+  implementation project(":common:common-container")
+  implementation project(":common:common-domain")
+  implementation project(":airline-approval-service:airline-approval-domain:airline-approval-domain-core")
+  implementation project(":airline-approval-service:airline-approval-domain:airline-approval-application-service")
+  implementation project(":airline-approval-service:airline-approval-infrastructure:airline-approval-data-access")
+  implementation project(":airline-approval-service:airline-approval-infrastructure:airline-approval-messaging")
 
-    implementation libs.jul.to.slf4j
-    implementation libs.spring.beans
-    implementation libs.spring.boot.actuator
-    implementation libs.spring.boot.autoconfigure
-    implementation libs.spring.boot.core
-    implementation libs.spring.context
-    implementation libs.spring.data.commons
-    implementation libs.spring.data.jpa
+  implementation libs.jul.to.slf4j
+  implementation libs.spring.beans
+  implementation libs.spring.boot.actuator
+  implementation libs.spring.boot.autoconfigure
+  implementation libs.spring.boot.core
+  implementation libs.spring.context
+  implementation libs.spring.data.commons
+  implementation libs.spring.data.jpa
 
-    runtimeOnly libs.jackson.databind
-    runtimeOnly libs.jackson.dataformat.yaml
-    runtimeOnly libs.log4j.core
-    runtimeOnly libs.log4j.json.layout
-    runtimeOnly libs.log4j.slf4j
-    runtimeOnly libs.postgresql.driver
-    runtimeOnly libs.spring.boot.data.jpa
-    runtimeOnly libs.spring.boot.validation
-    runtimeOnly libs.spring.boot.web
-    runtimeOnly libs.spring.boot.security
-    runtimeOnly libs.spring.boot.oauth2.client
-    runtimeOnly libs.spring.boot.oauth2.resource.server
+  runtimeOnly libs.jackson.databind
+  runtimeOnly libs.jackson.dataformat.yaml
+  runtimeOnly libs.log4j.core
+  runtimeOnly libs.log4j.json.layout
+  runtimeOnly libs.log4j.slf4j
+  runtimeOnly libs.postgresql.driver
+  runtimeOnly libs.spring.boot.data.jpa
+  runtimeOnly libs.spring.boot.validation
+  runtimeOnly libs.spring.boot.web
+  runtimeOnly libs.spring.boot.security
+  runtimeOnly libs.spring.boot.oauth2.client
+  runtimeOnly libs.spring.boot.oauth2.resource.server
 }
 
 springBoot {
-    mainClass = 'com.acroteq.ticketing.approval.service.container.AirlineApprovalServiceApplication'
+  mainClass = 'com.acroteq.ticketing.approval.service.container.AirlineApprovalServiceApplication'
 }
 
 bootBuildImage {
-    imageName = "${dockerNamespace}/${rootProject.name}/${project.name}:${project.version}"
+  imageName = "${dockerNamespace}/${rootProject.name}/${project.name}:${project.version}"
 }
 
 graphfityExtension {
-    nodeTypesPath = "${projectDir}/graphfityNodeTypes.json"
-    projectRootName = "${project.path}"
-    graphImagePath = "${buildDir}/"
+  nodeTypesPath = "${projectDir}/graphfityNodeTypes.json"
+  projectRootName = "${project.path}"
+  graphImagePath = "${buildDir}/"
 }
 
 test {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
+  useJUnitPlatform()
+  testLogging {
+    events "passed", "skipped", "failed"
+  }
 }

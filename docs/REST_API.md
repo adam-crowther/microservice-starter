@@ -60,8 +60,8 @@
 - The implementation class is located in submodule `xxxx-rest-controller`, and is annotated with `@RestController`, e.g.
   [AirlinesController.java](../airline-mdm/airline-mdm-presentation/airline-mdm-rest-controller/src/main/java/com/acroteq/ticketing/airline/service/presentation/rest/AirlinesController.java).
 - The implementation class should only do 2 things:
-  - Mapping between the API model and the Application-Service DTO model
-  - Service calls
+    - Mapping between the API model and the Application-Service DTO model
+    - Service calls
 - This is infrastructure code, which means that we are **strict** that about not wanting business or application logic
   in there.
 
@@ -84,6 +84,6 @@
 | Order Service | http://localhost:8181 | http://localhost:8281 |
 
 - To allow the Swagger UI client to make requests to the REST container, we need to enable **CORS**, using
-  the `@CrossOrigin` annotation in the `@RestController` classes in the `xxxx-rest-controller` submodule. 
+  the `@CrossOrigin` annotation in the `@RestController` classes in the `xxxx-rest-controller` submodule.
   The CORS configuration only allows cross-domain requests from `http://localhost:828x`, so it's not a security
   risk.

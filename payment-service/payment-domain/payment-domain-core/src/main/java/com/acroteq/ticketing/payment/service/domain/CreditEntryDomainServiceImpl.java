@@ -13,6 +13,7 @@ import com.acroteq.ticketing.payment.service.domain.exception.CreditEntryWithNul
 import com.acroteq.ticketing.payment.service.domain.valueobject.CreditEntryOutput;
 import com.acroteq.ticketing.payment.service.domain.valueobject.TransactionType;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,7 +50,7 @@ public class CreditEntryDomainServiceImpl implements CreditEntryDomainService {
                                                  .build();
 
     final CreditHistory previousHistory = getPreviousHistory(creditHistoryList);
-    final TransactionType transactionType = creditLimitDelta.isGreaterThanOrEqualToZero() ? CREDIT : DEBIT;
+    final TransactionType transactionType = creditLimitDelta.isGreaterThanOrEqualTo(ZERO) ? CREDIT : DEBIT;
     final CreditHistory creditHistory = previousHistory.toBuilder()
                                                        .id(null)
                                                        .transactionType(transactionType)
@@ -82,6 +83,6 @@ public class CreditEntryDomainServiceImpl implements CreditEntryDomainService {
   private CashValue getCreditWithSign(final CreditHistory creditHistory) {
     final CashValue credit = creditHistory.getCredit();
     final int sign = creditHistory.getTransactionType() == CREDIT ? 1 : -1;
-    return credit.multiply(sign);
+    return credit.multiply(BigDecimal.valueOf(sign));
   }
 }

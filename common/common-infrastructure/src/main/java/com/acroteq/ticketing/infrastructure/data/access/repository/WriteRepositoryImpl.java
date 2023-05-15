@@ -2,10 +2,11 @@ package com.acroteq.ticketing.infrastructure.data.access.repository;
 
 import com.acroteq.ticketing.application.repository.WriteRepository;
 import com.acroteq.ticketing.domain.entity.Entity;
-import com.acroteq.ticketing.domain.valueobject.BaseId;
+import com.acroteq.ticketing.domain.valueobject.EntityId;
 import com.acroteq.ticketing.infrastructure.data.access.entity.JpaEntity;
 import com.acroteq.ticketing.infrastructure.mapper.DomainToJpaMapper;
 import com.acroteq.ticketing.infrastructure.mapper.JpaToDomainMapper;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,7 +15,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 @RequiredArgsConstructor
-public class WriteRepositoryImpl<IdT extends BaseId, EntityT extends Entity<IdT>, JpaT extends JpaEntity>
+public class WriteRepositoryImpl<IdT extends EntityId, EntityT extends Entity<IdT>, JpaT extends JpaEntity>
     implements WriteRepository<IdT, EntityT> {
 
   private final JpaRepository<JpaT, Long> jpaRepository;
@@ -22,7 +23,7 @@ public class WriteRepositoryImpl<IdT extends BaseId, EntityT extends Entity<IdT>
   private final DomainToJpaMapper<EntityT, JpaT> domainToJpaMapper;
 
   @Override
-  public EntityT save(final EntityT entity) {
+  public EntityT save(@NonNull final EntityT entity) {
 
     return Optional.of(entity)
                    .map(EntityT::getId)
@@ -38,6 +39,8 @@ public class WriteRepositoryImpl<IdT extends BaseId, EntityT extends Entity<IdT>
 
   private EntityT updateExistingEntity(final JpaT existingEntity, final EntityT entity) {
     final JpaT updatedEntity = domainToJpaMapper.convertDomainToJpa(entity, existingEntity);
+    // We use saveAndFlush so that the response will be populated with the audit data - eg createdTimestamp,
+    // createdBy, etc.
     final JpaT savedEntity = jpaRepository.saveAndFlush(updatedEntity);
     return jpaToDomainMapper.convertJpaToDomain(savedEntity);
   }
@@ -48,12 +51,14 @@ public class WriteRepositoryImpl<IdT extends BaseId, EntityT extends Entity<IdT>
 
   private EntityT insertEntity(final EntityT entity) {
     final JpaT newEntity = domainToJpaMapper.convertDomainToJpa(entity);
+    // We use saveAndFlush so that the response will be populated with the audit data - eg createdTimestamp,
+    // createdBy, etc.
     final JpaT savedEntity = jpaRepository.saveAndFlush(newEntity);
     return jpaToDomainMapper.convertJpaToDomain(savedEntity);
   }
 
   @Override
-  public void deleteById(final IdT id) {
+  public void deleteById(@NonNull final IdT id) {
     jpaRepository.deleteById(id.getValue());
   }
 }
