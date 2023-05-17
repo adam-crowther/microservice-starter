@@ -131,7 +131,7 @@ The response will contain a customerId.
 - Check the `customer_master` schema.
     - You will see one new record in the `customers` table
 - Check the `payment` schema.
-    - You will see one new record in the `credit_entry` table
+    - You will see one new record in the `credit_balance` table
 - Check the `orders` schema.
     - You will see one new record in the `customers` table
 

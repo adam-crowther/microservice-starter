@@ -6,9 +6,9 @@ class EmptyEventSpec extends Specification {
 
   def "toString returns the expected string"() {
     when:
-      def string = EmptyEvent.INSTANCE.toString()
+      def event = EmptyEvent.INSTANCE.toString()
 
     then:
-      string == "EmptyEvent()"
+      event == "EmptyEvent()"
   }
 }

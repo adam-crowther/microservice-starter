@@ -14,6 +14,7 @@ dependencies {
   implementation libs.spring.boot.autoconfigure
   implementation libs.spring.boot.core
   implementation libs.spring.context
+  implementation libs.spring.core
   implementation libs.spring.webmvc
   implementation libs.google.guava
 

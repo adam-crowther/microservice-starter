@@ -20,7 +20,6 @@ public interface PaymentJpaToDomainMapper extends JpaToDomainMapper<PaymentJpaEn
 
   @Mapping(target = "value.currencyId", source = "valueCurrencyId")
   @Mapping(target = "value.amount", source = "valueAmount")
-  @Mapping(target = "paymentStatus", source = "status")
   @Override
   Payment convertJpaToDomain(PaymentJpaEntity paymentJpaEntity);
 }

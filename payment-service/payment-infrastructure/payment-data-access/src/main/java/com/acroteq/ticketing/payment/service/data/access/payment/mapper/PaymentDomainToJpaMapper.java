@@ -23,7 +23,6 @@ public interface PaymentDomainToJpaMapper extends DomainToJpaMapper<Payment, Pay
   @Mapping(target = "customer", source = "customer.id")
   @Mapping(target = "valueCurrencyId", source = "value.currencyId")
   @Mapping(target = "valueAmount", source = "value.amount")
-  @Mapping(target = "status", source = "paymentStatus")
   @Override
   PaymentJpaEntity convertDomainToJpa(Payment entity);
 
@@ -31,7 +30,6 @@ public interface PaymentDomainToJpaMapper extends DomainToJpaMapper<Payment, Pay
   @Mapping(target = "customer", source = "customer.id")
   @Mapping(target = "valueCurrencyId", source = "value.currencyId")
   @Mapping(target = "valueAmount", source = "value.amount")
-  @Mapping(target = "status", source = "paymentStatus")
   @Override
   PaymentJpaEntity convertDomainToJpa(Payment entity, @MappingTarget PaymentJpaEntity jpaEntity);
 }

@@ -1,21 +1,24 @@
 package com.acroteq.ticketing.payment.service.domain;
 
-import static com.acroteq.ticketing.payment.service.domain.exception.CreditEntryNotFoundException.creditEntryNotFoundException;
-import static com.acroteq.ticketing.payment.service.domain.exception.CreditHistoryNotFoundException.creditHistoryNotFoundException;
+import static com.acroteq.ticketing.domain.valueobject.CashValue.ZERO;
+import static com.acroteq.ticketing.payment.service.domain.exception.CreditBalanceNotFoundException.creditBalanceNotFoundException;
+import static com.acroteq.ticketing.payment.service.domain.exception.CreditChangeNotFoundException.creditChangeNotFoundException;
+import static com.acroteq.ticketing.payment.service.domain.exception.CustomerNotFoundException.customerNotFoundException;
 
+import com.acroteq.ticketing.domain.valueobject.CashValue;
 import com.acroteq.ticketing.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.payment.service.domain.dto.customer.CustomerEventDto;
-import com.acroteq.ticketing.payment.service.domain.entity.CreditEntry;
-import com.acroteq.ticketing.payment.service.domain.entity.CreditHistory;
+import com.acroteq.ticketing.payment.service.domain.entity.CreditBalance;
+import com.acroteq.ticketing.payment.service.domain.entity.CreditChange;
 import com.acroteq.ticketing.payment.service.domain.entity.Customer;
 import com.acroteq.ticketing.payment.service.domain.exception.CustomerEventProcessingOrderException;
 import com.acroteq.ticketing.payment.service.domain.exception.CustomerNotFoundException;
 import com.acroteq.ticketing.payment.service.domain.mapper.CustomerEventDtoToDomainMapper;
 import com.acroteq.ticketing.payment.service.domain.ports.input.message.listener.CustomerEventMessageListener;
-import com.acroteq.ticketing.payment.service.domain.ports.output.repository.CreditEntryRepository;
-import com.acroteq.ticketing.payment.service.domain.ports.output.repository.CreditHistoryRepository;
+import com.acroteq.ticketing.payment.service.domain.ports.output.repository.CreditBalanceRepository;
+import com.acroteq.ticketing.payment.service.domain.ports.output.repository.CreditChangeRepository;
 import com.acroteq.ticketing.payment.service.domain.ports.output.repository.CustomerRepository;
-import com.acroteq.ticketing.payment.service.domain.valueobject.CreditEntryOutput;
+import com.acroteq.ticketing.payment.service.domain.valueobject.CreditBalanceOutput;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -31,19 +34,19 @@ import java.util.function.Function;
 public class CustomerEventMessageListenerImpl implements CustomerEventMessageListener {
 
   private final CustomerRepository customerRepository;
-  private final CreditEntryRepository creditEntryRepository;
-  private final CreditHistoryRepository creditHistoryRepository;
+  private final CreditBalanceRepository creditBalanceRepository;
+  private final CreditChangeRepository creditChangeRepository;
   private final CustomerEventDtoToDomainMapper customerEventMapper;
-  private final CreditEntryDomainService creditEntryDomainService;
+  private final CreditBalanceDomainService creditBalanceDomainService;
 
   @Transactional
   @Override
   public void customerCreatedOrUpdated(final CustomerEventDto dto) {
     final CustomerId id = CustomerId.of(dto.getId());
-    log.info("Creating CreditEntry and adding CreditHistory for customer: {}", id);
+    log.info("Creating CreditBalance and adding CreditHistory for customer: {}", id);
 
     final Customer customer = customerEventMapper.convertDtoToDomain(dto);
-    final Optional<CreditEntryOutput> output;
+    final Optional<CreditBalanceOutput> output;
 
     customerRepository.save(customer);
 
@@ -55,10 +58,10 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
       output = Optional.empty();
     }
 
-    output.map(CreditEntryOutput::getCreditEntry)
-          .ifPresent(creditEntryRepository::save);
-    output.map(CreditEntryOutput::getCreditHistory)
-          .ifPresent(creditHistoryRepository::save);
+    output.map(CreditBalanceOutput::getCreditBalance)
+          .ifPresent(creditBalanceRepository::save);
+    output.map(CreditBalanceOutput::getCreditChange)
+          .ifPresent(creditChangeRepository::save);
   }
 
   private boolean doesNotAlreadyExist(final Customer customer) {
@@ -85,41 +88,65 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
     return !alreadyProcessed;
   }
 
-  private Optional<CreditEntryOutput> customerCreated(final CustomerEventDto dto) {
-    final Optional<CreditEntryOutput> output;
-    final CreditEntry newCreditEntry = customerEventMapper.convertDtoToCreditEntry(dto);
-    output = Optional.of(newCreditEntry)
-                     .map(creditEntryDomainService::createCreditEntry);
-    return output;
+  private Optional<CreditBalanceOutput> customerCreated(final CustomerEventDto dto) {
+    final Customer customer = customerEventMapper.convertDtoToDomain(dto);
+    return Optional.of(customer)
+                   .map(creditBalanceDomainService::createNewCreditBalance);
   }
 
-  private Optional<CreditEntryOutput> customerUpdated(final CustomerEventDto dto, final CustomerId id) {
-    final Optional<CreditEntryOutput> output;
-    final CreditEntry updatedCreditEntry = customerEventMapper.convertDtoToCreditEntry(dto);
-    final CreditEntry currentCreditEntry = creditEntryRepository.findByCustomerId(id)
-                                                                .orElseThrow(creditEntryNotFoundException(id));
-    final List<CreditHistory> historyList = creditHistoryRepository.findByCustomerId(id)
-                                                                   .orElseThrow(creditHistoryNotFoundException(id));
-    output = Optional.of(updatedCreditEntry)
-                     .map(updateCreditEntry(currentCreditEntry, historyList));
-    return output;
+  private Optional<CreditBalanceOutput> customerUpdated(final CustomerEventDto dto, final CustomerId id) {
+    final Customer customer = customerEventMapper.convertDtoToDomain(dto);
+
+    final CashValue newCreditLimit = customer.getCreditLimit();
+    final CashValue oldCreditLimit = customerRepository.findById(id)
+                                                       .map(Customer::getCreditLimit)
+                                                       .orElseThrow(customerNotFoundException(id));
+
+    final CreditBalance oldCreditBalance = creditBalanceRepository.findByCustomerId(id)
+                                                                  .orElseThrow(creditBalanceNotFoundException(id));
+    final List<CreditChange> creditHistory = creditChangeRepository.findByCustomerId(id)
+                                                                   .orElseThrow(creditChangeNotFoundException(id));
+    return Optional.of(newCreditLimit)
+                   .map(updateCreditLimit(oldCreditLimit, oldCreditBalance, creditHistory));
   }
 
-  private Function<CreditEntry, CreditEntryOutput> updateCreditEntry(final CreditEntry currentCredit,
-                                                                     final List<CreditHistory> historyList) {
-    return updatedCredit -> creditEntryDomainService.updateCreditEntry(currentCredit, updatedCredit, historyList);
+  private Function<CashValue, CreditBalanceOutput> updateCreditLimit(final CashValue oldCreditLimit,
+                                                                     final CreditBalance oldCreditBalance,
+                                                                     final List<CreditChange> creditHistory) {
+    return newCreditLimit -> creditBalanceDomainService.updateCreditLimit(newCreditLimit,
+                                                                          oldCreditLimit,
+                                                                          oldCreditBalance,
+                                                                          creditHistory);
   }
 
   @Transactional
   @Override
-  public void customerDeleted(final Long id) {
-    final CustomerId customerId = CustomerId.of(id);
-    log.info("Customer {} deleted. Setting credit limit and credit to zero.", customerId);
-    customerRepository.findById(customerId)
-                      .map(Customer::zeroCreditLimit)
-                      .ifPresent(customerRepository::save);
-    creditEntryRepository.findByCustomerId(customerId)
-                         .map(CreditEntry::zeroCredit)
-                         .ifPresent(creditEntryRepository::save);
+  public void customerDeleted(final Long customerId) {
+    final CustomerId id = CustomerId.of(customerId);
+    log.info("Customer {} deleted. Setting credit limit and credit to zero.", id);
+
+    customerRepository.findById(id)
+                      .ifPresent(this::setCreditLimitToZero);
+  }
+
+  private void setCreditLimitToZero(final Customer oldCustomer) {
+    final CashValue oldCreditLimit = oldCustomer.getCreditLimit();
+    final CustomerId id = oldCustomer.getId();
+    final CreditBalance oldCreditBalance = creditBalanceRepository.findByCustomerId(id)
+                                                                  .orElseThrow(creditBalanceNotFoundException(id));
+    final List<CreditChange> creditHistory = creditChangeRepository.findByCustomerId(id)
+                                                                   .orElseThrow(creditChangeNotFoundException(id));
+
+    final Customer customer = oldCustomer.withZeroCreditLimit();
+    customerRepository.save(customer);
+
+    final CreditBalanceOutput output = creditBalanceDomainService.updateCreditLimit(ZERO,
+                                                                                    oldCreditLimit,
+                                                                                    oldCreditBalance,
+                                                                                    creditHistory);
+    creditBalanceRepository.save(output.getCreditBalance());
+    Optional.of(output)
+            .map(CreditBalanceOutput::getCreditChange)
+            .ifPresent(creditChangeRepository::save);
   }
 }

@@ -18,7 +18,7 @@ public class Customer extends ReplicatedEntity<CustomerId> {
   @NonNull
   private final CashValue creditLimit;
 
-  public Customer zeroCreditLimit() {
+  public Customer withZeroCreditLimit() {
     return toBuilder().creditLimit(ZERO)
                       .build();
   }

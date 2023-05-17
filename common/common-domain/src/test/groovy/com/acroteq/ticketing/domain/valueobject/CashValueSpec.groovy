@@ -602,4 +602,18 @@ class CashValueSpec extends Specification {
     then:
       verifier.verify()
   }
+
+  def "toString returns the expected String"() {
+    given:
+      def value = CashValue.builder()
+            .currencyId(CURRENCY_CHF)
+            .amount(BigDecimal.valueOf(AMOUNT))
+            .build()
+
+    when:
+      def string = value.toString()
+
+    then:
+      string == "CashValue(amount=5000.0, currencyId=CurrencyId(CHF))"
+  }
 }

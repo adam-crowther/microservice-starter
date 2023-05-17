@@ -56,13 +56,10 @@ dependencies {
   annotationProcessor libs.lombok.mapstruct.binding
   annotationProcessor libs.mapstruct.processor
 
-  testImplementation libs.groovy
-  testImplementation libs.jakarta.inject.api
-  testImplementation libs.spock.core
-  testImplementation libs.spock.spring
-  testImplementation libs.spring.test
+  testImplementation libs.bundles.spock
   testImplementation libs.equalsverifier
-  testImplementation libs.mockito.core
+  testImplementation libs.jakarta.inject.api
+  testImplementation libs.spring.test
 }
 
 test {

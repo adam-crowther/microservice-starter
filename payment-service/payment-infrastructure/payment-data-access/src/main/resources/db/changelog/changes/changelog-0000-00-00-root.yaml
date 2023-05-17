@@ -10,7 +10,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: credit_entryPK
+                    primaryKeyName: credit_balancePK
                   name: id
                   type: BIGINT
               - column:
@@ -53,7 +53,7 @@ databaseChangeLog:
                     nullable: false
                   name: customer_id
                   type: BIGINT
-            tableName: credit_entry
+            tableName: credit_balance
   - changeSet:
       id: 1683614030512-2
       author: micro (generated)
@@ -235,14 +235,14 @@ databaseChangeLog:
         - addUniqueConstraint:
             columnNames: customer_id
             constraintName: UK_9w9a1y71xadqb6yoommm7hsyi
-            tableName: credit_entry
+            tableName: credit_balance
   - changeSet:
       id: 1683614030512-6
       author: micro (generated)
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: customer_id
-            baseTableName: credit_entry
+            baseTableName: credit_balance
             constraintName: FK9ryeml5lotqwuiq9myq1dshs0
             deferrable: false
             initiallyDeferred: false

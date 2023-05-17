@@ -10,11 +10,10 @@ apply from: "${rootDir}/java.gradle"
 apply plugin: "groovy"
 
 dependencies {
-  implementation project(":common:common-helper")
   implementation project(":common:common-domain")
+  implementation project(":common:common-helper")
 
   implementation libs.apache.commons.lang3
-  implementation libs.google.guava
   implementation libs.jakarta.annotation.api
   implementation libs.lombok.core
   implementation libs.slf4j.api
@@ -22,13 +21,19 @@ dependencies {
 
   annotationProcessor libs.lombok.core
 
-  testImplementation libs.groovy
-  testImplementation libs.jakarta.inject.api
-  testImplementation libs.spock.core
-  testImplementation libs.spock.spring
-  testImplementation libs.spring.test
+  testImplementation libs.bundles.cucumber
+  testImplementation libs.bundles.spock
   testImplementation libs.equalsverifier
+  testImplementation libs.hamcrest.core
+  testImplementation libs.hamcrest.optional
+  testImplementation libs.jakarta.inject.api
+  testImplementation libs.junit4
+  testImplementation libs.junit5.api
+  testImplementation libs.junit5.vintage
   testImplementation libs.mockito.core
+  testImplementation libs.spring.test
+
+  testAnnotationProcessor libs.lombok.core
 
   testRuntimeOnly libs.slf4j.simple
 }

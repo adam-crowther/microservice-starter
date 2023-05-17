@@ -11,20 +11,21 @@ apply plugin: "groovy"
 
 dependencies {
   implementation libs.lombok.core
-  implementation libs.spring.boot.security
-  implementation libs.spring.boot.oauth2.resource.server
   implementation libs.spring.context
+  implementation libs.spring.core
+  implementation libs.spring.boot.core
+  implementation libs.spring.security.oauth2.resource.server
+  implementation libs.spring.security.config
+  implementation libs.spring.security.core
+  implementation libs.spring.security.jose
+  implementation libs.spring.security.web
 
   annotationProcessor libs.lombok.core
 
-  testImplementation libs.groovy
-  testImplementation libs.jakarta.inject.api
-  testImplementation libs.spock.core
-  testImplementation libs.spock.spring
-  testImplementation libs.spring.test
+  testImplementation libs.bundles.spock
   testImplementation libs.equalsverifier
-  testImplementation libs.mockito.core
-
+  testImplementation libs.jakarta.inject.api
+  testImplementation libs.spring.test
 }
 
 test {

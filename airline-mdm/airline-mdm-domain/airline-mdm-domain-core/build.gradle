@@ -22,15 +22,10 @@ dependencies {
 
   annotationProcessor libs.lombok.core
 
-  testImplementation libs.groovy
-  testImplementation libs.jakarta.inject.api
-  testImplementation libs.spock.core
-  testImplementation libs.spock.spring
-  testImplementation libs.spring.test
+  testImplementation libs.bundles.spock
   testImplementation libs.equalsverifier
-  testImplementation libs.mockito.core
-
-  testRuntimeOnly libs.slf4j.simple
+  testImplementation libs.jakarta.inject.api
+  testImplementation libs.spring.test
 }
 
 test {

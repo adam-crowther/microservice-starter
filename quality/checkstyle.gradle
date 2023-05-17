@@ -2,10 +2,18 @@ apply plugin: 'checkstyle'
 
 checkstyle {
   toolVersion = '10.9.3'
-  configFile = file("${rootDir}/quality/checkstyle.xml")
+}
+
+checkstyleMain {
+  configFile = file("${rootDir}/quality/checkstyle_main.xml")
   ignoreFailures = false
   maxWarnings = 0
   maxErrors = 0
+}
+
+checkstyleTest {
+  configFile = file("${rootDir}/quality/checkstyle_test.xml")
+  ignoreFailures = true
 }
 
 tasks.withType(Checkstyle).configureEach {

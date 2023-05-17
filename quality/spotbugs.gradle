@@ -10,6 +10,7 @@ spotbugs {
   showProgress = true
   effort = 'more'
   reportLevel = 'default'
+  
   excludeFilter.fileValue file("${rootDir}/quality/spotbugs_exclude.xml")
 }
 

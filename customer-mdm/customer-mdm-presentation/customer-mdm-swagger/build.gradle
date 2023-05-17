@@ -17,6 +17,7 @@ dependencies {
   implementation libs.spring.webmvc
   implementation libs.google.guava
 
+  runtimeOnly libs.spring.boot.core
   runtimeOnly libs.spring.boot.web
 
   swaggerUI libs.swagger.ui

@@ -7,16 +7,17 @@ import com.acroteq.ticketing.domain.valueobject.OrderId;
 import com.acroteq.ticketing.payment.service.domain.PaymentDomainService;
 import com.acroteq.ticketing.payment.service.domain.dto.payment.PaymentCancelRequestDto;
 import com.acroteq.ticketing.payment.service.domain.dto.payment.PaymentRequestDto;
-import com.acroteq.ticketing.payment.service.domain.entity.CreditEntry;
-import com.acroteq.ticketing.payment.service.domain.entity.CreditHistory;
+import com.acroteq.ticketing.payment.service.domain.entity.CreditBalance;
+import com.acroteq.ticketing.payment.service.domain.entity.CreditChange;
 import com.acroteq.ticketing.payment.service.domain.entity.Payment;
 import com.acroteq.ticketing.payment.service.domain.event.PaymentEvent;
-import com.acroteq.ticketing.payment.service.domain.exception.CreditEntryNotFoundException;
-import com.acroteq.ticketing.payment.service.domain.exception.CreditHistoryNotFoundException;
+import com.acroteq.ticketing.payment.service.domain.exception.CreditBalanceNotFoundException;
+import com.acroteq.ticketing.payment.service.domain.exception.CreditChangeNotFoundException;
+import com.acroteq.ticketing.payment.service.domain.exception.MissingCreditChangeException;
 import com.acroteq.ticketing.payment.service.domain.exception.PaymentNotFoundException;
 import com.acroteq.ticketing.payment.service.domain.mapper.PaymentDtoToDomainMapper;
-import com.acroteq.ticketing.payment.service.domain.ports.output.repository.CreditEntryRepository;
-import com.acroteq.ticketing.payment.service.domain.ports.output.repository.CreditHistoryRepository;
+import com.acroteq.ticketing.payment.service.domain.ports.output.repository.CreditBalanceRepository;
+import com.acroteq.ticketing.payment.service.domain.ports.output.repository.CreditChangeRepository;
 import com.acroteq.ticketing.payment.service.domain.ports.output.repository.PaymentRepository;
 import com.acroteq.ticketing.payment.service.domain.valueobject.PaymentOutput;
 import lombok.RequiredArgsConstructor;
@@ -35,18 +36,18 @@ public class PaymentProcessor {
   private final PaymentDtoToDomainMapper paymentDtoToDomainMapper;
   private final OrderIdMapper idMapper;
   private final PaymentRepository paymentRepository;
-  private final CreditEntryRepository creditEntryRepository;
-  private final CreditHistoryRepository creditHistoryRepository;
+  private final CreditBalanceRepository creditBalanceRepository;
+  private final CreditChangeRepository creditChangeRepository;
 
   public PaymentEvent processPayment(final PaymentRequestDto dto) {
     log.info("Received payment requested event for order id: {}", dto.getOrderId());
     final Payment payment = paymentDtoToDomainMapper.convertDtoToDomain(dto);
     final CustomerId customerId = payment.getCustomer()
                                          .getId();
-    final CreditEntry creditEntry = getCreditEntry(customerId);
-    final List<CreditHistory> creditHistories = getCreditHistory(customerId);
+    final CreditBalance creditBalance = getCreditBalance(customerId);
+    final List<CreditChange> creditHistory = getCreditHistory(customerId);
 
-    final PaymentOutput paymentOutput = paymentDomainService.validatePayment(payment, creditEntry, creditHistories);
+    final PaymentOutput paymentOutput = paymentDomainService.validatePayment(payment, creditBalance, creditHistory);
     final Payment savedPayment = persistDbObjects(paymentOutput);
 
     final ValidationResult result = paymentOutput.getValidationResult();
@@ -65,10 +66,10 @@ public class PaymentProcessor {
     log.info("Received payment rollback event for order id: {}", orderId);
     final Payment payment = paymentRepository.findByOrderId(orderId)
                                              .orElseThrow(() -> new PaymentNotFoundException(orderId));
-    final CreditEntry creditEntry = getCreditEntry(payment.getCustomer()
-                                                          .getId());
+    final CreditBalance creditBalance = getCreditBalance(payment.getCustomer()
+                                                                .getId());
 
-    final PaymentOutput paymentOutput = paymentDomainService.cancelPayment(payment, creditEntry);
+    final PaymentOutput paymentOutput = paymentDomainService.cancelPayment(payment, creditBalance);
     final Payment savedPayment = persistDbObjects(paymentOutput);
 
     final ValidationResult result = paymentOutput.getValidationResult();
@@ -80,27 +81,28 @@ public class PaymentProcessor {
                        .build();
   }
 
-  private CreditEntry getCreditEntry(final CustomerId customerId) {
-    return creditEntryRepository.findByCustomerId(customerId)
-                                .orElseThrow(() -> new CreditEntryNotFoundException(customerId));
+  private CreditBalance getCreditBalance(final CustomerId customerId) {
+    return creditBalanceRepository.findByCustomerId(customerId)
+                                  .orElseThrow(() -> new CreditBalanceNotFoundException(customerId));
   }
 
-  private List<CreditHistory> getCreditHistory(final CustomerId customerId) {
-    return creditHistoryRepository.findByCustomerId(customerId)
-                                  .orElseThrow(() -> new CreditHistoryNotFoundException(customerId));
+  private List<CreditChange> getCreditHistory(final CustomerId customerId) {
+    return creditChangeRepository.findByCustomerId(customerId)
+                                 .orElseThrow(() -> new CreditChangeNotFoundException(customerId));
   }
 
   private Payment persistDbObjects(final PaymentOutput paymentOutput) {
     final ValidationResult result = paymentOutput.getValidationResult();
+    final Payment payment = paymentOutput.getPayment();
     if (result.isPass()) {
-      final CreditEntry creditEntry = paymentOutput.getCreditEntry();
-      creditEntryRepository.save(creditEntry);
+      final CreditBalance creditBalance = paymentOutput.getCreditBalance();
+      creditBalanceRepository.save(creditBalance);
 
-      final CreditHistory creditHistory = paymentOutput.getCreditHistory();
-      creditHistoryRepository.save(creditHistory);
+      final CreditChange creditChange = paymentOutput.getCreditChange()
+                                                     .orElseThrow(() -> new MissingCreditChangeException(payment.getId()));
+      creditChangeRepository.save(creditChange);
     }
 
-    final Payment payment = paymentOutput.getPayment();
     return paymentRepository.save(payment);
   }
 }

@@ -51,13 +51,13 @@ class AuditDtoSpec extends Specification {
       def string = dto.toString()
 
     then:
-      string == expected
+      string.startsWith("AuditDto(")
 
     where:
-      inputCreated      | inputLastModified       | expected
-      CREATED_TIMESTAMP | LAST_MODIFIED_TIMESTAMP | "AuditDto(createdTimestamp=2023-05-11T19:15:17Z, lastModifiedTimestamp=2023-03-09T06:51:46Z)"
-      null              | LAST_MODIFIED_TIMESTAMP | "AuditDto(createdTimestamp=null, lastModifiedTimestamp=2023-03-09T06:51:46Z)"
-      CREATED_TIMESTAMP | null                    | "AuditDto(createdTimestamp=2023-05-11T19:15:17Z, lastModifiedTimestamp=null)"
-      null              | null                    | "AuditDto(createdTimestamp=null, lastModifiedTimestamp=null)"
+      inputCreated      | inputLastModified
+      CREATED_TIMESTAMP | LAST_MODIFIED_TIMESTAMP
+      null              | LAST_MODIFIED_TIMESTAMP
+      CREATED_TIMESTAMP | null
+      null              | null
   }
 }

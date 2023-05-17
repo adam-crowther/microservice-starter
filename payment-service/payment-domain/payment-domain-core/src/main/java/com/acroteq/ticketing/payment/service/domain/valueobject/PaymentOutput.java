@@ -1,19 +1,32 @@
 package com.acroteq.ticketing.payment.service.domain.valueobject;
 
 import com.acroteq.ticketing.domain.validation.ValidationResult;
-import com.acroteq.ticketing.payment.service.domain.entity.CreditEntry;
-import com.acroteq.ticketing.payment.service.domain.entity.CreditHistory;
+import com.acroteq.ticketing.payment.service.domain.entity.CreditBalance;
+import com.acroteq.ticketing.payment.service.domain.entity.CreditChange;
 import com.acroteq.ticketing.payment.service.domain.entity.Payment;
+import jakarta.annotation.Nullable;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
 
+import java.util.Optional;
+
 @Builder
 @Value
-public class PaymentOutput {
+public final class PaymentOutput {
 
   @NonNull Payment payment;
-  @NonNull CreditEntry creditEntry;
-  @NonNull CreditHistory creditHistory;
+  @NonNull CreditBalance originalCreditBalance;
+  @NonNull CreditBalance updatedCreditBalance;
+  @Nullable
+  CreditChange newCreditChange;
   @NonNull ValidationResult validationResult;
+
+  public CreditBalance getCreditBalance() {
+    return validationResult.isPass() ? updatedCreditBalance : originalCreditBalance;
+  }
+
+  public Optional<CreditChange> getCreditChange() {
+    return validationResult.isPass() ? Optional.ofNullable(newCreditChange) : Optional.empty();
+  }
 }

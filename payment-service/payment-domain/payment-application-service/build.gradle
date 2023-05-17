@@ -26,6 +26,7 @@ dependencies {
   implementation project(":common:common-helper")
   implementation project(":payment-service:payment-domain:payment-domain-core")
 
+  implementation libs.google.guava
   implementation libs.jakarta.annotation.api
   implementation libs.jakarta.validation.api
   implementation libs.lombok.core
@@ -45,21 +46,17 @@ dependencies {
   testImplementation libs.spring.boot.autoconfigure
   testImplementation libs.spring.boot.test.core
   testImplementation libs.spring.test
-  testImplementation libs.junit.jupiter.api
+  testImplementation libs.junit5.api
   testImplementation libs.mockito.core
   testImplementation libs.mockito.junit.jupiter
   testImplementation libs.hamcrest.core
 
-  testImplementation libs.groovy
-  testImplementation libs.jakarta.inject.api
-  testImplementation libs.spock.core
-  testImplementation libs.spock.spring
-  testImplementation libs.spring.test
+  testImplementation libs.bundles.spock
   testImplementation libs.equalsverifier
-  testImplementation libs.mockito.core
+  testImplementation libs.jakarta.inject.api
+  testImplementation libs.spring.test
 
   testRuntimeOnly libs.mockito.inline
-  testRuntimeOnly libs.junit.jupiter.engine
 }
 
 test {

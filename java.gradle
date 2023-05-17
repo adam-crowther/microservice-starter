@@ -16,11 +16,14 @@ compileJava {
   ]
 }
 
-configurations {
-  implementation {
-    transitive = false
-  }
-}
+// It's mandatory for production software projects to keep dependencies under control.  If we need a library we should
+// make an active decision to use it.  We don't allow transitive dependencies in our code, because they allow devs to
+// use unsanctioned libraries.
+configurations
+      .matching({ name in ["implementation", "testImplementation"] })
+      .configureEach({
+        transitive = false
+      })
 
 tasks.withType(JavaCompile).configureEach {
   options.compilerArgs += ['-Xlint:all,-serial,-processing']

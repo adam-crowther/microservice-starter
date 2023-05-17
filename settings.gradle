@@ -159,6 +159,10 @@ dependencyResolutionManagement {
       library('spring-security-core', 'org.springframework.security', 'spring-security-core').versionRef('springSecurity')
       library('spring-security-config', 'org.springframework.security', 'spring-security-config').versionRef('springSecurity')
       library('spring-security-web', 'org.springframework.security', 'spring-security-web').versionRef('springSecurity')
+      library('spring-security-oauth2-client', 'org.springframework.security', 'spring-security-oauth2-client').versionRef('springSecurity')
+      library('spring-security-oauth2-resource-server', 'org.springframework.security', 'spring-security-oauth2-resource-server').versionRef('springSecurity')
+      library('spring-security-jose', 'org.springframework.security', 'spring-security-oauth2-jose').versionRef('springSecurity')
+      library('spring-security-jwt', 'org.springframework.security', 'spring-security-jwt').versionRef('springSecurity')
 
       // Spring Data
       version('springData', '3.0.5')
@@ -217,24 +221,38 @@ dependencyResolutionManagement {
       library('swagger-ui', 'org.webjars', 'swagger-ui').version('4.1.3')
 
       // Testing
-      version('junit', '5.9.2')
       version('mockito', '5.2.0')
-      library('junit-jupiter-api', 'org.junit.jupiter', 'junit-jupiter-api').versionRef('junit')
-      library('junit-jupiter-engine', 'org.junit.jupiter', 'junit-jupiter-engine').versionRef('junit')
+      version('junitJupiter', '5.9.3')
+      library('junit4', 'junit', 'junit').version('4.13.2')
+      library('junit5-api', 'org.junit.jupiter', 'junit-jupiter-api').versionRef('junitJupiter')
+      library('junit5-engine', 'org.junit.jupiter', 'junit-jupiter-engine').versionRef('junitJupiter')
+      library('junit5-vintage', 'org.junit.vintage', 'junit-vintage-engine').versionRef('junitJupiter')
       library('mockito-core', 'org.mockito', 'mockito-core').versionRef('mockito')
       library('mockito-junit-jupiter', 'org.mockito', 'mockito-junit-jupiter').versionRef('mockito')
       library('mockito-inline', 'org.mockito', 'mockito-inline').versionRef('mockito')
       library('hamcrest-core', 'org.hamcrest', 'hamcrest').version('2.2')
+      library('hamcrest-optional', 'com.github.npathai', 'hamcrest-optional').version('2.0.0')
       library('awaitility', 'org.awaitility', 'awaitility').version('4.2.0')
       library('equalsverifier', 'nl.jqno.equalsverifier', 'equalsverifier').version('3.14.1')
 
       // Spock
       version('spock', '2.3-groovy-4.0')
-      library('groovy', 'org.apache.groovy', 'groovy-all').version('4.0.12')
+      version('groovy', '4.0.12')
+      library('groovy-core', 'org.apache.groovy', 'groovy').versionRef('groovy')
       library('spock-core', 'org.spockframework', 'spock-core').versionRef('spock')
       library('spock-spring', 'org.spockframework', 'spock-spring').versionRef('spock')
       library('bytebuddy', 'net.bytebuddy', 'byte-buddy').version('1.12.17')
       library('objenesis', 'org.objenesis', 'objenesis').version('3.3')
+      library('opentest4j', 'org.opentest4j', 'opentest4j').version('1.2.0')
+      bundle('spock', List.of('groovy-core', 'spock-core', 'spock-spring', 'bytebuddy', 'objenesis', 'opentest4j'))
+
+      // Cucumber
+      version('cucumber', '7.12.0')
+      library('cucumber-java', 'io.cucumber', 'cucumber-java').versionRef('cucumber')
+      library('cucumber-junit', 'io.cucumber', 'cucumber-junit').versionRef('cucumber')
+      library('cucumber-picocontainer', 'io.cucumber', 'cucumber-picocontainer').versionRef('cucumber')
+      library('apiguardian', 'org.apiguardian', 'apiguardian-api').version('1.1.2')
+      bundle('cucumber', List.of('cucumber-java', 'cucumber-junit', 'cucumber-picocontainer', 'apiguardian'))
     }
 
     pluginLibs {

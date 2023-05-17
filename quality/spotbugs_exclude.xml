@@ -11,6 +11,15 @@
     <!--     <Package name="~com.acroteq.ticketing.[a-z\-]+.service.presentation.model"/> -->
     <!-- </Match> -->
 
+    <!-- We don't do static code analysis on test classes -->
+    <Match>
+        <Or>
+            <Class name="~.*Test"/>
+            <Class name="~.*Spec"/>
+            <Class name="~.*StepDefinitions"/>
+        </Or>
+    </Match>
+
     <Match>
         <Source name="~.*\.groovy"/>
     </Match>

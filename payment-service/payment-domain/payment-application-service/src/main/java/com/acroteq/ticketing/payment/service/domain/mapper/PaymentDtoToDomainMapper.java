@@ -22,7 +22,7 @@ public interface PaymentDtoToDomainMapper extends DtoToDomainMapper<PaymentReque
   @Mapping(target = "version", ignore = true)
   @Mapping(target = "audit", ignore = true)
   @Mapping(target = "customer", source = "customerId")
-  @Mapping(target = "paymentStatus", constant = "PENDING")
+  @Mapping(target = "status", constant = "PENDING")
   @Override
   Payment convertDtoToDomain(PaymentRequestDto paymentRequestDto);
 }

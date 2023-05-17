@@ -2,6 +2,7 @@ package com.acroteq.ticketing.application.mapper;
 
 import static java.time.ZoneOffset.UTC;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,6 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.function.Function;
-import javax.annotation.Nullable;
 
 @Component
 public class DateTimeMapper {

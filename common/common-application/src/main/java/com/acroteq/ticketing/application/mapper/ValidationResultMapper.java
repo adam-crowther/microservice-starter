@@ -4,11 +4,11 @@ import static com.acroteq.ticketing.domain.validation.ValidationResult.pass;
 import static java.util.Collections.emptyList;
 
 import com.acroteq.ticketing.domain.validation.ValidationResult;
+import jakarta.annotation.Nullable;
 import org.mapstruct.Mapper;
 
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.Nullable;
 
 @Mapper
 public interface ValidationResultMapper {

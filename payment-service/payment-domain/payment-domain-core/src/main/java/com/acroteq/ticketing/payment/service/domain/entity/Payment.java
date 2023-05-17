@@ -3,6 +3,7 @@ package com.acroteq.ticketing.payment.service.domain.entity;
 import static com.acroteq.ticketing.domain.validation.ValidationResult.fail;
 import static com.acroteq.ticketing.domain.validation.ValidationResult.pass;
 import static com.acroteq.ticketing.domain.valueobject.CashValue.ZERO;
+import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.COMPLETED;
 
 import com.acroteq.ticketing.domain.entity.AggregateRoot;
 import com.acroteq.ticketing.domain.validation.ValidationResult;
@@ -30,14 +31,25 @@ public class Payment extends AggregateRoot<PaymentId> {
   private final CashValue value;
 
   @NonNull
-  private final PaymentStatus paymentStatus;
+  private final PaymentStatus status;
 
-  public ValidationResult validatePayment() {
+  public ValidationResult validate() {
     final ValidationResult result;
     if (value.isGreaterThan(ZERO)) {
       result = pass();
     } else {
-      result = fail("Total price must be greater than zero!");
+      result = fail("Total price must be greater than zero");
+    }
+
+    return result;
+  }
+
+  public ValidationResult cancel() {
+    final ValidationResult result;
+    if (status == COMPLETED) {
+      result = pass();
+    } else {
+      result = fail("Only COMPLETED payments can be cancelled");
     }
 
     return result;

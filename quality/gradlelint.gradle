@@ -10,5 +10,6 @@ gradleLint {
 
   // We only run gradleLint as a dependency of the check task, not for every build
   alwaysRun = false
+  autoLintAfterFailure = true
   reportFormat = 'html'
 }
