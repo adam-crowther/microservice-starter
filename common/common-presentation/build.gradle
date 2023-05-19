@@ -1,23 +1,6 @@
 plugins {
-  id 'java'
-  id 'checkstyle'
-  id 'jacoco'
-  alias pluginLibs.plugins.spotbugs
-  id 'groovy'
-}
-
-apply from: "${rootDir}/java.gradle"
-apply plugin: "groovy"
-
-compileJava {
-  options.compilerArgs += [
-        '-Amapstruct.defaultComponentModel=spring',
-        '-Amapstruct.defaultInjectionStrategy=constructor',
-        '-Amapstruct.unmappedTargetPolicy=ERROR',
-        '-Amapstruct.verbose=false',
-        '-Amapstruct.suppressGeneratorVersionInfoComment=true',
-        '-Amapstruct.suppressGeneratorTimestamp=true'
-  ]
+  id 'java-conventions'
+  id 'spock-conventions'
 }
 
 dependencies {
@@ -25,31 +8,17 @@ dependencies {
   implementation project(":common:common-domain")
   implementation project(":common:common-helper")
 
-  implementation libs.google.guava
-  implementation libs.jakarta.annotation.api
-  implementation libs.jakarta.validation.api
-  implementation libs.lombok.core
-  implementation libs.mapstruct.core
-  implementation libs.slf4j.api
-  implementation libs.spotbugs.annotations
-  implementation libs.spring.context
-  implementation libs.spring.core
-  implementation libs.spring.web
-  implementation libs.spring.webmvc
+  implementation 'com.google.guava:guava'
+  implementation 'jakarta.annotation:jakarta.annotation-api'
+  implementation 'jakarta.validation:jakarta.validation-api'
+  implementation 'org.projectlombok:lombok'
+  implementation 'org.slf4j:slf4j-api'
+  implementation 'org.springframework:spring-context'
+  implementation 'org.springframework:spring-core'
+  implementation 'org.springframework:spring-web'
+  implementation 'org.springframework:spring-webmvc'
 
-  annotationProcessor libs.lombok.core
-  annotationProcessor libs.lombok.mapstruct.binding
-  annotationProcessor libs.mapstruct.processor
-
-  testImplementation libs.bundles.spock
-  testImplementation libs.equalsverifier
-  testImplementation libs.jakarta.inject.api
-  testImplementation libs.spring.test
-}
-
-test {
-  useJUnitPlatform()
-  testLogging {
-    events "passed", "skipped", "failed"
-  }
+  annotationProcessor 'org.projectlombok:lombok'
+  annotationProcessor 'org.projectlombok:lombok-mapstruct-binding'
+  annotationProcessor 'org.mapstruct:mapstruct-processor'
 }

@@ -1,0 +1,361 @@
+Initialized native services in: C:\Users\adamcc\.gradle\native
+Initialized jansi services in: C:\Users\adamcc\.gradle\native
+Received JVM installation metadata from 'C:\dev\apps\jdk-17.0.5+8': {JAVA_HOME=C:\dev\apps\jdk-17.0.5+8, JAVA_VERSION=17.0.5, JAVA_VENDOR=Eclipse Adoptium, RUNTIME_NAME=OpenJDK Runtime Environment, RUNTIME_VERSION=17.0.5+8, VM_NAME=OpenJDK 64-Bit Server VM, VM_VERSION=17.0.5+8, VM_VENDOR=Eclipse Adoptium, OS_ARCH=amd64}
+The client will now receive all logging from the daemon (pid: 11760). The daemon log file: C:\Users\adamcc\.gradle\daemon\8.1.1\daemon-11760.out.log
+Starting 27th build in daemon [uptime: 22 mins 33.57 secs, performance: 99%, GC rate: 0.00/s, heap usage: 0% of 4 GiB]
+Using 20 worker leases.
+Now considering [C:\dev\repo\ticketing, C:\dev\repo\ticketing\buildSrc] as hierarchies to watch
+Now considering [C:\dev\repo\ticketing\buildSrc, C:\dev\repo\ticketing] as hierarchies to watch
+Watching the file system is configured to be enabled if available
+File system watching is active
+Starting Build
+Settings evaluated using settings file 'C:\dev\repo\ticketing\settings.gradle'.
+Projects loaded. Root project using build file 'C:\dev\repo\ticketing\build.gradle'.
+Included projects: [root project 'ticketing', project ':airline-approval-service', project ':airline-mdm', project ':common', project ':customer-mdm', project ':order-service', project ':payment-service', project ':airline-approval-service:airline-approval-container', project ':airline-approval-service:airline-approval-domain', project ':airline-approval-service:airline-approval-infrastructure', project ':airline-mdm:airline-mdm-container', project ':airline-mdm:airline-mdm-domain', project ':airline-mdm:airline-mdm-infrastructure', project ':airline-mdm:airline-mdm-presentation', project ':common:common-application', project ':common:common-container', project ':common:common-domain', project ':common:common-helper', project ':common:common-infrastructure', project ':common:common-kafka', project ':common:common-presentation', project ':common:common-saga', project ':customer-mdm:customer-mdm-container', project ':customer-mdm:customer-mdm-domain', project ':customer-mdm:customer-mdm-infrastructure', project ':customer-mdm:customer-mdm-presentation', project ':order-service:order-container', project ':order-service:order-domain', project ':order-service:order-infrastructure', project ':order-service:order-presentation', project ':payment-service:payment-container', project ':payment-service:payment-domain', project ':payment-service:payment-infrastructure', project ':airline-approval-service:airline-approval-domain:airline-approval-application-service', project ':airline-approval-service:airline-approval-domain:airline-approval-domain-core', project ':airline-approval-service:airline-approval-infrastructure:airline-approval-data-access', project ':airline-approval-service:airline-approval-infrastructure:airline-approval-messaging', project ':airline-mdm:airline-mdm-domain:airline-mdm-application-service', project ':airline-mdm:airline-mdm-domain:airline-mdm-domain-core', project ':airline-mdm:airline-mdm-infrastructure:airline-mdm-data-access', project ':airline-mdm:airline-mdm-infrastructure:airline-mdm-messaging', project ':airline-mdm:airline-mdm-presentation:airline-mdm-api-spec', project ':airline-mdm:airline-mdm-presentation:airline-mdm-rest-controller', project ':airline-mdm:airline-mdm-presentation:airline-mdm-swagger', project ':common:common-kafka:kafka-libs', project ':common:common-kafka:kafka-model', project ':customer-mdm:customer-mdm-domain:customer-mdm-application-service', project ':customer-mdm:customer-mdm-domain:customer-mdm-domain-core', project ':customer-mdm:customer-mdm-infrastructure:customer-mdm-data-access', project ':customer-mdm:customer-mdm-infrastructure:customer-mdm-messaging', project ':customer-mdm:customer-mdm-presentation:customer-mdm-api-spec', project ':customer-mdm:customer-mdm-presentation:customer-mdm-rest-controller', project ':customer-mdm:customer-mdm-presentation:customer-mdm-swagger', project ':order-service:order-domain:order-application-service', project ':order-service:order-domain:order-domain-core', project ':order-service:order-infrastructure:order-data-access', project ':order-service:order-infrastructure:order-messaging', project ':order-service:order-presentation:order-api-spec', project ':order-service:order-presentation:order-rest-controller', project ':order-service:order-presentation:order-swagger', project ':payment-service:payment-domain:payment-application-service', project ':payment-service:payment-domain:payment-domain-core', project ':payment-service:payment-infrastructure:payment-data-access', project ':payment-service:payment-infrastructure:payment-messaging']
+
+> Configure project :buildSrc
+Evaluating project ':buildSrc' using build file 'C:\dev\repo\ticketing\buildSrc\build.gradle'.
+file or directory 'C:\dev\repo\ticketing\buildSrc\src\main\java', not found
+The configuration :buildSrc:mainSourceElements is both consumable and declarable. This combination is incorrect, only one of these flags should be set.
+file or directory 'C:\dev\repo\ticketing\buildSrc\src\main\java', not found
+file or directory 'C:\dev\repo\ticketing\buildSrc\src\main\java', not found
+Resolve mutations for :buildSrc:extractPluginRequests (Thread[Execution worker,5,main]) started.
+:buildSrc:extractPluginRequests (Thread[Execution worker,5,main]) started.
+
+> Task :buildSrc:extractPluginRequests UP-TO-DATE
+Caching disabled for task ':buildSrc:extractPluginRequests' because:
+  Build cache is disabled
+Skipping task ':buildSrc:extractPluginRequests' as it is up-to-date.
+Resolve mutations for :buildSrc:generatePluginAdapters (Thread[Execution worker,5,main]) started.
+:buildSrc:generatePluginAdapters (Thread[Execution worker,5,main]) started.
+
+> Task :buildSrc:generatePluginAdapters UP-TO-DATE
+Caching disabled for task ':buildSrc:generatePluginAdapters' because:
+  Build cache is disabled
+Skipping task ':buildSrc:generatePluginAdapters' as it is up-to-date.
+Resolve mutations for :buildSrc:compileJava (Thread[Execution worker,5,main]) started.
+:buildSrc:compileJava (Thread[Execution worker,5,main]) started.
+
+> Task :buildSrc:compileJava UP-TO-DATE
+Caching disabled for task ':buildSrc:compileJava' because:
+  Build cache is disabled
+Skipping task ':buildSrc:compileJava' as it is up-to-date.
+Resolve mutations for :buildSrc:compileGroovy (Thread[Execution worker,5,main]) started.
+:buildSrc:compileGroovy (Thread[Execution worker,5,main]) started.
+
+> Task :buildSrc:compileGroovy NO-SOURCE
+Skipping task ':buildSrc:compileGroovy' as it has no source files and no previous output files.
+Resolve mutations for :buildSrc:compileGroovyPlugins (Thread[Execution worker,5,main]) started.
+:buildSrc:compileGroovyPlugins (Thread[Execution worker,5,main]) started.
+
+> Task :buildSrc:compileGroovyPlugins UP-TO-DATE
+Caching disabled for task ':buildSrc:compileGroovyPlugins' because:
+  Build cache is disabled
+Skipping task ':buildSrc:compileGroovyPlugins' as it is up-to-date.
+Resolve mutations for :buildSrc:pluginDescriptors (Thread[Execution worker,5,main]) started.
+:buildSrc:pluginDescriptors (Thread[Execution worker Thread 15,5,main]) started.
+
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+Caching disabled for task ':buildSrc:pluginDescriptors' because:
+  Build cache is disabled
+Skipping task ':buildSrc:pluginDescriptors' as it is up-to-date.
+Resolve mutations for :buildSrc:processResources (Thread[Execution worker Thread 15,5,main]) started.
+:buildSrc:processResources (Thread[Execution worker Thread 15,5,main]) started.
+
+> Task :buildSrc:processResources UP-TO-DATE
+Caching disabled for task ':buildSrc:processResources' because:
+  Build cache is disabled
+Skipping task ':buildSrc:processResources' as it is up-to-date.
+Resolve mutations for :buildSrc:classes (Thread[Execution worker Thread 15,5,main]) started.
+:buildSrc:classes (Thread[Execution worker Thread 15,5,main]) started.
+
+> Task :buildSrc:classes UP-TO-DATE
+Skipping task ':buildSrc:classes' as it has no actions.
+Resolve mutations for :buildSrc:jar (Thread[Execution worker Thread 17,5,main]) started.
+:buildSrc:jar (Thread[Execution worker Thread 11,5,main]) started.
+
+> Task :buildSrc:jar UP-TO-DATE
+Caching disabled for task ':buildSrc:jar' because:
+  Build cache is disabled
+Skipping task ':buildSrc:jar' as it is up-to-date.
+
+> Configure project :
+Evaluating root project 'ticketing' using build file 'C:\dev\repo\ticketing\build.gradle'.
+
+> Configure project :airline-approval-service
+Evaluating project ':airline-approval-service' using build file 'C:\dev\repo\ticketing\airline-approval-service\build.gradle'.
+
+> Configure project :airline-mdm
+Evaluating project ':airline-mdm' using build file 'C:\dev\repo\ticketing\airline-mdm\build.gradle'.
+
+> Configure project :common
+Evaluating project ':common' using build file 'C:\dev\repo\ticketing\common\build.gradle'.
+
+> Configure project :customer-mdm
+Evaluating project ':customer-mdm' using build file 'C:\dev\repo\ticketing\customer-mdm\build.gradle'.
+
+> Configure project :order-service
+Evaluating project ':order-service' using build file 'C:\dev\repo\ticketing\order-service\build.gradle'.
+
+> Configure project :payment-service
+Evaluating project ':payment-service' using build file 'C:\dev\repo\ticketing\payment-service\build.gradle'.
+
+> Configure project :airline-approval-service:airline-approval-container
+Evaluating project ':airline-approval-service:airline-approval-container' using build file 'C:\dev\repo\ticketing\airline-approval-service\airline-approval-container\build.gradle'.
+
+> Configure project :airline-approval-service:airline-approval-domain
+Evaluating project ':airline-approval-service:airline-approval-domain' using build file 'C:\dev\repo\ticketing\airline-approval-service\airline-approval-domain\build.gradle'.
+
+> Configure project :airline-approval-service:airline-approval-infrastructure
+Evaluating project ':airline-approval-service:airline-approval-infrastructure' using build file 'C:\dev\repo\ticketing\airline-approval-service\airline-approval-infrastructure\build.gradle'.
+
+> Configure project :airline-mdm:airline-mdm-container
+Evaluating project ':airline-mdm:airline-mdm-container' using build file 'C:\dev\repo\ticketing\airline-mdm\airline-mdm-container\build.gradle'.
+
+> Configure project :airline-mdm:airline-mdm-domain
+Evaluating project ':airline-mdm:airline-mdm-domain' using build file 'C:\dev\repo\ticketing\airline-mdm\airline-mdm-domain\build.gradle'.
+
+> Configure project :airline-mdm:airline-mdm-infrastructure
+Evaluating project ':airline-mdm:airline-mdm-infrastructure' using build file 'C:\dev\repo\ticketing\airline-mdm\airline-mdm-infrastructure\build.gradle'.
+
+> Configure project :airline-mdm:airline-mdm-presentation
+Evaluating project ':airline-mdm:airline-mdm-presentation' using build file 'C:\dev\repo\ticketing\airline-mdm\airline-mdm-presentation\build.gradle'.
+
+> Configure project :common:common-application
+Evaluating project ':common:common-application' using build file 'C:\dev\repo\ticketing\common\common-application\build.gradle'.
+
+> Configure project :common:common-container
+Evaluating project ':common:common-container' using build file 'C:\dev\repo\ticketing\common\common-container\build.gradle'.
+
+> Configure project :common:common-domain
+Evaluating project ':common:common-domain' using build file 'C:\dev\repo\ticketing\common\common-domain\build.gradle'.
+
+> Configure project :common:common-helper
+Evaluating project ':common:common-helper' using build file 'C:\dev\repo\ticketing\common\common-helper\build.gradle'.
+
+> Configure project :common:common-infrastructure
+Evaluating project ':common:common-infrastructure' using build file 'C:\dev\repo\ticketing\common\common-infrastructure\build.gradle'.
+
+> Configure project :common:common-kafka
+Evaluating project ':common:common-kafka' using build file 'C:\dev\repo\ticketing\common\common-kafka\build.gradle'.
+
+> Configure project :common:common-presentation
+Evaluating project ':common:common-presentation' using build file 'C:\dev\repo\ticketing\common\common-presentation\build.gradle'.
+
+> Configure project :common:common-saga
+Evaluating project ':common:common-saga' using build file 'C:\dev\repo\ticketing\common\common-saga\build.gradle'.
+
+> Configure project :customer-mdm:customer-mdm-container
+Evaluating project ':customer-mdm:customer-mdm-container' using build file 'C:\dev\repo\ticketing\customer-mdm\customer-mdm-container\build.gradle'.
+
+> Configure project :customer-mdm:customer-mdm-domain
+Evaluating project ':customer-mdm:customer-mdm-domain' using build file 'C:\dev\repo\ticketing\customer-mdm\customer-mdm-domain\build.gradle'.
+
+> Configure project :customer-mdm:customer-mdm-infrastructure
+Evaluating project ':customer-mdm:customer-mdm-infrastructure' using build file 'C:\dev\repo\ticketing\customer-mdm\customer-mdm-infrastructure\build.gradle'.
+
+> Configure project :customer-mdm:customer-mdm-presentation
+Evaluating project ':customer-mdm:customer-mdm-presentation' using build file 'C:\dev\repo\ticketing\customer-mdm\customer-mdm-presentation\build.gradle'.
+
+> Configure project :order-service:order-container
+Evaluating project ':order-service:order-container' using build file 'C:\dev\repo\ticketing\order-service\order-container\build.gradle'.
+
+> Configure project :order-service:order-domain
+Evaluating project ':order-service:order-domain' using build file 'C:\dev\repo\ticketing\order-service\order-domain\build.gradle'.
+
+> Configure project :order-service:order-infrastructure
+Evaluating project ':order-service:order-infrastructure' using build file 'C:\dev\repo\ticketing\order-service\order-infrastructure\build.gradle'.
+
+> Configure project :order-service:order-presentation
+Evaluating project ':order-service:order-presentation' using build file 'C:\dev\repo\ticketing\order-service\order-presentation\build.gradle'.
+
+> Configure project :payment-service:payment-container
+Evaluating project ':payment-service:payment-container' using build file 'C:\dev\repo\ticketing\payment-service\payment-container\build.gradle'.
+
+> Configure project :payment-service:payment-domain
+Evaluating project ':payment-service:payment-domain' using build file 'C:\dev\repo\ticketing\payment-service\payment-domain\build.gradle'.
+
+> Configure project :payment-service:payment-infrastructure
+Evaluating project ':payment-service:payment-infrastructure' using build file 'C:\dev\repo\ticketing\payment-service\payment-infrastructure\build.gradle'.
+
+> Configure project :airline-approval-service:airline-approval-domain:airline-approval-application-service
+Evaluating project ':airline-approval-service:airline-approval-domain:airline-approval-application-service' using build file 'C:\dev\repo\ticketing\airline-approval-service\airline-approval-domain\airline-approval-application-service\build.gradle'.
+
+> Configure project :airline-approval-service:airline-approval-domain:airline-approval-domain-core
+Evaluating project ':airline-approval-service:airline-approval-domain:airline-approval-domain-core' using build file 'C:\dev\repo\ticketing\airline-approval-service\airline-approval-domain\airline-approval-domain-core\build.gradle'.
+
+> Configure project :airline-approval-service:airline-approval-infrastructure:airline-approval-data-access
+Evaluating project ':airline-approval-service:airline-approval-infrastructure:airline-approval-data-access' using build file 'C:\dev\repo\ticketing\airline-approval-service\airline-approval-infrastructure\airline-approval-data-access\build.gradle'.
+
+> Configure project :airline-approval-service:airline-approval-infrastructure:airline-approval-messaging
+Evaluating project ':airline-approval-service:airline-approval-infrastructure:airline-approval-messaging' using build file 'C:\dev\repo\ticketing\airline-approval-service\airline-approval-infrastructure\airline-approval-messaging\build.gradle'.
+
+> Configure project :airline-mdm:airline-mdm-domain:airline-mdm-application-service
+Evaluating project ':airline-mdm:airline-mdm-domain:airline-mdm-application-service' using build file 'C:\dev\repo\ticketing\airline-mdm\airline-mdm-domain\airline-mdm-application-service\build.gradle'.
+
+> Configure project :airline-mdm:airline-mdm-domain:airline-mdm-domain-core
+Evaluating project ':airline-mdm:airline-mdm-domain:airline-mdm-domain-core' using build file 'C:\dev\repo\ticketing\airline-mdm\airline-mdm-domain\airline-mdm-domain-core\build.gradle'.
+
+> Configure project :airline-mdm:airline-mdm-infrastructure:airline-mdm-data-access
+Evaluating project ':airline-mdm:airline-mdm-infrastructure:airline-mdm-data-access' using build file 'C:\dev\repo\ticketing\airline-mdm\airline-mdm-infrastructure\airline-mdm-data-access\build.gradle'.
+
+> Configure project :airline-mdm:airline-mdm-infrastructure:airline-mdm-messaging
+Evaluating project ':airline-mdm:airline-mdm-infrastructure:airline-mdm-messaging' using build file 'C:\dev\repo\ticketing\airline-mdm\airline-mdm-infrastructure\airline-mdm-messaging\build.gradle'.
+
+> Configure project :airline-mdm:airline-mdm-presentation:airline-mdm-api-spec
+Evaluating project ':airline-mdm:airline-mdm-presentation:airline-mdm-api-spec' using build file 'C:\dev\repo\ticketing\airline-mdm\airline-mdm-presentation\airline-mdm-api-spec\build.gradle'.
+
+> Configure project :airline-mdm:airline-mdm-presentation:airline-mdm-rest-controller
+Evaluating project ':airline-mdm:airline-mdm-presentation:airline-mdm-rest-controller' using build file 'C:\dev\repo\ticketing\airline-mdm\airline-mdm-presentation\airline-mdm-rest-controller\build.gradle'.
+
+> Configure project :airline-mdm:airline-mdm-presentation:airline-mdm-swagger
+Evaluating project ':airline-mdm:airline-mdm-presentation:airline-mdm-swagger' using build file 'C:\dev\repo\ticketing\airline-mdm\airline-mdm-presentation\airline-mdm-swagger\build.gradle'.
+
+> Configure project :common:common-kafka:kafka-libs
+Evaluating project ':common:common-kafka:kafka-libs' using build file 'C:\dev\repo\ticketing\common\common-kafka\kafka-libs\build.gradle'.
+
+> Configure project :common:common-kafka:kafka-model
+Evaluating project ':common:common-kafka:kafka-model' using build file 'C:\dev\repo\ticketing\common\common-kafka\kafka-model\build.gradle'.
+
+> Configure project :customer-mdm:customer-mdm-domain:customer-mdm-application-service
+Evaluating project ':customer-mdm:customer-mdm-domain:customer-mdm-application-service' using build file 'C:\dev\repo\ticketing\customer-mdm\customer-mdm-domain\customer-mdm-application-service\build.gradle'.
+
+> Configure project :customer-mdm:customer-mdm-domain:customer-mdm-domain-core
+Evaluating project ':customer-mdm:customer-mdm-domain:customer-mdm-domain-core' using build file 'C:\dev\repo\ticketing\customer-mdm\customer-mdm-domain\customer-mdm-domain-core\build.gradle'.
+
+> Configure project :customer-mdm:customer-mdm-infrastructure:customer-mdm-data-access
+Evaluating project ':customer-mdm:customer-mdm-infrastructure:customer-mdm-data-access' using build file 'C:\dev\repo\ticketing\customer-mdm\customer-mdm-infrastructure\customer-mdm-data-access\build.gradle'.
+
+> Configure project :customer-mdm:customer-mdm-infrastructure:customer-mdm-messaging
+Evaluating project ':customer-mdm:customer-mdm-infrastructure:customer-mdm-messaging' using build file 'C:\dev\repo\ticketing\customer-mdm\customer-mdm-infrastructure\customer-mdm-messaging\build.gradle'.
+
+> Configure project :customer-mdm:customer-mdm-presentation:customer-mdm-api-spec
+Evaluating project ':customer-mdm:customer-mdm-presentation:customer-mdm-api-spec' using build file 'C:\dev\repo\ticketing\customer-mdm\customer-mdm-presentation\customer-mdm-api-spec\build.gradle'.
+
+> Configure project :customer-mdm:customer-mdm-presentation:customer-mdm-rest-controller
+Evaluating project ':customer-mdm:customer-mdm-presentation:customer-mdm-rest-controller' using build file 'C:\dev\repo\ticketing\customer-mdm\customer-mdm-presentation\customer-mdm-rest-controller\build.gradle'.
+
+> Configure project :customer-mdm:customer-mdm-presentation:customer-mdm-swagger
+Evaluating project ':customer-mdm:customer-mdm-presentation:customer-mdm-swagger' using build file 'C:\dev\repo\ticketing\customer-mdm\customer-mdm-presentation\customer-mdm-swagger\build.gradle'.
+
+> Configure project :order-service:order-domain:order-application-service
+Evaluating project ':order-service:order-domain:order-application-service' using build file 'C:\dev\repo\ticketing\order-service\order-domain\order-application-service\build.gradle'.
+
+> Configure project :order-service:order-domain:order-domain-core
+Evaluating project ':order-service:order-domain:order-domain-core' using build file 'C:\dev\repo\ticketing\order-service\order-domain\order-domain-core\build.gradle'.
+
+> Configure project :order-service:order-infrastructure:order-data-access
+Evaluating project ':order-service:order-infrastructure:order-data-access' using build file 'C:\dev\repo\ticketing\order-service\order-infrastructure\order-data-access\build.gradle'.
+
+> Configure project :order-service:order-infrastructure:order-messaging
+Evaluating project ':order-service:order-infrastructure:order-messaging' using build file 'C:\dev\repo\ticketing\order-service\order-infrastructure\order-messaging\build.gradle'.
+
+> Configure project :order-service:order-presentation:order-api-spec
+Evaluating project ':order-service:order-presentation:order-api-spec' using build file 'C:\dev\repo\ticketing\order-service\order-presentation\order-api-spec\build.gradle'.
+
+> Configure project :order-service:order-presentation:order-rest-controller
+Evaluating project ':order-service:order-presentation:order-rest-controller' using build file 'C:\dev\repo\ticketing\order-service\order-presentation\order-rest-controller\build.gradle'.
+
+> Configure project :order-service:order-presentation:order-swagger
+Evaluating project ':order-service:order-presentation:order-swagger' using build file 'C:\dev\repo\ticketing\order-service\order-presentation\order-swagger\build.gradle'.
+
+> Configure project :payment-service:payment-domain:payment-application-service
+Evaluating project ':payment-service:payment-domain:payment-application-service' using build file 'C:\dev\repo\ticketing\payment-service\payment-domain\payment-application-service\build.gradle'.
+
+> Configure project :payment-service:payment-domain:payment-domain-core
+Evaluating project ':payment-service:payment-domain:payment-domain-core' using build file 'C:\dev\repo\ticketing\payment-service\payment-domain\payment-domain-core\build.gradle'.
+
+> Configure project :payment-service:payment-infrastructure:payment-data-access
+Evaluating project ':payment-service:payment-infrastructure:payment-data-access' using build file 'C:\dev\repo\ticketing\payment-service\payment-infrastructure\payment-data-access\build.gradle'.
+
+> Configure project :payment-service:payment-infrastructure:payment-messaging
+Evaluating project ':payment-service:payment-infrastructure:payment-messaging' using build file 'C:\dev\repo\ticketing\payment-service\payment-infrastructure\payment-messaging\build.gradle'.
+All projects evaluated.
+Task name matched 'projects'
+Selected primary task 'projects' from project :
+Tasks to be executed: [task ':projects']
+Tasks that were excluded: []
+Resolve mutations for :projects (Thread[Execution worker Thread 5,5,main]) started.
+:projects (Thread[Execution worker Thread 5,5,main]) started.
+
+> Task :projects
+Caching disabled for task ':projects' because:
+  Build cache is disabled
+Task ':projects' is not up-to-date because:
+  Task state is not tracked.
+
+------------------------------------------------------------
+Root project 'ticketing'
+------------------------------------------------------------
+
+Root project 'ticketing'
++--- Project ':airline-approval-service'
+|    +--- Project ':airline-approval-service:airline-approval-container'
+|    +--- Project ':airline-approval-service:airline-approval-domain'
+|    |    +--- Project ':airline-approval-service:airline-approval-domain:airline-approval-application-service'
+|    |    \--- Project ':airline-approval-service:airline-approval-domain:airline-approval-domain-core'
+|    \--- Project ':airline-approval-service:airline-approval-infrastructure'
+|         +--- Project ':airline-approval-service:airline-approval-infrastructure:airline-approval-data-access'
+|         \--- Project ':airline-approval-service:airline-approval-infrastructure:airline-approval-messaging'
++--- Project ':airline-mdm'
+|    +--- Project ':airline-mdm:airline-mdm-container'
+|    +--- Project ':airline-mdm:airline-mdm-domain'
+|    |    +--- Project ':airline-mdm:airline-mdm-domain:airline-mdm-application-service'
+|    |    \--- Project ':airline-mdm:airline-mdm-domain:airline-mdm-domain-core'
+|    +--- Project ':airline-mdm:airline-mdm-infrastructure'
+|    |    +--- Project ':airline-mdm:airline-mdm-infrastructure:airline-mdm-data-access'
+|    |    \--- Project ':airline-mdm:airline-mdm-infrastructure:airline-mdm-messaging'
+|    \--- Project ':airline-mdm:airline-mdm-presentation'
+|         +--- Project ':airline-mdm:airline-mdm-presentation:airline-mdm-api-spec'
+|         +--- Project ':airline-mdm:airline-mdm-presentation:airline-mdm-rest-controller'
+|         \--- Project ':airline-mdm:airline-mdm-presentation:airline-mdm-swagger'
++--- Project ':common'
+|    +--- Project ':common:common-application'
+|    +--- Project ':common:common-container'
+|    +--- Project ':common:common-domain'
+|    +--- Project ':common:common-helper'
+|    +--- Project ':common:common-infrastructure'
+|    +--- Project ':common:common-kafka'
+|    |    +--- Project ':common:common-kafka:kafka-libs'
+|    |    \--- Project ':common:common-kafka:kafka-model'
+|    +--- Project ':common:common-presentation'
+|    \--- Project ':common:common-saga'
++--- Project ':customer-mdm'
+|    +--- Project ':customer-mdm:customer-mdm-container'
+|    +--- Project ':customer-mdm:customer-mdm-domain'
+|    |    +--- Project ':customer-mdm:customer-mdm-domain:customer-mdm-application-service'
+|    |    \--- Project ':customer-mdm:customer-mdm-domain:customer-mdm-domain-core'
+|    +--- Project ':customer-mdm:customer-mdm-infrastructure'
+|    |    +--- Project ':customer-mdm:customer-mdm-infrastructure:customer-mdm-data-access'
+|    |    \--- Project ':customer-mdm:customer-mdm-infrastructure:customer-mdm-messaging'
+|    \--- Project ':customer-mdm:customer-mdm-presentation'
+|         +--- Project ':customer-mdm:customer-mdm-presentation:customer-mdm-api-spec'
+|         +--- Project ':customer-mdm:customer-mdm-presentation:customer-mdm-rest-controller'
+|         \--- Project ':customer-mdm:customer-mdm-presentation:customer-mdm-swagger'
++--- Project ':order-service'
+|    +--- Project ':order-service:order-container'
+|    +--- Project ':order-service:order-domain'
+|    |    +--- Project ':order-service:order-domain:order-application-service'
+|    |    \--- Project ':order-service:order-domain:order-domain-core'
+|    +--- Project ':order-service:order-infrastructure'
+|    |    +--- Project ':order-service:order-infrastructure:order-data-access'
+|    |    \--- Project ':order-service:order-infrastructure:order-messaging'
+|    \--- Project ':order-service:order-presentation'
+|         +--- Project ':order-service:order-presentation:order-api-spec'
+|         +--- Project ':order-service:order-presentation:order-rest-controller'
+|         \--- Project ':order-service:order-presentation:order-swagger'
+\--- Project ':payment-service'
+     +--- Project ':payment-service:payment-container'
+     +--- Project ':payment-service:payment-domain'
+     |    +--- Project ':payment-service:payment-domain:payment-application-service'
+     |    \--- Project ':payment-service:payment-domain:payment-domain-core'
+     \--- Project ':payment-service:payment-infrastructure'
+          +--- Project ':payment-service:payment-infrastructure:payment-data-access'
+          \--- Project ':payment-service:payment-infrastructure:payment-messaging'
+
+To see a list of the tasks of a project, run gradlew <project-path>:tasks
+For example, try running gradlew :airline-approval-service:tasks
+
+BUILD SUCCESSFUL in 1s
+8 actionable tasks: 1 executed, 7 up-to-date
+Watched directory hierarchies: [C:\dev\repo\ticketing]

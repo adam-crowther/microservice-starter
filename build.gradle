@@ -1,7 +1,7 @@
 plugins {
   id 'base'
   id 'maven-publish'
-  alias pluginLibs.plugins.nebula.lint
+  id 'gradlelint-conventions'
 }
 
 allprojects {

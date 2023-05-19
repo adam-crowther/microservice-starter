@@ -1,38 +1,17 @@
 plugins {
-  id 'java'
-  id 'checkstyle'
-  id 'jacoco'
-  alias pluginLibs.plugins.spotbugs
-  id 'groovy'
+  id 'java-conventions'
+  id 'spock-conventions'
 }
-
-apply from: "${rootDir}/java.gradle"
-apply plugin: "groovy"
 
 dependencies {
   implementation project(":common:common-helper")
 
-  implementation libs.apache.commons.lang3
-  implementation libs.google.guava
-  implementation libs.jakarta.annotation.api
-  implementation libs.lombok.core
-  implementation libs.spotbugs.annotations
+  implementation 'org.apache.commons:commons-lang3'
+  implementation 'com.google.guava:guava'
+  implementation 'jakarta.annotation:jakarta.annotation-api'
+  implementation 'org.projectlombok:lombok'
 
-  annotationProcessor libs.lombok.core
+  annotationProcessor 'org.projectlombok:lombok'
 
-  testImplementation libs.bundles.spock
-  testImplementation libs.equalsverifier
-  testImplementation libs.hamcrest.core
-  testImplementation libs.jakarta.inject.api
-  testImplementation libs.mockito.core
-  testImplementation libs.spring.test
-
-  testAnnotationProcessor libs.lombok.core
-}
-
-test {
-  useJUnitPlatform()
-  testLogging {
-    events "passed", "skipped", "failed"
-  }
+  testAnnotationProcessor 'org.projectlombok:lombok'
 }

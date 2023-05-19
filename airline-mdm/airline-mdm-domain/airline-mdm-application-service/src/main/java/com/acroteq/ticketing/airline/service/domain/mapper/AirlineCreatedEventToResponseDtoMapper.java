@@ -3,11 +3,12 @@ package com.acroteq.ticketing.airline.service.domain.mapper;
 import com.acroteq.ticketing.airline.service.domain.dto.create.CreateAirlineResponseDto;
 import com.acroteq.ticketing.airline.service.domain.event.AirlineEvent;
 import com.acroteq.ticketing.application.mapper.EventToDtoMapper;
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.id.AirlineIdMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(uses = { AirlineIdMapper.class })
+@Mapper(config = MapstructConfig.class, uses = { AirlineIdMapper.class })
 public interface AirlineCreatedEventToResponseDtoMapper
     extends EventToDtoMapper<AirlineEvent, CreateAirlineResponseDto> {
 

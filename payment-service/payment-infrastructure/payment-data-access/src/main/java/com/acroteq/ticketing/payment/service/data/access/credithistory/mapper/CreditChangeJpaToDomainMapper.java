@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.payment.service.data.access.credithistory.mapper;
 
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
 import com.acroteq.ticketing.application.mapper.id.CustomerIdMapper;
 import com.acroteq.ticketing.infrastructure.mapper.JpaToDomainMapper;
@@ -11,7 +12,8 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(uses = { CreditChangeIdMapper.class,
+@Mapper(config = MapstructConfig.class,
+        uses = { CreditChangeIdMapper.class,
                  CurrencyIdMapper.class,
                  CustomerIdMapper.class,
                  CustomerJpaToDomainMapper.class })

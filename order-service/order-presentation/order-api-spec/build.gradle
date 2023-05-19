@@ -1,55 +1,9 @@
 plugins {
-  id 'java'
-  alias pluginLibs.plugins.openapi.generator
-  id 'checkstyle'
-  id 'jacoco'
-  alias pluginLibs.plugins.spotbugs
-}
-
-apply from: "${rootDir}/java.gradle"
-apply plugin: "org.openapi.generator"
-
-dependencies {
-  implementation libs.jackson.annotations
-  implementation libs.jakarta.annotation.api
-  implementation libs.jakarta.servlet.api
-  implementation libs.jakarta.validation.api
-  implementation libs.jakarta.validation.api
-  implementation libs.lombok.core
-  implementation libs.openapitools.jackson.databind.nullable
-  implementation libs.spotbugs.annotations
-  implementation libs.spring.context
-  implementation libs.spring.core
-  implementation libs.spring.web
-  implementation libs.swagger.annotations
-  implementation libs.swagger.core
-
-  annotationProcessor libs.lombok.core
+  id 'java-conventions'
+  id 'openapi-conventions'
 }
 
 openApiGenerate {
-  generatorName = "spring"
-  inputSpec = "${projectDir}/src/main/spec/openapi.yaml"
-  outputDir = "${buildDir}/generated"
   apiPackage = "com.acroteq.ticketing.order.service.presentation.api"
-  invokerPackage = "org.openapi.example.invoker"
   modelPackage = "com.acroteq.ticketing.order.service.presentation.model"
-  configOptions.putAll([
-        dateLibrary   : "java8",
-        interfaceOnly : "true",
-        useSpringBoot3: "true"
-  ])
 }
-
-sourceSets {
-  main {
-    java {
-      srcDirs += "${buildDir}/generated/src/main/java"
-    }
-    resources {
-      srcDirs += "${projectDir}/src/main/spec"
-    }
-  }
-}
-
-compileJava.dependsOn tasks.openApiGenerate

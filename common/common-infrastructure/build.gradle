@@ -1,57 +1,24 @@
 plugins {
-  id 'java'
-  id 'checkstyle'
-  id 'jacoco'
-  alias pluginLibs.plugins.spotbugs
-  id 'groovy'
-}
-
-apply from: "${rootDir}/java.gradle"
-apply plugin: "groovy"
-
-compileJava {
-  options.compilerArgs += [
-        '-Amapstruct.defaultComponentModel=spring',
-        '-Amapstruct.defaultInjectionStrategy=constructor',
-        '-Amapstruct.unmappedTargetPolicy=ERROR',
-        '-Amapstruct.verbose=false',
-        '-Amapstruct.suppressGeneratorVersionInfoComment=true',
-        '-Amapstruct.suppressGeneratorTimestamp=true'
-  ]
+  id 'java-conventions'
+  id 'spock-conventions'
 }
 
 dependencies {
   implementation project(":common:common-domain")
   implementation project(":common:common-application")
 
-  implementation libs.apache.avro
-  implementation libs.jakarta.persistence.api
-  implementation libs.lombok.core
-  implementation libs.mapstruct.core
-  implementation libs.spring.boot.autoconfigure
-  implementation libs.spring.beans
-  implementation libs.spring.context
-  implementation libs.spring.data.commons
-  implementation libs.spring.data.jpa
-  implementation libs.spring.security.core
-  implementation libs.spring.boot.oauth2.resource.server
+  implementation 'org.apache.avro:avro'
+  implementation 'jakarta.persistence:jakarta.persistence-api'
+  implementation 'org.projectlombok:lombok'
+  implementation 'org.mapstruct:mapstruct'
+  implementation 'org.springframework:spring-context'
+  implementation 'org.springframework.data:spring-data-commons'
+  implementation 'org.springframework.data:spring-data-jpa'
+  implementation 'org.springframework.security:spring-security-core'
 
-  annotationProcessor libs.lombok.core
-  annotationProcessor libs.lombok.mapstruct.binding
-  annotationProcessor libs.mapstruct.processor
+  annotationProcessor 'org.projectlombok:lombok'
+  annotationProcessor 'org.projectlombok:lombok-mapstruct-binding'
+  annotationProcessor 'org.mapstruct:mapstruct-processor'
 
-  testImplementation libs.bundles.spock
-  testImplementation libs.equalsverifier
-  testImplementation libs.jakarta.inject.api
-  testImplementation libs.mockito.core
-  testImplementation libs.spring.test
-
-  testAnnotationProcessor libs.lombok.core
-}
-
-test {
-  useJUnitPlatform()
-  testLogging {
-    events "passed", "skipped", "failed"
-  }
+  testAnnotationProcessor 'org.projectlombok:lombok'
 }

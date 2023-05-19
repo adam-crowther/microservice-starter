@@ -1,6 +1,7 @@
 package com.acroteq.ticketing.order.service.domain.mapper.order;
 
 import com.acroteq.ticketing.application.mapper.DtoToDomainMapper;
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.id.AirlineIdMapper;
 import com.acroteq.ticketing.application.mapper.id.CustomerIdMapper;
 import com.acroteq.ticketing.application.mapper.id.OrderIdMapper;
@@ -11,7 +12,8 @@ import com.acroteq.ticketing.order.service.domain.resolver.CustomerResolver;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(uses = { OrderItemDtoToDomainMapper.class,
+@Mapper(config = MapstructConfig.class,
+        uses = { OrderItemDtoToDomainMapper.class,
                  OrderIdMapper.class,
                  CustomerIdMapper.class,
                  AirlineIdMapper.class,

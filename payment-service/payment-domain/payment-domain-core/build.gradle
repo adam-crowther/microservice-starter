@@ -1,46 +1,20 @@
 plugins {
-  id 'java'
-  id 'checkstyle'
-  id 'jacoco'
-  alias pluginLibs.plugins.spotbugs
-  id 'groovy'
+  id 'java-conventions'
+  id 'spock-conventions'
+  id 'cucumber-conventions'
 }
-
-apply from: "${rootDir}/java.gradle"
-apply plugin: "groovy"
 
 dependencies {
   implementation project(":common:common-domain")
   implementation project(":common:common-helper")
 
-  implementation libs.apache.commons.lang3
-  implementation libs.jakarta.annotation.api
-  implementation libs.lombok.core
-  implementation libs.slf4j.api
-  implementation libs.spotbugs.annotations
+  implementation 'jakarta.annotation:jakarta.annotation-api'
+  implementation 'org.projectlombok:lombok'
+  implementation 'org.slf4j:slf4j-api'
 
-  annotationProcessor libs.lombok.core
+  annotationProcessor 'org.projectlombok:lombok'
 
-  testImplementation libs.bundles.cucumber
-  testImplementation libs.bundles.spock
-  testImplementation libs.equalsverifier
-  testImplementation libs.hamcrest.core
-  testImplementation libs.hamcrest.optional
-  testImplementation libs.jakarta.inject.api
-  testImplementation libs.junit4
-  testImplementation libs.junit5.api
-  testImplementation libs.junit5.vintage
-  testImplementation libs.mockito.core
-  testImplementation libs.spring.test
+  testAnnotationProcessor 'org.projectlombok:lombok'
 
-  testAnnotationProcessor libs.lombok.core
-
-  testRuntimeOnly libs.slf4j.simple
-}
-
-test {
-  useJUnitPlatform()
-  testLogging {
-    events "passed", "skipped", "failed"
-  }
+  testRuntimeOnly 'org.slf4j:slf4j-simple'
 }

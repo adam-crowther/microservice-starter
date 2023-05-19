@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.order.service.messaging.mapper.customer;
 
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.infrastructure.mapper.EventIdMessageToDtoMapper;
 import com.acroteq.ticketing.infrastructure.mapper.MessageToDtoMapper;
 import com.acroteq.ticketing.kafka.customer.avro.model.CustomerEventMessage;
@@ -8,7 +9,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Mapper
+@Mapper(config = MapstructConfig.class)
 public abstract class CustomerEventMessageToDtoMapper
     implements MessageToDtoMapper<CustomerEventMessage, CustomerEventDto> {
 

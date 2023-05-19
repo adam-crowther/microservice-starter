@@ -2,6 +2,7 @@ package com.acroteq.ticketing.order.service.messaging.mapper.airline;
 
 
 import com.acroteq.ticketing.application.mapper.DateTimeMapper;
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.id.AirlineIdMapper;
 import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
 import com.acroteq.ticketing.application.mapper.id.FlightIdMapper;
@@ -17,11 +18,13 @@ import org.mapstruct.Mapping;
 import java.time.Instant;
 import java.util.UUID;
 
-@Mapper(uses = { OrderIdMapper.class,
+@Mapper(config = MapstructConfig.class,
+        uses = { OrderIdMapper.class,
                  CurrencyIdMapper.class,
                  AirlineIdMapper.class,
                  FlightIdMapper.class,
-                 DateTimeMapper.class }, imports = { UUID.class, Instant.class })
+                 DateTimeMapper.class },
+        imports = { UUID.class, Instant.class })
 public interface AirlineApprovalRequestMessageFactory
     extends EventToMessageMapper<OrderEvent, AirlineApprovalRequestMessage> {
 

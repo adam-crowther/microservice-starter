@@ -67,7 +67,7 @@ Uses Docker Compose to start up a clean PostgreSQL database.
 - Static code analyser that finds common simple flaws, like unused variables, empty catch blocks, unnecessary object
   creation, etc.
 - See https://docs.pmd-code.org/latest/
-- PMD is configured in the file: [pmd_rules.xml](../quality/pmd_rules.xml)
+- PMD is configured in the file: [pmd_rules.xml](../buildSrc/src/main/resources/pmd_rules.xml)
 - Configure `Actions On Save` in Intellij to enforce our coding standards, as follows:
   [![img.png](images/intellij-actions-on-save-thumb.png)](./images/intellij-actions-on-save.png)
 
@@ -87,7 +87,7 @@ Uses Docker Compose to start up a clean PostgreSQL database.
     - Security issues
     - Confusing code.
 - See https://spotbugs.readthedocs.io/en/latest/
-- Spotbugs is configured in the exclusion file: [spotbugs_exclude.xml](../quality/spotbugs_exclude.xml)
+- Spotbugs is configured in the exclusion file: [spotbugs_exclude.xml](../buildSrc/src/main/resources/spotbugs_exclude.xml)
 
 |                  | Gradle command        | Task dependencies |
 |------------------|:----------------------|-------------------|

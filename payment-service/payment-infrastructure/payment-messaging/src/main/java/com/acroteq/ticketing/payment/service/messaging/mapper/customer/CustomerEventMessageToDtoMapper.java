@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.payment.service.messaging.mapper.customer;
 
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
 import com.acroteq.ticketing.infrastructure.mapper.EventIdMessageToDtoMapper;
 import com.acroteq.ticketing.infrastructure.mapper.MessageToDtoMapper;
@@ -9,7 +10,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Mapper(uses = CurrencyIdMapper.class)
+@Mapper(config = MapstructConfig.class, uses = CurrencyIdMapper.class)
 public abstract class CustomerEventMessageToDtoMapper
     implements MessageToDtoMapper<CustomerEventMessage, CustomerEventDto> {
 

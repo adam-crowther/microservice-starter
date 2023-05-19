@@ -1,23 +1,6 @@
 plugins {
-  id 'java'
-  id 'checkstyle'
-  id 'jacoco'
-  alias pluginLibs.plugins.spotbugs
-  id 'groovy'
-}
-
-apply from: "${rootDir}/java.gradle"
-apply plugin: "groovy"
-
-compileJava {
-  options.compilerArgs += [
-        '-Amapstruct.defaultComponentModel=spring',
-        '-Amapstruct.defaultInjectionStrategy=constructor',
-        '-Amapstruct.unmappedTargetPolicy=ERROR',
-        '-Amapstruct.verbose=false',
-        '-Amapstruct.suppressGeneratorVersionInfoComment=true',
-        '-Amapstruct.suppressGeneratorTimestamp=true'
-  ]
+  id 'java-conventions'
+  id 'spock-conventions'
 }
 
 dependencies {
@@ -30,31 +13,19 @@ dependencies {
   implementation project(":common:common-kafka:kafka-libs")
   implementation project(":common:common-kafka:kafka-model")
 
-  implementation libs.apache.avro
-  implementation libs.kafka.clients
-  implementation libs.lombok.core
-  implementation libs.mapstruct.core
-  implementation libs.slf4j.api
-  implementation libs.spotbugs.annotations
-  implementation libs.spring.beans
-  implementation libs.spring.boot.core
-  implementation libs.spring.context
-  implementation libs.spring.kafka
-  implementation libs.spring.messaging
+  compileOnly 'org.springframework.boot:spring-boot'
+  compileOnly 'org.springframework.kafka:spring-kafka'
 
-  annotationProcessor libs.lombok.core
-  annotationProcessor libs.lombok.mapstruct.binding
-  annotationProcessor libs.mapstruct.processor
+  implementation 'org.apache.avro:avro'
+  implementation 'org.projectlombok:lombok'
+  implementation 'org.mapstruct:mapstruct'
+  implementation 'org.slf4j:slf4j-api'
+  implementation 'org.springframework:spring-beans'
+  implementation 'org.springframework:spring-context'
+  implementation 'org.springframework.kafka:spring-kafka'
+  implementation 'org.springframework:spring-messaging'
 
-  testImplementation libs.bundles.spock
-  testImplementation libs.equalsverifier
-  testImplementation libs.jakarta.inject.api
-  testImplementation libs.spring.test
-}
-
-test {
-  useJUnitPlatform()
-  testLogging {
-    events "passed", "skipped", "failed"
-  }
+  annotationProcessor 'org.projectlombok:lombok'
+  annotationProcessor 'org.projectlombok:lombok-mapstruct-binding'
+  annotationProcessor 'org.mapstruct:mapstruct-processor'
 }

@@ -1,0 +1,25 @@
+plugins {
+  id 'com.github.spotbugs'
+}
+
+dependencies {
+  spotbugs 'com.github.spotbugs:spotbugs:4.7.3'
+  spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.12.0'
+}
+
+spotbugs {
+  ignoreFailures = false
+  showStackTraces = true
+  showProgress = true
+  effort = 'more'
+  reportLevel = 'default'
+
+  excludeFilter.fileValue file("${rootDir}/quality/spotbugs_exclude.xml")
+}
+
+tasks.withType(com.github.spotbugs.snom.SpotBugsTask).configureEach { task ->
+  task.reports {
+    xml.required = false
+    html.required = true
+  }
+}

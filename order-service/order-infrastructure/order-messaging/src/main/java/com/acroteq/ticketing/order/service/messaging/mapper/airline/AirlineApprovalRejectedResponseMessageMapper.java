@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.order.service.messaging.mapper.airline;
 
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.ValidationResultMapper;
 import com.acroteq.ticketing.application.mapper.id.AirlineIdMapper;
 import com.acroteq.ticketing.application.mapper.id.OrderIdMapper;
@@ -9,7 +10,8 @@ import com.acroteq.ticketing.order.service.domain.dto.message.AirlineApprovalRej
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(uses = { AirlineIdMapper.class, OrderIdMapper.class, ValidationResultMapper.class })
+@Mapper(config = MapstructConfig.class,
+        uses = { AirlineIdMapper.class, OrderIdMapper.class, ValidationResultMapper.class })
 public interface AirlineApprovalRejectedResponseMessageMapper
     extends MessageToDtoMapper<AirlineApprovalRejectedResponseMessage, AirlineApprovalRejectedResponseDto> {
 

@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.order.service.messaging.mapper.airline;
 
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.ValidationResultMapper;
 import com.acroteq.ticketing.application.mapper.id.AirlineIdMapper;
 import com.acroteq.ticketing.application.mapper.id.OrderIdMapper;
@@ -8,7 +9,8 @@ import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalApp
 import com.acroteq.ticketing.order.service.domain.dto.message.AirlineApprovalApprovedResponseDto;
 import org.mapstruct.Mapper;
 
-@Mapper(uses = { AirlineIdMapper.class, OrderIdMapper.class, ValidationResultMapper.class })
+@Mapper(config = MapstructConfig.class,
+        uses = { AirlineIdMapper.class, OrderIdMapper.class, ValidationResultMapper.class })
 public interface AirlineApprovalApprovedResponseMessageMapper
     extends MessageToDtoMapper<AirlineApprovalApprovedResponseMessage, AirlineApprovalApprovedResponseDto> {
 

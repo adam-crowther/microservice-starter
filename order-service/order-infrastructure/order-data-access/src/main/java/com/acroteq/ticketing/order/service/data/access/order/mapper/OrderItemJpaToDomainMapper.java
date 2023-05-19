@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.order.service.data.access.order.mapper;
 
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.id.AirlineIdMapper;
 import com.acroteq.ticketing.application.mapper.id.CustomerIdMapper;
 import com.acroteq.ticketing.application.mapper.id.OrderIdMapper;
@@ -13,12 +14,14 @@ import com.acroteq.ticketing.order.service.domain.entity.OrderItem;
 import com.acroteq.ticketing.order.service.domain.mapper.order.TrackingIdMapper;
 import org.mapstruct.Mapper;
 
-@Mapper(uses = { OrderIdMapper.class,
+@Mapper(config = MapstructConfig.class,
+        uses = { OrderIdMapper.class,
                  OrderItemIdMapper.class,
                  TrackingIdMapper.class,
                  CustomerIdMapper.class,
                  AirlineIdMapper.class,
-                 FlightJpaToDomainMapper.class }, imports = { OrderItemId.class, OrderId.class, FlightId.class })
+                 FlightJpaToDomainMapper.class },
+        imports = { OrderItemId.class, OrderId.class, FlightId.class })
 public interface OrderItemJpaToDomainMapper extends JpaToDomainMapper<OrderItemJpaEntity, OrderItem> {
 
   @Override

@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.payment.service.data.access.payment.mapper;
 
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
 import com.acroteq.ticketing.application.mapper.id.CustomerIdMapper;
 import com.acroteq.ticketing.application.mapper.id.OrderIdMapper;
@@ -11,7 +12,8 @@ import com.acroteq.ticketing.payment.service.domain.entity.Payment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(uses = { PaymentIdMapper.class,
+@Mapper(config = MapstructConfig.class,
+        uses = { PaymentIdMapper.class,
                  CurrencyIdMapper.class,
                  OrderIdMapper.class,
                  CustomerIdMapper.class,

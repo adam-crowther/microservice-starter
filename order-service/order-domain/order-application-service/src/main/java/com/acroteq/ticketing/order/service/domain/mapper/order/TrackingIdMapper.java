@@ -1,12 +1,13 @@
 package com.acroteq.ticketing.order.service.domain.mapper.order;
 
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.order.service.domain.valueobject.TrackingId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.UUID;
 
-@Mapper(imports = UUID.class)
+@Mapper(config = MapstructConfig.class, imports = UUID.class)
 public interface TrackingIdMapper {
 
   default UUID convertIdToUuid(final TrackingId trackingId) {

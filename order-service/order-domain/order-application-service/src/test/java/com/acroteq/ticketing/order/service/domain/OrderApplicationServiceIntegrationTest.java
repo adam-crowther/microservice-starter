@@ -1,6 +1,7 @@
 package com.acroteq.ticketing.order.service.domain;
 
 import static com.acroteq.ticketing.domain.valueobject.OrderStatus.PENDING;
+import static com.acroteq.ticketing.order.service.domain.test.helper.AirlineTestDataHelper.AIRLINE_ID;
 import static com.acroteq.ticketing.order.service.domain.test.helper.CustomerTestDataHelper.createCreateOrderCommandDto;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -62,7 +63,7 @@ class OrderApplicationServiceIntegrationTest {
     final Airline airline = AirlineTestDataHelper.AIRLINE.toBuilder()
                                                          .active(false)
                                                          .build();
-    when(airlineRepository.findById(AirlineId.of(AirlineTestDataHelper.AIRLINE_ID))).thenReturn(Optional.of(airline));
+    when(airlineRepository.findById(AirlineId.of(AIRLINE_ID))).thenReturn(Optional.of(airline));
     final CreateOrderCommandDto createOrderCommand = createCreateOrderCommandDto();
 
     // when:
@@ -71,7 +72,7 @@ class OrderApplicationServiceIntegrationTest {
                                                                  createOrderCommand));
     // then:
     assertThat(exception.getMessage(), startsWith("Airline "));
-    assertThat(exception.getMessage(), containsString(AirlineTestDataHelper.AIRLINE_ID.toString()));
+    assertThat(exception.getMessage(), containsString(AIRLINE_ID.toString()));
     assertThat(exception.getMessage(), endsWith(" is currently not active"));
   }
 }

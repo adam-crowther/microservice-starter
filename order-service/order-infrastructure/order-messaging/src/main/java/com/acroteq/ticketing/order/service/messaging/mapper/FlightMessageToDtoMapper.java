@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.order.service.messaging.mapper;
 
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
 import com.acroteq.ticketing.infrastructure.mapper.EventIdMessageToDtoMapper;
 import com.acroteq.ticketing.infrastructure.mapper.MessageToDtoMapper;
@@ -12,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.function.Function;
 
-@Mapper(uses = CurrencyIdMapper.class)
+@Mapper(config = MapstructConfig.class, uses = CurrencyIdMapper.class)
 public abstract class FlightMessageToDtoMapper implements MessageToDtoMapper<Flight, FlightDto> {
 
   @Autowired

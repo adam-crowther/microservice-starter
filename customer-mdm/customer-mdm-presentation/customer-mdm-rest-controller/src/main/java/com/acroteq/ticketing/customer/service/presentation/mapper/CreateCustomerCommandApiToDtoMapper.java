@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.customer.service.presentation.mapper;
 
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
 import com.acroteq.ticketing.common.application.mapper.ApiToDtoMapper;
 import com.acroteq.ticketing.customer.service.domain.dto.create.CreateCustomerCommandDto;
@@ -7,7 +8,7 @@ import com.acroteq.ticketing.customer.service.presentation.model.CreateCustomerC
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(uses = CurrencyIdMapper.class)
+@Mapper(config = MapstructConfig.class, uses = CurrencyIdMapper.class)
 public interface CreateCustomerCommandApiToDtoMapper
     extends ApiToDtoMapper<CreateCustomerCommand, CreateCustomerCommandDto> {
 

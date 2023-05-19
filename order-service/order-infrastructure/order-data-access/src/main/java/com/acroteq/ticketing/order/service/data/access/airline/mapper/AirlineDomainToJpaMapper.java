@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.order.service.data.access.airline.mapper;
 
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.id.AirlineIdMapper;
 import com.acroteq.ticketing.infrastructure.mapper.DomainToJpaMapper;
 import com.acroteq.ticketing.infrastructure.mapper.EventIdDomainToJpaMapper;
@@ -9,7 +10,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper(uses = { AirlineIdMapper.class, FlightDomainToJpaMapper.class, EventIdDomainToJpaMapper.class })
+@Mapper(config = MapstructConfig.class,
+        uses = { AirlineIdMapper.class, FlightDomainToJpaMapper.class, EventIdDomainToJpaMapper.class })
 public interface AirlineDomainToJpaMapper extends DomainToJpaMapper<Airline, AirlineJpaEntity> {
 
   @Override

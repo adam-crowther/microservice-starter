@@ -1,12 +1,16 @@
-apply plugin: 'nebula.lint'
+plugins {
+  id 'nebula.lint'
+}
 
 gradleLint {
   rules += ['overridden-dependency-version',
-            'unused-dependency',
+            // 'unused-dependency',       // generates false positives when a library needs an annotation processor dependency
             'unused-exclude-by-dep',
             // 'unused-exclude-by-conf',  // generates false positives in liquibase tasks, surrounding slf4j modules
             'archaic-wrapper',
             'duplicate-dependency-class']
+
+  // SEE https://github.com/nebula-plugins/gradle-lint-plugin/issues/349
 
   // We only run gradleLint as a dependency of the check task, not for every build
   alwaysRun = false

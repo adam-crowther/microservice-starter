@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.order.service.data.access.order.mapper;
 
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.id.AirlineIdMapper;
 import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
 import com.acroteq.ticketing.application.mapper.id.CustomerIdMapper;
@@ -17,14 +18,16 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper(uses = { OrderIdMapper.class,
+@Mapper(config = MapstructConfig.class,
+        uses = { OrderIdMapper.class,
                  OrderItemIdMapper.class,
                  TrackingIdMapper.class,
                  CurrencyIdMapper.class,
                  CustomerIdMapper.class,
                  FlightIdMapper.class,
                  AirlineIdMapper.class,
-                 FlightDomainToJpaMapper.class }, imports = { OrderItemId.class, OrderId.class, FlightId.class })
+                 FlightDomainToJpaMapper.class },
+        imports = { OrderItemId.class, OrderId.class, FlightId.class })
 public interface OrderItemDomainToJpaMapper extends DomainToJpaMapper<OrderItem, OrderItemJpaEntity> {
 
   @Mapping(target = "audit", ignore = true)

@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.payment.service.data.access.creditbalance.mapper;
 
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
 import com.acroteq.ticketing.application.mapper.id.CustomerIdMapper;
 import com.acroteq.ticketing.infrastructure.mapper.JpaToDomainMapper;
@@ -9,7 +10,8 @@ import com.acroteq.ticketing.payment.service.domain.entity.CreditBalance;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(uses = { CurrencyIdMapper.class,
+@Mapper(config = MapstructConfig.class,
+        uses = { CurrencyIdMapper.class,
                  CustomerIdMapper.class,
                  CreditBalanceIdMapper.class,
                  CustomerJpaToDomainMapper.class })

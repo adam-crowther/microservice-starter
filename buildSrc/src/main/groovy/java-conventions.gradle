@@ -1,0 +1,77 @@
+plugins {
+  id 'java'
+  id 'checkstyle-conventions'
+  id 'jacoco-conventions'
+  id 'pmd-conventions'
+  id 'spotbugs-conventions'
+}
+
+repositories {
+  mavenCentral()
+}
+
+group group
+version version
+
+compileJava {
+  sourceCompatibility = javaSourceCompatibility
+  targetCompatibility = javaTargetCompatibility
+  options.compilerArgs += [
+        '-Xlint:all,-serial,-processing'
+  ]
+}
+
+// This defines all the dependency versions and ensures consistency
+dependencies {
+  implementation enforcedPlatform('org.springframework.boot:spring-boot-dependencies:3.1.0')
+  annotationProcessor enforcedPlatform('org.springframework.boot:spring-boot-dependencies:3.1.0')
+  testAnnotationProcessor enforcedPlatform('org.springframework.boot:spring-boot-dependencies:3.1.0')
+
+  testImplementation enforcedPlatform('io.cucumber:cucumber-bom:7.12.0')
+
+  testImplementation enforcedPlatform('org.junit:junit-bom:5.9.3')
+
+  constraints {
+    implementation 'com.github.spotbugs:spotbugs-annotations:4.7.3'
+    implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'io.confluent:kafka-avro-serializer:7.3.3'
+    implementation 'io.confluent:kafka-schema-serializer:7.3.3'
+    implementation 'io.swagger.core.v3:swagger-annotations:2.2.8'
+    implementation 'io.swagger.core.v3:swagger-core:2.2.8'
+    implementation 'jakarta.inject:jakarta.inject-api:2.0.1'
+    implementation 'org.apache.avro:avro:1.11.0'
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+    implementation 'org.yaml:snakeyaml:2.0'
+
+    annotationProcessor 'io.swagger.core.v3:swagger-annotations:2.2.8'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+    annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+    runtimeOnly 'org.postgresql:postgresql:42.6.0'
+
+    testImplementation 'junit:junit:4.13.2'
+  }
+
+  testImplementation 'com.github.npathai:hamcrest-optional:2.0.0'
+  testImplementation 'nl.jqno.equalsverifier:equalsverifier:3.14.1'
+  testImplementation 'org.awaitility:awaitility:4.2.0'
+  testImplementation 'org.junit.jupiter:junit-jupiter'
+  testImplementation 'org.mockito:mockito-core'
+}
+
+// It's mandatory for production software projects to keep dependencies under control.  If we need a library we should
+// make an active decision to use it.  We don't allow transitive dependencies in our code, because they allow devs to
+// use unsanctioned libraries.
+configurations
+      .matching({ name in ["implementation", "testImplementation"] })
+      .configureEach({
+        transitive = false
+      })
+
+test {
+  useJUnitPlatform()
+  testLogging {
+    events "passed", "skipped", "failed"
+  }
+}

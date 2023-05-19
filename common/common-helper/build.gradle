@@ -1,28 +1,10 @@
 plugins {
-  id 'java'
-  id 'checkstyle'
-  id 'jacoco'
-  alias pluginLibs.plugins.spotbugs
-  id 'groovy'
+  id 'java-conventions'
+  id 'spock-conventions'
 }
-
-apply from: "${rootDir}/java.gradle"
-apply plugin: "groovy"
 
 dependencies {
-  implementation libs.lombok.core
+  implementation 'org.projectlombok:lombok:1.18.26'
 
-  annotationProcessor libs.lombok.core
-
-  testImplementation libs.bundles.spock
-  testImplementation libs.equalsverifier
-  testImplementation libs.jakarta.inject.api
-  testImplementation libs.spring.test
-}
-
-test {
-  useJUnitPlatform()
-  testLogging {
-    events "passed", "skipped", "failed"
-  }
+  annotationProcessor 'org.projectlombok:lombok:1.18.26'
 }

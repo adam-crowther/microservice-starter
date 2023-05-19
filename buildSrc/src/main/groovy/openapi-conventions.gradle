@@ -1,0 +1,49 @@
+plugins {
+  id 'org.openapi.generator'
+}
+
+dependencies {
+  implementation 'com.fasterxml.jackson.core:jackson-annotations'
+  implementation 'jakarta.annotation:jakarta.annotation-api'
+  implementation 'jakarta.servlet:jakarta.servlet-api'
+  implementation 'jakarta.validation:jakarta.validation-api'
+  implementation 'org.projectlombok:lombok'
+  implementation 'org.openapitools:jackson-databind-nullable'
+  implementation 'com.github.spotbugs:spotbugs-annotations'
+  implementation 'org.springframework:spring-context'
+  implementation 'org.springframework:spring-core'
+  implementation 'org.springframework:spring-web'
+  implementation 'io.swagger.core.v3:swagger-annotations'
+  implementation 'io.swagger.core.v3:swagger-core'
+
+  annotationProcessor 'io.swagger.core.v3:swagger-annotations'
+  annotationProcessor 'org.projectlombok:lombok'
+}
+
+openApiGenerate {
+  generatorName = "spring"
+  inputSpec = "${projectDir}/src/main/spec/openapi.yaml"
+  outputDir = "${buildDir}/generated"
+  // apiPackage = "com.acroteq.ticketing.airline.service.presentation.api"
+  invokerPackage = "org.openapi.example.invoker"
+  // modelPackage = "com.acroteq.ticketing.airline.service.presentation.model"
+  configOptions.putAll([
+        dateLibrary   : "java8",
+        interfaceOnly : "true",
+        useSpringBoot3: "true"
+  ])
+}
+
+sourceSets {
+  main {
+    java {
+      srcDirs += "${buildDir}/generated/src/main/java"
+    }
+    resources {
+      srcDirs += "${projectDir}/src/main/spec"
+    }
+  }
+}
+
+compileJava.dependsOn tasks.openApiGenerate
+

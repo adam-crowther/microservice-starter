@@ -1,3 +1,7 @@
+# Build
+
+- Parallelise the tests
+
 # Implementation
 
 - ValidationResult needs to be translatable, include i18n keys.
@@ -7,9 +11,9 @@
 
 # Testing
 
-- Spock unit tests
-- Cucumber tests
-- Integration tests
+/ Spock unit tests
+/ Cucumber tests
+- REST Integration tests
 
 # Spring
 

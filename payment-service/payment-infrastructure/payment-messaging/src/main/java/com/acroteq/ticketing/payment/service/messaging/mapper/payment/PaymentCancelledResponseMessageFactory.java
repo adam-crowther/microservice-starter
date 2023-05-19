@@ -1,6 +1,7 @@
 package com.acroteq.ticketing.payment.service.messaging.mapper.payment;
 
 import com.acroteq.ticketing.application.mapper.DateTimeMapper;
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.ValidationResultMapper;
 import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
 import com.acroteq.ticketing.application.mapper.id.CustomerIdMapper;
@@ -15,12 +16,14 @@ import org.mapstruct.Mapping;
 import java.time.Instant;
 import java.util.UUID;
 
-@Mapper(uses = { PaymentIdMapper.class,
+@Mapper(config = MapstructConfig.class,
+        uses = { PaymentIdMapper.class,
                  OrderIdMapper.class,
                  CustomerIdMapper.class,
                  CurrencyIdMapper.class,
                  ValidationResultMapper.class,
-                 DateTimeMapper.class }, imports = { UUID.class, Instant.class })
+                 DateTimeMapper.class },
+        imports = { UUID.class, Instant.class })
 public interface PaymentCancelledResponseMessageFactory
     extends EventToMessageMapper<PaymentCancelledEvent, PaymentCancelledResponseMessage> {
 

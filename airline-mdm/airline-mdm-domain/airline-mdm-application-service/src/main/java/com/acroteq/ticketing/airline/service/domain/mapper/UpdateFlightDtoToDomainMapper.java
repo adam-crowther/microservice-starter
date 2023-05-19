@@ -4,12 +4,13 @@ import com.acroteq.ticketing.airline.service.domain.dto.update.UpdateFlightComma
 import com.acroteq.ticketing.airline.service.domain.entity.Flight;
 import com.acroteq.ticketing.application.mapper.DateTimeMapper;
 import com.acroteq.ticketing.application.mapper.DtoToDomainMapper;
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.id.FlightIdMapper;
 import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(uses = { FlightIdMapper.class, DateTimeMapper.class })
+@Mapper(config = MapstructConfig.class, uses = { FlightIdMapper.class, DateTimeMapper.class })
 public interface UpdateFlightDtoToDomainMapper extends DtoToDomainMapper<UpdateFlightCommandDto, Flight> {
 
   @Override

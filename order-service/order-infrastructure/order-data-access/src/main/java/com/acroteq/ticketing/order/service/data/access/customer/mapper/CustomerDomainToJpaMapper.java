@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.order.service.data.access.customer.mapper;
 
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.id.CustomerIdMapper;
 import com.acroteq.ticketing.infrastructure.mapper.DomainToJpaMapper;
 import com.acroteq.ticketing.infrastructure.mapper.EventIdDomainToJpaMapper;
@@ -9,7 +10,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper(uses = { CustomerIdMapper.class, EventIdDomainToJpaMapper.class })
+@Mapper(config = MapstructConfig.class, uses = { CustomerIdMapper.class, EventIdDomainToJpaMapper.class })
 public interface CustomerDomainToJpaMapper extends DomainToJpaMapper<Customer, CustomerJpaEntity> {
 
   @Override

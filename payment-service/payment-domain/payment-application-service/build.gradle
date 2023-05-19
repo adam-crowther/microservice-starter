@@ -1,23 +1,6 @@
 plugins {
-  id 'java'
-  id 'checkstyle'
-  id 'jacoco'
-  alias pluginLibs.plugins.spotbugs
-  id 'groovy'
-}
-
-apply from: "${rootDir}/java.gradle"
-apply plugin: "groovy"
-
-compileJava {
-  options.compilerArgs += [
-        '-Amapstruct.defaultComponentModel=spring',
-        '-Amapstruct.defaultInjectionStrategy=constructor',
-        '-Amapstruct.unmappedTargetPolicy=ERROR',
-        '-Amapstruct.verbose=false',
-        '-Amapstruct.suppressGeneratorVersionInfoComment=true',
-        '-Amapstruct.suppressGeneratorTimestamp=true'
-  ]
+  id 'java-conventions'
+  id 'spock-conventions'
 }
 
 dependencies {
@@ -26,42 +9,18 @@ dependencies {
   implementation project(":common:common-helper")
   implementation project(":payment-service:payment-domain:payment-domain-core")
 
-  implementation libs.google.guava
-  implementation libs.jakarta.annotation.api
-  implementation libs.jakarta.validation.api
-  implementation libs.lombok.core
-  implementation libs.mapstruct.core
-  implementation libs.slf4j.api
-  implementation libs.spotbugs.annotations
-  implementation libs.spring.beans
-  implementation libs.spring.boot.core
-  implementation libs.spring.context
-  implementation libs.spring.tx
+  implementation 'com.google.guava:guava'
+  implementation 'jakarta.validation:jakarta.validation-api'
+  implementation 'org.projectlombok:lombok'
+  implementation 'org.mapstruct:mapstruct'
+  implementation 'org.slf4j:slf4j-api'
+  implementation 'org.springframework:spring-beans'
+  implementation 'org.springframework.boot:spring-boot'
+  implementation 'org.springframework:spring-context'
+  implementation 'org.springframework:spring-tx'
 
-  annotationProcessor libs.lombok.core
-  annotationProcessor libs.lombok.mapstruct.binding
-  annotationProcessor libs.mapstruct.processor
-  annotationProcessor libs.spring.boot.configuration.processor
-
-  testImplementation libs.spring.boot.autoconfigure
-  testImplementation libs.spring.boot.test.core
-  testImplementation libs.spring.test
-  testImplementation libs.junit5.api
-  testImplementation libs.mockito.core
-  testImplementation libs.mockito.junit.jupiter
-  testImplementation libs.hamcrest.core
-
-  testImplementation libs.bundles.spock
-  testImplementation libs.equalsverifier
-  testImplementation libs.jakarta.inject.api
-  testImplementation libs.spring.test
-
-  testRuntimeOnly libs.mockito.inline
-}
-
-test {
-  useJUnitPlatform()
-  testLogging {
-    events "passed", "skipped", "failed"
-  }
+  annotationProcessor 'org.projectlombok:lombok'
+  annotationProcessor 'org.projectlombok:lombok-mapstruct-binding'
+  annotationProcessor 'org.mapstruct:mapstruct-processor'
+  annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 }

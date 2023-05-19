@@ -1,0 +1,19 @@
+plugins {
+  id 'org.springframework.boot'
+  id 'com.github.ivancarras.graphfity'
+}
+
+configurations {
+  runtimeOnly.exclude group: 'ch.qos.logback'
+  runtimeOnly.exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+}
+
+bootBuildImage {
+  imageName = "${dockerNamespace}/${rootProject.name}/${project.name}:${project.version}"
+}
+
+graphfityExtension {
+  nodeTypesPath = "${rootDir}/quality/graphfityNodeTypes.json"
+  projectRootName = "${project.path}"
+  graphImagePath = "${buildDir}/"
+}

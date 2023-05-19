@@ -1,6 +1,7 @@
 package com.acroteq.ticketing.order.service.domain.mapper.order;
 
 import com.acroteq.ticketing.application.mapper.DtoToDomainMapper;
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.id.OrderIdMapper;
 import com.acroteq.ticketing.order.service.domain.dto.create.OrderItemDto;
 import com.acroteq.ticketing.order.service.domain.entity.OrderItem;
@@ -10,7 +11,7 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(uses = { OrderIdMapper.class, FlightResolver.class })
+@Mapper(config = MapstructConfig.class, uses = { OrderIdMapper.class, FlightResolver.class })
 public interface OrderItemDtoToDomainMapper extends DtoToDomainMapper<OrderItemDto, OrderItem> {
 
   @Mapping(target = "id", ignore = true)

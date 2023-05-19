@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.order.service.data.access.order.mapper;
 
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.ValidationResultMapper;
 import com.acroteq.ticketing.application.mapper.id.AirlineIdMapper;
 import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
@@ -15,7 +16,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
-@Mapper(uses = { OrderIdMapper.class,
+@Mapper(config = MapstructConfig.class,
+        uses = { OrderIdMapper.class,
                  TrackingIdMapper.class,
                  CurrencyIdMapper.class,
                  CustomerIdMapper.class,

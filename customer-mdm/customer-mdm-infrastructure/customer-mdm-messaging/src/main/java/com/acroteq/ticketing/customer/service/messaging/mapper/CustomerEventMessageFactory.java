@@ -1,6 +1,7 @@
 package com.acroteq.ticketing.customer.service.messaging.mapper;
 
 import com.acroteq.ticketing.application.mapper.DateTimeMapper;
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.application.mapper.ValidationResultMapper;
 import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
 import com.acroteq.ticketing.application.mapper.id.CustomerIdMapper;
@@ -13,7 +14,8 @@ import org.mapstruct.Mapping;
 import java.time.Instant;
 import java.util.UUID;
 
-@Mapper(uses = { CustomerIdMapper.class, CurrencyIdMapper.class, ValidationResultMapper.class, DateTimeMapper.class },
+@Mapper(config = MapstructConfig.class,
+        uses = { CustomerIdMapper.class, CurrencyIdMapper.class, ValidationResultMapper.class, DateTimeMapper.class },
         imports = { UUID.class, Instant.class })
 public interface CustomerEventMessageFactory extends EventToMessageMapper<CustomerEvent, CustomerEventMessage> {
 

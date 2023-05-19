@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.approval.service.messaging.mapper.airline;
 
+import com.acroteq.ticketing.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.approval.service.domain.dto.AirlineEventDto;
 import com.acroteq.ticketing.infrastructure.mapper.EventIdMessageToDtoMapper;
 import com.acroteq.ticketing.infrastructure.mapper.MessageToDtoMapper;
@@ -8,7 +9,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Mapper
+@Mapper(config = MapstructConfig.class)
 public abstract class AirlineEventMessageToDtoMapper
     implements MessageToDtoMapper<AirlineEventMessage, AirlineEventDto> {
 

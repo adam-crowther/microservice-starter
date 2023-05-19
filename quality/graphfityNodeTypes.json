@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Domain",
+    "regex": "^.*:(?!common)[a-z\\-]+\\-domain:.*$",
+    "isEnabled": true,
+    "shape": "box3d",
+    "fillColor": "#E6BFB1"
+  },
+  {
+    "name": "Infrastructure",
+    "regex": "^.*:(?!common)[a-z\\-]+\\-infrastructure:.*$",
+    "isEnabled": true,
+    "shape": "box3d",
+    "fillColor": "#FDFFBF"
+  },
+  {
+    "name": "Presentation",
+    "regex": "^.*:(?!common)[a-z\\-]+\\-presentation:.*$",
+    "isEnabled": true,
+    "shape": "box3d",
+    "fillColor": "#CCE3FF"
+  },
+  {
+    "name": "Container",
+    "regex": "^.*:(?!common)[a-z\\-]+\\-container.*$",
+    "isEnabled": true,
+    "shape": "box3d",
+    "fillColor": "#D8C8E6"
+  }
+]
