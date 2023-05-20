@@ -5,8 +5,10 @@ import com.acroteq.ticketing.infrastructure.data.access.entity.TestJpaEntity
 import com.acroteq.ticketing.infrastructure.data.access.jpa.TestJpaRepository
 import com.acroteq.ticketing.infrastructure.data.access.mapper.TestJpaToDomainMapper
 import com.acroteq.ticketing.infrastructure.data.access.valueobject.TestId
+import groovy.transform.CompileDynamic
 import spock.lang.Specification
 
+@CompileDynamic
 class ReadRepositoryImplSpec extends Specification {
 
   static final Long ID = 123
@@ -17,67 +19,67 @@ class ReadRepositoryImplSpec extends Specification {
 
   ReadRepositoryImpl repository = new ReadRepositoryImpl(jpaRepository, jpaToDomainMapper)
 
-  def "findById returns an optional containing the requested entity"() {
+  def 'findById returns an optional containing the requested entity'() {
     given:
-      def testEntity = Mock(TestEntity)
-      def testJpaEntity = Mock(TestJpaEntity)
+    def testEntity = Mock(TestEntity)
+    def testJpaEntity = Mock(TestJpaEntity)
 
-      jpaRepository.findById(ID) >> Optional.ofNullable(testJpaEntity)
-      jpaToDomainMapper.convertJpaToDomain(testJpaEntity) >> testEntity
+    jpaRepository.findById(ID) >> Optional.ofNullable(testJpaEntity)
+    jpaToDomainMapper.convertJpaToDomain(testJpaEntity) >> testEntity
 
     when:
-      def entity = repository.findById(TEST_ID)
+    def entity = repository.findById(TEST_ID)
 
     then:
-      entity == Optional.of(testEntity)
+    entity == Optional.of(testEntity)
   }
 
-  def "findById returns an optional containing the requested entity"() {
+  def 'findById should return an optional containing the requested entity'() {
     given:
-      jpaRepository.findById(ID) >> Optional.empty()
+    jpaRepository.findById(ID) >> Optional.empty()
 
     when:
-      def entity = repository.findById(TEST_ID)
+    def entity = repository.findById(TEST_ID)
 
     then:
-      entity == Optional.empty()
+    entity == Optional.empty()
   }
 
-  def "findById throws an exception if the given id is null"() {
+  def 'findById throws an exception if the given id is null'() {
     when:
-      repository.findById(null)
+    repository.findById(null)
 
     then:
-      thrown(NullPointerException)
+    thrown(NullPointerException)
   }
 
-  def "existsById returns true if the entity exists"() {
+  def 'existsById returns true if the entity exists'() {
     given:
-      jpaRepository.existsById(ID) >> true
+    jpaRepository.existsById(ID) >> true
 
     when:
-      def exists = repository.existsById(TEST_ID)
+    def exists = repository.existsById(TEST_ID)
 
     then:
-      exists
+    exists
   }
 
-  def "existsById returns false if the entity does not exist"() {
+  def 'existsById returns false if the entity does not exist'() {
     given:
-      jpaRepository.existsById(ID) >> false
+    jpaRepository.existsById(ID) >> false
 
     when:
-      def exists = repository.existsById(TEST_ID)
+    def exists = repository.existsById(TEST_ID)
 
     then:
-      !exists
+    !exists
   }
 
-  def "existsById throws an exception if the given id is null"() {
+  def 'existsById throws an exception if the given id is null'() {
     when:
-      repository.existsById(null)
+    repository.existsById(null)
 
     then:
-      thrown(NullPointerException)
+    thrown(NullPointerException)
   }
 }

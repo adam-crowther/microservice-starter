@@ -1,6 +1,7 @@
 package com.acroteq.ticketing.payment.service.domain.valueobject
 
 import com.acroteq.ticketing.domain.validation.ValidationResult
+import groovy.transform.CompileDynamic
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 
@@ -8,87 +9,92 @@ import static com.acroteq.ticketing.payment.service.domain.helper.TestDataHelper
 import static com.acroteq.ticketing.payment.service.domain.helper.TestDataHelper.createCreditChange
 import static com.acroteq.ticketing.payment.service.domain.helper.TestDataHelper.createPayment
 
+@CompileDynamic
 class PaymentOutputSpec extends Specification {
 
-  static final String FAILURE_MESSAGE = "failure-message"
+  static final String FAILURE_MESSAGE = 'failure-message'
 
-  def "calling the builder with all attributes should set them on the entity and getters should them back the same"() {
+  def 'calling the builder with all attributes should set them on the entity and getters should them back the same'() {
     given:
-      def payment = createPayment()
-      def originalCreditBalance = createCreditBalance()
-      def updatedCreditBalance = createCreditBalance()
-      def creditChange = createCreditChange()
-      def validationResult = ValidationResult.pass()
+    def testPayment = createPayment()
+    def testOriginalCreditBalance = createCreditBalance()
+    def testUpdatedCreditBalance = createCreditBalance()
+    def testCreditChange = createCreditChange()
+    def testValidationResult = ValidationResult.pass()
 
     when:
-      def paymentOutput = PaymentOutput.builder()
-            .payment(payment)
-            .originalCreditBalance(originalCreditBalance)
-            .updatedCreditBalance(updatedCreditBalance)
-            .newCreditChange(creditChange)
-            .validationResult(validationResult)
-            .build()
+    def paymentOutput = PaymentOutput.builder()
+          .payment(testPayment)
+          .originalCreditBalance(testOriginalCreditBalance)
+          .updatedCreditBalance(testUpdatedCreditBalance)
+          .newCreditChange(testCreditChange)
+          .validationResult(testValidationResult)
+          .build()
 
     then:
-      paymentOutput.getPayment() == payment
-      paymentOutput.getOriginalCreditBalance() == originalCreditBalance
-      paymentOutput.getUpdatedCreditBalance() == updatedCreditBalance
-      paymentOutput.getCreditBalance() == updatedCreditBalance
-      paymentOutput.getCreditChange() == Optional.of(creditChange)
-      paymentOutput.getValidationResult() == validationResult
+    paymentOutput.with {
+      payment == testPayment
+      originalCreditBalance == testOriginalCreditBalance
+      updatedCreditBalance == testUpdatedCreditBalance
+      creditBalance == testUpdatedCreditBalance
+      creditChange == Optional.of(testCreditChange)
+      validationResult == testValidationResult
+    }
   }
 
-  def "when the validation result is a fail, getCreditBalance should return the original"() {
+  def 'when the validation result is a fail, getCreditBalance should return the original'() {
     given:
-      def payment = createPayment()
-      def originalCreditBalance = createCreditBalance()
-      def updatedCreditBalance = createCreditBalance()
-      def validationResult = ValidationResult.fail(FAILURE_MESSAGE)
+    def testPayment = createPayment()
+    def testOriginalCreditBalance = createCreditBalance()
+    def testUpdatedCreditBalance = createCreditBalance()
+    def testValidationResult = ValidationResult.fail(FAILURE_MESSAGE)
 
     when:
-      def paymentOutput = PaymentOutput.builder()
-            .payment(payment)
-            .originalCreditBalance(originalCreditBalance)
-            .updatedCreditBalance(updatedCreditBalance)
-            .validationResult(validationResult)
-            .build()
+    def paymentOutput = PaymentOutput.builder()
+          .payment(testPayment)
+          .originalCreditBalance(testOriginalCreditBalance)
+          .updatedCreditBalance(testUpdatedCreditBalance)
+          .validationResult(testValidationResult)
+          .build()
 
     then:
-      paymentOutput.getPayment() == payment
-      paymentOutput.getOriginalCreditBalance() == originalCreditBalance
-      paymentOutput.getUpdatedCreditBalance() == updatedCreditBalance
-      paymentOutput.getCreditBalance() == originalCreditBalance
-      paymentOutput.getCreditChange() == Optional.empty()
-      paymentOutput.getValidationResult() == validationResult
+    paymentOutput.with {
+      payment == testPayment
+      originalCreditBalance == testOriginalCreditBalance
+      updatedCreditBalance == testUpdatedCreditBalance
+      creditBalance == testOriginalCreditBalance
+      creditChange == Optional.empty()
+      validationResult == testValidationResult
+    }
   }
 
-  def "equals and hashcode contract is correct"() {
+  def 'equals and hashcode contract is correct'() {
     when:
-      def verifier = EqualsVerifier.forClass(PaymentOutput)
+    def verifier = EqualsVerifier.forClass(PaymentOutput)
 
     then:
-      verifier.verify()
+    verifier.verify()
   }
 
-  def "toString returns the expected string"() {
+  def 'toString returns the expected string'() {
     given:
-      def payment = createPayment()
-      def originalCreditBalance = createCreditBalance()
-      def updatedCreditBalance = createCreditBalance()
-      def creditChange = createCreditChange()
-      def validationResult = ValidationResult.pass()
-      def paymentOutput = PaymentOutput.builder()
-            .payment(payment)
-            .originalCreditBalance(originalCreditBalance)
-            .updatedCreditBalance(updatedCreditBalance)
-            .newCreditChange(creditChange)
-            .validationResult(validationResult)
-            .build()
+    def payment = createPayment()
+    def originalCreditBalance = createCreditBalance()
+    def updatedCreditBalance = createCreditBalance()
+    def creditChange = createCreditChange()
+    def validationResult = ValidationResult.pass()
+    def paymentOutput = PaymentOutput.builder()
+          .payment(payment)
+          .originalCreditBalance(originalCreditBalance)
+          .updatedCreditBalance(updatedCreditBalance)
+          .newCreditChange(creditChange)
+          .validationResult(validationResult)
+          .build()
 
     when:
-      def string = paymentOutput.toString()
+    def string = paymentOutput.toString()
 
     then:
-      string.startsWith("PaymentOutput(")
+    string.startsWith('PaymentOutput(')
   }
 }

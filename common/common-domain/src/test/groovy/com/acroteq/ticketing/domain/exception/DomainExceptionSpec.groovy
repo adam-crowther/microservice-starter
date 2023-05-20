@@ -1,43 +1,45 @@
 package com.acroteq.ticketing.domain.exception
 
+import groovy.transform.CompileDynamic
 import spock.lang.Specification
 
+@CompileDynamic
 class DomainExceptionSpec extends Specification {
 
-  static final String PARAMETER = "parameter"
+  static final String PARAMETER = 'parameter'
 
-  def "without a cause exception"() {
+  def 'without a cause exception'() {
     when:
-      def exception = new TestDomainException(parameter)
+    def exception = new TestDomainException(parameter)
 
     then:
-      exception.getCode() == "problem.test.domain.exception"
-      exception.getParameters() == [parameter] as String[]
-      exception.getMessage() == message
-      exception.getCause() == null
+    exception.code == 'problem.test.domain.exception'
+    exception.parameters == [parameter] as String[]
+    exception.message == message
+    exception.cause == null
 
     where:
-      parameter | message
-      PARAMETER | "Test Domain Exception parameter"
-      null      | "Test Domain Exception null"
+    parameter || message
+    PARAMETER || 'Test Domain Exception parameter'
+    null      || 'Test Domain Exception null'
   }
 
-  def "with a cause exception"() {
+  def 'with a cause exception'() {
     given:
-      def cause = Mock(Throwable)
+    def cause = Mock(Throwable)
 
     when:
-      def exception = new TestDomainException(parameter, cause)
+    def exception = new TestDomainException(parameter, cause)
 
     then:
-      exception.getCode() == "problem.test.domain.exception"
-      exception.getParameters() == [parameter] as String[]
-      exception.getMessage() == message
-      exception.getCause() == cause
+    exception.code == 'problem.test.domain.exception'
+    exception.parameters == [parameter] as String[]
+    exception.message == message
+    exception.cause == cause
 
     where:
-      parameter | message
-      PARAMETER | "Test Domain Exception parameter"
-      null      | "Test Domain Exception null"
+    parameter || message
+    PARAMETER || 'Test Domain Exception parameter'
+    null      || 'Test Domain Exception null'
   }
 }

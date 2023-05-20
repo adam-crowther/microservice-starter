@@ -14,7 +14,7 @@ spotbugs {
   effort = 'more'
   reportLevel = 'default'
 
-  excludeFilter.fileValue file("${rootDir}/quality/spotbugs_exclude.xml")
+  excludeFilter.fileValue file("${rootDir}/config/spotbugs_exclude.xml")
 }
 
 tasks.withType(com.github.spotbugs.snom.SpotBugsTask).configureEach { task ->

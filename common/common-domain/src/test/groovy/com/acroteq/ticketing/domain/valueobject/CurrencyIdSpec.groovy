@@ -1,56 +1,58 @@
 package com.acroteq.ticketing.domain.valueobject
 
+import groovy.transform.CompileDynamic
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 
 import static com.acroteq.ticketing.domain.valueobject.CurrencyId.NONE
 import static nl.jqno.equalsverifier.Warning.STRICT_INHERITANCE
 
+@CompileDynamic
 class CurrencyIdSpec extends Specification {
 
-  static final String ID = "CHF"
+  static final String ID = 'CHF'
 
-  def "when created with a valid ID, the entityId should return the correct value"() {
+  def 'when created with a valid ID, the entityId should return the correct value'() {
     when:
-      def currencyId = CurrencyId.of(ID)
+    def currencyId = CurrencyId.of(ID)
     then:
-      currencyId.getValue() == ID
-      currencyId.isNotNone()
+    currencyId.value == ID
+    currencyId.isNotNone()
   }
 
-  def "when created with a null ID, it should throw a NullPointerException"() {
+  def 'when created with a null ID, it should throw a NullPointerException'() {
     when:
-      def currencyId = CurrencyId.of(null)
+    CurrencyId.of(null)
     then:
-      thrown(NullPointerException)
+    thrown(NullPointerException)
   }
 
-  def "the NONE currency should return the value 'NONE'"() {
+  def 'the NONE currency should return the value NONE'() {
     when:
-      def currencyId = NONE
+    def currencyId = NONE
     then:
-      currencyId == NONE
-      currencyId.getValue() == "NONE"
-      !currencyId.isNotNone()
+    currencyId == NONE
+    currencyId.value == 'NONE'
+    !currencyId.isNotNone()
   }
 
-  def "equals and hashcode contract is correct"() {
+  def 'equals and hashcode contract is correct'() {
     when:
-      def verifier = EqualsVerifier.forClass(CurrencyId)
-            .suppress(STRICT_INHERITANCE)
+    def verifier = EqualsVerifier.forClass(CurrencyId)
+          .suppress(STRICT_INHERITANCE)
 
     then:
-      verifier.verify()
+    verifier.verify()
   }
 
-  def "toString returns the expected String"() {
+  def 'toString returns the expected String'() {
     given:
-      def dto = CurrencyId.of(ID)
+    def dto = CurrencyId.of(ID)
 
     when:
-      def string = dto.toString()
+    def string = dto.toString()
 
     then:
-      string == "CurrencyId(CHF)"
+    string == 'CurrencyId(CHF)'
   }
 }

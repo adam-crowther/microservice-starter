@@ -1,46 +1,48 @@
 package com.acroteq.ticketing.payment.service.domain.valueobject
 
+import groovy.transform.CompileDynamic
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 
 import static nl.jqno.equalsverifier.Warning.STRICT_INHERITANCE
 
+@CompileDynamic
 class CreditBalanceIdSpec extends Specification {
 
   static final Long ID = 394875
 
-  def "when created with a valid ID, the entityId should return the correct value"() {
+  def 'when created with a valid ID, the entityId should return the correct value'() {
     when:
-      def creditBalanceId = CreditBalanceId.of(ID)
+    def creditBalanceId = CreditBalanceId.of(ID)
     then:
-      creditBalanceId.getValue() == ID
+    creditBalanceId.value == ID
   }
 
-  def "when created with a null ID, the entityId should throw a NullPointerException"() {
+  def 'when created with a null ID, the entityId should throw a NullPointerException'() {
     when:
-      CreditBalanceId.of(null)
+    CreditBalanceId.of(null)
     then:
-      thrown(NullPointerException)
+    thrown(NullPointerException)
   }
 
-  def "equals and hashcode contract is correct"() {
+  def 'equals and hashcode contract is correct'() {
     when:
-      def verifier = EqualsVerifier.forClass(CreditBalanceId)
-            .withRedefinedSuperclass()
-            .suppress(STRICT_INHERITANCE)
+    def verifier = EqualsVerifier.forClass(CreditBalanceId)
+          .withRedefinedSuperclass()
+          .suppress(STRICT_INHERITANCE)
 
     then:
-      verifier.verify()
+    verifier.verify()
   }
 
-  def "toString returns the expected String"() {
+  def 'toString returns the expected String'() {
     given:
-      def dto = CreditBalanceId.of(ID)
+    def dto = CreditBalanceId.of(ID)
 
     when:
-      def string = dto.toString()
+    def string = dto.toString()
 
     then:
-      string == "CreditBalanceId(super=394875)"
+    string == 'CreditBalanceId(super=394875)'
   }
 }

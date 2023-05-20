@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.infrastructure.data.access.audit
 
+import groovy.transform.CompileDynamic
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
@@ -16,13 +17,15 @@ import static org.mockito.Mockito.when
 /**
  * Here we use Mockito for mocking instead of Spock, because Spock can't mock static methods of Java classes.
  **/
+@CompileDynamic
 class AuditorAwareImplSpec extends Specification {
 
-  static final String USERNAME = "adamcc"
+  static final String USERNAME = 'adamcc'
 
   @Mock
   @Shared
   SecurityContext securityContext
+
   @Mock
   @Shared
   Authentication authentication
@@ -31,7 +34,7 @@ class AuditorAwareImplSpec extends Specification {
 
   def setupSpec() {
     MockitoAnnotations.openMocks(this)
-    def mockedSecurityContextHolder = mockStatic(SecurityContextHolder.class)
+    def mockedSecurityContextHolder = mockStatic(SecurityContextHolder)
     mockedSecurityContextHolder.when(SecurityContextHolder::getContext).thenReturn(securityContext)
   }
 
@@ -39,35 +42,35 @@ class AuditorAwareImplSpec extends Specification {
     Mockito.reset(authentication, securityContext)
   }
 
-  def "getCurrentAuditor() should return the user from the Spring Security context"() {
+  def 'getCurrentAuditor() should return the user from the Spring Security context'() {
     given:
-      when(securityContext.getAuthentication()).thenReturn(authentication)
-      when(authentication.getName()).thenReturn(USERNAME)
+    when(securityContext.authentication).thenReturn(authentication)
+    when(authentication.name).thenReturn(USERNAME)
 
     when:
-      def currentAuditor = auditorAware.getCurrentAuditor()
+    def currentAuditor = auditorAware.currentAuditor
 
     then:
-      currentAuditor.isPresent()
-      currentAuditor.get() == USERNAME
+    currentAuditor.isPresent()
+    currentAuditor.get() == USERNAME
   }
 
-  def "if there is no name on the authentication, then getCurrentAuditor() should an empty Optional"() {
+  def 'if there is no name on the authentication, then getCurrentAuditor() should an empty Optional'() {
     given:
-      when(securityContext.getAuthentication()).thenReturn(authentication)
+    when(securityContext.authentication).thenReturn(authentication)
 
     when:
-      def currentAuditor = auditorAware.getCurrentAuditor()
+    def currentAuditor = auditorAware.currentAuditor
 
     then:
-      currentAuditor.isEmpty()
+    currentAuditor.isEmpty()
   }
 
-  def "if there is no Authentication on the security context, then getCurrentAuditor() should an empty Optional"() {
+  def 'if there is no Authentication on the security context, then getCurrentAuditor() should an empty Optional'() {
     when:
-      def currentAuditor = auditorAware.getCurrentAuditor()
+    def currentAuditor = auditorAware.currentAuditor
 
     then:
-      currentAuditor.isEmpty()
+    currentAuditor.isEmpty()
   }
 }

@@ -13,7 +13,7 @@ bootBuildImage {
 }
 
 graphfityExtension {
-  nodeTypesPath = "${rootDir}/quality/graphfityNodeTypes.json"
+  nodeTypesPath = "${rootDir}/config/graphfityNodeTypes.json"
   projectRootName = "${project.path}"
   graphImagePath = "${buildDir}/"
 }

@@ -1,46 +1,48 @@
 package com.acroteq.ticketing.domain.valueobject
 
+import groovy.transform.CompileDynamic
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 
 import static nl.jqno.equalsverifier.Warning.STRICT_INHERITANCE
 
+@CompileDynamic
 class OrderIdSpec extends Specification {
 
   static final Long ID = 394875
 
-  def "when created with a valid ID, the entityId should return the correct value"() {
+  def 'when created with a valid ID, the entityId should return the correct value'() {
     when:
-      def orderId = OrderId.of(ID)
+    def orderId = OrderId.of(ID)
     then:
-      orderId.getValue() == ID
+    orderId.value == ID
   }
 
-  def "when created with a null ID, the entityId should throw a NullPointerException"() {
+  def 'when created with a null ID, the entityId should throw a NullPointerException'() {
     when:
-      OrderId.of(null)
+    OrderId.of(null)
     then:
-      thrown(NullPointerException)
+    thrown(NullPointerException)
   }
 
-  def "equals and hashcode contract is correct"() {
+  def 'equals and hashcode contract is correct'() {
     when:
-      def verifier = EqualsVerifier.forClass(OrderId)
-            .withRedefinedSuperclass()
-            .suppress(STRICT_INHERITANCE)
+    def verifier = EqualsVerifier.forClass(OrderId)
+          .withRedefinedSuperclass()
+          .suppress(STRICT_INHERITANCE)
 
     then:
-      verifier.verify()
+    verifier.verify()
   }
 
-  def "toString returns the expected String"() {
+  def 'toString returns the expected String'() {
     given:
-      def dto = OrderId.of(ID)
+    def dto = OrderId.of(ID)
 
     when:
-      def string = dto.toString()
+    def string = dto.toString()
 
     then:
-      string == "OrderId(super=394875)"
+    string == 'OrderId(super=394875)'
   }
 }

@@ -10,5 +10,5 @@ pmd {
   toolVersion = "6.55.0"
   rulesMinimumPriority = 5
   ruleSets = []
-  ruleSetFiles = files("${rootDir}/quality/pmd_rules.xml")
+  ruleSetFiles = files("${rootDir}/config/pmd_rules.xml")
 }

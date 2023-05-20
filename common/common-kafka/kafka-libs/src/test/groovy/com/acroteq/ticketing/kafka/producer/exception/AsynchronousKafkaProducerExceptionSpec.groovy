@@ -1,20 +1,21 @@
 package com.acroteq.ticketing.kafka.producer.exception
 
-
+import groovy.transform.CompileDynamic
 import spock.lang.Specification
 
+@CompileDynamic
 class AsynchronousKafkaProducerExceptionSpec extends Specification {
 
   RuntimeException cause = Mock(RuntimeException)
 
-  def "message and i18n code should be set"() {
+  def 'message and i18n code should be set'() {
     when:
-      def exception = new AsynchronousKafkaProducerException(cause)
+    def exception = new AsynchronousKafkaProducerException(cause)
 
     then:
-      exception.getCode() == "problem.asynchronous.error.in.kafka.producer"
-      exception.getParameters() == [] as String[]
-      exception.getMessage() == "Asynchronous exception while sending a message to Kafka"
-      exception.getCause() == cause
+    exception.code == 'problem.asynchronous.error.in.kafka.producer'
+    exception.parameters == [] as String[]
+    exception.message == 'Asynchronous exception while sending a message to Kafka'
+    exception.cause == cause
   }
 }

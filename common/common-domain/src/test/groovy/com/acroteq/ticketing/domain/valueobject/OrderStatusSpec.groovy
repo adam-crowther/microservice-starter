@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.domain.valueobject
 
+import groovy.transform.CompileDynamic
 import spock.lang.Specification
 
 import static com.acroteq.ticketing.domain.valueobject.OrderStatus.APPROVED
@@ -10,11 +11,13 @@ import static com.acroteq.ticketing.domain.valueobject.OrderStatus.PENDING
 import static org.hamcrest.Matchers.containsInAnyOrder
 import static spock.util.matcher.HamcrestSupport.expect
 
+@CompileDynamic
 class OrderStatusSpec extends Specification {
-  def "the enum should include only the expected values"() {
+
+  def 'the enum should include only the expected values'() {
     when:
-      def values = List.of(OrderStatus.values())
+    def values = List.of(OrderStatus.values())
     then:
-      expect values, containsInAnyOrder(PENDING, PAID, APPROVED, CANCELLING, CANCELLED)
+    expect values, containsInAnyOrder(PENDING, PAID, APPROVED, CANCELLING, CANCELLED)
   }
 }

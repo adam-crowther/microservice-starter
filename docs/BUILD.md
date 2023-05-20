@@ -53,8 +53,8 @@ Uses Docker Compose to start up a clean PostgreSQL database.
 - Our code style is loosely based on the Google style, with some modifications to make it more readable, more lenient
   and easier to conform.
 - See https://checkstyle.sourceforge.io/
-- Checkstyle is configured in the file: [checkstyle.xml](../quality/checkstyle.xml)
-- Please load the Intellij [Intellij_codestyle_java.xml](../quality/Intellij_codestyle_java.xml), which will implement
+- Checkstyle is configured in the file: [checkstyle.xml](../config/checkstyle.xml)
+- Please load the Intellij [Intellij_codestyle_java.xml](../config/Intellij_codestyle_java.xml), which will implement
   the rules that are enforced by Checkstyle.
 
 |                  | Gradle command          | Task dependencies |
@@ -100,7 +100,7 @@ Uses Docker Compose to start up a clean PostgreSQL database.
 - See https://www.eclemma.org/jacoco/
 - The plugin is configured to fail the build if coverage is less than 95%.
 - Reports are generated in `build/reports/jacoco`
-- JaCoCo is configured in the file: [jacoco.gradle](../quality/jacoco.gradle)
+- JaCoCo is configured in the file: [jacoco.gradle](../config/jacoco.gradle)
 
 |                          | Gradle command            | Task dependencies |
 |--------------------------|:--------------------------|-------------------|
@@ -113,7 +113,7 @@ Uses Docker Compose to start up a clean PostgreSQL database.
 - We only run gradleLint as a dependency of the check task, not for every build.
 - Use the `generateGradleLintReport` task to find which submodule is generating a lint error.
 - Do NOT run `fixGradleLint` to apply fix changes automatically.
-- GradleLint is configured directly in the gradle build file: [gradlelint.gradle](../quality/gradlelint.gradle)
+- GradleLint is configured directly in the gradle build file: [gradlelint.gradle](../config/gradlelint.gradle)
 
 |                  | Gradle command                    | Task dependencies |
 |------------------|:----------------------------------|-------------------|

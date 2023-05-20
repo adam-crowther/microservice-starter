@@ -1,24 +1,26 @@
 package com.acroteq.ticketing.kafka.consumer.exception
 
+import groovy.transform.CompileDynamic
 import spock.lang.Specification
 
+@CompileDynamic
 class EventListenerMissingExceptionSpec extends Specification {
 
-  static final String MESSAGE_TYPE = "message-type"
+  static final String MESSAGE_TYPE = 'message-type'
 
-  def "message and i18n code should be set"() {
+  def 'message and i18n code should be set'() {
     when:
-      def exception = new EventListenerMissingException(parameter)
+    def exception = new EventListenerMissingException(parameter)
 
     then:
-      exception.getCode() == "problem.event.listener.missing"
-      exception.getParameters() == [parameter] as String[]
-      exception.getMessage() == message
-      exception.getCause() == null
+    exception.code == 'problem.event.listener.missing'
+    exception.parameters == [parameter] as String[]
+    exception.message == message
+    exception.cause == null
 
     where:
-      parameter    | message
-      MESSAGE_TYPE | "No event listener was given for the message type message-type"
-      null         | "No event listener was given for the message type null"
+    parameter    || message
+    MESSAGE_TYPE || 'No event listener was given for the message type message-type'
+    null         || 'No event listener was given for the message type null'
   }
 }

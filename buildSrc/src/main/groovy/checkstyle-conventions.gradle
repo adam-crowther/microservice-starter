@@ -8,14 +8,14 @@ checkstyle {
 }
 
 checkstyleMain {
-  configFile = file("${rootDir}/quality/checkstyle_main.xml")
+  configFile = file("${rootDir}/config/checkstyle_main.xml")
   ignoreFailures = false
   maxWarnings = 0
   maxErrors = 0
 }
 
 checkstyleTest {
-  configFile = file("${rootDir}/quality/checkstyle_test.xml")
+  configFile = file("${rootDir}/config/checkstyle_test.xml")
   ignoreFailures = true
 }
 

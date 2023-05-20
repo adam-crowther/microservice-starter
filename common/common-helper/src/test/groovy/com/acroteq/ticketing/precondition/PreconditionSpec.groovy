@@ -1,102 +1,101 @@
 package com.acroteq.ticketing.precondition
 
-
+import groovy.transform.CompileDynamic
 import spock.lang.Specification
 
 import static com.acroteq.ticketing.precondition.Precondition.checkPrecondition
 
+@CompileDynamic
 class PreconditionSpec extends Specification {
 
-  static final String MESSAGE = "message"
+  static final String MESSAGE = 'message'
 
-  static final String PARAMETER_1 = "parameter"
-  static final String PARAMETER_2 = "parameter"
-  static final String PARAMETERISED_MESSAGE = "message %s"
-  static final String MESSAGE_WITH_PARAMETER = "message parameter"
+  static final String PARAMETER_1 = 'parameter'
+  static final String PARAMETER_2 = 'parameter'
+  static final String PARAMETERISED_MESSAGE = 'message %s'
+  static final String MESSAGE_WITH_PARAMETER = 'message parameter'
 
-  def "checkPrecondition should not throw an exception if the given expression returns true"() {
+  def 'checkPrecondition should not throw an exception if the given expression returns true'() {
     when:
-      checkPrecondition(true, { new TestException() })
+    checkPrecondition(true) { new TestException() }
+
     then:
-      noExceptionThrown()
+    noExceptionThrown()
   }
 
-  def "checkPrecondition should throw an exception if the given expression returns false"() {
+  def 'checkPrecondition should throw an exception if the given expression returns false'() {
     when:
-      checkPrecondition(false, { new TestException() })
+    checkPrecondition(false) { new TestException() }
+
     then:
-      thrown(TestException)
+    thrown(TestException)
   }
 
-  def "checkPrecondition with a message should not throw an exception if the given expression returns true"() {
+  def 'checkPrecondition with a message should not throw an exception if the given expression returns true'() {
     when:
-      checkPrecondition(true, MESSAGE, { new TestException(it) })
+    checkPrecondition(true, MESSAGE) { parameter -> new TestException(parameter) }
+
     then:
-      noExceptionThrown()
+    noExceptionThrown()
   }
 
-  def "checkPrecondition with a message should throw an exception if the given expression returns false"() {
+  def 'checkPrecondition with a message should throw an exception if the given expression returns false'() {
     when:
-      checkPrecondition(false, MESSAGE, { new TestException(it) })
+    checkPrecondition(false, MESSAGE) { parameter -> new TestException(parameter) }
+
     then:
-      def exception = thrown(TestException)
-      exception.getMessage() == MESSAGE
+    def exception = thrown(TestException)
+    exception.message == MESSAGE
   }
 
-  def "checkPrecondition with message and parameter should not throw an exception if the given expression returns true"() {
+  def 'checkPrecondition with message and parameter should not throw an exception if the given expression returns true'() {
     when:
-      checkPrecondition(true, PARAMETERISED_MESSAGE, { new TestException(it) }, PARAMETER_1)
+    checkPrecondition(true, PARAMETERISED_MESSAGE, { parameter -> new TestException(parameter) }, PARAMETER_1)
+
     then:
-      noExceptionThrown()
+    noExceptionThrown()
   }
 
-  def "checkPrecondition with message and parameter should throw an exception if the given expression returns false"() {
+  def 'checkPrecondition with message and parameter should throw an exception if the given expression returns false'() {
     when:
-      checkPrecondition(false, PARAMETERISED_MESSAGE, { new TestException(it) }, PARAMETER_1)
+    checkPrecondition(false, PARAMETERISED_MESSAGE, { parameter -> new TestException(parameter) }, PARAMETER_1)
+
     then:
-      def exception = thrown(TestException)
-      exception.getMessage() == MESSAGE_WITH_PARAMETER
+    def exception = thrown(TestException)
+    exception.message == MESSAGE_WITH_PARAMETER
   }
 
-  def "checkPrecondition with parameter should not throw an exception if the given expression returns true"() {
+  def 'checkPrecondition with parameter should not throw an exception if the given expression returns true'() {
     when:
-      checkPrecondition(true, { new TestException(it) }, PARAMETER_1)
+    checkPrecondition(true, { parameter -> new TestException(parameter) }, PARAMETER_1)
+
     then:
-      noExceptionThrown()
+    noExceptionThrown()
   }
 
-  def "checkPrecondition with parameter should throw an exception if the given expression returns false"() {
+  def 'checkPrecondition with parameter should throw an exception if the given expression returns false'() {
     when:
-      checkPrecondition(false, { new TestException(it) }, PARAMETER_1)
+    checkPrecondition(false, { parameter -> new TestException(parameter) }, PARAMETER_1)
+
     then:
-      def exception = thrown(TestException)
-      exception.getMessage() == PARAMETER_1
+    def exception = thrown(TestException)
+    exception.message == PARAMETER_1
   }
 
-  def "checkPrecondition with 2 parameters should not throw an exception if the given expression returns true"() {
+  def 'checkPrecondition with 2 parameters should not throw an exception if the given expression returns true'() {
     when:
-      checkPrecondition(true, { new TestException(it) }, PARAMETER_1, PARAMETER_2)
+    checkPrecondition(true, { parameter -> new TestException(parameter) }, PARAMETER_1, PARAMETER_2)
+
     then:
-      noExceptionThrown()
+    noExceptionThrown()
   }
 
-  def "checkPrecondition with 2 parameters should throw an exception if the given expression returns false"() {
+  def 'checkPrecondition with 2 parameters should throw an exception if the given expression returns false'() {
     when:
-      checkPrecondition(false, { parameter1, parameter2 -> new TestException(parameter1, parameter2) }, PARAMETER_1, PARAMETER_2)
+    checkPrecondition(false, { parameter1, parameter2 -> new TestException(parameter1, parameter2) }, PARAMETER_1, PARAMETER_2)
+
     then:
-      def exception = thrown(TestException)
-      exception.getMessage() == PARAMETER_1 + "," + PARAMETER_2
-  }
-}
-
-class TestException extends RuntimeException {
-  TestException() {}
-
-  TestException(final String message) {
-    super(message)
-  }
-
-  TestException(final String message1, final String message2) {
-    super(message1 + "," + message2)
+    def exception = thrown(TestException)
+    exception.message == PARAMETER_1 + ',' + PARAMETER_2
   }
 }

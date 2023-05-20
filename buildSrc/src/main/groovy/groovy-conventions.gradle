@@ -1,0 +1,22 @@
+plugins {
+  id 'groovy'
+  id 'codenarc'
+}
+
+codenarcMain {
+  compilationClasspath = sourceSets.main.compileClasspath + sourceSets.main.output
+}
+
+codenarcTest {
+  compilationClasspath = codenarcMain.compilationClasspath + sourceSets.test.compileClasspath + sourceSets.test.output
+}
+
+codenarc {
+  configFile = file("${rootDir}/config/codenarc.xml")
+  reportFormat = 'html'
+  reportsDir = file("$buildDir/reports/codenarc")
+  ignoreFailures = false
+  maxPriority1Violations = 0
+  maxPriority2Violations = 0
+  maxPriority3Violations = 0
+}

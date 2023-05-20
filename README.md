@@ -1,7 +1,7 @@
-# Ticketing System
+# Microservice Starter
 
-This is a Template Project for programming Microservices using DDD and Hexagonal Architecture. It is intended to serve
-as an example, and as a starting point for a green-field project, in terms of:
+This is a Template for a Microservices Project, based on DDD and Hexagonal Architecture. It is intended to serve
+as an example, and as a starting point for a green-field project.
 
 - Design
 - Architecture

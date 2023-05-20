@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.payment.service.domain.valueobject
 
+import groovy.transform.CompileDynamic
 import spock.lang.Specification
 
 import static com.acroteq.ticketing.payment.service.domain.valueobject.CreditChangeType.CREDIT_LIMIT_UPDATE
@@ -7,25 +8,29 @@ import static com.acroteq.ticketing.payment.service.domain.valueobject.CreditCha
 import static org.hamcrest.Matchers.containsInAnyOrder
 import static spock.util.matcher.HamcrestSupport.expect
 
+@CompileDynamic
 class CreditChangeTypeSpec extends Specification {
 
-  def "the enum should include only the expected values"() {
+  def 'the enum should include only the expected values'() {
     when:
-      def values = List.of(CreditChangeType.values())
+    def values = List.of(CreditChangeType.values())
+
     then:
-      expect values, containsInAnyOrder(PAYMENT, CREDIT_LIMIT_UPDATE)
+    expect values, containsInAnyOrder(PAYMENT, CREDIT_LIMIT_UPDATE)
   }
 
-  def "static of() method should return the corresponding enum value"() {
+  def 'static of() method should return the corresponding enum value'() {
     when:
-      def result = CreditChangeType.of(value)
+    def result = CreditChangeType.of(value)
+
     then:
-      result == expected
+    result == expected
+
     where:
-      value                 || expected
-      "payment"             || Optional.of(PAYMENT)
-      "credit limit update" || Optional.of(CREDIT_LIMIT_UPDATE)
-      "unrecognised"        || Optional.empty()
-      null                  || Optional.empty()
+    value                 || expected
+    'payment'             || Optional.of(PAYMENT)
+    'credit limit update' || Optional.of(CREDIT_LIMIT_UPDATE)
+    'unrecognised'        || Optional.empty()
+    null                  || Optional.empty()
   }
 }

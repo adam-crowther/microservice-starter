@@ -1,70 +1,72 @@
 package com.acroteq.ticketing.application.mapper.id
 
 import com.acroteq.ticketing.domain.valueobject.PaymentId
+import groovy.transform.CompileDynamic
 import org.mapstruct.factory.Mappers
 import spock.lang.Specification
 
+@CompileDynamic
 class PaymentIdMapperSpec extends Specification {
 
-  static final String STRING_ID = "6789"
+  static final String STRING_ID = '6789'
   static final Long LONG_ID = 6789
   static final PaymentId PAYMENT_ID = PaymentId.of(LONG_ID)
 
   PaymentIdMapper mapper = Mappers.getMapper(PaymentIdMapper)
 
-  def "long id is converted correctly"() {
+  def 'long id is converted correctly'() {
     when:
-      def paymentId = mapper.convertLongToId(LONG_ID)
+    def paymentId = mapper.convertLongToId(LONG_ID)
     then:
-      paymentId.getValue() == LONG_ID
+    paymentId.value == LONG_ID
   }
 
-  def "string id is converted correctly"() {
+  def 'string id is converted correctly'() {
     when:
-      def paymentId = mapper.convertStringToId(STRING_ID)
+    def paymentId = mapper.convertStringToId(STRING_ID)
     then:
-      paymentId.getValue() == LONG_ID
+    paymentId.value == LONG_ID
   }
 
-  def "id is converted to long correctly"() {
+  def 'id is converted to long correctly'() {
     when:
-      def longId = mapper.convertEntityIdToLong(PAYMENT_ID)
+    def longId = mapper.convertEntityIdToLong(PAYMENT_ID)
     then:
-      longId == LONG_ID
+    longId == LONG_ID
   }
 
-  def "id is converted to string correctly"() {
+  def 'id is converted to string correctly'() {
     when:
-      def stringId = mapper.convertEntityIdToString(PAYMENT_ID)
+    def stringId = mapper.convertEntityIdToString(PAYMENT_ID)
     then:
-      stringId == STRING_ID
+    stringId == STRING_ID
   }
 
-  def "null string input is converted to null"() {
+  def 'null string input is converted to null'() {
     when:
-      def paymentId = mapper.convertStringToId(null)
+    def paymentId = mapper.convertStringToId(null)
     then:
-      paymentId == null
+    paymentId == null
   }
 
-  def "null long input is converted to null"() {
+  def 'null long input is converted to null'() {
     when:
-      def paymentId = mapper.convertLongToId(null)
+    def paymentId = mapper.convertLongToId(null)
     then:
-      paymentId == null
+    paymentId == null
   }
 
-  def "null id input is converted to null long"() {
+  def 'null id input is converted to null long'() {
     when:
-      def longId = mapper.convertEntityIdToLong(null)
+    def longId = mapper.convertEntityIdToLong(null)
     then:
-      longId == null
+    longId == null
   }
 
-  def "null id input is converted to null string"() {
+  def 'null id input is converted to null string'() {
     when:
-      def stringId = mapper.convertEntityIdToString(null)
+    def stringId = mapper.convertEntityIdToString(null)
     then:
-      stringId == null
+    stringId == null
   }
 }
