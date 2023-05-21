@@ -25,6 +25,7 @@ dependencies {
   liquibaseRuntime 'jakarta.annotation:jakarta.annotation-api'
   liquibaseRuntime 'org.liquibase:liquibase-core:4.19.0'
   liquibaseRuntime 'org.liquibase:liquibase-groovy-dsl:3.0.3'
+  liquibaseRuntime 'org.liquibase.ext:liquibase-hibernate6:4.19.0'
   liquibaseRuntime 'info.picocli:picocli:4.7.1'
   liquibaseRuntime 'org.postgresql:postgresql:42.6.0'
   liquibaseRuntime 'org.slf4j:slf4j-simple'
@@ -32,7 +33,6 @@ dependencies {
   liquibaseRuntime 'org.springframework.boot:spring-boot-starter-data-jpa'
   liquibaseRuntime sourceSets.main.output
 }
-
 
 dockerCompose {
   useComposeFiles = ["docker-compose.yaml"]
@@ -47,10 +47,12 @@ composeUp {
   }
 }
 
+
 tasks.register('liquibaseInitialise') {
   doFirst {
+    mkdir "${projectDir}/build/liquibase/"
     liquibase {
-      jvmArgs << "-Duser.dir=$projectDir"
+      jvmArgs << "-Duser.dir=${projectDir}"
       project.ext.timestamp = new Date().format("yyyyMMdd-HHmmss")
     }
   }
@@ -123,7 +125,7 @@ liquibaseDiffChangelog {
     liquibase {
       activities {
         generateDiffChangeLog {
-          changelogFile "./build/liquibase/changelog-diff-${project.timestamp}.yaml"
+          changelogFile "build/liquibase/changelog-diff-${project.timestamp}.yaml"
           overwriteOutputFile true
           url "jdbc:postgresql://localhost:${project.postgresqlPort}/postgres"
           driver "org.postgresql.Driver"
@@ -133,7 +135,7 @@ liquibaseDiffChangelog {
                 "hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl&" +
                 "hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
           referenceDriver "liquibase.ext.hibernate.database.connection.HibernateDriver"
-          logFile "./build/liquibase/liquibase_diff.log"
+          logFile "build/liquibase/liquibase_diff.log"
           format "yaml"
           logLevel "FINE"
           showBanner "false"
@@ -154,13 +156,13 @@ liquibaseGenerateChangelog {
     liquibase {
       activities {
         generateChangeLog {
-          changelogFile "./build/liquibase/changelog-${project.timestamp}.yaml"
+          changelogFile "build/liquibase/changelog-${project.timestamp}.yaml"
           overwriteOutputFile true
           url "hibernate:spring:com.acroteq.ticketing?dialect=org.hibernate.dialect.PostgreSQLDialect&" +
                 "hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl&" +
                 "hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
           driver "liquibase.ext.hibernate.database.connection.HibernateDriver"
-          logFile "./build/liquibase/liquibase_gen.log"
+          logFile "build/liquibase/liquibase_gen.log"
           format "yaml"
           logLevel "FINE"
           showBanner "false"

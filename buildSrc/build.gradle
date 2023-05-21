@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'org.codehaus.groovy:groovy-all:3.0.17'
+  implementation 'org.codehaus.groovy:groovy:3.0.17'
 
   implementation 'com.avast.gradle:gradle-docker-compose-plugin:0.16.11'
   implementation 'com.github.davidmc24.gradle.plugin:gradle-avro-plugin:1.7.1'
@@ -19,8 +19,7 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-gradle-plugin:3.1.0'
   implementation 'com.netflix.nebula:gradle-lint-plugin:18.0.3'
 
-  testImplementation 'org.apache.groovy:groovy-all:4.0.6'
-  testImplementation platform("org.spockframework:spock-bom:2.4-M1-groovy-4.0")
+  testImplementation platform("org.spockframework:spock-bom:2.4-M1-groovy-3.0")
   testImplementation 'org.spockframework:spock-core'
 }
 

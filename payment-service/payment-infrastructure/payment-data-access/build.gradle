@@ -20,6 +20,8 @@ dependencies {
   implementation 'org.springframework.data:spring-data-commons'
   implementation 'org.springframework.data:spring-data-jpa'
 
+  annotationProcessor 'org.mapstruct:mapstruct-processor'
   annotationProcessor 'org.projectlombok:lombok'
+  annotationProcessor 'org.projectlombok:lombok-mapstruct-binding'
 }
 

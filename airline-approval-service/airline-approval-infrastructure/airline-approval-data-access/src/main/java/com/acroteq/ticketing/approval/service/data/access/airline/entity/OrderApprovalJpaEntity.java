@@ -5,7 +5,7 @@ import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.acroteq.ticketing.domain.valueobject.OrderApprovalStatus;
-import com.acroteq.ticketing.infrastructure.data.access.entity.MasterJpaEntity;
+import com.acroteq.ticketing.infrastructure.data.access.entity.PrimaryJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -23,7 +23,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = PROTECTED)
 @Table(name = "order_approval")
 @Entity
-public class OrderApprovalJpaEntity extends MasterJpaEntity {
+public class OrderApprovalJpaEntity extends PrimaryJpaEntity {
 
   @ManyToOne(cascade = MERGE, optional = false)
   @JoinColumn(name = "airline_id", nullable = false)

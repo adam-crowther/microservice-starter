@@ -21,7 +21,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor(access = PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
-public abstract class MasterJpaEntity implements JpaEntity {
+public abstract class PrimaryJpaEntity implements JpaEntity {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)

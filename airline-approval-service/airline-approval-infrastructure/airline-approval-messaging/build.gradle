@@ -25,7 +25,7 @@ dependencies {
   implementation 'org.springframework.kafka:spring-kafka'
   implementation 'org.springframework:spring-messaging'
 
+  annotationProcessor 'org.mapstruct:mapstruct-processor'
   annotationProcessor 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok-mapstruct-binding'
-  annotationProcessor 'org.mapstruct:mapstruct-processor'
 }

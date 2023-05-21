@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.order.service.domain.entity;
 
-import com.acroteq.ticketing.domain.entity.MasterEntity;
+import com.acroteq.ticketing.domain.entity.PrimaryEntity;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
 import com.acroteq.ticketing.domain.valueobject.OrderItemId;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Getter
 @ToString(callSuper = true)
 @SuperBuilder(toBuilder = true)
-public class OrderItem extends MasterEntity<OrderItemId> {
+public class OrderItem extends PrimaryEntity<OrderItemId> {
 
   @NonNull
   private final Flight flight;

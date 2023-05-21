@@ -1,7 +1,3 @@
-# Build
-
-- Parallelise the tests
-
 # Implementation
 
 - ValidationResult needs to be translatable, include i18n keys.
@@ -9,25 +5,14 @@
 - Eventual Consistency
 - Dockerfile for the containers/services
 
-# Testing
-
-/ Spock unit tests
-/ Cucumber tests
-- REST Integration tests
-
 # Spring
 
-- Clean shutdown in Intellij
-- Try gradle dependency manager plugin
-
-# Database
-
-- Logical delete / Historized data
+- Upgrade 10 Spring Boot 3.1.0
 
 # Security
 
-- Propagate JWT token from sender to recipient via Kafka messages
-- Entity level security for Authorisation
+- Role-based Authorisation of REST APIs
+- Row-level-security
 - Security/Vulnerability dependency audit
 - Override authorisationUrl in openapi.yaml
 

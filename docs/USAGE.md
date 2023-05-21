@@ -2,25 +2,23 @@
 
 ## Installation
 
-If you want to start with a fresh and empty data constellation, delete the contents
-of `infrastructure/docker-compose/build`.
+If you want to start with a fresh and empty database and Kafka topics, delete the contents
+of `infrastructure/docker-compose/build` before you start the containers.
 
 |     |                                       | Shell script / Gradle task                                                    |
 |----:|---------------------------------------|-------------------------------------------------------------------------------|
 |     | Change directory to docker_compose.   | `$ cd infrastructure/docker-compose/`                                         |
-|  1. | Start Zookeeper                       | `$ ./start_zookeeper.sh`                                                      |
-|  2. | Start PostgreSQL                      | `$ ./start_postgres.sh`                                                       |
-|  3. | Start Kafka                           | `$ ./start_kafka.sh`                                                          |
-|  4. | Initialise Kafka topics               | `$ ./init_kafka.sh`                                                           |
+|  1. | Start Docker Containers               | `$ ./start.sh`                                                      |
+|  2. | Initialise Kafka topics               | `$ ./init_kafka.sh`                                                           |
 |     | Change directory back to project root | `$ cd ../..`                                                                  |
-|  5. | Start Airline MDM                     | `gradle :airline-mdm:airline-mdm-container:bootRun`                           |
-|  6. | Start Airline MDM Swagger             | `gradle :airline-mdm:airline-mdm-presentation:airline-mdm-swagger:bootRun`    |
-|  7. | Start Customer MDM                    | `gradle :customer-mdm:customer-mdm-container:bootRun`                         |
-|  8. | Start Customer MDM Swagger            | `gradle :customer-mdm:customer-mdm-presentation:customer-mdm-swagger:bootRun` |
-|  9. | Start Airline-Approval MDM Service    | `gradle :airline-approval:airline-approval-container:bootRun`                 |
-| 10. | Start Payment Service                 | `gradle :payment-service:payment-container:bootRun`                           |
-| 11. | Start Order Service                   | `gradle :order-service:order-container:bootRun`                               |
-| 12. | Start Order Service Swagger           | `gradle :order-service:order-presentation:order-swagger:bootRun`              |
+|  3. | Start Airline MDM                     | `gradle :airline-mdm:airline-mdm-container:bootRun`                           |
+|  4. | Start Airline MDM Swagger             | `gradle :airline-mdm:airline-mdm-presentation:airline-mdm-swagger:bootRun`    |
+|  5. | Start Customer MDM                    | `gradle :customer-mdm:customer-mdm-container:bootRun`                         |
+|  6. | Start Customer MDM Swagger            | `gradle :customer-mdm:customer-mdm-presentation:customer-mdm-swagger:bootRun` |
+|  7. | Start Airline-Approval MDM Service    | `gradle :airline-approval:airline-approval-container:bootRun`                 |
+|  8. | Start Payment Service                 | `gradle :payment-service:payment-container:bootRun`                           |
+|  9. | Start Order Service                   | `gradle :order-service:order-container:bootRun`                               |
+| 10. | Start Order Service Swagger           | `gradle :order-service:order-presentation:order-swagger:bootRun`              |
 
 ## Operation
 

@@ -7,6 +7,9 @@
   ### `common-application`
     - Contains shared code that is used by the `xxxx-application` submodules of the microservices.
     - Must not contain business logic or models.
+  ### `common-container`
+    - Contains shared code that is used by the `xxxx-container` submodules of the microservices.
+    - Must not contain business logic or models.
   ### `common-domain`
     - Contains shared code that is used by the `xxxx-domain` submodules of the microservices.
     - Must not contain business logic or models.
@@ -15,10 +18,6 @@
     - Along the lines of Apache Commons or Google Guava
   ### `common-infrastructure`
     - Contains shared code that is used by the `xxx-infrastructure` submodules of the microservices.
-    - Must not contain business logic or models.
-  ### `common-presentation`
-    - Contains shared code that is used by the `xxxx-presentation` submodules of the microservices. Mainly mapping and
-      resolvers.
     - Must not contain business logic or models.
   ### `common-kafka`
     - Contains 2 submodules
@@ -29,6 +28,10 @@
         - These message definitions are located outside the microservice submodules, because each will be used by at
           least 2 microservices.
         - It is likely that this will be split into multiple independent submodules, one per DDD bounded context.
+  ### `common-presentation`
+    - Contains shared code that is used by the `xxxx-presentation` submodules of the microservices. Mainly mapping and
+      resolvers.
+    - Must not contain business logic or models.
   ### `common-saga`
     - Supporting libraries and code that will be used by the microservices that implement Saga pattern.
 
@@ -188,6 +191,7 @@ ticketing
 │       └── airline-mdm-swagger
 ├── common
 │   ├── common-application
+│   ├── common-container
 │   ├── common-domain
 │   ├── common-helper
 │   ├── common-infrastructure

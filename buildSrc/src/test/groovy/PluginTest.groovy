@@ -10,7 +10,7 @@ abstract class PluginTest extends Specification {
   File buildFile
 
   def setup() {
-    settingsFile = new File(testProjectDir, 'settings.gradle').tap { file -> file << 'rootProject.name = ' test '' }
+    settingsFile = new File(testProjectDir, 'settings.gradle').tap { file -> file.append('rootProject.name = \'test\'') }
     buildFile = new File(testProjectDir, 'build.gradle')
   }
 

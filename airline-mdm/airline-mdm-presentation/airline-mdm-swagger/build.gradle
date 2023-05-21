@@ -1,5 +1,4 @@
 plugins {
   id 'java-conventions'
-  id 'spring-conventions'
   id 'swagger-ui-conventions'
 }

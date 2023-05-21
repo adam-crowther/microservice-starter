@@ -20,7 +20,7 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class OrderApprovalSaga
+public class OrderApprovalSagaStep
     implements SagaStep<AirlineApprovalApprovedResponseDto, EmptyEvent, AirlineApprovalRejectedResponseDto,
     OrderCancelledEvent> {
 

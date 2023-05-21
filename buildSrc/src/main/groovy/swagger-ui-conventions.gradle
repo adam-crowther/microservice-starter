@@ -1,5 +1,11 @@
 plugins {
   id 'org.hidetake.swagger.generator'
+  id 'org.springframework.boot'
+}
+
+configurations {
+  runtimeOnly.exclude group: 'ch.qos.logback'
+  runtimeOnly.exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
 }
 
 dependencies {

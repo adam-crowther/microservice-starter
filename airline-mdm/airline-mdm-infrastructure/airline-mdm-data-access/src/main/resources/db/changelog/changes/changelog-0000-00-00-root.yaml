@@ -14,8 +14,6 @@ databaseChangeLog:
                   name: id
                   type: BIGINT
               - column:
-                  constraints:
-                    nullable: false
                   name: created_by
                   type: VARCHAR(255)
               - column:
@@ -24,8 +22,6 @@ databaseChangeLog:
                   name: created_timestamp
                   type: timestamp
               - column:
-                  constraints:
-                    nullable: false
                   name: lasted_modified_by
                   type: VARCHAR(255)
               - column:
@@ -64,8 +60,6 @@ databaseChangeLog:
                   name: id
                   type: BIGINT
               - column:
-                  constraints:
-                    nullable: false
                   name: created_by
                   type: VARCHAR(255)
               - column:
@@ -74,8 +68,6 @@ databaseChangeLog:
                   name: created_timestamp
                   type: timestamp
               - column:
-                  constraints:
-                    nullable: false
                   name: lasted_modified_by
                   type: VARCHAR(255)
               - column:

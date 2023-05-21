@@ -6,7 +6,7 @@ import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
 
 import com.acroteq.ticketing.approval.service.domain.ports.input.message.listener.order.OrderApprovalRequestMessageListener;
 import com.acroteq.ticketing.approval.service.messaging.mapper.approval.AirlineApprovalRequestMessageToDtoMapper;
-import com.acroteq.ticketing.kafka.consumer.service.KafkaMessageHandler;
+import com.acroteq.ticketing.kafka.consumer.service.KafkaSagaMessageHandler;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalRequestMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -21,15 +21,15 @@ import java.util.List;
 @Component
 public class AirlineApprovalRequestKafkaListener {
 
-  private final KafkaMessageHandler messageHandler;
+  private final KafkaSagaMessageHandler messageHandler;
 
   public AirlineApprovalRequestKafkaListener(final OrderApprovalRequestMessageListener listener,
                                              final AirlineApprovalRequestMessageToDtoMapper requestMapper) {
-    messageHandler = KafkaMessageHandler.builder()
-                                        .addMessageType(AirlineApprovalRequestMessage.SCHEMA$.getName(),
+    messageHandler = KafkaSagaMessageHandler.builder()
+                                            .addMessageType(AirlineApprovalRequestMessage.SCHEMA$.getName(),
                                                         requestMapper,
                                                         listener::checkOrder)
-                                        .build();
+                                            .build();
   }
 
   @KafkaListener(id = "${airline-approval-service.airline-approval.consumer-group-id}",

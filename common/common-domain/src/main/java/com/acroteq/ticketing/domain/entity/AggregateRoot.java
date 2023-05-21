@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @ToString(callSuper = true)
 @SuperBuilder(toBuilder = true)
-public abstract class AggregateRoot<IdT extends EntityId> extends MasterEntity<IdT> {
+public abstract class AggregateRoot<IdT extends EntityId> extends PrimaryEntity<IdT> {
 
   @Builder.Default
   @Nullable

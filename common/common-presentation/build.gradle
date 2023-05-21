@@ -18,7 +18,7 @@ dependencies {
   implementation 'org.springframework:spring-web'
   implementation 'org.springframework:spring-webmvc'
 
+  annotationProcessor 'org.mapstruct:mapstruct-processor'
   annotationProcessor 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok-mapstruct-binding'
-  annotationProcessor 'org.mapstruct:mapstruct-processor'
 }

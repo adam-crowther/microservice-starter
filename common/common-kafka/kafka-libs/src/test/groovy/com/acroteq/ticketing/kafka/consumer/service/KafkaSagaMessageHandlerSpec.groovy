@@ -14,7 +14,7 @@ import spock.lang.Specification
 import java.util.function.Consumer
 
 @CompileDynamic
-class KafkaMessageHandlerSpec extends Specification {
+class KafkaSagaMessageHandlerSpec extends Specification {
 
   static final String KNOWN_MESSAGE_TYPE = 'message-type'
   static final String UNKNOWN_MESSAGE_TYPE = 'unknown-message-type'
@@ -28,7 +28,7 @@ class KafkaMessageHandlerSpec extends Specification {
   MessageToDtoMapper<SpecificRecord, TestDto> mapper = Mock()
   Consumer<TestDto> consumer = Mock()
 
-  KafkaMessageHandler messageHandler = KafkaMessageHandler.builder()
+  KafkaSagaMessageHandler messageHandler = KafkaSagaMessageHandler.builder()
         .addMessageType(KNOWN_MESSAGE_TYPE, mapper, consumer)
         .build()
 

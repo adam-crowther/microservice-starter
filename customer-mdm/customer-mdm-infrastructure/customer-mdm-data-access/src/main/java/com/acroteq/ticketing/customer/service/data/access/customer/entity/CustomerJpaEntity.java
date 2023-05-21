@@ -2,7 +2,7 @@ package com.acroteq.ticketing.customer.service.data.access.customer.entity;
 
 import static lombok.AccessLevel.PROTECTED;
 
-import com.acroteq.ticketing.infrastructure.data.access.entity.MasterJpaEntity;
+import com.acroteq.ticketing.infrastructure.data.access.entity.PrimaryJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor(access = PROTECTED)
 @Table(name = "customers")
 @Entity
-public class CustomerJpaEntity extends MasterJpaEntity {
+public class CustomerJpaEntity extends PrimaryJpaEntity {
 
   @Column(name = "user_name", nullable = false)
   private String userName;

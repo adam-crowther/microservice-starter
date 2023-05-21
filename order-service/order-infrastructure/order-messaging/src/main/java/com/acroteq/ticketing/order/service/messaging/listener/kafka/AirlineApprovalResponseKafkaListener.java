@@ -4,7 +4,7 @@ import static org.springframework.kafka.support.KafkaHeaders.OFFSET;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_KEY;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
 
-import com.acroteq.ticketing.kafka.consumer.service.KafkaMessageHandler;
+import com.acroteq.ticketing.kafka.consumer.service.KafkaSagaMessageHandler;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalApprovedResponseMessage;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalRejectedResponseMessage;
 import com.acroteq.ticketing.order.service.domain.ports.input.message.listener.airlineapproval.AirlineApprovalResponseMessageListener;
@@ -24,20 +24,20 @@ import java.util.List;
 @Component
 public class AirlineApprovalResponseKafkaListener {
 
-  private final KafkaMessageHandler messageHandler;
+  private final KafkaSagaMessageHandler messageHandler;
 
   public AirlineApprovalResponseKafkaListener(final AirlineApprovalApprovedResponseMessageMapper approvedResponseMapper,
                                               final AirlineApprovalRejectedResponseMessageMapper rejectedResponseMapper,
                                               final AirlineApprovalResponseMessageListener messageListener) {
 
-    messageHandler = KafkaMessageHandler.builder()
-                                        .addMessageType(AirlineApprovalApprovedResponseMessage.SCHEMA$.getName(),
+    messageHandler = KafkaSagaMessageHandler.builder()
+                                            .addMessageType(AirlineApprovalApprovedResponseMessage.SCHEMA$.getName(),
                                                         approvedResponseMapper,
                                                         messageListener::orderApproved)
-                                        .addMessageType(AirlineApprovalRejectedResponseMessage.SCHEMA$.getName(),
+                                            .addMessageType(AirlineApprovalRejectedResponseMessage.SCHEMA$.getName(),
                                                         rejectedResponseMapper,
                                                         messageListener::orderRejected)
-                                        .build();
+                                            .build();
   }
 
   @KafkaListener(id = "${order-service.airline-approval.consumer-group-id}",

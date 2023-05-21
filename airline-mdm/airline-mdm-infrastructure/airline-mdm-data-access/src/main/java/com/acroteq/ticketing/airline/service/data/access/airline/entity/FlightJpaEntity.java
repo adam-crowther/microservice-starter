@@ -2,7 +2,7 @@ package com.acroteq.ticketing.airline.service.data.access.airline.entity;
 
 import static lombok.AccessLevel.PROTECTED;
 
-import com.acroteq.ticketing.infrastructure.data.access.entity.MasterJpaEntity;
+import com.acroteq.ticketing.infrastructure.data.access.entity.PrimaryJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor(access = PROTECTED)
 @Table(name = "flights")
 @Entity
-public class FlightJpaEntity extends MasterJpaEntity {
+public class FlightJpaEntity extends PrimaryJpaEntity {
 
   @Column(name = "flight_number", nullable = false)
   private String flightNumber;

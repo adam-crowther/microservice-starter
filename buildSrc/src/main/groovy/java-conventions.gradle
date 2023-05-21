@@ -23,9 +23,9 @@ compileJava {
 
 // This defines all the dependency versions and ensures consistency
 dependencies {
-  implementation enforcedPlatform('org.springframework.boot:spring-boot-dependencies:3.1.0')
-  annotationProcessor enforcedPlatform('org.springframework.boot:spring-boot-dependencies:3.1.0')
-  testAnnotationProcessor enforcedPlatform('org.springframework.boot:spring-boot-dependencies:3.1.0')
+  implementation enforcedPlatform('org.springframework.boot:spring-boot-dependencies:3.0.7')
+  annotationProcessor enforcedPlatform('org.springframework.boot:spring-boot-dependencies:3.0.7')
+  testAnnotationProcessor enforcedPlatform('org.springframework.boot:spring-boot-dependencies:3.0.7')
 
   testImplementation enforcedPlatform('io.cucumber:cucumber-bom:7.12.0')
 

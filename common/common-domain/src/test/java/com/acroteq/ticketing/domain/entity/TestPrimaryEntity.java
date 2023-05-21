@@ -8,4 +8,4 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @ToString(callSuper = true)
 @SuperBuilder(toBuilder = true)
-public class TestMasterEntity extends MasterEntity<TestId> {}
+public class TestPrimaryEntity extends PrimaryEntity<TestId> {}

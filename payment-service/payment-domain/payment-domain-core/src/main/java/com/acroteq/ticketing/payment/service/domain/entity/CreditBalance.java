@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.payment.service.domain.entity;
 
-import com.acroteq.ticketing.domain.entity.MasterEntity;
+import com.acroteq.ticketing.domain.entity.PrimaryEntity;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
 import com.acroteq.ticketing.payment.service.domain.valueobject.CreditBalanceId;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @ToString(callSuper = true)
 @SuperBuilder(toBuilder = true)
-public class CreditBalance extends MasterEntity<CreditBalanceId> {
+public class CreditBalance extends PrimaryEntity<CreditBalanceId> {
 
   @NonNull
   private final CashValue totalCredit;

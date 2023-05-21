@@ -3,6 +3,13 @@ plugins {
   id 'spock-conventions'
   id 'liquibase-conventions'
 }
+compileJava {
+  options.compilerArgs += [
+        '-Amapstruct.verbose=true',
+        '-Amapstruct.suppressGeneratorVersionInfoComment=true',
+        '-Amapstruct.suppressGeneratorTimestamp=true'
+  ]
+}
 
 dependencies {
   implementation project(":common:common-domain")
@@ -20,6 +27,8 @@ dependencies {
   implementation 'org.springframework.data:spring-data-commons'
   implementation 'org.springframework.data:spring-data-jpa'
 
+  annotationProcessor 'org.mapstruct:mapstruct-processor'
   annotationProcessor 'org.projectlombok:lombok'
+  annotationProcessor 'org.projectlombok:lombok-mapstruct-binding'
 }
 

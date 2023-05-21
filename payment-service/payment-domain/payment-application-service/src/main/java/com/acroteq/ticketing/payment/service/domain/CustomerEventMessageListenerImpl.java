@@ -48,12 +48,10 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
     final Customer customer = customerEventMapper.convertDtoToDomain(dto);
     final Optional<CreditBalanceOutput> output;
 
-    customerRepository.save(customer);
-
     if (doesNotAlreadyExist(customer)) {
-      output = customerCreated(dto);
+      output = customerCreated(customer);
     } else if (isNotAlreadyProcessed(customer)) {
-      output = customerUpdated(dto, id);
+      output = customerUpdated(customer, id);
     } else {
       output = Optional.empty();
     }
@@ -88,14 +86,14 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
     return !alreadyProcessed;
   }
 
-  private Optional<CreditBalanceOutput> customerCreated(final CustomerEventDto dto) {
-    final Customer customer = customerEventMapper.convertDtoToDomain(dto);
+  private Optional<CreditBalanceOutput> customerCreated(final Customer customer) {
+    customerRepository.save(customer);
     return Optional.of(customer)
                    .map(creditBalanceDomainService::createNewCreditBalance);
   }
 
-  private Optional<CreditBalanceOutput> customerUpdated(final CustomerEventDto dto, final CustomerId id) {
-    final Customer customer = customerEventMapper.convertDtoToDomain(dto);
+  private Optional<CreditBalanceOutput> customerUpdated(final Customer customer, final CustomerId id) {
+    customerRepository.save(customer);
 
     final CashValue newCreditLimit = customer.getCreditLimit();
     final CashValue oldCreditLimit = customerRepository.findById(id)

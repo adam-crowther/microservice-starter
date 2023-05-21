@@ -4,7 +4,7 @@ import static org.springframework.kafka.support.KafkaHeaders.OFFSET;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_KEY;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
 
-import com.acroteq.ticketing.kafka.consumer.service.KafkaMessageHandler;
+import com.acroteq.ticketing.kafka.consumer.service.KafkaSagaMessageHandler;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentCancelRequestMessage;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentRequestMessage;
 import com.acroteq.ticketing.payment.service.domain.ports.input.message.listener.PaymentRequestMessageListener;
@@ -23,19 +23,19 @@ import java.util.List;
 @Component
 public class PaymentRequestKafkaListener {
 
-  private final KafkaMessageHandler messageHandler;
+  private final KafkaSagaMessageHandler messageHandler;
 
   public PaymentRequestKafkaListener(final PaymentRequestMessageListener listener,
                                      final PaymentRequestMessageToDtoMapper requestMapper,
                                      final PaymentCancelRequestMessageToDtoMapper cancelRequestMapper) {
-    messageHandler = KafkaMessageHandler.builder()
-                                        .addMessageType(PaymentRequestMessage.SCHEMA$.getName(),
+    messageHandler = KafkaSagaMessageHandler.builder()
+                                            .addMessageType(PaymentRequestMessage.SCHEMA$.getName(),
                                                         requestMapper,
                                                         listener::completePayment)
-                                        .addMessageType(PaymentCancelRequestMessage.SCHEMA$.getName(),
+                                            .addMessageType(PaymentCancelRequestMessage.SCHEMA$.getName(),
                                                         cancelRequestMapper,
                                                         listener::cancelPayment)
-                                        .build();
+                                            .build();
   }
 
   @KafkaListener(id = "${payment-service.payment.consumer-group-id}",

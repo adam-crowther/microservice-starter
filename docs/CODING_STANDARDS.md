@@ -3,6 +3,12 @@
 > The primary consumer of your code is **not** the compiler, but the next developer, or you in 6 months. Make it
 > readable and easy to understand first, and make it work second.
 
+> We don't accept compiler warnings in our code. Either fix the warning or suppress it with `@SuppressWarnings`. However
+> be aware that your reviewer will want to see a very good argument documented in a comment next to
+> the `@SuppressWarnings` annotation, otherwise he will require you to fix the warning.
+
+## In general
+
 [KISS](https://medium.com/sliitwif/keep-it-simple-stupid-the-kiss-principle-guide-to-developers-d6ad83145955),
 [YAGNI](https://martinfowler.com/bliki/Yagni.html),
 [DRY](https://medium.com/code-thoughts/dont-repeat-yourself-caa413910753),
@@ -65,7 +71,6 @@
   the method.
 
 - No Side-Effects:
-
     - Methods **must not** change the internal state of their input parameters.
     - Place complex logic inside Domain Entities and Value Objects, and have them change their state from within.
     - Separate commands from queries - a method that changes the internal state of an object should not return domain

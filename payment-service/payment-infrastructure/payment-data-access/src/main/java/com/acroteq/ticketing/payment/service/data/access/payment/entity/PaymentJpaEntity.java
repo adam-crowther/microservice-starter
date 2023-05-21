@@ -5,7 +5,7 @@ import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.acroteq.ticketing.domain.valueobject.PaymentStatus;
-import com.acroteq.ticketing.infrastructure.data.access.entity.MasterJpaEntity;
+import com.acroteq.ticketing.infrastructure.data.access.entity.PrimaryJpaEntity;
 import com.acroteq.ticketing.payment.service.data.access.customer.entity.CustomerJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor(access = PROTECTED)
 @Table(name = "payments")
 @Entity
-public class PaymentJpaEntity extends MasterJpaEntity {
+public class PaymentJpaEntity extends PrimaryJpaEntity {
 
   @ManyToOne(cascade = MERGE, optional = false)
   @JoinColumn(name = "customer_id", nullable = false)

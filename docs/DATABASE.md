@@ -8,29 +8,29 @@
 - We use JPA annotations in JPA Entity classes to define the persistence schema.
 - This project uses PostgreSQL, running in a Docker Container.
 
-# Master and Replicated models
+# Primary and Replicated models
 
 - JPA Entity
-  Diagram: [![jpa-entity-diagram-thumb.png](images%2Fjpa-entity-diagram-thumb.png)](![jpa-entity-diagram.png](images%2Fjpa-entity-diagram.png))
+  Diagram: [![jpa-entity-diagram-thumb.png](images/jpa-entity-diagram-thumb.png)](![jpa-entity-diagram.png](images/jpa-entity-diagram.png))
 - There must be exactly one source of truth for each entity: one microservice that is allowed to change the entity's
   data (=Command). All others are only allowed read access (=Query).
-- The microservice that is allowed to modify the entity is called the 'Master' of that data.
-- Most microservices will have 2 kinds of entity - those which they control as 'Master' (="Master Data") and some that
-  they can only query, because another microservice is the master (="Replicated Data").
+- The microservice that is allowed to modify the entity is called the 'Primary' of that data.
+- Most microservices will have 2 kinds of entity - those which they control as 'Primary' (="Primary Data") and some that
+  they can only query, because another microservice is the primary (="Replicated Data").
 - Since a Microservice must not access another microservice's data repository directly, data is replicated across to
   other microservices using CRUD events: Create, Update and Delete.
 
-## Master Data
+## Primary Data
 
-- Master Data is "owned" directly by the microservice in question.
+- Primary Data is "owned" directly by the microservice in question.
 - It is fully DDD-modelled into entities and aggregates.
 - Aggregates are kept internally consistent by the domain validations and logic.
 - All database updates and most database queries are performed on the aggregate root.
-- Master JPA Entities inherit from class `MasterJpaEntity`.
-- The `MasterJpaEntity` parent class includes 'Auditing' attributes, which is enriched by Spring-Data.
+- Primary JPA Entities inherit from class `PrimaryJpaEntity`.
+- The `PrimaryJpaEntity` parent class includes 'Auditing' attributes, which is enriched by Spring-Data.
 
   | Type    | Field                 | Annotation          | Description                                        |
-      |---------|-----------------------|---------------------|----------------------------------------------------|
+  |---------|-----------------------|---------------------|----------------------------------------------------|
   | String  | createdBy             | `@CreatedBy`        | The principal (user) that created the entity       |
   | Instant | createdTimestamp      | `@CreatedDate`      | The date that the entity was created               |
   | String  | lastModifiedBy        | `@LastModifiedBy`   | The principal (user) that last modified the entity |
@@ -48,6 +48,14 @@
 - The `ReplicatedJpaEntity` includes the `EventId` attributes, which are taken from the Kafka event: partition and
   offset.
 - The `EventId` is used to recognise event ordering errors and implement idempotent event processing.
+
+# Relational Database Constraints
+
+- We use the JPA annotations `@OneToMany`, `@OneToOne` and `@ManyToOne` to model relationships between our JPA entities.  
+- We do this to make use of database constraints as much as possible.
+- We will require very good arguments to allow modelling of related entity IDs without constraints. 
+- We also use `"nullable = false"` and other constraints as much as possible, to allow the database to do its job and 
+  guarantee data consistency for us.     
 
 # Optimistic Locking
 

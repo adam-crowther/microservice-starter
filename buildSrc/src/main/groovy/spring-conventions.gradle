@@ -8,6 +8,21 @@ configurations {
   runtimeOnly.exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
 }
 
+dependencies {
+  runtimeOnly 'com.fasterxml.jackson.core:jackson-databind'
+  runtimeOnly 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
+  runtimeOnly 'org.apache.logging.log4j:log4j-core'
+  runtimeOnly 'org.apache.logging.log4j:log4j-layout-template-json'
+  runtimeOnly 'org.apache.logging.log4j:log4j-slf4j2-impl'
+  runtimeOnly 'org.postgresql:postgresql'
+  runtimeOnly 'org.springframework.boot:spring-boot-starter-data-jpa'
+  runtimeOnly 'org.springframework.boot:spring-boot-starter-oauth2-client'
+  runtimeOnly 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+  runtimeOnly 'org.springframework.boot:spring-boot-starter-security'
+  runtimeOnly 'org.springframework.boot:spring-boot-starter-validation'
+  runtimeOnly 'org.springframework.boot:spring-boot-starter-web'
+}
+
 bootBuildImage {
   imageName = "${dockerNamespace}/${rootProject.name}/${project.name}:${project.version}"
 }

@@ -28,7 +28,7 @@ public final class AuditJpaEmbedded {
   private Instant createdTimestamp;
 
   @CreatedBy
-  @Column(name = "created_by", nullable = false, updatable = false)
+  @Column(name = "created_by", updatable = false)
   private String createdBy;
 
   @LastModifiedDate
@@ -36,6 +36,6 @@ public final class AuditJpaEmbedded {
   private Instant lastModifiedTimestamp;
 
   @LastModifiedBy
-  @Column(name = "lasted_modified_by", nullable = false)
+  @Column(name = "lasted_modified_by")
   private String lastModifiedBy;
 }

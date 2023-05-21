@@ -33,7 +33,7 @@
   ],
   "clients": [
     {
-      "clientId": "ticketing-login",
+      "clientId": "ticketing",
       "enabled": true,
       "standardFlowEnabled": true,
       "implicitFlowEnabled": true,

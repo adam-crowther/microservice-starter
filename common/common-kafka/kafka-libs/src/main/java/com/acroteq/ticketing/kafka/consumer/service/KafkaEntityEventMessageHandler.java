@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 @Slf4j
-public class KafkaEntityEventMessageHandler extends MessageHandler {
+public class KafkaEntityEventMessageHandler extends KafkaMessageHandler {
 
   private final String messageType;
   private final MessageToDtoMapper<SpecificRecord, DataTransferObject> mapper;

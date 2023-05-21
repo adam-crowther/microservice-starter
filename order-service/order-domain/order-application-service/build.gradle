@@ -21,9 +21,9 @@ dependencies {
   implementation 'org.springframework:spring-context'
   implementation 'org.springframework:spring-tx'
 
+  annotationProcessor 'org.mapstruct:mapstruct-processor'
   annotationProcessor 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok-mapstruct-binding'
-  annotationProcessor 'org.mapstruct:mapstruct-processor'
   annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
   testAnnotationProcessor 'org.projectlombok:lombok'

@@ -6,7 +6,7 @@ import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.acroteq.ticketing.domain.valueobject.OrderStatus;
-import com.acroteq.ticketing.infrastructure.data.access.entity.MasterJpaEntity;
+import com.acroteq.ticketing.infrastructure.data.access.entity.PrimaryJpaEntity;
 import com.acroteq.ticketing.order.service.data.access.airline.entity.AirlineJpaEntity;
 import com.acroteq.ticketing.order.service.data.access.customer.entity.CustomerJpaEntity;
 import jakarta.persistence.CollectionTable;
@@ -33,7 +33,7 @@ import java.util.List;
 @NoArgsConstructor(access = PROTECTED)
 @Table(name = "orders")
 @Entity
-public class OrderJpaEntity extends MasterJpaEntity {
+public class OrderJpaEntity extends PrimaryJpaEntity {
 
   @ManyToOne(cascade = MERGE, optional = false)
   @JoinColumn(name = "customer_id", nullable = false)

@@ -4,7 +4,7 @@ import static org.springframework.kafka.support.KafkaHeaders.OFFSET;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_KEY;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
 
-import com.acroteq.ticketing.kafka.consumer.service.KafkaMessageHandler;
+import com.acroteq.ticketing.kafka.consumer.service.KafkaSagaMessageHandler;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentCancelledResponseMessage;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentFailedResponseMessage;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentPaidResponseMessage;
@@ -26,24 +26,24 @@ import java.util.List;
 @Component
 public class PaymentResponseKafkaListener {
 
-  private final KafkaMessageHandler messageHandler;
+  private final KafkaSagaMessageHandler messageHandler;
 
   public PaymentResponseKafkaListener(final PaymentPaidResponseMessageToDtoMapper paidResponseMapper,
                                       final PaymentCancelledResponseMessageToDtoMapper cancelledResponseMapper,
                                       final PaymentFailedResponseMessageToDtoMapper failedResponseMapper,
                                       final PaymentResponseMessageListener messageListener) {
 
-    messageHandler = KafkaMessageHandler.builder()
-                                        .addMessageType(PaymentPaidResponseMessage.SCHEMA$.getName(),
+    messageHandler = KafkaSagaMessageHandler.builder()
+                                            .addMessageType(PaymentPaidResponseMessage.SCHEMA$.getName(),
                                                         paidResponseMapper,
                                                         messageListener::paymentCompleted)
-                                        .addMessageType(PaymentCancelledResponseMessage.SCHEMA$.getName(),
+                                            .addMessageType(PaymentCancelledResponseMessage.SCHEMA$.getName(),
                                                         cancelledResponseMapper,
                                                         messageListener::paymentCancelled)
-                                        .addMessageType(PaymentFailedResponseMessage.SCHEMA$.getName(),
+                                            .addMessageType(PaymentFailedResponseMessage.SCHEMA$.getName(),
                                                         failedResponseMapper,
                                                         messageListener::paymentCancelled)
-                                        .build();
+                                            .build();
   }
 
   @KafkaListener(id = "${order-service.payment.consumer-group-id}",

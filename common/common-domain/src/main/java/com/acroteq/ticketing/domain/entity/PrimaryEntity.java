@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 @SuperBuilder(toBuilder = true)
-public abstract class MasterEntity<IdT extends EntityId> implements Entity<IdT> {
+public abstract class PrimaryEntity<IdT extends EntityId> implements Entity<IdT> {
 
   @EqualsAndHashCode.Include
   @Nullable

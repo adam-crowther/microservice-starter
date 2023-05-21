@@ -16,12 +16,12 @@ import java.util.function.Consumer;
 
 @Slf4j
 @RequiredArgsConstructor(access = PACKAGE)
-public class KafkaMessageHandlerBuilder {
+public class KafkaSagaMessageHandlerBuilder {
 
   private final Map<String, MessageConsumer<? extends SpecificRecord, ? extends DataTransferObject>> consumers =
       new ConcurrentHashMap<>();
 
-  public <MessageT extends SpecificRecord, DtoT extends DataTransferObject> KafkaMessageHandlerBuilder addMessageType(
+  public <MessageT extends SpecificRecord, DtoT extends DataTransferObject> KafkaSagaMessageHandlerBuilder addMessageType(
       final String messageType,
       final MessageToDtoMapper<MessageT, DtoT> mapper,
       final Consumer<DtoT> listener) {
@@ -30,8 +30,8 @@ public class KafkaMessageHandlerBuilder {
     return this;
   }
 
-  public KafkaMessageHandler build() {
-    return new KafkaMessageHandler(unmodifiableMap(consumers));
+  public KafkaSagaMessageHandler build() {
+    return new KafkaSagaMessageHandler(unmodifiableMap(consumers));
   }
 }
 

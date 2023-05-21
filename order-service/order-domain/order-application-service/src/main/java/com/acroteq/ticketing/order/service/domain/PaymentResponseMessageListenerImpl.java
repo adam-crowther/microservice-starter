@@ -18,7 +18,7 @@ import org.springframework.validation.annotation.Validated;
 @Service
 public class PaymentResponseMessageListenerImpl implements PaymentResponseMessageListener {
 
-  private final OrderPaymentSaga saga;
+  private final OrderPaymentSagaStep saga;
   private final AirlineApprovalRequestMessagePublisher messagePublisher;
 
   @Override

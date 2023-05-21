@@ -3,7 +3,7 @@ package com.acroteq.ticketing.airline.service.data.access.airline.entity;
 import static jakarta.persistence.CascadeType.ALL;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.acroteq.ticketing.infrastructure.data.access.entity.MasterJpaEntity;
+import com.acroteq.ticketing.infrastructure.data.access.entity.PrimaryJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -22,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor(access = PROTECTED)
 @Table(name = "airlines")
 @Entity
-public class AirlineJpaEntity extends MasterJpaEntity {
+public class AirlineJpaEntity extends PrimaryJpaEntity {
 
   @Column(name = "name", nullable = false)
   private String name;

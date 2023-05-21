@@ -4,7 +4,7 @@ import static com.acroteq.ticketing.domain.validation.ValidationResult.fail;
 import static com.acroteq.ticketing.domain.valueobject.OrderStatus.PAID;
 
 import com.acroteq.ticketing.approval.service.domain.entity.airline.Airline;
-import com.acroteq.ticketing.domain.entity.MasterEntity;
+import com.acroteq.ticketing.domain.entity.PrimaryEntity;
 import com.acroteq.ticketing.domain.validation.ValidationResult;
 import com.acroteq.ticketing.domain.validation.ValidationResultBuilder;
 import com.acroteq.ticketing.domain.valueobject.CashValue;
@@ -23,7 +23,7 @@ import java.util.Optional;
 @Getter
 @ToString(callSuper = true)
 @SuperBuilder(toBuilder = true)
-public class Order extends MasterEntity<OrderId> {
+public class Order extends PrimaryEntity<OrderId> {
 
   @NonNull
   private final OrderStatus orderStatus;
@@ -55,7 +55,7 @@ public class Order extends MasterEntity<OrderId> {
 
   @SuppressWarnings("PublicInnerClass")
   public abstract static class OrderBuilder<C extends Order, B extends OrderBuilder<C, B>>
-      extends MasterEntityBuilder<OrderId, C, B> {
+      extends PrimaryEntityBuilder<OrderId, C, B> {
 
     public B items(@Nullable final List<OrderItem> items) {
       this.items = Optional.ofNullable(items)

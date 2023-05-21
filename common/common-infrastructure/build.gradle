@@ -4,11 +4,13 @@ plugins {
 }
 
 dependencies {
-  implementation project(":common:common-domain")
   implementation project(":common:common-application")
+  implementation project(":common:common-domain")
+  implementation project(":common:common-helper")
 
-  implementation 'org.apache.avro:avro'
+  implementation 'com.google.guava:guava'
   implementation 'jakarta.persistence:jakarta.persistence-api'
+  implementation 'org.apache.avro:avro'
   implementation 'org.projectlombok:lombok'
   implementation 'org.mapstruct:mapstruct'
   implementation 'org.springframework:spring-context'
@@ -16,9 +18,9 @@ dependencies {
   implementation 'org.springframework.data:spring-data-jpa'
   implementation 'org.springframework.security:spring-security-core'
 
+  annotationProcessor 'org.mapstruct:mapstruct-processor'
   annotationProcessor 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok-mapstruct-binding'
-  annotationProcessor 'org.mapstruct:mapstruct-processor'
 
   testAnnotationProcessor 'org.projectlombok:lombok'
 }

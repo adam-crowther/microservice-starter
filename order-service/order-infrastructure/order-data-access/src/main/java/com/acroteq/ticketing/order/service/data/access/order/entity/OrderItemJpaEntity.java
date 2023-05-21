@@ -2,7 +2,7 @@ package com.acroteq.ticketing.order.service.data.access.order.entity;
 
 import static lombok.AccessLevel.PROTECTED;
 
-import com.acroteq.ticketing.infrastructure.data.access.entity.MasterJpaEntity;
+import com.acroteq.ticketing.infrastructure.data.access.entity.PrimaryJpaEntity;
 import com.acroteq.ticketing.order.service.data.access.airline.entity.FlightJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = PROTECTED)
 @Table(name = "order_items")
 @Entity
-public class OrderItemJpaEntity extends MasterJpaEntity {
+public class OrderItemJpaEntity extends PrimaryJpaEntity {
 
   @ManyToOne(optional = false)
   @JoinColumn(name = "flight_id", nullable = false)

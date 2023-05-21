@@ -3,7 +3,7 @@ package com.acroteq.ticketing.payment.service.data.access.credithistory.entity;
 import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.acroteq.ticketing.infrastructure.data.access.entity.MasterJpaEntity;
+import com.acroteq.ticketing.infrastructure.data.access.entity.PrimaryJpaEntity;
 import com.acroteq.ticketing.payment.service.data.access.customer.entity.CustomerJpaEntity;
 import com.acroteq.ticketing.payment.service.domain.valueobject.CreditChangeType;
 import com.acroteq.ticketing.payment.service.domain.valueobject.TransactionType;
@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor(access = PROTECTED)
 @Table(name = "credit_change")
 @Entity
-public class CreditChangeJpaEntity extends MasterJpaEntity {
+public class CreditChangeJpaEntity extends PrimaryJpaEntity {
 
   @ManyToOne(optional = false)
   @JoinColumn(name = "customer_id", nullable = false)

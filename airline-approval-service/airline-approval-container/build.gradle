@@ -15,17 +15,4 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-autoconfigure'
   implementation 'org.springframework.boot:spring-boot'
   implementation 'org.springframework:spring-context'
-
-  runtimeOnly 'com.fasterxml.jackson.core:jackson-databind'
-  runtimeOnly 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml'
-  runtimeOnly 'org.apache.logging.log4j:log4j-core'
-  runtimeOnly 'org.apache.logging.log4j:log4j-layout-template-json'
-  runtimeOnly 'org.apache.logging.log4j:log4j-slf4j2-impl'
-  runtimeOnly 'org.postgresql:postgresql'
-  runtimeOnly 'org.springframework.boot:spring-boot-starter-validation'
-  runtimeOnly 'org.springframework.boot:spring-boot-starter-web'
-  runtimeOnly 'org.springframework.boot:spring-boot-starter-security'
-  runtimeOnly 'org.springframework.boot:spring-boot-starter-oauth2-client'
-  runtimeOnly 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-  runtimeOnly 'org.springframework.data:spring-data-jpa'
 }

@@ -18,7 +18,7 @@ import java.util.UUID;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class OrderPaymentSaga
+public class OrderPaymentSagaStep
     implements SagaStep<PaymentPaidResponseDto, OrderPaidEvent, PaymentCancelledResponseDto, EmptyEvent> {
 
   private final OrderDomainService orderDomainService;

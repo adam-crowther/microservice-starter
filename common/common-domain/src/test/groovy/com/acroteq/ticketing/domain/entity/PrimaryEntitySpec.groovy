@@ -8,34 +8,34 @@ import spock.lang.Specification
 import static nl.jqno.equalsverifier.Warning.STRICT_INHERITANCE
 
 @CompileDynamic
-class MasterEntitySpec extends Specification {
+class PrimaryEntitySpec extends Specification {
 
   static final TestId TEST_ID = TestId.of(987)
   static final int VERSION = 2
 
   def 'builder with all attributes'() {
     when:
-    def masterEntity = TestMasterEntity.builder()
+    def primaryEntity = TestPrimaryEntity.builder()
           .id(TEST_ID)
           .version(VERSION)
           .build()
     then:
-    masterEntity.id == TEST_ID
-    masterEntity.version == VERSION
+    primaryEntity.id == TEST_ID
+    primaryEntity.version == VERSION
   }
 
   def 'builder with no attributes'() {
     when:
-    def masterEntity = TestMasterEntity.builder()
+    def primaryEntity = TestPrimaryEntity.builder()
           .build()
     then:
-    masterEntity.id == null
-    masterEntity.version == null
+    primaryEntity.id == null
+    primaryEntity.version == null
   }
 
   def 'equals and hashcode contract is correct'() {
     when:
-    def verifier = EqualsVerifier.forClass(TestMasterEntity)
+    def verifier = EqualsVerifier.forClass(TestPrimaryEntity)
 
     then:
     verifier.suppress(STRICT_INHERITANCE)
@@ -45,7 +45,7 @@ class MasterEntitySpec extends Specification {
 
   def 'toString returns the expected string'() {
     given:
-    def entity = TestMasterEntity.builder()
+    def entity = TestPrimaryEntity.builder()
           .id(testId)
           .version(version)
           .build()
@@ -54,7 +54,7 @@ class MasterEntitySpec extends Specification {
     def string = entity.toString()
 
     then:
-    string.startsWith('TestMasterEntity(')
+    string.startsWith('TestPrimaryEntity(')
 
     where:
     testId  | version
