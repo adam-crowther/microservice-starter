@@ -7,6 +7,9 @@
     <Match>
         <Package name="~com.acroteq.ticketing.[a-z\.]+.service.presentation.(api|model)"/>
     </Match>
+    <Match>
+        <Package name="~com.acroteq.ticketing.[a-z\.]+.service.client.(api|model|invoker)"/>
+    </Match>
     <!-- <Match> -->
     <!--     <Package name="~com.acroteq.ticketing.[a-z\-]+.service.presentation.model"/> -->
     <!-- </Match> -->

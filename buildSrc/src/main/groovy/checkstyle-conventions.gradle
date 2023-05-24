@@ -23,6 +23,9 @@ tasks.withType(Checkstyle).configureEach {
   outputs.upToDateWhen { false }
   exclude '**/presentation/api/**'
   exclude '**/presentation/model/**'
+  exclude '**/client/api/**'
+  exclude '**/client/model/**'
+  exclude '**/client/invoker/**'
   exclude '**/avro/model/**'
 }
 

@@ -3,7 +3,14 @@ plugins {
   id 'openapi-conventions'
 }
 
-openApiGenerate {
+openApiGenerateSpring {
   apiPackage = "com.acroteq.ticketing.order.service.presentation.api"
   modelPackage = "com.acroteq.ticketing.order.service.presentation.model"
+  invokerPackage = "com.acroteq.ticketing.order.service.presentation.invoker"
+}
+
+openApiGenerateJavaClient {
+  apiPackage = "com.acroteq.ticketing.order.service.client.api"
+  modelPackage = "com.acroteq.ticketing.order.service.client.model"
+  invokerPackage = "com.acroteq.ticketing.order.service.client.invoker"
 }

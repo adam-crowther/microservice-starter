@@ -155,7 +155,6 @@ components:
   schemas:
     CreateCustomerCommand:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - userName
         - firstName
@@ -177,7 +176,6 @@ components:
 
     CreateCustomerResponse:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - id
         - version
@@ -197,7 +195,6 @@ components:
     UpdateCustomerCommand:
       allOf:
         - $ref: '#/components/schemas/CreateCustomerCommand'
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - id
         - version
@@ -211,7 +208,6 @@ components:
 
     Customer:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - id
         - version
@@ -251,7 +247,6 @@ components:
 
     Customers:
       type: array
-      x-class-extra-annotation: "@lombok.Builder"
       maxItems: 100
       readOnly: true
       items:
@@ -259,7 +254,6 @@ components:
 
     Audit:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - createdTimestamp
         - lastModifiedTimestamp
@@ -275,7 +269,6 @@ components:
 
     Problem:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - code
         - reason
@@ -296,7 +289,6 @@ components:
           readOnly: true
         i18nParameters:
           type: array
-          x-field-extra-annotation: "@lombok.Builder.Default"
           readOnly: true
           items:
             type: string

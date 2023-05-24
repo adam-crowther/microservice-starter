@@ -1,3 +1,5 @@
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
 plugins {
   id 'org.openapi.generator'
 }
@@ -13,6 +15,7 @@ dependencies {
   implementation 'org.springframework:spring-context'
   implementation 'org.springframework:spring-core'
   implementation 'org.springframework:spring-web'
+  implementation 'org.springframework:spring-webflux'
   implementation 'io.swagger.core.v3:swagger-annotations'
   implementation 'io.swagger.core.v3:swagger-core'
 
@@ -20,24 +23,33 @@ dependencies {
   annotationProcessor 'org.projectlombok:lombok'
 }
 
-openApiGenerate {
-  generatorName = "spring"
+tasks.register('openApiGenerateSpring', GenerateTask) {
+  generatorName = 'spring'
   inputSpec = "${projectDir}/src/main/spec/openapi.yaml"
-  outputDir = "${buildDir}/generated"
-  // apiPackage = "com.acroteq.ticketing.airline.service.presentation.api"
-  invokerPackage = "org.openapi.example.invoker"
-  // modelPackage = "com.acroteq.ticketing.airline.service.presentation.model"
-  configOptions.putAll([
-        dateLibrary   : "java8",
-        interfaceOnly : "true",
-        useSpringBoot3: "true"
-  ])
+  outputDir = "${buildDir}/generated/spring"
+  configOptions.putAll([dateLibrary                   : 'java8',
+                        interfaceOnly                 : 'true',
+                        useSpringBoot3                : 'true',
+                        containerDefaultToNull        : 'true',
+                        additionalModelTypeAnnotations: '@lombok.experimental.SuperBuilder'])
+}
+
+tasks.register('openApiGenerateJavaClient', GenerateTask) {
+  generatorName = 'java'
+  inputSpec = "${projectDir}/src/main/spec/openapi.yaml"
+  outputDir = "${buildDir}/generated/java-client"
+  configOptions.putAll([dateLibrary                   : 'java8',
+                        useJakartaEe                  : 'true',
+                        library                       : 'webclient',
+                        serializationLibrary          : 'jackson',
+                        containerDefaultToNull        : 'true',
+                        additionalModelTypeAnnotations: '@lombok.experimental.SuperBuilder'])
 }
 
 sourceSets {
   main {
     java {
-      srcDirs += "${buildDir}/generated/src/main/java"
+      srcDirs += ["${buildDir}/generated/spring/src/main/java", "${buildDir}/generated/java-client/src/main/java"]
     }
     resources {
       srcDirs += "${projectDir}/src/main/spec"
@@ -45,5 +57,5 @@ sourceSets {
   }
 }
 
-compileJava.dependsOn tasks.openApiGenerate
+compileJava.dependsOn << [tasks.named('openApiGenerateSpring'), tasks.named('openApiGenerateJavaClient')]
 

@@ -1,6 +1,7 @@
 plugins {
   id 'java-conventions'
   id 'spock-conventions'
+  id 'testcontainers-conventions'
 }
 
 dependencies {
@@ -23,6 +24,8 @@ dependencies {
 
   annotationProcessor 'org.projectlombok:lombok'
   annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+  testImplementation 'org.springframework.boot:spring-boot-test'
 
   testAnnotationProcessor 'org.projectlombok:lombok'
 }

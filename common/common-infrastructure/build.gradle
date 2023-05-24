@@ -1,6 +1,7 @@
 plugins {
   id 'java-conventions'
   id 'spock-conventions'
+  id 'testcontainers-conventions'
 }
 
 dependencies {
@@ -21,6 +22,10 @@ dependencies {
   annotationProcessor 'org.mapstruct:mapstruct-processor'
   annotationProcessor 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok-mapstruct-binding'
+
+  testImplementation 'jakarta.annotation:jakarta.annotation-api'
+  testImplementation 'org.springframework.boot:spring-boot-test'
+  testImplementation 'org.springframework:spring-test'
 
   testAnnotationProcessor 'org.projectlombok:lombok'
 }

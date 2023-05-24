@@ -9,6 +9,7 @@ intended to serve as an example, and a starting point for a green-field project.
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
+[![License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 ### Built With
@@ -93,7 +94,6 @@ reference, and as a template for new projects.
 
 ## TODO
 
-- REST Integration tests
 - End-to-end tests
 
 ## Usage
@@ -117,27 +117,29 @@ See the following documentation for more information:
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/adam-crowther/kafka-connect-source-twitter-api-v2.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/adam-crowther/microservice-starter.svg?style=for-the-badge
 
-[contributors-url]: https://github.com/adam-crowther/kafka-connect-source-twitter-api-v2/graphs/contributors
+[contributors-url]: https://github.com/adam-crowther/microservice-starter/graphs/contributors
 
-[forks-shield]: https://img.shields.io/github/forks/adam-crowther/kafka-connect-source-twitter-api-v2.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/adam-crowther/microservice-starter.svg?style=for-the-badge
 
-[forks-url]: https://github.com/adam-crowther/kafka-connect-source-twitter-api-v2/network/members
+[forks-url]: https://github.com/adam-crowther/microservice-starter/network/members
 
-[stars-shield]: https://img.shields.io/github/stars/adam-crowther/kafka-connect-source-twitter-api-v2.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/adam-crowther/microservice-starter.svg?style=for-the-badge
 
-[stars-url]: https://github.com/adam-crowther/kafka-connect-source-twitter-api-v2/stargazers
+[stars-url]: https://github.com/adam-crowther/microservice-starter/stargazers
 
-[issues-shield]: https://img.shields.io/github/issues/adam-crowther/kafka-connect-source-twitter-api-v2.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/adam-crowther/microservice-starter.svg?style=for-the-badge
 
-[issues-url]: https://github.com/adam-crowther/kafka-connect-source-twitter-api-v2/issues
+[issues-url]: https://github.com/adam-crowther/microservice-starter/issues
+
+[license-shield]: https://img.shields.io/github/license/adam-crowther/microservice-starter.svg?style=for-the-badge
+
+[license-url]: https://github.com/adam-crowther/microservice-starter/blob/master/LICENSE.md
 
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 
 [linkedin-url]: https://www.linkedin.com/in/adam-crowther-5a51564/
-
-[product-screenshot]: images/screenshot.png
 
 [Java-shield]: https://img.shields.io/badge/Java%2017-e76f00?style=for-the-badge
 

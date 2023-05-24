@@ -54,7 +54,7 @@ Testing
 
 > See the Cucumber tests in the payment-domain-core submodule.
 
-E.g. This is a working unit test:
+E.g. This is a working cucumber test:
 
 ```gherkin
 Feature: Payment Validation
@@ -89,6 +89,8 @@ Feature: Payment Validation
     - [WireMock](https://wiremock.org/docs/)
     - [Test Containers](https://www.testcontainers.org/)
 - Mock all external system dependencies, including REST client, messaging and database
+
+> See the Integration tests in the order-container submodule.
 
 ## E2E Testing
 

@@ -329,7 +329,6 @@ components:
   schemas:
     CreateAirlineCommand:
       type: object
-      x-class-extra-annotation: "@lombok.Builder @lombok.AllArgsConstructor"
       required:
         - name
         - active
@@ -340,14 +339,12 @@ components:
           type: boolean
         flights:
           type: array
-          x-class-extra-annotation: "@lombok.Builder"
           maxItems: 100
           items:
             $ref: "#/components/schemas/CreateFlightCommand"
 
     CreateAirlineResponse:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - id
         - version
@@ -367,7 +364,6 @@ components:
     UpdateAirlineCommand:
       allOf:
         - $ref: '#/components/schemas/CreateAirlineCommand'
-      x-class-extra-annotation: "@lombok.Builder @lombok.AllArgsConstructor"
       required:
         - id
         - version
@@ -380,14 +376,12 @@ components:
           format: int64
         flights:
           type: array
-          x-class-extra-annotation: "@lombok.Builder"
           maxItems: 100
           items:
             $ref: "#/components/schemas/UpdateFlightCommand"
 
     Airline:
       type: object
-      x-class-extra-annotation: "@lombok.Builder @lombok.AllArgsConstructor"
       required:
         - id
         - version
@@ -416,7 +410,6 @@ components:
 
     Airlines:
       type: array
-      x-class-extra-annotation: "@lombok.Builder"
       maxItems: 100
       readOnly: true
       items:
@@ -424,7 +417,6 @@ components:
 
     CreateFlightCommand:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - flightNumber
         - price
@@ -439,7 +431,6 @@ components:
 
     CreateFlightResponse:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - id
         - version
@@ -456,7 +447,6 @@ components:
     UpdateFlightCommand:
       allOf:
         - $ref: '#/components/schemas/CreateFlightCommand'
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - id
         - version
@@ -470,7 +460,6 @@ components:
 
     Flight:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - id
         - version
@@ -497,7 +486,6 @@ components:
 
     Flights:
       type: array
-      x-class-extra-annotation: "@lombok.Builder"
       maxItems: 100
       readOnly: true
       items:
@@ -505,7 +493,6 @@ components:
 
     CashValueCommand:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - currencyId
         - amount
@@ -518,7 +505,6 @@ components:
 
     CashValue:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - currencyId
         - amount
@@ -533,7 +519,6 @@ components:
 
     Audit:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - createdTimestamp
         - lastModifiedTimestamp
@@ -549,7 +534,6 @@ components:
 
     Problem:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - code
         - reason
@@ -570,7 +554,6 @@ components:
           readOnly: true
         i18nParameters:
           type: array
-          x-field-extra-annotation: "@lombok.Builder.Default"
           readOnly: true
           items:
             type: string

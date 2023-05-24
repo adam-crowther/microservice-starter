@@ -3,13 +3,6 @@ plugins {
   id 'spock-conventions'
   id 'liquibase-conventions'
 }
-compileJava {
-  options.compilerArgs += [
-        '-Amapstruct.verbose=true',
-        '-Amapstruct.suppressGeneratorVersionInfoComment=true',
-        '-Amapstruct.suppressGeneratorTimestamp=true'
-  ]
-}
 
 dependencies {
   implementation project(":common:common-domain")

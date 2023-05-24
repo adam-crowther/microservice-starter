@@ -103,7 +103,6 @@ components:
   schemas:
     CreateOrderCommand:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - customerId
         - airlineId
@@ -118,7 +117,6 @@ components:
           format: int64
         items:
           type: array
-          x-field-extra-annotation: "@lombok.Builder.Default"
           items:
             $ref: "#/components/schemas/CreateOrderItemCommand"
         address:
@@ -126,7 +124,6 @@ components:
 
     CreateOrderResponse:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - trackingId
         - audit
@@ -146,7 +143,6 @@ components:
 
     Order:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - trackingId
         - audit
@@ -174,7 +170,6 @@ components:
           readOnly: true
         items:
           type: array
-          x-field-extra-annotation: "@lombok.Builder.Default"
           readOnly: true
           items:
             $ref: "#/components/schemas/OrderItem"
@@ -188,7 +183,6 @@ components:
 
     Orders:
       type: array
-      x-class-extra-annotation: "@lombok.Builder"
       maxItems: 100
       readOnly: true
       items:
@@ -196,7 +190,6 @@ components:
 
     CreateOrderItemCommand:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - flightId
         - quantity
@@ -211,7 +204,6 @@ components:
 
     OrderItem:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - flightId
         - quantity
@@ -228,7 +220,6 @@ components:
 
     CreateAddressCommand:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - street
         - postalCode
@@ -246,7 +237,6 @@ components:
 
     Address:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - street
         - postalCode
@@ -267,7 +257,6 @@ components:
 
     Audit:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - createdTimestamp
         - lastModifiedTimestamp
@@ -283,7 +272,6 @@ components:
 
     Problem:
       type: object
-      x-class-extra-annotation: "@lombok.Builder"
       required:
         - code
         - reason
@@ -304,7 +292,6 @@ components:
           readOnly: true
         i18nParameters:
           type: array
-          x-field-extra-annotation: "@lombok.Builder.Default"
           readOnly: true
           items:
             type: string

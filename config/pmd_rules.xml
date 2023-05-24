@@ -12,6 +12,9 @@
     <exclude-pattern>.*/avro/model/.*</exclude-pattern>
     <exclude-pattern>.*/presentation/api/.*</exclude-pattern>
     <exclude-pattern>.*/presentation/model/.*</exclude-pattern>
+    <exclude-pattern>.*/client/api/.*</exclude-pattern>
+    <exclude-pattern>.*/client/model/.*</exclude-pattern>
+    <exclude-pattern>.*/client/invoker/.*</exclude-pattern>
 
     <rule ref="category/java/bestpractices.xml">
         <exclude name="GuardLogStatement"/>
@@ -100,7 +103,7 @@
 
     <rule ref="category/java/errorprone.xml/AvoidDuplicateLiterals">
         <properties>
-            <property name="maxDuplicateLiterals" value="2"/>
+            <property name="maxDuplicateLiterals" value="3"/>
             <property name="skipAnnotations" value="true"/>
         </properties>
     </rule>

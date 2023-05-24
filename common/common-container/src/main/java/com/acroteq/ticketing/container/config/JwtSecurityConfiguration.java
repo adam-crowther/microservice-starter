@@ -2,6 +2,7 @@ package com.acroteq.ticketing.container.config;
 
 import com.acroteq.ticketing.container.properties.JwtMappingProperties;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,7 @@ import java.util.Collection;
 @EnableWebSecurity
 @EnableMethodSecurity
 @EnableConfigurationProperties(JwtMappingProperties.class)
+@ConditionalOnProperty(name = "security.jwt.enabled", havingValue = "true", matchIfMissing = true)
 public class JwtSecurityConfiguration {
 
   private final JwtMappingProperties jwtMappingProperties;

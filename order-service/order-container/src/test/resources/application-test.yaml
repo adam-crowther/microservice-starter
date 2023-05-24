@@ -1,0 +1,22 @@
+security:
+  jwt:
+    enabled: false
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration
+
+  kafka:
+    security:
+      protocol: "PLAINTEXT"
+    producer:
+      properties:
+        schema.registry.url: mock://my-scope-name
+    consumer:
+      properties:
+        schema.registry.url: mock://my-scope-name

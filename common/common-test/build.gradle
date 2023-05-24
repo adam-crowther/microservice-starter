@@ -1,0 +1,18 @@
+plugins {
+  id 'java-conventions'
+}
+
+dependencies {
+  implementation 'com.github.spotbugs:spotbugs-annotations'
+  implementation 'com.github.spotbugs:spotbugs-annotations'
+  implementation 'org.apache.avro:avro'
+  implementation 'org.projectlombok:lombok'
+  implementation 'org.springframework.boot:spring-boot-test'
+  implementation 'org.springframework.kafka:spring-kafka:'
+  implementation 'org.springframework:spring-context'
+
+  annotationProcessor 'org.projectlombok:lombok'
+
+  // testImplementation 'org.springframework.boot:spring-boot-test'
+}
+

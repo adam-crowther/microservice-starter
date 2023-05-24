@@ -49,6 +49,8 @@ include 'common:common-kafka:kafka-model'
 findProject(':common:common-kafka:kafka-model')?.name = 'kafka-model'
 include 'common:common-saga'
 findProject(':common:common-saga')?.name = 'common-saga'
+include 'common:common-test'
+findProject(':common:common-test')?.name = 'common-test'
 
 include 'customer-mdm:customer-mdm-container'
 findProject(':customer-mdm:customer-mdm-container')?.name = 'customer-mdm-container'
