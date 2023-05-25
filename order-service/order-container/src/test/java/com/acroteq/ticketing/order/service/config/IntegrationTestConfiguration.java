@@ -9,10 +9,11 @@ import org.springframework.context.annotation.Lazy;
 
 @Configuration
 @Import({ MasterDataUploaderConfiguration.class,
-          MasterDataGeneratorConfiguration.class,
-          TestWebSecurityConfiguration.class })
+          TestDataGeneratorConfiguration.class,
+          TestWebSecurityConfiguration.class,
+          KafkaConsumerConfiguration.class })
 public class IntegrationTestConfiguration {
-  
+
   @Lazy
   @Bean
   OrdersApi ordersApi(@Value("${local.server.port}") final int serverPort) {

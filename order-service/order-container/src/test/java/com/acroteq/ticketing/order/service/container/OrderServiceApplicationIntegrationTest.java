@@ -1,23 +1,33 @@
 package com.acroteq.ticketing.order.service.container;
 
-import static com.acroteq.ticketing.order.service.client.model.OrderStatus.PENDING;
-import static com.github.npathai.hamcrestopt.OptionalMatchers.isPresentAndIs;
+import static com.acroteq.ticketing.order.service.matchers.OrderServiceMatchers.matches;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import com.acroteq.ticketing.kafka.airline.avro.model.AirlineEventMessage;
-import com.acroteq.ticketing.kafka.airline.avro.model.Flight;
-import com.acroteq.ticketing.kafka.customer.avro.model.CustomerEventMessage;
+import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalApprovedResponseMessage;
+import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalRequestMessage;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentPaidResponseMessage;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentRequestMessage;
 import com.acroteq.ticketing.order.service.client.api.OrdersApi;
 import com.acroteq.ticketing.order.service.client.model.CreateOrderCommand;
 import com.acroteq.ticketing.order.service.client.model.CreateOrderResponse;
+import com.acroteq.ticketing.order.service.client.model.Order;
+import com.acroteq.ticketing.order.service.client.model.OrderStatus;
 import com.acroteq.ticketing.order.service.config.IntegrationTestConfiguration;
-import com.acroteq.ticketing.order.service.data.AirlineMasterDataGenerator;
-import com.acroteq.ticketing.order.service.data.CreateOrderCommandGenerator;
-import com.acroteq.ticketing.order.service.data.CustomerMasterDataGenerator;
-import com.acroteq.ticketing.order.service.data.MasterDataUploader;
-import com.acroteq.ticketing.order.service.extension.KafkaContainerExtension;
-import com.acroteq.ticketing.order.service.extension.PostgreSqlContainerExtension;
+import com.acroteq.ticketing.order.service.data.MasterDataFixture;
+import com.acroteq.ticketing.order.service.data.TestDataGenerator;
+import com.acroteq.ticketing.order.service.producer.AirlineApprovalApprovedResponseMessageProducer;
+import com.acroteq.ticketing.order.service.producer.PaymentPaidResponseMessageProducer;
+import com.acroteq.ticketing.test.extension.KafkaContainerExtension;
+import com.acroteq.ticketing.test.extension.PostgreSqlContainerExtension;
+import com.acroteq.ticketing.test.kafka.TestKafkaConsumer;
+import lombok.extern.slf4j.Slf4j;
+import org.awaitility.Awaitility;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,59 +35,134 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
-import reactor.core.publisher.Mono;
 
-import java.util.Optional;
+import java.util.UUID;
+import java.util.function.Predicate;
 
+// This is an integration test that exercises many interfaces.  It is always going to have many imports.
+@SuppressWarnings("PMD.ExcessiveImports")
+@Slf4j
 @ExtendWith({ PostgreSqlContainerExtension.class, KafkaContainerExtension.class })
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @Import(IntegrationTestConfiguration.class)
 @ActiveProfiles("test")
 class OrderServiceApplicationIntegrationTest {
 
+  private static final int POLL_INTERVAL_MILLISECONDS = 100;
+
   @Autowired
-  private AirlineMasterDataGenerator airlineGenerator;
+  private TestDataGenerator testDataGenerator;
   @Autowired
-  private CustomerMasterDataGenerator customerGenerator;
+  private MasterDataFixture masterDataFixture;
   @Autowired
-  private CreateOrderCommandGenerator orderCommandGenerator;
+  private TestKafkaConsumer<PaymentRequestMessage> paymentRequestMessageConsumer;
   @Autowired
-  private MasterDataUploader<AirlineEventMessage> airlineMasterDataUploader;
+  private PaymentPaidResponseMessageProducer paymentPaidResponseMessageProducer;
   @Autowired
-  private MasterDataUploader<CustomerEventMessage> customerMasterDataUploader;
+  private AirlineApprovalApprovedResponseMessageProducer approvedResponseMessageProducer;
+  @Autowired
+  private TestKafkaConsumer<AirlineApprovalRequestMessage> approvalRequestMessageConsumer;
 
   @Autowired
   private OrdersApi ordersApi;
 
-  private AirlineEventMessage airline;
-  private CustomerEventMessage customer;
-
   @BeforeEach
   void prepareMasterData() {
-    airline = airlineGenerator.getAirlineEventMessage();
-    airlineMasterDataUploader.upload(airline.getId(), airline);
+    masterDataFixture.prepareMasterData();
+  }
 
-    customer = customerGenerator.getCustomerEventMessage();
-    customerMasterDataUploader.upload(customer.getId(), customer);
+  @BeforeEach
+  void subscribeToKafkaTopics() {
+    paymentRequestMessageConsumer.subscribe();
+    approvalRequestMessageConsumer.subscribe();
+  }
+
+  @AfterEach
+  void stopConsumers() {
+    paymentRequestMessageConsumer.stop();
+    approvalRequestMessageConsumer.stop();
   }
 
   @Test
   void testCreateOrder() {
     // given:
-    final long customerId = customer.getId();
-    final long airlineId = airline.getId();
-    final Flight flight = airline.getFlights()
-                                 .get(0);
-    final long flightId = flight.getId();
+    final long customerId = masterDataFixture.getCustomerId();
+    final long flightId = masterDataFixture.getFlightId(0);
 
-    final CreateOrderCommand createOrderCommand = orderCommandGenerator.getCreateOrderCommand(customerId,
-                                                                                              airlineId,
-                                                                                              flightId,
-                                                                                              1);
+    final AirlineEventMessage airline = masterDataFixture.getAirline();
+    final long airlineId = masterDataFixture.getAirlineId();
+
+    final CreateOrderCommand createOrderCommand = testDataGenerator.getCreateOrderCommand(customerId,
+                                                                                          airlineId,
+                                                                                          flightId,
+                                                                                          1);
+
     // when:
-    final Mono<CreateOrderResponse> order = ordersApi.createOrder(createOrderCommand);
+    final CreateOrderResponse createOrderResponse = ordersApi.createOrder(createOrderCommand)
+                                                             .blockOptional()
+                                                             .orElseGet(Assertions::fail);
+
+
     // then:
-    final Optional<CreateOrderResponse> createOrderResponse = order.blockOptional();
-    assertThat(createOrderResponse.map(CreateOrderResponse::getStatus), isPresentAndIs(PENDING));
+    assertThat(createOrderResponse.getStatus(), is(OrderStatus.PENDING));
+    final UUID trackingId = createOrderResponse.getTrackingId();
+
+    // when:
+    final Order order = ordersApi.getOrderByTrackingId(trackingId)
+                                 .blockOptional()
+                                 .orElseGet(Assertions::fail);
+    // then:
+    assertThat(order, matches(createOrderCommand, OrderStatus.PENDING, trackingId));
+
+    // when:
+    final PaymentRequestMessage paymentRequest = paymentRequestMessageConsumer.poll()
+                                                                              .blockOptional()
+                                                                              .orElseGet(Assertions::fail);
+    // then:
+    assertThat(paymentRequest, matches(createOrderCommand, order.getId(), airline));
+
+    // then:
+    final PaymentPaidResponseMessage paymentPaidResponse = testDataGenerator.getPaymentPaidResponseMessage(
+        paymentRequest);
+    paymentPaidResponseMessageProducer.send(paymentPaidResponse);
+
+    // when:
+    final Order paidOrder = waitForOrderState(trackingId, OrderStatus.PAID);
+    // then:
+    assertThat(paidOrder, matches(createOrderCommand, OrderStatus.PAID, trackingId));
+
+    // when:
+    final AirlineApprovalRequestMessage approvalRequest = approvalRequestMessageConsumer.poll()
+                                                                                        .blockOptional()
+                                                                                        .orElseGet(Assertions::fail);
+    // then:
+    assertThat(approvalRequest, matches(createOrderCommand, paymentRequest, airline));
+
+    // then:
+    final AirlineApprovalApprovedResponseMessage approvedResponse =
+        testDataGenerator.getAirlineApprovalApprovedResponseMessage(approvalRequest);
+    approvedResponseMessageProducer.send(approvedResponse);
+
+    // when:
+    final Order approvedOrder = waitForOrderState(trackingId, OrderStatus.APPROVED);
+    // then:
+    assertThat(approvedOrder, matches(createOrderCommand, OrderStatus.APPROVED, trackingId));
+  }
+
+  private Order waitForOrderState(final UUID trackingId, final OrderStatus expectedState) {
+    return Awaitility.await()
+                     .pollInterval(POLL_INTERVAL_MILLISECONDS, MILLISECONDS)
+                     .until(() -> ordersApi.getOrderByTrackingId(trackingId)
+                                           .blockOptional()
+                                           .orElseGet(Assertions::fail), hasExpectedState(expectedState));
+  }
+
+  private Predicate<Order> hasExpectedState(final OrderStatus expectedState) {
+    return order -> hasExpectedState(order, expectedState);
+  }
+
+  private boolean hasExpectedState(final Order order, final OrderStatus expectedState) {
+    final OrderStatus orderStatus = order.getStatus();
+    return orderStatus == expectedState;
   }
 }

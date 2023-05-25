@@ -125,11 +125,15 @@ components:
     CreateOrderResponse:
       type: object
       required:
+        - id
         - trackingId
         - audit
         - status
         - message
       properties:
+        id:
+          type: integer
+          format: int64
         trackingId:
           type: string
           format: uuid
@@ -144,6 +148,7 @@ components:
     Order:
       type: object
       required:
+        - id
         - trackingId
         - audit
         - status
@@ -160,6 +165,9 @@ components:
           $ref: "#/components/schemas/Audit"
         status:
           $ref: "#/components/schemas/OrderStatus"
+        id:
+          type: integer
+          format: int64
         customerId:
           type: integer
           format: int64

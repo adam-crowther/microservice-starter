@@ -18,6 +18,8 @@ import java.util.UUID;
 public class CreateOrderResponseDto implements DataTransferObject {
 
   @NotNull
+  private final Long id;
+  @NotNull
   private final UUID trackingId;
   @NotNull
   private final AuditDto audit;

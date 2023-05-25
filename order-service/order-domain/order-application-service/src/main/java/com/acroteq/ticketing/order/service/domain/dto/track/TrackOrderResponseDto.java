@@ -27,6 +27,8 @@ import java.util.UUID;
 public class TrackOrderResponseDto implements DataTransferObject {
 
   @NotNull
+  private final Long id;
+  @NotNull
   private final Long customerId;
   @NotNull
   private final Long airlineId;

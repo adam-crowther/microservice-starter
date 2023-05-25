@@ -1,7 +1,6 @@
 plugins {
   id 'java-conventions'
   id 'spring-conventions'
-  id 'testcontainers-conventions'
 }
 
 dependencies {
@@ -17,12 +16,12 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot'
   implementation 'org.springframework:spring-context'
 
+  testImplementation project(":common:common-helper")
   testImplementation project(":common:common-kafka:kafka-libs")
   testImplementation project(":common:common-kafka:kafka-model")
-  testImplementation project(":order-service:order-presentation:order-api-spec")
   testImplementation project(":common:common-test")
+  testImplementation project(":order-service:order-presentation:order-api-spec")
 
-  testImplementation project(path: ':common:common-kafka:kafka-libs')
   testImplementation 'io.projectreactor:reactor-core'
   testImplementation 'org.apache.avro:avro'
   testImplementation 'org.awaitility:awaitility'

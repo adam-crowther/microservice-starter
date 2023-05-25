@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.order.service.extension;
+package com.acroteq.ticketing.test.extension;
 
 import static org.testcontainers.containers.output.OutputFrame.OutputType.STDERR;
 import static org.testcontainers.containers.output.OutputFrame.OutputType.STDOUT;

@@ -1,7 +1,6 @@
-package com.acroteq.ticketing.order.service.extension;
+package com.acroteq.ticketing.test.extension;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
-import static org.testcontainers.containers.PostgreSQLContainer.POSTGRESQL_PORT;
 import static org.testcontainers.containers.output.OutputFrame.OutputType.STDERR;
 import static org.testcontainers.containers.output.OutputFrame.OutputType.STDOUT;
 
@@ -42,7 +41,7 @@ public class PostgreSqlContainerExtension implements BeforeAllCallback, AfterAll
                                                                                             .withPassword(
                                                                                                 POSTGRES_PASSWORD)
                                                                                             .withExposedPorts(
-                                                                                                POSTGRESQL_PORT)
+                                                                                                PostgreSQLContainer.POSTGRESQL_PORT)
                                                                                             .withLogConsumer(this::logOutputFrame)
                                                                                             .withInitScript(
                                                                                                 "init-schema.sql")
