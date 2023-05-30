@@ -48,7 +48,6 @@ intended to serve as an example, and a starting point for a green-field project.
 [![Codenarc][Codenarc-shield]][Codenarc-url]
 [![GradleLint][GradleLint-shield]][GradleLint-url]
 
-
 ## Topology
 
 [![Topology.drawio_thumb.png](docs/draw.io/Topology.drawio_thumb.png)](docs/draw.io/Topology.drawio.png)
@@ -57,11 +56,11 @@ intended to serve as an example, and a starting point for a green-field project.
 Each microservice has a PostgreSQL Schema for data storage, and the 3 microservices with REST APIs use KeyCloak for
 authentication.
 
-We provide Swagger-UI interfaces for the 3 REST APIs, which run in their own containers and delegate to the REST APIs.
+Swagger-UI interfaces are provided for the 3 REST APIs. These run in their own containers and delegate to the REST APIs.
 
 ## Use Case
 
-It is very simple. 5 microservices are implemented:
+Very simple, 5 microservices are implemented:
 
 |                          |                              |
 |--------------------------|------------------------------|
@@ -111,8 +110,6 @@ See the following documentation for more information:
 - [SECURITY.md](docs/SECURITY.md)
 - [TESTING.md](docs/TESTING.md)
 - [BUILD.md](docs/BUILD.md)
-
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
