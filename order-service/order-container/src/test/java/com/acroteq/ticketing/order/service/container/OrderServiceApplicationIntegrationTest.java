@@ -8,8 +8,10 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 import com.acroteq.ticketing.kafka.airline.avro.model.AirlineEventMessage;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalApprovedResponseMessage;
+import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalApprovedResponseMessageProducer;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalRequestMessage;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentPaidResponseMessage;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentPaidResponseMessageProducer;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentRequestMessage;
 import com.acroteq.ticketing.order.service.client.api.OrdersApi;
 import com.acroteq.ticketing.order.service.client.model.CreateOrderCommand;
@@ -19,8 +21,6 @@ import com.acroteq.ticketing.order.service.client.model.OrderStatus;
 import com.acroteq.ticketing.order.service.config.IntegrationTestConfiguration;
 import com.acroteq.ticketing.order.service.data.MasterDataFixture;
 import com.acroteq.ticketing.order.service.data.TestDataGenerator;
-import com.acroteq.ticketing.order.service.producer.AirlineApprovalApprovedResponseMessageProducer;
-import com.acroteq.ticketing.order.service.producer.PaymentPaidResponseMessageProducer;
 import com.acroteq.ticketing.test.extension.KafkaContainerExtension;
 import com.acroteq.ticketing.test.extension.PostgreSqlContainerExtension;
 import com.acroteq.ticketing.test.kafka.TestKafkaConsumer;
@@ -38,6 +38,15 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.UUID;
 import java.util.function.Predicate;
+
+
+/*
+    export KAFKA_ADVERTISED_LISTENERS=LOCAL_PLAINTEXT://localhost:60347,
+                                      LOCAL_SSL://localhost:60348,
+                                      PLAINTEXT://kafka84572:19092,
+                                      SSL://kafka84572:19093,
+                                      BROKER://kafka84572:9090
+ */
 
 // This is an integration test that exercises many interfaces.  It is always going to have many imports.
 @SuppressWarnings("PMD.ExcessiveImports")

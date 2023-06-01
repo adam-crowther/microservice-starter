@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1683556267329-1
+      id: 1685801893039-1
       author: micro (generated)
       changes:
         - createTable:
@@ -39,7 +39,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: airlines
   - changeSet:
-      id: 1683556267329-2
+      id: 1685801893039-2
       author: micro (generated)
       changes:
         - createTable:
@@ -93,7 +93,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: flights
   - changeSet:
-      id: 1683556267329-3
+      id: 1685801893039-3
       author: micro (generated)
       changes:
         - createTable:
@@ -103,7 +103,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: order_approvalPK
+                    primaryKeyName: order_approvalsPK
                   name: id
                   type: BIGINT
               - column:
@@ -147,22 +147,22 @@ databaseChangeLog:
                     nullable: false
                   name: airline_id
                   type: BIGINT
-            tableName: order_approval
+            tableName: order_approvals
   - changeSet:
-      id: 1683556267329-4
+      id: 1685801893039-4
       author: micro (generated)
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: airline_id
-            baseTableName: order_approval
-            constraintName: FKhg0onp3q1eavwcqrh7y435kqq
+            baseTableName: order_approvals
+            constraintName: FKd2l6lpk3hs7kcn3qqoenrnu5q
             deferrable: false
             initiallyDeferred: false
             referencedColumnNames: id
             referencedTableName: airlines
             validate: true
   - changeSet:
-      id: 1683556267329-5
+      id: 1685801893039-5
       author: micro (generated)
       changes:
         - addForeignKeyConstraint:

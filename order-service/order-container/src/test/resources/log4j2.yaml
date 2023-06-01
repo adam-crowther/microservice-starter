@@ -1,0 +1,46 @@
+Configuration:
+  name: E2E Tests with Colours
+  Appenders:
+    Console:
+      name: Console_Appender
+      target: SYSTEM_OUT
+      PatternLayout:
+        MarkerPatternSelector:
+          defaultPattern: "[%d{yyyy-MM-dd HH:mm:ss.SSS}] %-5p [%-20.20t] %-40.40c{1.} : %m%n%ex"
+          PatternMatch:
+            - key: KAFKA
+              pattern: "%style{%msg}{BG_#312108}"
+            - key: SCHEMA_REGISTRY
+              pattern: "%style{%msg}{BG_#3d0000}"
+            - key: POSTGRE_SQL
+              pattern: "%style{%msg}{BG_#000033}"
+            - key: KEYCLOAK
+              pattern: "%style{%msg}{BG_#333333}"
+            - key: CUSTOMER_MDM
+              pattern: "%style{%msg}{BG_#330033}"
+            - key: AIRLINE_MDM
+              pattern: "%style{%msg}{BG_#003300}"
+            - key: AIRLINE_APPROVAL
+              pattern: "%style{%msg}{BG_#330066}"
+            - key: ORDER_SERVICE
+              pattern: "%style{%msg}{BG_#330000}"
+            - key: PAYMENT_SERVICE
+              pattern: "%style{%msg}{BG_#333322}"
+
+  Loggers:
+    Root:
+      level: info
+      additivity: false
+      AppenderRef:
+        - ref: Console_Appender
+    Logger:
+      - name: com.acroteq.ticketing
+        level: debug
+      - name: org.springframework.web
+        level: debug
+      - name: org.springframework.security
+        level: info
+      - name: org.springframework.kafka
+        level: info
+      - name: org.apache.kafka
+        level: warn

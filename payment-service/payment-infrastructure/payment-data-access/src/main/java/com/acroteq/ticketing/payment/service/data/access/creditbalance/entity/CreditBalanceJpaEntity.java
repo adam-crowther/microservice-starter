@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor(access = PROTECTED)
-@Table(name = "credit_balance")
+@Table(name = "credit_balances")
 @Entity
 public class CreditBalanceJpaEntity extends PrimaryJpaEntity {
 

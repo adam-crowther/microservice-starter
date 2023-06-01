@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 @Getter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor(access = PROTECTED)
-@Table(name = "customer")
+@Table(name = "customers")
 @Entity
 public class CustomerJpaEntity extends ReplicatedJpaEntity {
 

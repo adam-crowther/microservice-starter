@@ -19,6 +19,11 @@ checkstyleTest {
   ignoreFailures = true
 }
 
+checkstyleTestFixtures {
+  configFile = file("${rootDir}/config/checkstyle_test.xml")
+  ignoreFailures = true
+}
+
 tasks.withType(Checkstyle).configureEach {
   outputs.upToDateWhen { false }
   exclude '**/presentation/api/**'

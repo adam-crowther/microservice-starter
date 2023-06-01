@@ -72,7 +72,7 @@ services:
       SCHEMA_REGISTRY_KAFKASTORE_TOPIC_REPLICATION_FACTOR: 1
       SCHEMA_REGISTRY_DEBUG: 'true'
     volumes:
-      - "./kafka/certs/schema-registry:/var/private/ssl"
+      - "./certs/schema-registry:/var/private/ssl"
     networks:
       - app-tier
 
@@ -102,7 +102,7 @@ services:
       KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: ''
     volumes:
       - "./build/kafka/broker:/var/lib/kafka/mount"
-      - "./kafka/certs/kafka-broker:/etc/kafka/secrets/certs"
+      - "./certs/kafka-broker:/etc/kafka/secrets/certs"
       - "./kafka/create_topics.sh:/home/appuser/create_topics.sh"
     networks:
       - app-tier

@@ -69,6 +69,8 @@ findProject(':customer-mdm:customer-mdm-presentation:customer-mdm-rest-controlle
 include 'customer-mdm:customer-mdm-presentation:customer-mdm-swagger'
 findProject(':customer-mdm:customer-mdm-presentation:customer-mdm-swagger')?.name = 'customer-mdm-swagger'
 
+include 'e2e-testing'
+
 include 'order-service:order-container'
 findProject(':order-service:order-container')?.name = 'order-container'
 include 'order-service:order-domain:order-domain-core'
@@ -96,3 +98,4 @@ include 'payment-service:payment-infrastructure:payment-data-access'
 findProject(':payment-service:payment-infrastructure:payment-data-access')?.name = 'payment-data-access'
 include 'payment-service:payment-infrastructure:payment-messaging'
 findProject(':payment-service:payment-infrastructure:payment-messaging')?.name = 'payment-messaging'
+

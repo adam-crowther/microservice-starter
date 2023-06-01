@@ -24,10 +24,11 @@ security:
     principal-claim-name: "preferred_username"
 
 spring:
+  config:
+    import: optional:file:.env[.properties]
   main:
     banner-mode: off
   jpa:
-    # defer-datasource-initialization: true
     open-in-view: false
     show-sql: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -36,9 +37,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=orders&binaryTransfer=true&reWriteBatchedInserts=true&stringType=unspecified
-    username: postgres
-    password: ""
+    url: jdbc:postgresql://${DATASOURCE_HOST}:${DATASOURCE_PORT}/${DATASOURCE_DATABASE}?currentSchema=orders&binaryTransfer=true&reWriteBatchedInserts=true&stringType=unspecified
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
   sql:
     init:
@@ -57,19 +58,19 @@ spring:
             scope: openid
         provider:
           keycloak:
-            issuer-uri: http://localhost:8080/realms/acroteq
+            issuer-uri: http://${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/realms/acroteq
             user-name-attribute: preferred_username
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8080/realms/acroteq
+          issuer-uri: http://${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/realms/acroteq
   kafka:
-    bootstrap-servers: localhost:19093
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
     security:
       protocol: "SSL"
     ssl:
-      key-store-location: file:infrastructure/docker-compose/kafka/certs/order-service/order-service.keystore.jks
+      key-store-location: classpath:/certs/order-service.keystore.jks
       key-store-password: acroteq
-      trust-store-location: file:infrastructure/docker-compose/kafka/certs/order-service/order-service.truststore.jks
+      trust-store-location: classpath:/certs/order-service.truststore.jks
       trust-store-password: acroteq
     producer:
       acks: all
@@ -80,7 +81,7 @@ spring:
       retries: 5
       properties:
         linger.ms: 5
-        schema.registry.url: http://localhost:8081
+        schema.registry.url: ${SCHEMA_REGISTRY_URL}
         ssl.endpoint.identification.algorithm: ""
     listener:
       type: batch
@@ -94,7 +95,7 @@ spring:
       heartbeat-interval: 3000
       max-poll-records: 500
       properties:
-        schema.registry.url: http://localhost:8081
+        schema.registry.url: ${SCHEMA_REGISTRY_URL}
         value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
         specific.avro.reader: true
         session.timeout.ms: 60000

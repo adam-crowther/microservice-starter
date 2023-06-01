@@ -1,6 +1,7 @@
 plugins {
   id 'java-conventions'
   id 'spring-conventions'
+  id 'testcontainers-conventions'
 }
 
 dependencies {
@@ -16,26 +17,40 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot'
   implementation 'org.springframework:spring-context'
 
-  testImplementation project(":common:common-helper")
-  testImplementation project(":common:common-kafka:kafka-libs")
   testImplementation project(":common:common-kafka:kafka-model")
-  testImplementation project(":common:common-test")
   testImplementation project(":order-service:order-presentation:order-api-spec")
+  testImplementation testFixtures(project(":common:common-kafka:kafka-model"))
+  testImplementation testFixtures(project(":common:common-test"))
 
   testImplementation 'io.projectreactor:reactor-core'
   testImplementation 'org.apache.avro:avro'
-  testImplementation 'org.awaitility:awaitility'
   testImplementation 'org.projectlombok:lombok'
   testImplementation 'org.springframework.boot:spring-boot-test'
-  testImplementation 'org.springframework.data:spring-data-jpa'
-  testImplementation 'org.springframework.kafka:spring-kafka'
-  testImplementation 'org.springframework.security:spring-security-config'
-  testImplementation 'org.springframework.security:spring-security-web'
   testImplementation 'org.springframework:spring-test'
-  testImplementation 'com.github.spotbugs:spotbugs-annotations'
-
-  testCompileOnly 'org.springframework.data:spring-data-commons'
-  testCompileOnly 'org.springframework:spring-webflux'
+  testImplementation 'org.springframework:spring-webflux'
 
   testAnnotationProcessor 'org.projectlombok:lombok'
+
+  testRuntimeOnly 'org.postgresql:postgresql'
+  testRuntimeOnly 'org.apache.logging.log4j:log4j-core'
+  testRuntimeOnly 'org.apache.logging.log4j:log4j-layout-template-json'
+  testRuntimeOnly 'org.apache.logging.log4j:log4j-slf4j2-impl'
+  
+  testFixturesImplementation project(":common:common-helper")
+  testFixturesImplementation project(":order-service:order-infrastructure:order-data-access")
+  testFixturesImplementation project(":common:common-kafka:kafka-model")
+  testFixturesImplementation project(":order-service:order-presentation:order-api-spec")
+  testFixturesImplementation testFixtures(project(":common:common-test"))
+  testFixturesImplementation testFixtures(project(":order-service:order-presentation:order-api-spec"))
+
+  testFixturesImplementation 'org.apache.avro:avro'
+  testFixturesImplementation 'org.awaitility:awaitility'
+  testFixturesImplementation 'org.projectlombok:lombok'
+  testFixturesImplementation 'org.springframework.boot:spring-boot-test'
+  testFixturesImplementation 'org.springframework.data:spring-data-jpa'
+  testFixturesImplementation 'org.springframework.security:spring-security-config'
+  testFixturesImplementation 'org.springframework.security:spring-security-web'
+  testFixturesImplementation 'org.springframework:spring-context'
+
+  testFixturesAnnotationProcessor 'org.projectlombok:lombok'
 }

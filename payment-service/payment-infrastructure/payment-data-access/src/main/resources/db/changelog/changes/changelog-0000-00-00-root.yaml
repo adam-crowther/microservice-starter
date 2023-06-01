@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1684703035302-1
+      id: 1685801453822-1
       author: micro (generated)
       changes:
         - createTable:
@@ -10,7 +10,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: credit_balancePK
+                    primaryKeyName: credit_balancesPK
                   name: id
                   type: BIGINT
               - column:
@@ -49,9 +49,9 @@ databaseChangeLog:
                     nullable: false
                   name: customer_id
                   type: BIGINT
-            tableName: credit_balance
+            tableName: credit_balances
   - changeSet:
-      id: 1684703035302-2
+      id: 1685801453822-2
       author: micro (generated)
       changes:
         - createTable:
@@ -61,7 +61,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: credit_changePK
+                    primaryKeyName: credit_changesPK
                   name: id
                   type: BIGINT
               - column:
@@ -110,9 +110,9 @@ databaseChangeLog:
                     nullable: false
                   name: customer_id
                   type: BIGINT
-            tableName: credit_change
+            tableName: credit_changes
   - changeSet:
-      id: 1684703035302-3
+      id: 1685801453822-3
       author: micro (generated)
       changes:
         - createTable:
@@ -121,7 +121,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     primaryKey: true
-                    primaryKeyName: customerPK
+                    primaryKeyName: customersPK
                   name: id
                   type: BIGINT
               - column:
@@ -149,9 +149,9 @@ databaseChangeLog:
                     nullable: false
                   name: credit_limit_currency_id
                   type: VARCHAR(255)
-            tableName: customer
+            tableName: customers
   - changeSet:
-      id: 1684703035302-4
+      id: 1685801453822-4
       author: micro (generated)
       changes:
         - createTable:
@@ -217,50 +217,50 @@ databaseChangeLog:
                   type: BIGINT
             tableName: payments
   - changeSet:
-      id: 1684703035302-5
+      id: 1685801453822-5
       author: micro (generated)
       changes:
         - addUniqueConstraint:
             columnNames: customer_id
-            constraintName: UK_gvfnnxglrfxw9fep7c05fs89a
-            tableName: credit_balance
+            constraintName: UK_go629wso7u7s8spwdpimr9rkr
+            tableName: credit_balances
   - changeSet:
-      id: 1684703035302-6
-      author: micro (generated)
-      changes:
-        - addForeignKeyConstraint:
-            baseColumnNames: customer_id
-            baseTableName: credit_balance
-            constraintName: FKkrf9ikn8yp1a2ubsppngiik81
-            deferrable: false
-            initiallyDeferred: false
-            referencedColumnNames: id
-            referencedTableName: customer
-            validate: true
-  - changeSet:
-      id: 1684703035302-7
+      id: 1685801453822-6
       author: micro (generated)
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: customer_id
             baseTableName: payments
-            constraintName: FKsdjuc6afoefcj8l2rs6smc5m2
+            constraintName: FK45dp0030s8e3myd8n6ky4e79g
             deferrable: false
             initiallyDeferred: false
             referencedColumnNames: id
-            referencedTableName: customer
+            referencedTableName: customers
             validate: true
   - changeSet:
-      id: 1684703035302-8
+      id: 1685801453822-7
       author: micro (generated)
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: customer_id
-            baseTableName: credit_change
-            constraintName: FKtm9g1n3tu3j4v7ey803uackad
+            baseTableName: credit_changes
+            constraintName: FKb8h58sx1m3as3krk0hd3l2k06
             deferrable: false
             initiallyDeferred: false
             referencedColumnNames: id
-            referencedTableName: customer
+            referencedTableName: customers
+            validate: true
+  - changeSet:
+      id: 1685801453822-8
+      author: micro (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: customer_id
+            baseTableName: credit_balances
+            constraintName: FKtijd5rj2past4urdm86ekk621
+            deferrable: false
+            initiallyDeferred: false
+            referencedColumnNames: id
+            referencedTableName: customers
             validate: true
 

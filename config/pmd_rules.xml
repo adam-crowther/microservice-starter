@@ -67,6 +67,12 @@
         </properties>
     </rule>
 
+    <rule ref="category/java/codestyle.xml/UseUnderscoresInNumericLiterals">
+        <properties>
+            <property name="acceptableDecimalLength" value="5"/>
+        </properties>
+    </rule>
+
     <rule ref="category/java/design.xml">
         <!-- Too many false positives for builder, fluent interface and factory pattern -->
         <exclude name="LawOfDemeter"/>

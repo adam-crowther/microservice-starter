@@ -21,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor(access = PROTECTED)
-@Table(name = "order_approval")
+@Table(name = "order_approvals")
 @Entity
 public class OrderApprovalJpaEntity extends PrimaryJpaEntity {
 

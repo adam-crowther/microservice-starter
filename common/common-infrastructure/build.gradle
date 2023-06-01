@@ -28,4 +28,11 @@ dependencies {
   testImplementation 'org.springframework:spring-test'
 
   testAnnotationProcessor 'org.projectlombok:lombok'
+
+  testFixturesImplementation 'com.github.spotbugs:spotbugs-annotations'
+  testFixturesImplementation 'org.projectlombok:lombok'
+  testFixturesImplementation 'org.slf4j:slf4j-api'
+
+  testFixturesAnnotationProcessor 'org.projectlombok:lombok'
+
 }
