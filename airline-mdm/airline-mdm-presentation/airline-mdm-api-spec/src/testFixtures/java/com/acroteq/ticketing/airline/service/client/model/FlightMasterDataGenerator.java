@@ -11,13 +11,22 @@ public class FlightMasterDataGenerator {
   private final RandomDoubleGenerator randomDoubleGenerator;
 
   public CreateFlightCommand getFlight() {
-    return getFlight(true);
+    final Double price = randomDoubleGenerator.getBetween(100, 250);
+    return getFlight(true, price);
+  }
+
+  public CreateFlightCommand getFlight(final Double priceAmount) {
+    return getFlight(true, priceAmount);
   }
 
   public CreateFlightCommand getFlight(final boolean available) {
+    final Double price = randomDoubleGenerator.getBetween(100, 250);
+    return getFlight(available, price);
+  }
+
+  public CreateFlightCommand getFlight(final boolean available, final Double priceAmount) {
     final String flightNumber = randomStringGenerator.getRandomString();
     final String priceCurrencyId = "CHF";
-    final Double priceAmount = randomDoubleGenerator.getBetween(100, 250);
 
     final CashValueCommand price = CashValueCommand.builder()
                                                    .amount(priceAmount)

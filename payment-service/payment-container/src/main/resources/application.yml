@@ -74,6 +74,7 @@ spring:
       properties:
         linger.ms: 5
         schema.registry.url: ${SCHEMA_REGISTRY_URL}
+        value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy
         ssl.endpoint.identification.algorithm: ""
     listener:
       type: batch

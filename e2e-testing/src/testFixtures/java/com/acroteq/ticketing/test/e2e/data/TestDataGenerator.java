@@ -9,7 +9,6 @@ import com.acroteq.ticketing.order.service.client.model.CreateOrderCommand;
 import com.acroteq.ticketing.order.service.client.model.CreateOrderCommandGenerator;
 import com.acroteq.ticketing.test.data.RandomDoubleGenerator;
 import com.acroteq.ticketing.test.data.RandomHolder;
-import com.acroteq.ticketing.test.data.RandomInstantGenerator;
 import com.acroteq.ticketing.test.data.RandomIntegerGenerator;
 import com.acroteq.ticketing.test.data.RandomStringGenerator;
 
@@ -20,12 +19,11 @@ public class TestDataGenerator {
   private final RandomIntegerGenerator randomIntegerGenerator = new RandomIntegerGenerator(randomHolder);
   private final RandomDoubleGenerator randomDoubleGenerator = new RandomDoubleGenerator(randomHolder);
   private final RandomStringGenerator randomStringGenerator = new RandomStringGenerator(randomIntegerGenerator);
-  private final RandomInstantGenerator randomInstantGenerator = new RandomInstantGenerator(randomIntegerGenerator);
 
   private final FlightMasterDataGenerator flightGenerator = new FlightMasterDataGenerator(randomStringGenerator,
                                                                                           randomDoubleGenerator);
   private final AirlineMasterDataGenerator airlineGenerator = new AirlineMasterDataGenerator(randomStringGenerator,
-                                                                                             randomInstantGenerator,
+                                                                                             randomDoubleGenerator,
                                                                                              flightGenerator);
   private final CustomerMasterDataGenerator customerGenerator = new CustomerMasterDataGenerator(randomStringGenerator,
                                                                                                 randomDoubleGenerator);
@@ -36,18 +34,30 @@ public class TestDataGenerator {
     return airlineGenerator.getAirlineEventMessage();
   }
 
-  public CreateAirlineCommand getCreateAirlineCommand(final boolean active, final int flightCount) {
-    return airlineGenerator.getAirlineEventMessage(active, flightCount);
+  public CreateAirlineCommand getCreateAirlineCommand(final Double flightPrice) {
+    return airlineGenerator.getAirlineEventMessage(flightPrice);
   }
+
+  public CreateAirlineCommand getCreateAirlineCommand(final boolean active,
+                                                      final int flightCount,
+                                                      final Double flightPrice) {
+    return airlineGenerator.getAirlineEventMessage(active, flightCount, flightPrice);
+  }
+
+  public CreateCustomerCommand getCreateCustomerCommand(final Double creditLimit) {
+    return customerGenerator.getCreateCustomerCommand(creditLimit);
+  }
+
 
   public CreateCustomerCommand getCreateCustomerCommand() {
     return customerGenerator.getCreateCustomerCommand();
   }
 
-  public CreateOrderCommand getCreateOrderCommand(final long customerId,
-                                                  final long airlineId,
-                                                  final long flightId,
+  public CreateOrderCommand getCreateOrderCommand(final MasterData masterData,
                                                   final int quantity) {
+    final Long customerId = masterData.getCustomerId();
+    final Long airlineId = masterData.getAirlineId();
+    final Long flightId = masterData.getFlightId();
     return orderCommandGenerator.getCreateOrderCommand(customerId, airlineId, flightId, quantity);
   }
 }

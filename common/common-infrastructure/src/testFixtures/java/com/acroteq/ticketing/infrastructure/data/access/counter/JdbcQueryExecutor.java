@@ -21,9 +21,18 @@ public class JdbcQueryExecutor implements AutoCloseable {
     this.connection = connection;
   }
 
+  int getCount(final String tableName) {
+    return count(tableName);
+  }
+
   void waitForCount(final String tableName, final int expectedCount) {
     Awaitility.await()
               .until(() -> count(tableName) == expectedCount);
+  }
+
+  void waitForEntityWithId(final String tableName, final Long id) {
+    Awaitility.await()
+              .until(() -> exists(tableName, id));
   }
 
   @SuppressFBWarnings("SQL_INJECTION_JDBC")
@@ -46,6 +55,29 @@ public class JdbcQueryExecutor implements AutoCloseable {
 
   private String createCountQuery(final String tableName) {
     return String.format("SELECT count(*) AS %s FROM %s", COUNT_COLUMN, tableName);
+  }
+
+  @SuppressFBWarnings("SQL_INJECTION_JDBC")
+  @SneakyThrows
+  private boolean exists(final String tableName, final Long id) {
+    final String query = createExistsQuery(tableName, id);
+    final boolean exists;
+    try (Statement statement = connection.createStatement();
+         ResultSet result = statement.executeQuery(query)) {
+      if (result.next()) {
+        final int count = result.getInt(COUNT_COLUMN);
+        exists = count > 0;
+        log.debug("Row count for table {}: {}", tableName, count);
+      } else {
+        exists = false;
+      }
+    }
+
+    return exists;
+  }
+
+  private String createExistsQuery(final String tableName, final Long id) {
+    return String.format("SELECT count(*) AS %s FROM %s where id = %d", COUNT_COLUMN, tableName, id);
   }
 
   @Override

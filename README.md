@@ -91,10 +91,6 @@ I have tried to use the latest available versions of the component frameworks an
 The project is not fully fleshed out with modelling, business logic and tests - it's intended as a showcase, as a
 reference, and as a template for new projects.
 
-## TODO
-
-- End-to-end tests
-
 ## Usage
 
 See [USAGE.md](docs/USAGE.md) for instructions on how to run the microservices.

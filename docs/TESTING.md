@@ -35,7 +35,8 @@ Testing
       (these should be covered by integration tests)
 - Everything else is **fully covered** by Unit tests!
 
-> See Spock unit tests implemented in the common submodule.
+> See Spock unit test examples implemented in the `common`
+> submodule: [com.acroteq.ticketing.domain.**.*.groovy](../common/common-domain/src/test/groovy/com/acroteq/ticketing/domain)
 
 ## Behavior-Driven Development
 
@@ -52,7 +53,9 @@ Testing
 - Step definitions are implemented on-demand by Java Devs.
 - Scenarios and Features are implemented by BAs and Devs working together (!)
 
-> See the Cucumber tests in the payment-domain-core submodule.
+> See the Cucumber test examples in the `payment-domain-core`
+>
+submodule: [payment-domain-core](../payment-service/payment-domain/payment-domain-core/src/test/resources/payment-domain-core)
 
 E.g. This is a working cucumber test:
 
@@ -90,7 +93,9 @@ Feature: Payment Validation
     - [Test Containers](https://www.testcontainers.org/)
 - Mock all external system dependencies, including REST client, messaging and database
 
-> See the Integration tests in the order-container submodule.
+> See the Integration test examples in the `order-container`
+>
+submodule: [OrderServiceApplicationIntegrationTest.java](../order-service/order-container/src/test/java/com/acroteq/ticketing/order/service/container/OrderServiceApplicationIntegrationTest.java)
 
 ## E2E Testing
 
@@ -100,6 +105,10 @@ Feature: Payment Validation
 - Uses a curated database and a set of instrumented data constellations
 - Smoke-tests only, no full coverage of use-cases or edge-cases
 - Best case: includes the UI, driven by an automated testing tool like [Selenium](https://www.selenium.dev/)
+
+> See the E2E test examples in the `e2e-testing`
+>
+submodule: [OrderSagaFlowTest.java](../e2e-testing/src/test/java/com/acroteq/ticketing/test/e2e/OrderSagaFlowTest.java)
 
 ## Performance Testing
 
@@ -171,10 +180,10 @@ Feature: Payment Validation
 #### Availability and Resilience Testing
 
 - What happens when a pod dies or is killed under load?
-- SLA should define the maximum acceptable impact on the user experience.  E.g.  Maximum downtime, session loss, etc.
+- SLA should define the maximum acceptable impact on the user experience. E.g. Maximum downtime, session loss, etc.
 - Run a standard "Load" test and when the response times have stabilised, kill a pod.
 - The system should recognise the failure and react by
-  - redistributing the load to the remaining pods.
-  - starting up a new pod to replace the one that failed.
+    - redistributing the load to the remaining pods.
+    - starting up a new pod to replace the one that failed.
 - Run this test for each microservice, as well as for each infrastructure container.
 - It should not be possible to force a catastrophic system shutdown.

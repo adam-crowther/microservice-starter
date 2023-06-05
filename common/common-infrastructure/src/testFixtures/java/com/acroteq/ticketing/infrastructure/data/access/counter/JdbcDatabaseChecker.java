@@ -8,7 +8,7 @@ public class JdbcDatabaseChecker implements AutoCloseable {
   private static final String AIRLINES_TABLE = "airlines";
   private static final String ORDERS_TABLE = "orders";
   private static final String PAYMENTS_TABLE = "payments";
-  
+
   private final JdbcQueryExecutor airlineMdmQueryExecutor;
   private final JdbcQueryExecutor customerMdmQueryExecutor;
   private final JdbcQueryExecutor airlineApprovalQueryExecutor;
@@ -31,28 +31,32 @@ public class JdbcDatabaseChecker implements AutoCloseable {
     this.paymentServiceQueryExecutor = paymentServiceQueryExecutor;
   }
 
-  public void inCustomerMdmWaitForCustomerCount(final int count) {
-    customerMdmQueryExecutor.waitForCount(CUSTOMERS_TABLE, count);
+  public void inCustomerMdmWaitForCustomer(final Long id) {
+    customerMdmQueryExecutor.waitForEntityWithId(CUSTOMERS_TABLE, id);
   }
 
-  public void inOrderServiceWaitForCustomerCount(final int count) {
-    orderServiceQueryExecutor.waitForCount(CUSTOMERS_TABLE, count);
+  public void inOrderServiceWaitForCustomer(final Long id) {
+    orderServiceQueryExecutor.waitForEntityWithId(CUSTOMERS_TABLE, id);
   }
 
-  public void inPaymentServiceWaitForCustomerCount(final int count) {
-    paymentServiceQueryExecutor.waitForCount(CUSTOMERS_TABLE, count);
+  public void inPaymentServiceWaitForCustomer(final Long id) {
+    paymentServiceQueryExecutor.waitForEntityWithId(CUSTOMERS_TABLE, id);
   }
 
-  public void inAirlineMdmWaitForAirlineCount(final int count) {
-    airlineMdmQueryExecutor.waitForCount(AIRLINES_TABLE, count);
+  public void inAirlineMdmWaitForAirline(final Long id) {
+    airlineMdmQueryExecutor.waitForEntityWithId(AIRLINES_TABLE, id);
   }
 
-  public void inAirlineApprovalWaitForAirlineCount(final int count) {
-    airlineApprovalQueryExecutor.waitForCount(AIRLINES_TABLE, count);
+  public void inAirlineApprovalWaitForAirline(final Long id) {
+    airlineApprovalQueryExecutor.waitForEntityWithId(AIRLINES_TABLE, id);
   }
 
-  public void inOrderServiceWaitForAirlineCount(final int count) {
-    orderServiceQueryExecutor.waitForCount(AIRLINES_TABLE, count);
+  public int inOrderServiceGetOrderCount() {
+    return orderServiceQueryExecutor.getCount(ORDERS_TABLE);
+  }
+
+  public void inOrderServiceWaitForAirline(final Long id) {
+    orderServiceQueryExecutor.waitForEntityWithId(AIRLINES_TABLE, id);
   }
 
   public void inOrderServiceWaitForOrdersCount(final int count) {

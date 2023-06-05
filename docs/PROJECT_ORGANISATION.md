@@ -152,6 +152,15 @@
 
 - Integrates all the above submodules together in a `@SpringBootApplication`.
 
+## E2E Tests
+
+The End-to-End Tests run all infrastructure containers (PostgresSQL, Kafka, Schema Registry and Keycloak) and all
+application microservice containers (Airline-MDM, Customer-MDM, Airline-Approval, Order-Service and Payment-Service)
+using Testcontainers, and exercise the full ecosystem working together by calling the external APIs as they will be
+called in production.
+
+E2E tests are implemented in a submodule called `e2e-testing`.
+
 ## Submodules
 
 The project is structured along the lines of the definitions given above:

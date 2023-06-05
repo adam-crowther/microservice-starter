@@ -4,6 +4,7 @@ import static com.acroteq.ticketing.domain.validation.ValidationResult.combine;
 import static com.acroteq.ticketing.domain.validation.ValidationResult.pass;
 import static com.acroteq.ticketing.domain.valueobject.CashValue.ZERO;
 import static com.acroteq.ticketing.domain.valueobject.OrderStatus.APPROVED;
+import static com.acroteq.ticketing.domain.valueobject.OrderStatus.CANCELLED;
 import static com.acroteq.ticketing.domain.valueobject.OrderStatus.CANCELLING;
 import static com.acroteq.ticketing.domain.valueobject.OrderStatus.PAID;
 import static com.acroteq.ticketing.domain.valueobject.OrderStatus.PENDING;
@@ -84,9 +85,9 @@ public class Order extends AggregateRoot<OrderId> {
   }
 
   public Order cancel(final ValidationResult cancelResult) {
-    checkOrderState("cancel", PENDING, CANCELLING);
+    checkOrderState("cancel", PENDING, CANCELLED);
     final ValidationResult combinedResult = combine(result, cancelResult);
-    return toBuilder().orderStatus(CANCELLING)
+    return toBuilder().orderStatus(CANCELLED)
                       .result(combinedResult)
                       .build();
   }
