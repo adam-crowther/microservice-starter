@@ -6,6 +6,8 @@ import dasniko.testcontainers.keycloak.KeycloakContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
+import java.util.List;
+
 public final class PaymentServiceContainer extends AbstractTicketingContainer<PaymentServiceContainer> {
 
   private static final String PAYMENT_SERVICE_IMAGE_NAME = "adamcc/ticketing/payment-container:0.1.0";
@@ -14,11 +16,11 @@ public final class PaymentServiceContainer extends AbstractTicketingContainer<Pa
   private static final String CONTAINER_NAME = "PaymentService";
 
   public static PaymentServiceContainer startPaymentServiceContainer(final PostgreSQLContainer<?> postgreSqlContainer,
-                                                                     final KafkaSslContainer kafkaContainer,
+                                                                     final List<KafkaSslContainer> kafkaContainers,
                                                                      final SchemaRegistryContainer schemaRegistryContainer,
                                                                      final KeycloakContainer keycloakContainer) {
     final PaymentServiceContainer paymentServiceContainer = new PaymentServiceContainer(postgreSqlContainer,
-                                                                                        kafkaContainer,
+                                                                                        kafkaContainers,
                                                                                         schemaRegistryContainer,
                                                                                         keycloakContainer);
     paymentServiceContainer.start();
@@ -28,12 +30,12 @@ public final class PaymentServiceContainer extends AbstractTicketingContainer<Pa
 
   @SuppressWarnings("resource")
   private PaymentServiceContainer(final PostgreSQLContainer<?> postgreSqlContainer,
-                                  final KafkaSslContainer kafkaContainer,
+                                  final List<KafkaSslContainer> kafkaContainers,
                                   final SchemaRegistryContainer schemaRegistryContainer,
                                   final KeycloakContainer keycloakContainer) {
     super(DockerImageName.parse(PAYMENT_SERVICE_IMAGE_NAME),
           postgreSqlContainer,
-          kafkaContainer,
+          kafkaContainers,
           schemaRegistryContainer,
           keycloakContainer,
           CONTAINER_NAME);

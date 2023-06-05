@@ -6,6 +6,8 @@ import dasniko.testcontainers.keycloak.KeycloakContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
+import java.util.List;
+
 public final class CustomerMdmContainer extends AbstractTicketingContainer<CustomerMdmContainer> {
 
   private static final String CUSTOMER_MDM_IMAGE_NAME = "adamcc/ticketing/customer-mdm-container:0.1.0";
@@ -14,11 +16,11 @@ public final class CustomerMdmContainer extends AbstractTicketingContainer<Custo
   private static final String CONTAINER_NAME = "CustomerMdm";
 
   public static CustomerMdmContainer startCustomerMdmContainer(final PostgreSQLContainer<?> postgreSqlContainer,
-                                                               final KafkaSslContainer kafkaContainer,
+                                                               final List<KafkaSslContainer> kafkaContainers,
                                                                final SchemaRegistryContainer schemaRegistryContainer,
                                                                final KeycloakContainer keycloakContainer) {
     final CustomerMdmContainer customerMdmContainer = new CustomerMdmContainer(postgreSqlContainer,
-                                                                               kafkaContainer,
+                                                                               kafkaContainers,
                                                                                schemaRegistryContainer,
                                                                                keycloakContainer);
     customerMdmContainer.start();
@@ -28,12 +30,12 @@ public final class CustomerMdmContainer extends AbstractTicketingContainer<Custo
 
   @SuppressWarnings("resource")
   private CustomerMdmContainer(final PostgreSQLContainer<?> postgreSqlContainer,
-                               final KafkaSslContainer kafkaContainer,
+                               final List<KafkaSslContainer> kafkaContainers,
                                final SchemaRegistryContainer schemaRegistryContainer,
                                final KeycloakContainer keycloakContainer) {
     super(DockerImageName.parse(CUSTOMER_MDM_IMAGE_NAME),
           postgreSqlContainer,
-          kafkaContainer,
+          kafkaContainers,
           schemaRegistryContainer,
           keycloakContainer,
           CONTAINER_NAME);

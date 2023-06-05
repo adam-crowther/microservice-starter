@@ -1,6 +1,5 @@
 package com.acroteq.ticketing.test.e2e.extension;
 
-import static com.acroteq.ticketing.test.container.KafkaSslContainer.startKafkaSslContainer;
 import static com.acroteq.ticketing.test.container.KeycloakIamContainer.startKeycloakContainer;
 import static com.acroteq.ticketing.test.container.PostgreSqlContainer.startPostgreSqlContainer;
 import static com.acroteq.ticketing.test.container.SchemaRegistryContainer.startSchemaRegistryContainer;
@@ -21,11 +20,12 @@ import com.acroteq.ticketing.test.e2e.container.OrderServiceContainer;
 import com.acroteq.ticketing.test.e2e.container.PaymentServiceContainer;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 public class TestDockerContainers {
 
   private PostgreSqlContainer postgreSqlContainer;
-  private KafkaSslContainer kafkaSslContainer;
   private KeycloakIamContainer keycloakContainer;
   private SchemaRegistryContainer schemaRegistryContainer;
   private CustomerMdmContainer customerMdmContainer;
@@ -34,36 +34,34 @@ public class TestDockerContainers {
   private OrderServiceContainer orderServiceContainer;
   private PaymentServiceContainer paymentServiceContainer;
 
-  void start() {
+  void start(final List<KafkaSslContainer> kafkaContainers) {
     postgreSqlContainer = startPostgreSqlContainer();
-    kafkaSslContainer = startKafkaSslContainer();
     keycloakContainer = startKeycloakContainer();
-    schemaRegistryContainer = startSchemaRegistryContainer(kafkaSslContainer);
+    schemaRegistryContainer = startSchemaRegistryContainer(kafkaContainers);
     customerMdmContainer = startCustomerMdmContainer(postgreSqlContainer,
-                                                     kafkaSslContainer,
+                                                     kafkaContainers,
                                                      schemaRegistryContainer,
                                                      keycloakContainer);
     airlineMdmContainer = startAirlineMdmContainer(postgreSqlContainer,
-                                                   kafkaSslContainer,
+                                                   kafkaContainers,
                                                    schemaRegistryContainer,
                                                    keycloakContainer);
     airlineApprovalContainer = startAirlineApprovalContainer(postgreSqlContainer,
-                                                             kafkaSslContainer,
+                                                             kafkaContainers,
                                                              schemaRegistryContainer,
                                                              keycloakContainer);
     orderServiceContainer = startOrderServiceContainer(postgreSqlContainer,
-                                                       kafkaSslContainer,
+                                                       kafkaContainers,
                                                        schemaRegistryContainer,
                                                        keycloakContainer);
     paymentServiceContainer = startPaymentServiceContainer(postgreSqlContainer,
-                                                           kafkaSslContainer,
+                                                           kafkaContainers,
                                                            schemaRegistryContainer,
                                                            keycloakContainer);
   }
 
   void stop() {
     postgreSqlContainer.stop();
-    kafkaSslContainer.stop();
     keycloakContainer.stop();
     schemaRegistryContainer.stop();
     customerMdmContainer.stop();

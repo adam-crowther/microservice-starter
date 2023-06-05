@@ -6,6 +6,8 @@ import dasniko.testcontainers.keycloak.KeycloakContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
+import java.util.List;
+
 public final class AirlineMdmContainer extends AbstractTicketingContainer<AirlineMdmContainer> {
 
   private static final String AIRLINE_MDM_IMAGE_NAME = "adamcc/ticketing/airline-mdm-container:0.1.0";
@@ -14,11 +16,11 @@ public final class AirlineMdmContainer extends AbstractTicketingContainer<Airlin
   private static final String CONTAINER_NAME = "AirlineMdm";
 
   public static AirlineMdmContainer startAirlineMdmContainer(final PostgreSQLContainer<?> postgreSqlContainer,
-                                                             final KafkaSslContainer kafkaContainer,
+                                                             final List<KafkaSslContainer> kafkaContainers,
                                                              final SchemaRegistryContainer schemaRegistryContainer,
                                                              final KeycloakContainer keycloakContainer) {
     final AirlineMdmContainer airlineMdmContainer = new AirlineMdmContainer(postgreSqlContainer,
-                                                                            kafkaContainer,
+                                                                            kafkaContainers,
                                                                             schemaRegistryContainer,
                                                                             keycloakContainer);
     airlineMdmContainer.start();
@@ -28,12 +30,12 @@ public final class AirlineMdmContainer extends AbstractTicketingContainer<Airlin
 
   @SuppressWarnings("resource")
   private AirlineMdmContainer(final PostgreSQLContainer<?> postgreSqlContainer,
-                              final KafkaSslContainer kafkaContainer,
+                              final List<KafkaSslContainer> kafkaContainers,
                               final SchemaRegistryContainer schemaRegistryContainer,
                               final KeycloakContainer keycloakContainer) {
     super(DockerImageName.parse(AIRLINE_MDM_IMAGE_NAME),
           postgreSqlContainer,
-          kafkaContainer,
+          kafkaContainers,
           schemaRegistryContainer,
           keycloakContainer,
           CONTAINER_NAME);

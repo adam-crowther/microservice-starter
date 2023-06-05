@@ -6,6 +6,8 @@ import dasniko.testcontainers.keycloak.KeycloakContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
+import java.util.List;
+
 public final class AirlineApprovalContainer extends AbstractTicketingContainer<AirlineApprovalContainer> {
 
   private static final String AIRLINE_APPROVAL_IMAGE_NAME = "adamcc/ticketing/airline-approval-container:0.1.0";
@@ -14,11 +16,11 @@ public final class AirlineApprovalContainer extends AbstractTicketingContainer<A
   private static final String CONTAINER_NAME = "AirlineApproval";
 
   public static AirlineApprovalContainer startAirlineApprovalContainer(final PostgreSQLContainer<?> postgreSqlContainer,
-                                                                       final KafkaSslContainer kafkaContainer,
+                                                                       final List<KafkaSslContainer> kafkaContainers,
                                                                        final SchemaRegistryContainer schemaRegistryContainer,
                                                                        final KeycloakContainer keycloakContainer) {
     final AirlineApprovalContainer airlineApprovalContainer = new AirlineApprovalContainer(postgreSqlContainer,
-                                                                                           kafkaContainer,
+                                                                                           kafkaContainers,
                                                                                            schemaRegistryContainer,
                                                                                            keycloakContainer);
     airlineApprovalContainer.start();
@@ -28,12 +30,12 @@ public final class AirlineApprovalContainer extends AbstractTicketingContainer<A
 
   @SuppressWarnings("resource")
   private AirlineApprovalContainer(final PostgreSQLContainer<?> postgreSqlContainer,
-                                   final KafkaSslContainer kafkaContainer,
+                                   final List<KafkaSslContainer> kafkaContainers,
                                    final SchemaRegistryContainer schemaRegistryContainer,
                                    final KeycloakContainer keycloakContainer) {
     super(DockerImageName.parse(AIRLINE_APPROVAL_IMAGE_NAME),
           postgreSqlContainer,
-          kafkaContainer,
+          kafkaContainers,
           schemaRegistryContainer,
           keycloakContainer,
           CONTAINER_NAME);

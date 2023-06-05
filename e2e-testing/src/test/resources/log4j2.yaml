@@ -8,8 +8,14 @@ Configuration:
         MarkerPatternSelector:
           defaultPattern: "[%d{yyyy-MM-dd HH:mm:ss.SSS}] %-5p [%-20.20t] %-40.40c{1.} : %m%n%ex"
           PatternMatch:
-            - key: KAFKA
+            - key: ZOOKEEPER
+              pattern: "%style{%msg}{BG_#310821}"
+            - key: KAFKA1
               pattern: "%style{%msg}{BG_#312108}"
+            - key: KAFKA2
+              pattern: "%style{%msg}{BG_#213108}"
+            - key: KAFKA3
+              pattern: "%style{%msg}{BG_#210831}"
             - key: SCHEMA_REGISTRY
               pattern: "%style{%msg}{BG_#3d0000}"
             - key: POSTGRE_SQL

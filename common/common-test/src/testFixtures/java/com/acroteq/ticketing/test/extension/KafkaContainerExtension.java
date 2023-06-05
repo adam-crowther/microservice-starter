@@ -1,5 +1,7 @@
 package com.acroteq.ticketing.test.extension;
 
+import static java.util.Collections.singletonList;
+
 import com.acroteq.ticketing.test.container.KafkaSslContainer;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.extension.AfterAllCallback;
@@ -11,16 +13,17 @@ import org.junit.jupiter.api.extension.ParameterResolver;
 @Slf4j
 public class KafkaContainerExtension implements BeforeAllCallback, AfterAllCallback, ParameterResolver {
 
-  private final KafkaSslContainer kafka = new KafkaSslContainer();
+  public static final String KAFKA_CONTAINERS = "kafka-containers";
+
+  private final KafkaSslContainer kafka = new KafkaSslContainer(1, 1);
 
   @Override
   public void beforeAll(final ExtensionContext context) {
     kafka.start();
 
-    final int mappedPlaintextBrokerPort = kafka.getMappedExposedPlaintextBrokerPort();
-
-    final String bootstrapServers = String.format("localhost:%d", mappedPlaintextBrokerPort);
-    System.setProperty("KAFKA_BOOTSTRAP_SERVERS", bootstrapServers);
+    final ExtensionContext.Namespace namespace = ExtensionContext.Namespace.create(context.getRequiredTestClass());
+    context.getStore(namespace)
+           .put(KAFKA_CONTAINERS, singletonList(kafka));
   }
 
   @Override

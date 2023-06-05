@@ -1,8 +1,9 @@
 package com.acroteq.ticketing.test.container;
 
+import static com.acroteq.ticketing.test.extension.DockerNetworkSingleton.getNetworkInstance;
+import static com.acroteq.ticketing.test.extension.DockerNetworkSingleton.getNetworkName;
 import static org.testcontainers.containers.BindMode.READ_ONLY;
 
-import com.acroteq.ticketing.test.extension.DockerNetworkSingleton;
 import com.acroteq.ticketing.test.extension.HostNameSetter;
 import com.acroteq.ticketing.test.extension.OutputFrameLogger;
 import com.github.dockerjava.api.command.InspectContainerResponse;
@@ -10,13 +11,15 @@ import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.images.builder.Transferable;
 import org.testcontainers.utility.DockerImageName;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class SchemaRegistryContainer extends GenericContainer<SchemaRegistryContainer> {
 
   private static final String SCHEMA_REGISTRY_IMAGE_NAME = "confluentinc/cp-schema-registry:7.3.2";
 
   private static final String CONTAINER_NAME = "SchemaRegistry";
   private static final String SECURITY_PROTOCOL = "SSL";
-  private static final DockerImageName DEFAULT_IMAGE_NAME = DockerImageName.parse("confluentinc/cp-schema-registry");
   private static final int LISTENER_PORT = 8081;
   private static final String ENV_HOST_NAME = "SCHEMA_REGISTRY_HOST_NAME";
   private static final String ENV_LISTENERS = "SCHEMA_REGISTRY_LISTENERS";
@@ -43,19 +46,15 @@ public class SchemaRegistryContainer extends GenericContainer<SchemaRegistryCont
   @SuppressWarnings({ "OctalInteger", "PMD.AvoidUsingOctalValues" })
   private static final int FILE_MODE_0777 = 0777;
 
-  public static SchemaRegistryContainer startSchemaRegistryContainer(final KafkaSslContainer kafkaContainer) {
-    final DockerImageName dockerImageName = DockerImageName.parse(SCHEMA_REGISTRY_IMAGE_NAME);
-    final SchemaRegistryContainer schemaRegistryContainer = new SchemaRegistryContainer(dockerImageName,
-                                                                                        kafkaContainer);
+  public static SchemaRegistryContainer startSchemaRegistryContainer(final List<KafkaSslContainer> kafkaContainers) {
+    final SchemaRegistryContainer schemaRegistryContainer = new SchemaRegistryContainer(kafkaContainers);
     schemaRegistryContainer.start();
     return schemaRegistryContainer;
   }
 
   @SuppressWarnings("resource")
-  public SchemaRegistryContainer(final DockerImageName dockerImageName, final KafkaSslContainer kafkaContainer) {
-    super(dockerImageName);
-    dockerImageName.assertCompatibleWith(DEFAULT_IMAGE_NAME);
-
+  public SchemaRegistryContainer(final List<KafkaSslContainer> kafkaContainers) {
+    super(DockerImageName.parse(SCHEMA_REGISTRY_IMAGE_NAME));
     withClasspathResourceMapping("certs/schema-registry.keystore.jks",
                                  "/var/private/ssl/schema-registry.keystore.jks",
                                  READ_ONLY);
@@ -66,12 +65,12 @@ public class SchemaRegistryContainer extends GenericContainer<SchemaRegistryCont
     final OutputFrameLogger logConsumer = new OutputFrameLogger(CONTAINER_NAME);
     final HostNameSetter hostNameSetter = new HostNameSetter(CONTAINER_NAME);
 
-    withNetwork(DockerNetworkSingleton.getNetworkInstance());
-    withNetworkAliases(DockerNetworkSingleton.getNetworkName());
+    withNetwork(getNetworkInstance());
+    withNetworkAliases(getNetworkName());
     withLogConsumer(logConsumer);
     withCreateContainerCmdModifier(hostNameSetter);
 
-    final String kafkaBootstrapServer = getKafkaBootstrapServer(kafkaContainer);
+    final String kafkaBootstrapServer = getKafkaBootstrapServers(kafkaContainers);
     withEnv(ENV_BOOTSTRAP_SERVERS, kafkaBootstrapServer);
     withEnv(ENV_SECURITY_PROTOCOL, SECURITY_PROTOCOL);
     withEnv(ENV_SSL_TRUSTSTORE_LOCATION, TRUSTSTORE_LOCATION);
@@ -85,7 +84,7 @@ public class SchemaRegistryContainer extends GenericContainer<SchemaRegistryCont
 
     withExposedPorts(LISTENER_PORT);
 
-    dependsOn(kafkaContainer);
+    kafkaContainers.forEach(this::dependsOn);
 
     withCreateContainerCmdModifier(cmd -> {
       cmd.withEntrypoint("sh");
@@ -111,7 +110,6 @@ public class SchemaRegistryContainer extends GenericContainer<SchemaRegistryCont
                             + LINE_BREAK;
 
     final Transferable file = Transferable.of(commands, FILE_MODE_0777);
-
     copyFileToContainer(file, STARTER_SCRIPT);
   }
 
@@ -125,6 +123,13 @@ public class SchemaRegistryContainer extends GenericContainer<SchemaRegistryCont
 
   private String getListeners(final String hostName) {
     return String.format("http://%s:%d", hostName, LISTENER_PORT);
+  }
+
+
+  private String getKafkaBootstrapServers(final List<KafkaSslContainer> kafkaContainers) {
+    return kafkaContainers.stream()
+                          .map(this::getKafkaBootstrapServer)
+                          .collect(Collectors.joining(","));
   }
 
   private String getKafkaBootstrapServer(final KafkaSslContainer kafkaContainer) {

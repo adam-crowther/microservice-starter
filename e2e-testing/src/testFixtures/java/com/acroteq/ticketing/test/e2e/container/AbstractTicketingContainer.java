@@ -11,6 +11,9 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 abstract class AbstractTicketingContainer<SelfT extends GenericContainer<SelfT>> extends GenericContainer<SelfT> {
 
 
@@ -29,14 +32,14 @@ abstract class AbstractTicketingContainer<SelfT extends GenericContainer<SelfT>>
   @SuppressWarnings("resource")
   AbstractTicketingContainer(final DockerImageName dockerImageName,
                              final PostgreSQLContainer<?> postgreSqlContainer,
-                             final KafkaSslContainer kafkaContainer,
+                             final List<KafkaSslContainer> kafkaContainers,
                              final SchemaRegistryContainer schemaRegistryContainer,
                              final KeycloakContainer keycloakContainer,
                              final String containerName) {
     super(dockerImageName);
 
     final String postgresHost = getPostgresHost(postgreSqlContainer);
-    final String kafkaBootstrapServers = getKafkaBootstrapServers(kafkaContainer);
+    final String kafkaBootstrapServers = getKafkaBootstrapServers(kafkaContainers);
     final String keycloakHost = getKeycloakHost(keycloakContainer);
     final String schemaRegistryUrl = getSchemaRegistryUrl(schemaRegistryContainer);
 
@@ -59,7 +62,7 @@ abstract class AbstractTicketingContainer<SelfT extends GenericContainer<SelfT>>
     withEnv(ENV_SCHEMA_REGISTRY_URL, schemaRegistryUrl);
 
     dependsOn(postgreSqlContainer);
-    dependsOn(kafkaContainer);
+    kafkaContainers.forEach(super::dependsOn);
     dependsOn(schemaRegistryContainer);
     dependsOn(keycloakContainer);
 
@@ -86,7 +89,13 @@ abstract class AbstractTicketingContainer<SelfT extends GenericContainer<SelfT>>
                               .getHostName();
   }
 
-  private String getKafkaBootstrapServers(final KafkaSslContainer kafkaContainer) {
+  private String getKafkaBootstrapServers(final List<KafkaSslContainer> kafkaContainers) {
+    return kafkaContainers.stream()
+                          .map(this::getKafkaBootstrapServer)
+                          .collect(Collectors.joining(","));
+  }
+
+  private String getKafkaBootstrapServer(final KafkaSslContainer kafkaContainer) {
     final String kafkaHost = kafkaContainer.getContainerInfo()
                                            .getConfig()
                                            .getHostName();

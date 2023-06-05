@@ -31,13 +31,9 @@ public class PostgreSqlContainer extends PostgreSQLContainer<PostgreSqlContainer
     return kafkaContainer;
   }
 
-  public PostgreSqlContainer() {
-    this(DockerImageName.parse(POSTGRESQL_DOCKER_IMAGE));
-  }
-
   @SuppressWarnings("resource")
-  private PostgreSqlContainer(final DockerImageName dockerImageName) {
-    super(dockerImageName);
+  public PostgreSqlContainer() {
+    super(DockerImageName.parse(POSTGRESQL_DOCKER_IMAGE));
 
     final OutputFrameLogger logConsumer = new OutputFrameLogger(POSTGRESQL_CONTAINER_NAME);
     final HostNameSetter hostNameSetter = new HostNameSetter(POSTGRESQL_CONTAINER_NAME);

@@ -30,8 +30,9 @@ import com.acroteq.ticketing.order.service.client.model.Order;
 import com.acroteq.ticketing.order.service.client.model.OrderStatus;
 import com.acroteq.ticketing.test.e2e.data.MasterData;
 import com.acroteq.ticketing.test.e2e.data.TestDataGenerator;
+import com.acroteq.ticketing.test.e2e.extension.TestContainersExtension;
 import com.acroteq.ticketing.test.e2e.extension.TestDockerContainers;
-import com.acroteq.ticketing.test.e2e.extension.TestcontainersLifecycleExtension;
+import com.acroteq.ticketing.test.extension.KafkaContainerExtension;
 import lombok.extern.slf4j.Slf4j;
 import org.awaitility.Awaitility;
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +45,7 @@ import java.util.UUID;
 
 @Slf4j
 @SuppressWarnings("PMD.ExcessiveImports")
-@ExtendWith({ TestcontainersLifecycleExtension.class })
+@ExtendWith({ KafkaContainerExtension.class, TestContainersExtension.class })
 class OrderSagaFlowTest {
 
   private static CustomersApi customersApi;

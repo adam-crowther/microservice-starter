@@ -6,6 +6,8 @@ import dasniko.testcontainers.keycloak.KeycloakContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
+import java.util.List;
+
 public final class OrderServiceContainer extends AbstractTicketingContainer<OrderServiceContainer> {
 
   private static final String ORDER_SERVICE_IMAGE_NAME = "adamcc/ticketing/order-container:0.1.0";
@@ -14,11 +16,11 @@ public final class OrderServiceContainer extends AbstractTicketingContainer<Orde
   private static final String CONTAINER_NAME = "OrderService";
 
   public static OrderServiceContainer startOrderServiceContainer(final PostgreSQLContainer<?> postgreSqlContainer,
-                                                                 final KafkaSslContainer kafkaContainer,
+                                                                 final List<KafkaSslContainer> kafkaContainers,
                                                                  final SchemaRegistryContainer schemaRegistryContainer,
                                                                  final KeycloakContainer keycloakContainer) {
     final OrderServiceContainer orderServiceContainer = new OrderServiceContainer(postgreSqlContainer,
-                                                                                  kafkaContainer,
+                                                                                  kafkaContainers,
                                                                                   schemaRegistryContainer,
                                                                                   keycloakContainer);
     orderServiceContainer.start();
@@ -28,12 +30,12 @@ public final class OrderServiceContainer extends AbstractTicketingContainer<Orde
 
   @SuppressWarnings("resource")
   private OrderServiceContainer(final PostgreSQLContainer<?> postgreSqlContainer,
-                                final KafkaSslContainer kafkaContainer,
+                                final List<KafkaSslContainer> kafkaContainers,
                                 final SchemaRegistryContainer schemaRegistryContainer,
                                 final KeycloakContainer keycloakContainer) {
     super(DockerImageName.parse(ORDER_SERVICE_IMAGE_NAME),
           postgreSqlContainer,
-          kafkaContainer,
+          kafkaContainers,
           schemaRegistryContainer,
           keycloakContainer,
           CONTAINER_NAME);

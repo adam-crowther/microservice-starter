@@ -21,6 +21,7 @@ import com.acroteq.ticketing.order.service.client.model.OrderStatus;
 import com.acroteq.ticketing.order.service.config.IntegrationTestConfiguration;
 import com.acroteq.ticketing.order.service.data.MasterDataFixture;
 import com.acroteq.ticketing.order.service.data.TestDataGenerator;
+import com.acroteq.ticketing.test.container.KafkaSslContainer;
 import com.acroteq.ticketing.test.extension.KafkaContainerExtension;
 import com.acroteq.ticketing.test.extension.PostgreSqlContainerExtension;
 import com.acroteq.ticketing.test.kafka.TestKafkaConsumer;
@@ -28,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -74,6 +76,14 @@ class OrderServiceApplicationIntegrationTest {
 
   @Autowired
   private OrdersApi ordersApi;
+
+  @BeforeAll
+  static void setBootstrapServers(final KafkaSslContainer kafka) {
+    final int mappedPlaintextBrokerPort = kafka.getMappedExposedPlaintextBrokerPort();
+
+    final String bootstrapServers = String.format("localhost:%d", mappedPlaintextBrokerPort);
+    System.setProperty("KAFKA_BOOTSTRAP_SERVERS", bootstrapServers);
+  }
 
   @BeforeEach
   void prepareMasterData() {

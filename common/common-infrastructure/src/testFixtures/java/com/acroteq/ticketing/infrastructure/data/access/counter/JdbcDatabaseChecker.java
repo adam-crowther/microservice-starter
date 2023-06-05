@@ -35,12 +35,28 @@ public class JdbcDatabaseChecker implements AutoCloseable {
     customerMdmQueryExecutor.waitForEntityWithId(CUSTOMERS_TABLE, id);
   }
 
+  public void inCustomerMdmWaitForCustomersCount(final int count) {
+    customerMdmQueryExecutor.waitForCount(CUSTOMERS_TABLE, count);
+  }
+
+  public int inCustomerMdmGetCustomerCount() {
+    return customerMdmQueryExecutor.getCount(CUSTOMERS_TABLE);
+  }
+
   public void inOrderServiceWaitForCustomer(final Long id) {
     orderServiceQueryExecutor.waitForEntityWithId(CUSTOMERS_TABLE, id);
   }
 
+  public void inOrderServiceWaitForCustomersCount(final int count) {
+    orderServiceQueryExecutor.waitForCount(CUSTOMERS_TABLE, count);
+  }
+
   public void inPaymentServiceWaitForCustomer(final Long id) {
     paymentServiceQueryExecutor.waitForEntityWithId(CUSTOMERS_TABLE, id);
+  }
+
+  public void inPaymentServiceWaitForCustomersCount(final int count) {
+    paymentServiceQueryExecutor.waitForCount(CUSTOMERS_TABLE, count);
   }
 
   public void inAirlineMdmWaitForAirline(final Long id) {

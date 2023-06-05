@@ -7,15 +7,19 @@ import static org.testcontainers.containers.BindMode.READ_ONLY;
 import com.acroteq.ticketing.test.extension.HostNameSetter;
 import com.acroteq.ticketing.test.extension.OutputFrameLogger;
 import com.github.dockerjava.api.command.InspectContainerResponse;
+import lombok.EqualsAndHashCode;
 import org.testcontainers.containers.KafkaContainer;
 import org.testcontainers.utility.DockerImageName;
 
+@EqualsAndHashCode(callSuper = true)
 public class KafkaSslContainer extends KafkaContainer {
 
-  private static final String KAFKA_IMAGE_NAME = "confluentinc/cp-kafka:7.3.2";
+  public static final String KAFKA_IMAGE_NAME = "confluentinc/cp-kafka:7.3.2";
 
   private static final String ENV_BROKER_ID = "KAFKA_BROKER_ID";
   private static final String ENV_OFFSETS_TOPIC_REPL_FACTOR = "KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR";
+  private static final String ENV_DEFAULT_REPLICATION_FACTOR = "KAFKA_DEFAULT_REPLICATION_FACTOR";
+  private static final String ENV_NUM_PARTITIONS = "KAFKA_NUM_PARTITIONS";
   private static final String ENV_COMPRESSION_TYPE = "KAFKA_COMPRESSION_TYPE";
   private static final String ENV_LISTENER_SECURITY_PROTOCOL_MAP = "KAFKA_LISTENER_SECURITY_PROTOCOL_MAP";
   private static final String ENV_LISTENERS = "KAFKA_LISTENERS";
@@ -31,36 +35,35 @@ public class KafkaSslContainer extends KafkaContainer {
   private static final int KAFKA_BROKER_PORT = 9090;
   private static final int KAFKA_INTERNAL_PLAINTEXT_PORT = 9092;
   private static final int KAFKA_INTERNAL_SSL_PORT = 9093;
-  private static final int KAFKA_EXPOSED_PLAINTEXT_PORT = 19092;
-  private static final int KAFKA_EXPOSED_SSL_PORT = 19093;
+  private static final int EXTERNAL_PORT_FACTOR = 10_000;
 
-  public static KafkaSslContainer startKafkaSslContainer() {
-    final KafkaSslContainer kafkaContainer = new KafkaSslContainer();
+  private final int brokerId;
+
+  public static KafkaSslContainer startKafkaSslContainer(final int brokerId) {
+    final KafkaSslContainer kafkaContainer = new KafkaSslContainer(brokerId, 1);
     kafkaContainer.start();
     return kafkaContainer;
   }
 
-  public KafkaSslContainer() {
-    this(DockerImageName.parse(KAFKA_IMAGE_NAME));
-  }
-
   @SuppressWarnings("resource")
-  private KafkaSslContainer(final DockerImageName dockerImageName) {
-    super(dockerImageName);
+  public KafkaSslContainer(final int brokerId, final int numberOfBrokers) {
+    super(DockerImageName.parse(KAFKA_IMAGE_NAME));
+    this.brokerId = brokerId;
 
-    withKraft();
-
-    final OutputFrameLogger logConsumer = new OutputFrameLogger(KAFKA_CONTAINER_NAME);
+    final String brokerIdStr = Integer.toString(brokerId);
+    final String containerName = KAFKA_CONTAINER_NAME + brokerIdStr;
+    final OutputFrameLogger logConsumer = new OutputFrameLogger(containerName);
     withLogConsumer(logConsumer);
 
-    final HostNameSetter hostNameSetter = new HostNameSetter(KAFKA_CONTAINER_NAME);
+    final HostNameSetter hostNameSetter = new HostNameSetter(containerName);
     withCreateContainerCmdModifier(hostNameSetter);
 
     withNetwork(getNetworkInstance());
     withNetworkAliases(getNetworkName());
 
-    withExposedPorts(KAFKA_EXPOSED_PLAINTEXT_PORT,
-                     KAFKA_EXPOSED_SSL_PORT);
+    final int exposedPlaintextPort = getExposedPlaintextPort();
+    final int exposedSslPort = getExposedSslPort();
+    withExposedPorts(exposedPlaintextPort, exposedSslPort);
     withClasspathResourceMapping("certs/kafka-broker.keystore.jks",
                                  "/etc/kafka/secrets/certs/kafka-broker.keystore.jks",
                                  READ_ONLY);
@@ -77,8 +80,12 @@ public class KafkaSslContainer extends KafkaContainer {
                                  "/etc/kafka/secrets/certs/kafka-broker_truststore_creds",
                                  READ_ONLY);
 
-    withEnv(ENV_BROKER_ID, "1");
-    withEnv(ENV_OFFSETS_TOPIC_REPL_FACTOR, "1");
+    final String replicationFactor = getReplicationFactor(numberOfBrokers);
+    withEnv(ENV_BROKER_ID, brokerIdStr);
+    withEnv(ENV_OFFSETS_TOPIC_REPL_FACTOR, replicationFactor);
+    withEnv(ENV_DEFAULT_REPLICATION_FACTOR, replicationFactor);
+    final String numberOfPartitions = getNumberOfPartitions(numberOfBrokers);
+    withEnv(ENV_NUM_PARTITIONS, numberOfPartitions);
     withEnv(ENV_COMPRESSION_TYPE, "producer");
     withEnv(ENV_LISTENERS, getListeners());
     withEnv(ENV_LISTENER_SECURITY_PROTOCOL_MAP,
@@ -93,18 +100,32 @@ public class KafkaSslContainer extends KafkaContainer {
     withEnv(ENV_SSL_ENDPOINT_ID_ALGORITHM, "");
   }
 
+  private String getReplicationFactor(final int numberOfBrokers) {
+    final int replicationFactor = numberOfBrokers > 1 ? 2 : 1;
+    return Integer.toString(replicationFactor);
+  }
+
+  private String getNumberOfPartitions(final int numberOfBrokers) {
+    final int numberOfPartitions = numberOfBrokers * 3;
+    return Integer.toString(numberOfPartitions);
+  }
+
   private String getListeners() {
+    final int exposedPlaintextPort = getExposedPlaintextPort();
+    final int exposedSslPort = getExposedSslPort();
     return "BROKER://0.0.0.0:" + KAFKA_BROKER_PORT + ","
            + "INTERNAL_PLAINTEXT://0.0.0.0:" + KAFKA_INTERNAL_PLAINTEXT_PORT + ","
            + "INTERNAL_SSL://0.0.0.0:" + KAFKA_INTERNAL_SSL_PORT + ","
-           + "EXPOSED_PLAINTEXT://0.0.0.0:" + KAFKA_EXPOSED_PLAINTEXT_PORT + ","
-           + "EXPOSED_SSL://0.0.0.0:" + KAFKA_EXPOSED_SSL_PORT;
+           + "EXPOSED_PLAINTEXT://0.0.0.0:" + exposedPlaintextPort + ","
+           + "EXPOSED_SSL://0.0.0.0:" + exposedSslPort;
   }
 
   @Override
   public String getBootstrapServers() {
-    final int mappedPlaintextPort = getMappedPort(KAFKA_EXPOSED_PLAINTEXT_PORT);
-    final int mappedSslPort = getMappedPort(KAFKA_EXPOSED_SSL_PORT);
+    final int exposedPlaintextPort = getExposedPlaintextPort();
+    final int mappedPlaintextPort = getMappedPort(exposedPlaintextPort);
+    final int exposedSslPort = getExposedSslPort();
+    final int mappedSslPort = getMappedPort(exposedSslPort);
     final String hostName = getContainerInfo().getConfig()
                                               .getHostName();
     return String.format("INTERNAL_PLAINTEXT://%s:%d", hostName, KAFKA_INTERNAL_PLAINTEXT_PORT) + ","
@@ -121,19 +142,29 @@ public class KafkaSslContainer extends KafkaContainer {
                          KAFKA_BROKER_PORT);
   }
 
-  public int getInternalPlaintextBrokerPort() {
+  public final int getInternalPlaintextBrokerPort() {
     return KAFKA_INTERNAL_PLAINTEXT_PORT;
   }
 
-  public int getInternalSslBrokerPort() {
+  public final int getInternalSslBrokerPort() {
     return KAFKA_INTERNAL_SSL_PORT;
   }
 
-  public int getMappedExposedPlaintextBrokerPort() {
-    return getMappedPort(KAFKA_EXPOSED_PLAINTEXT_PORT);
+  public final int getMappedExposedPlaintextBrokerPort() {
+    final int exposedPlaintextPort = getExposedPlaintextPort();
+    return getMappedPort(exposedPlaintextPort);
   }
 
-  public int getMappedExposedSslBrokerPort() {
-    return getMappedPort(KAFKA_EXPOSED_SSL_PORT);
+  public final int getMappedExposedSslBrokerPort() {
+    final int exposedSslPort = getExposedSslPort();
+    return getMappedPort(exposedSslPort);
+  }
+
+  public final int getExposedPlaintextPort() {
+    return brokerId * EXTERNAL_PORT_FACTOR + KAFKA_INTERNAL_PLAINTEXT_PORT;
+  }
+
+  public final int getExposedSslPort() {
+    return brokerId * EXTERNAL_PORT_FACTOR + KAFKA_INTERNAL_SSL_PORT;
   }
 }
