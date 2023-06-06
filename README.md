@@ -1,9 +1,3 @@
-# Microservice Starter
-
-## About
-
-This is a Template for a Microservices Project, based on the principles of DDD and Hexagonal Architecture. It is
-intended to serve as an example, and a starting point for a green-field project.
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
@@ -11,6 +5,43 @@ intended to serve as an example, and a starting point for a green-field project.
 [![Issues][issues-shield]][issues-url]
 [![License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
+
+# Microservice Starter
+
+## About
+
+This is a showcase and template for a microservices project, based on the principles of DDD and Hexagonal Architecture.
+It is intended to serve as an example, and a starting point for a green-field project. The goal is to solve as many of
+the technical integration issues as possible up front, allowing the project to focus on domain modelling and business
+implementation.
+
+This is a fully integrated and running project, complete with mainstream architecture, design patterns, data migration
+(Liquibase), build integration (Gradle) and test examples. Core domain model and business logic are fully separated from
+technical and infrastructure integration concerns, which does complicate the project organisation somewhat, but in
+return provides a modular, maintainable and testable code base. It also prevents technology tie-in and makes BDD-style
+testing easy.
+
+Communication is implemented using REST for external APIs, and asynchronous messages over Kafka internally between the
+microservices. 2 communication patterns are shown: CQRS and Saga Flows. The Kafka integration is based on Spring Kafka
+and Avro/Schema Registry, and uses retries with exponential backoff and DLQs to achieve robustness. Resilience is shown
+using end-to-end tests that kill and then restart components of the infrastructure, and assert that no messages have
+been lost.
+
+The microservices are implemented using Java 17, Spring Boot and common libraries to reduce boilerplate. REST APIs are
+specified using OpenAPI 3 (API first) and the client stubs and server skeletons are generated using the OpenApi
+generators.
+
+4 different kinds of tests are shown: Spock Unit tests, Cucumber BDD business logic/domain tests, Integration tests and
+End-to-End tests. Test coverage is enforced with JaCoCo. Integration tests use TestContainers to run the infrastructure
+and microservice containers locally, with lifecycles that are managed by custom JUnit5 extensions.
+
+SwaggerUI is provided for spec and testing purposes, served by a separate, independent microservices for each REST API.
+
+Static code analysis is integrated using Checkstyle, PMD, Spotbugs and Codenarc, and preconfigured to provide a strict
+but realistic starting point. Having these standards defined and enforced from the outset will prevent a lot of the
+technical debt that often builds up at the start of a project, while these things are sorted out.
+
+Authentication is provided by Keycloak and integrated in the Spring microservices using Spring Security JWT.
 
 ### Built With
 
@@ -83,10 +114,12 @@ Flow, which first requests payment from the Payment Service and then requests ap
 
 ## Implementation
 
+While the use-case is rudimentary, the implementations should be clean enough to serve as an example.
+
 All Gradle plugins are fully integrated and configured, including Spring, OpenAPI Generator, Avro Generator, Liquibase,
 Checkstyle, PMD, Spotbugs, Jacoco, Groovy, Codenarc and Spock.
 
-I have tried to use the latest available versions of the component frameworks and libraries as much as possible.
+The latest available versions of the component frameworks and libraries are used as much as possible.
 
 The project is not fully fleshed out with modelling, business logic and tests - it's intended as a showcase, as a
 reference, and as a template for new projects.

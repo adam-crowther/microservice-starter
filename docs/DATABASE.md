@@ -11,7 +11,7 @@
 # Primary and Replicated models
 
 - JPA Entity
-  Diagram: [![jpa-entity-diagram-thumb.png](images/jpa-entity-diagram-thumb.png)](![jpa-entity-diagram.png](images/jpa-entity-diagram.png))
+  Diagram: [![jpa-entity-diagram-thumb.png](images/jpa-entity-diagram-thumb.png)](images/jpa-entity-diagram.png)
 - There must be exactly one source of truth for each entity: one microservice that is allowed to change the entity's
   data (=Command). All others are only allowed read access (=Query).
 - The microservice that is allowed to modify the entity is called the 'Primary' of that data.

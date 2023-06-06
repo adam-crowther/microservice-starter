@@ -20,7 +20,4 @@
 
 - Configure all logging so that it includes the sagaId from the Session. CorrelationId must be enriched in all
   messages using an interceptor, and stored in the Session.
-
-
-
  
