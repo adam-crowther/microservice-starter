@@ -19,7 +19,7 @@ public class TestContainersExtension implements BeforeAllCallback, AfterAllCallb
   @SuppressWarnings("unchecked")
   @Override
   public void beforeAll(final ExtensionContext context) {
-    final Namespace namespace = Namespace.create(context.getRequiredTestClass());
+    final Namespace namespace = Namespace.create(KafkaSslContainer.class, context.getRequiredTestClass());
     final List<KafkaSslContainer> kafkaContainers = context.getStore(namespace)
                                                            .get(KAFKA_CONTAINERS, List.class);
     testDockerContainers.start(kafkaContainers);

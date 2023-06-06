@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.ExtensionContext.Namespace;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolver;
 
@@ -21,7 +22,7 @@ public class KafkaContainerExtension implements BeforeAllCallback, AfterAllCallb
   public void beforeAll(final ExtensionContext context) {
     kafka.start();
 
-    final ExtensionContext.Namespace namespace = ExtensionContext.Namespace.create(context.getRequiredTestClass());
+    final Namespace namespace = Namespace.create(KafkaSslContainer.class, context.getRequiredTestClass());
     context.getStore(namespace)
            .put(KAFKA_CONTAINERS, singletonList(kafka));
   }

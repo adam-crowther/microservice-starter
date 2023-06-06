@@ -2,6 +2,7 @@ package com.acroteq.ticketing.test.e2e.extension;
 
 import static com.acroteq.ticketing.test.extension.KafkaContainerExtension.KAFKA_CONTAINERS;
 
+import com.acroteq.ticketing.test.container.KafkaSslContainer;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -17,7 +18,7 @@ public class KafkaClusterExtension implements BeforeAllCallback, AfterAllCallbac
   public void beforeAll(final ExtensionContext context) {
     kafkaClusterContainers.start();
 
-    final Namespace namespace = Namespace.create(context.getRequiredTestClass());
+    final Namespace namespace = Namespace.create(KafkaSslContainer.class, context.getRequiredTestClass());
     context.getStore(namespace)
            .put(KAFKA_CONTAINERS, kafkaClusterContainers.getKafkaContainers());
   }

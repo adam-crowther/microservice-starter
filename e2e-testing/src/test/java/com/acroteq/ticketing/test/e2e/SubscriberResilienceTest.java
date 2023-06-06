@@ -9,12 +9,11 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.acroteq.ticketing.infrastructure.data.access.counter.JdbcDatabaseChecker;
-import com.acroteq.ticketing.test.container.KafkaSslContainer;
-import com.acroteq.ticketing.test.e2e.extension.KafkaClusterContainers;
-import com.acroteq.ticketing.test.e2e.extension.KafkaClusterExtension;
+import com.acroteq.ticketing.test.e2e.container.OrderServiceContainer;
 import com.acroteq.ticketing.test.e2e.extension.TestContainersExtension;
 import com.acroteq.ticketing.test.e2e.extension.TestDockerContainers;
 import com.acroteq.ticketing.test.e2e.uploader.CustomerUploader;
+import com.acroteq.ticketing.test.extension.KafkaContainerExtension;
 import lombok.extern.slf4j.Slf4j;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.AfterAll;
@@ -23,13 +22,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.List;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 @Slf4j
 @SuppressWarnings("PMD.ExcessiveImports")
-@ExtendWith({ KafkaClusterExtension.class, TestContainersExtension.class })
-class BrokerResilienceTest {
+@ExtendWith({ KafkaContainerExtension.class, TestContainersExtension.class })
+class SubscriberResilienceTest {
 
   private static final long DELAY_IN_MILLISECONDS = 1000L;
   private static final int SHUTDOWN_THRESHOLD_SECONDS = 15;
@@ -39,17 +37,22 @@ class BrokerResilienceTest {
   private static final int SHUTDOWN_TIMEOUT_SECONDS = 90;
 
   private static JdbcDatabaseChecker databaseChecker;
-  private static List<KafkaSslContainer> kafkaContainers;
+  private static OrderServiceContainer orderServiceContainer;
   private static CustomerUploader uploader;
 
   @BeforeAll
-  static void startUp(final KafkaClusterContainers kafkaClusterContainers, final TestDockerContainers testContainers) {
+  static void startUp(final TestDockerContainers testContainers) {
 
     final String bearerToken = authenticate(testContainers);
-    kafkaContainers = kafkaClusterContainers.getKafkaContainers();
+    orderServiceContainer = testContainers.getOrderServiceContainer();
     uploader = new CustomerUploader(testContainers, bearerToken);
 
     databaseChecker = createDatabaseChecker(testContainers);
+  }
+
+  @BeforeEach
+  void resetCount() {
+    uploader.resetCustomerCount();
   }
 
   @AfterAll
@@ -57,10 +60,6 @@ class BrokerResilienceTest {
     databaseChecker.close();
   }
 
-  @BeforeEach
-  void resetCount() {
-    uploader.resetCustomerCount();
-  }
 
   // Shut down one of a cluster of 3 brokers while the customer entity replication is running, and restart it a
   // couple of seconds later.  No events should be lost.
@@ -73,13 +72,13 @@ class BrokerResilienceTest {
                                                 DELAY_IN_MILLISECONDS,
                                                 MILLISECONDS);
 
-    // After 15 seconds, shut down the Kafka broker for 15 seconds
-    final ScheduledThreadPoolExecutor shutdownKafkaThread = new ScheduledThreadPoolExecutor(1);
-    shutdownKafkaThread.schedule(this::shutdownKafkaInstance, SHUTDOWN_THRESHOLD_SECONDS, SECONDS);
+    // After 15 seconds, shut down the Order Service for 15 seconds
+    final ScheduledThreadPoolExecutor shutdownOrderService = new ScheduledThreadPoolExecutor(1);
+    shutdownOrderService.schedule(orderServiceContainer::stop, SHUTDOWN_THRESHOLD_SECONDS, SECONDS);
 
-    // After 30 seconds, restart the Kafka broker
-    final ScheduledThreadPoolExecutor startupKafkaThread = new ScheduledThreadPoolExecutor(1);
-    startupKafkaThread.schedule(this::startupKafkaInstance, STARTUP_THRESHOLD_SECONDS, SECONDS);
+    // After 30 seconds, restart the Order Service
+    final ScheduledThreadPoolExecutor startupOrderService = new ScheduledThreadPoolExecutor(1);
+    startupOrderService.schedule(orderServiceContainer::start, STARTUP_THRESHOLD_SECONDS, SECONDS);
 
     // Stop generating customers after 60 seconds
     final ScheduledThreadPoolExecutor killCreateCustomerThread = new ScheduledThreadPoolExecutor(1);
@@ -97,15 +96,5 @@ class BrokerResilienceTest {
 
     databaseChecker.inOrderServiceWaitForCustomersCount(count);
     databaseChecker.inPaymentServiceWaitForCustomersCount(count);
-  }
-
-  private void shutdownKafkaInstance() {
-    kafkaContainers.get(1)
-                   .stop();
-  }
-
-  private void startupKafkaInstance() {
-    kafkaContainers.get(1)
-                   .start();
   }
 }
