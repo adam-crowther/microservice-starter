@@ -1,0 +1,156 @@
+services:
+  postgres:
+    image: postgres:17.3-alpine
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - ./build/postgresql:/var/lib/postgresql/data
+      - ./init-schemas.sql:/docker-entrypoint-initdb.d/init-schemas.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", " netstat -an | grep -q 5432" ]
+    networks:
+      - app-tier
+
+  pgadmin:
+    image: dpage/pgadmin4:9.0.0
+    container_name: pgadmin
+    depends_on:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@adamcc.ch
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+      PGADMIN_LISTEN_PORT: 5050
+    ports:
+      - "5050:5050"
+    networks:
+      - app-tier
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:${KAFKA_VERSION:-latest}
+    container_name: zookeeper
+    hostname: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+      ZOOKEEPER_SERVERS: zookeeper:2888:3888
+      KAFKA_OPTS: "-Dzookeeper.4lw.commands.whitelist=ruok"
+    volumes:
+      - "./build/zookeeper/data:/var/lib/zookeeper/data"
+      - "./build/zookeeper/transactions:/var/lib/zookeeper/log"
+    networks:
+      - app-tier
+
+  kafka-broker:
+    image: confluentinc/cp-kafka:${KAFKA_VERSION}
+    container_name: kafka-broker
+    depends_on:
+      - zookeeper
+    hostname: kafka-broker
+    user: root
+    ports:
+      - "19092:19092"
+      - "19093:19093"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      #      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker:9092,LOCAL_PLAINTEXT://localhost:19092
+      #      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,LOCAL_PLAINTEXT:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker:9092,SSL://kafka-broker:9093,LOCAL_PLAINTEXT://localhost:19092,LOCAL_SSL://localhost:19093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,LOCAL_PLAINTEXT:PLAINTEXT,SSL:SSL,LOCAL_SSL:SSL
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_COMPRESSION_TYPE: producer
+      KAFKA_SSL_CLIENT_AUTH: 'required'
+      KAFKA_SSL_KEYSTORE_FILENAME: '/certs/kafka-broker.keystore.jks'
+      KAFKA_SSL_KEYSTORE_CREDENTIALS: '/certs/kafka-broker_keystore_creds'
+      KAFKA_SSL_KEY_CREDENTIALS: '/certs/kafka-broker_sslkey_creds'
+      KAFKA_SSL_TRUSTSTORE_FILENAME: '/certs/kafka-broker.truststore.jks'
+      KAFKA_SSL_TRUSTSTORE_CREDENTIALS: '/certs/kafka-broker_truststore_creds'
+      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: ''
+    volumes:
+      - "./build/kafka/broker:/var/lib/kafka/mount"
+      - "./certs/kafka-broker:/etc/kafka/secrets/certs"
+      - "./kafka:/home/appuser/bin"
+    networks:
+      - app-tier
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:${KAFKA_VERSION}
+    container_name: schema-registry
+    hostname: schema-registry
+    depends_on:
+      - kafka-broker
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_LISTENERS: http://schema-registry:8081
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
+      # SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka-broker:9092
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: SSL://kafka-broker:9093
+      SCHEMA_REGISTRY_KAFKASTORE_SECURITY_PROTOCOL: SSL
+      SCHEMA_REGISTRY_KAFKASTORE_SSL_TRUSTSTORE_LOCATION: /var/private/ssl/schema-registry.truststore.jks
+      SCHEMA_REGISTRY_KAFKASTORE_SSL_TRUSTSTORE_PASSWORD: acroteq
+      SCHEMA_REGISTRY_KAFKASTORE_SSL_KEYSTORE_LOCATION: /var/private/ssl/schema-registry.keystore.jks
+      SCHEMA_REGISTRY_KAFKASTORE_SSL_KEYSTORE_PASSWORD: acroteq
+      SCHEMA_REGISTRY_KAFKASTORE_SSL_KEY_PASSWORD: acroteq
+      SCHEMA_REGISTRY_KAFKASTORE_TOPIC_REPLICATION_FACTOR: 1
+      SCHEMA_REGISTRY_DEBUG: 'true'
+    volumes:
+      - "./certs/schema-registry:/var/private/ssl"
+    networks:
+      - app-tier
+
+  kafka-manager:
+    image: hlebalbau/kafka-manager:stable
+    container_name: kafka-manager
+    depends_on:
+      - kafka-broker
+    ports:
+      - "9000:9000"
+    environment:
+      ZK_HOSTS: "zookeeper:2181"
+    networks:
+      - app-tier
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:21.1.1
+    container_name: keycloak
+    depends_on:
+      postgres:
+        condition: service_healthy
+    hostname: keycloak
+    ports:
+      - "8080:8080"
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/postgres
+      KC_DB_SCHEMA: keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak
+      KC_HOSTNAME: localhost
+    command: start-dev --import-realm
+    volumes:
+      - "./keycloak:/opt/keycloak/data/import"
+    networks:
+      - app-tier
+
+networks:
+  app-tier:
+    driver: bridge
