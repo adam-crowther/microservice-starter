@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.order.service.domain;
 
-import com.acroteq.ticketing.domain.validation.ValidationResult;
+import com.acroteq.domain.validation.ValidationResult;
 import com.acroteq.ticketing.order.service.domain.entity.Airline;
 import com.acroteq.ticketing.order.service.domain.entity.Order;
 

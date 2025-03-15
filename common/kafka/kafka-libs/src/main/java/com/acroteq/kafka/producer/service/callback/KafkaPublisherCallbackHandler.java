@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.kafka.producer.service.callback;
+package com.acroteq.kafka.producer.service.callback;
 
 import jakarta.annotation.Nullable;
 import lombok.extern.slf4j.Slf4j;

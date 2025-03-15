@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.approval.service.domain.processor;
 
+import com.acroteq.domain.validation.ValidationResult;
 import com.acroteq.ticketing.approval.service.domain.AirlineDomainService;
 import com.acroteq.ticketing.approval.service.domain.dto.AirlineApprovalRequestDto;
 import com.acroteq.ticketing.approval.service.domain.entity.order.Order;
@@ -8,7 +9,6 @@ import com.acroteq.ticketing.approval.service.domain.event.order.OrderApprovalEv
 import com.acroteq.ticketing.approval.service.domain.mapper.OrderRequestDtoToOrderDomainMapper;
 import com.acroteq.ticketing.approval.service.domain.ports.output.repository.OrderApprovalRepository;
 import com.acroteq.ticketing.approval.service.domain.valueobject.OrderApprovalOutput;
-import com.acroteq.ticketing.domain.validation.ValidationResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

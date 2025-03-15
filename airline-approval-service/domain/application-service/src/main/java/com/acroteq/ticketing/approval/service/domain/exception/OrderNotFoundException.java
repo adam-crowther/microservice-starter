@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.approval.service.domain.exception;
 
-import com.acroteq.ticketing.domain.exception.DomainException;
-import com.acroteq.ticketing.domain.valueobject.OrderId;
+import com.acroteq.domain.exception.DomainException;
+import com.acroteq.domain.valueobject.OrderId;
 
 public class OrderNotFoundException extends DomainException {
 

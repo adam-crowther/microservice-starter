@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.customer.service.domain.dto.create;
 
-import com.acroteq.ticketing.application.dto.AuditedEntityDto;
+import com.acroteq.application.dto.AuditedEntityDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

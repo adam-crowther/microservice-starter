@@ -1,10 +1,9 @@
-package com.acroteq.ticketing.kafka.consumer.service;
-
+package com.acroteq.kafka.consumer.service;
 
 import static lombok.AccessLevel.PACKAGE;
 
 import com.acroteq.application.dto.DataTransferObject;
-import com.acroteq.ticketing.kafka.consumer.exception.UnsupportedMessageTypeException;
+import com.acroteq.kafka.consumer.exception.UnsupportedMessageTypeException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

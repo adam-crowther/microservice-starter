@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.approval.service.domain.exception;
 
-import com.acroteq.ticketing.domain.exception.DomainException;
+import com.acroteq.domain.exception.DomainException;
 
 public class AirlineValidationException extends DomainException {
 

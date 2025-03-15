@@ -1,11 +1,11 @@
 package com.acroteq.ticketing.airline.service.messaging.mapper;
 
-import com.acroteq.ticketing.application.mapper.DateTimeMapper;
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
-import com.acroteq.ticketing.application.mapper.id.AirlineIdMapper;
-import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
-import com.acroteq.ticketing.application.mapper.id.FlightIdMapper;
-import com.acroteq.ticketing.infrastructure.mapper.DomainToMessageMapper;
+import com.acroteq.application.mapper.DateTimeMapper;
+import com.acroteq.application.mapper.MapstructConfig;
+import com.acroteq.application.mapper.id.AirlineIdMapper;
+import com.acroteq.application.mapper.id.CurrencyIdMapper;
+import com.acroteq.application.mapper.id.FlightIdMapper;
+import com.acroteq.infrastructure.mapper.DomainToMessageMapper;
 import com.acroteq.ticketing.kafka.airline.avro.model.Flight;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

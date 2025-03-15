@@ -22,6 +22,6 @@ public class TrackingId {
   }
 
   public static TrackingId random() {
-    return TrackingId.of(randomUUID());
+    return of(randomUUID());
   }
 }

@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.airline.service.domain.dto.update;
 
-import com.acroteq.ticketing.application.dto.EntityDto;
+import com.acroteq.application.dto.EntityDto;
 import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
@@ -23,7 +23,7 @@ public class UpdateAirlineCommandDto extends EntityDto {
   @NotNull
   private final boolean active;
   @NotNull
-  private final ImmutableList<UpdateFlightCommandDto> flights;
+  private final List<UpdateFlightCommandDto> flights;
 
   @SuppressWarnings("PublicInnerClass")
   public abstract static class UpdateAirlineCommandDtoBuilder<C extends UpdateAirlineCommandDto,

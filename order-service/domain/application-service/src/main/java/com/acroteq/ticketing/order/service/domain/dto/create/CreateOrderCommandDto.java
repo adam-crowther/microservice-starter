@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.order.service.domain.dto.create;
 
-import com.acroteq.ticketing.application.dto.DataTransferObject;
+import com.acroteq.application.dto.DataTransferObject;
 import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
@@ -23,7 +23,7 @@ public class CreateOrderCommandDto implements DataTransferObject {
   @NotNull
   private final Long airlineId;
   @NotNull
-  private final ImmutableList<OrderItemDto> items;
+  private final List<OrderItemDto> items;
   @NotNull
   private final OrderAddressDto address;
 

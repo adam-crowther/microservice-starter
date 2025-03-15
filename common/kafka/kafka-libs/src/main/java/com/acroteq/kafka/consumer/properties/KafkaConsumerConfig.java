@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.kafka.consumer.properties;
+package com.acroteq.kafka.consumer.properties;
 
 import jakarta.annotation.Nullable;
 import lombok.Value;

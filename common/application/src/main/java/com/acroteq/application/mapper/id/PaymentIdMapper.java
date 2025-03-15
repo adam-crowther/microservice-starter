@@ -1,7 +1,7 @@
 package com.acroteq.application.mapper.id;
 
 import com.acroteq.application.mapper.MapstructConfig;
-import com.acroteq.ticketing.domain.valueobject.PaymentId;
+import com.acroteq.domain.valueobject.PaymentId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

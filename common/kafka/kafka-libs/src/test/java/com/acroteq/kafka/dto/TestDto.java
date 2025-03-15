@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.kafka.dto;
+package com.acroteq.kafka.dto;
 
 import com.acroteq.application.dto.EntityDto;
 import lombok.experimental.SuperBuilder;

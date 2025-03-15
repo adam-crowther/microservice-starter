@@ -1,22 +1,25 @@
 plugins {
-  id 'java-conventions'
-  id 'spock-conventions'
+  id("java-conventions")
+  id("spock-conventions")
 }
 
 dependencies {
-  implementation project(":common:common-domain")
-  implementation project(":common:common-helper")
+  implementation(project(":common:common-domain"))
+  implementation(project(":common:common-helper"))
 
-  implementation 'com.google.guava:guava:'
-  implementation 'jakarta.annotation:jakarta.annotation-api'
-  implementation 'jakarta.validation:jakarta.validation-api'
-  implementation 'org.projectlombok:lombok'
-  implementation 'org.mapstruct:mapstruct'
-  implementation 'org.springframework:spring-context'
+  implementation(libs.guava)
+  implementation(libs.jakarta.annotation.api)
+  implementation(libs.jakarta.validation.api)
+  implementation(libs.lombok)
+  implementation(libs.mapstruct)
+  implementation(libs.spring.context)
 
-  annotationProcessor 'org.mapstruct:mapstruct-processor'
-  annotationProcessor 'org.projectlombok:lombok'
-  annotationProcessor 'org.projectlombok:lombok-mapstruct-binding'
+  annotationProcessor(libs.mapstruct.processor)
+  annotationProcessor(libs.lombok)
+  annotationProcessor(libs.lombok.mapstruct.binding)
 
-  testRuntimeOnly 'org.springframework.boot:spring-boot-starter-validation'
+  testImplementation(testFixtures(project(":common:common-domain")))
+  testImplementation(libs.spock.spring)
+  testImplementation(libs.spring.boot.test)
+  testRuntimeOnly(libs.spring.boot.starter.validation)
 }

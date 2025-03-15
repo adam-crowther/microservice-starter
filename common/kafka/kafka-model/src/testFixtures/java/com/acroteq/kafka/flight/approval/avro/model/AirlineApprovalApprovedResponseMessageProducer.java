@@ -1,6 +1,7 @@
-package com.acroteq.ticketing.kafka.flight.approval.avro.model;
+package com.acroteq.kafka.flight.approval.avro.model;
 
-import com.acroteq.ticketing.test.kafka.TestKafkaProducer;
+import com.acroteq.test.kafka.TestKafkaProducer;
+import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalApprovedResponseMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

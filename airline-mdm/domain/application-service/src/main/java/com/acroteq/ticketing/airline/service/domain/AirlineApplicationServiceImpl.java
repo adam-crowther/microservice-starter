@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.airline.service.domain;
 
+import com.acroteq.domain.valueobject.AirlineId;
 import com.acroteq.ticketing.airline.service.domain.dto.create.CreateAirlineCommandDto;
 import com.acroteq.ticketing.airline.service.domain.dto.create.CreateAirlineResponseDto;
 import com.acroteq.ticketing.airline.service.domain.dto.get.AirlineDto;
@@ -12,7 +13,6 @@ import com.acroteq.ticketing.airline.service.domain.mapper.AirlineDomainToDtoMap
 import com.acroteq.ticketing.airline.service.domain.ports.input.service.AirlineApplicationService;
 import com.acroteq.ticketing.airline.service.domain.ports.output.message.publisher.AirlineEventMessagePublisher;
 import com.acroteq.ticketing.airline.service.domain.ports.output.repository.AirlineRepository;
-import com.acroteq.ticketing.domain.valueobject.AirlineId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

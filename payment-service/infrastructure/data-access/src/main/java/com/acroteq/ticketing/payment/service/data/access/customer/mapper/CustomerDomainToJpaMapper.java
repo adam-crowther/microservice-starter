@@ -1,10 +1,10 @@
 package com.acroteq.ticketing.payment.service.data.access.customer.mapper;
 
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
-import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
-import com.acroteq.ticketing.application.mapper.id.CustomerIdMapper;
-import com.acroteq.ticketing.infrastructure.mapper.DomainToJpaMapper;
-import com.acroteq.ticketing.infrastructure.mapper.EventIdDomainToJpaMapper;
+import com.acroteq.application.mapper.MapstructConfig;
+import com.acroteq.application.mapper.id.CurrencyIdMapper;
+import com.acroteq.application.mapper.id.CustomerIdMapper;
+import com.acroteq.infrastructure.mapper.DomainToJpaMapper;
+import com.acroteq.infrastructure.mapper.EventIdDomainToJpaMapper;
 import com.acroteq.ticketing.payment.service.data.access.customer.entity.CustomerJpaEntity;
 import com.acroteq.ticketing.payment.service.domain.entity.Customer;
 import org.mapstruct.Mapper;

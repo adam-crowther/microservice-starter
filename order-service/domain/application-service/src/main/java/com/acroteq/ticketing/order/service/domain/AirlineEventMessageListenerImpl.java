@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.order.service.domain;
 
-import com.acroteq.ticketing.domain.valueobject.AirlineId;
+import com.acroteq.domain.valueobject.AirlineId;
 import com.acroteq.ticketing.order.service.domain.dto.airline.AirlineEventDto;
 import com.acroteq.ticketing.order.service.domain.entity.Airline;
 import com.acroteq.ticketing.order.service.domain.exception.AirlineEventProcessingOrderException;

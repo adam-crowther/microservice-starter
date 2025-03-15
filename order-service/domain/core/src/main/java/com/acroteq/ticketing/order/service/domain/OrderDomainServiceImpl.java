@@ -1,9 +1,9 @@
 package com.acroteq.ticketing.order.service.domain;
 
-import static com.acroteq.ticketing.precondition.Precondition.checkPrecondition;
+import static com.acroteq.precondition.Precondition.checkPrecondition;
 
-import com.acroteq.ticketing.domain.validation.ValidationResult;
-import com.acroteq.ticketing.domain.valueobject.FlightId;
+import com.acroteq.domain.validation.ValidationResult;
+import com.acroteq.domain.valueobject.FlightId;
 import com.acroteq.ticketing.order.service.domain.entity.Airline;
 import com.acroteq.ticketing.order.service.domain.entity.Flight;
 import com.acroteq.ticketing.order.service.domain.entity.Order;

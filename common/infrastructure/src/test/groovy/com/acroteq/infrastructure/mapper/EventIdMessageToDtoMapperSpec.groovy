@@ -1,6 +1,5 @@
-package com.acroteq.ticketing.infrastructure.mapper
+package com.acroteq.infrastructure.mapper
 
-import com.acroteq.infrastructure.mapper.EventIdMessageToDtoMapper
 import groovy.transform.CompileDynamic
 import org.mapstruct.factory.Mappers
 import spock.lang.Specification

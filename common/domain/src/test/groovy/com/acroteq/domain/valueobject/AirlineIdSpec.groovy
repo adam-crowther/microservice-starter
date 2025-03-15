@@ -1,6 +1,5 @@
-package com.acroteq.ticketing.domain.valueobject
+package com.acroteq.domain.valueobject
 
-import com.acroteq.domain.valueobject.AirlineId
 import groovy.transform.CompileDynamic
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification

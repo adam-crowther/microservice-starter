@@ -1,9 +1,9 @@
 package com.acroteq.ticketing.payment.service.domain.processor;
 
-import com.acroteq.ticketing.application.mapper.id.OrderIdMapper;
-import com.acroteq.ticketing.domain.validation.ValidationResult;
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
-import com.acroteq.ticketing.domain.valueobject.OrderId;
+import com.acroteq.application.mapper.id.OrderIdMapper;
+import com.acroteq.domain.validation.ValidationResult;
+import com.acroteq.domain.valueobject.CustomerId;
+import com.acroteq.domain.valueobject.OrderId;
 import com.acroteq.ticketing.payment.service.domain.PaymentDomainService;
 import com.acroteq.ticketing.payment.service.domain.dto.payment.PaymentCancelRequestDto;
 import com.acroteq.ticketing.payment.service.domain.dto.payment.PaymentRequestDto;

@@ -1,12 +1,12 @@
 package com.acroteq.ticketing.customer.service.messaging.publisher.kafka;
 
+import com.acroteq.kafka.producer.service.KafkaProducer;
+import com.acroteq.kafka.producer.service.callback.KafkaPublisherCallbackHandler;
 import com.acroteq.ticketing.customer.service.domain.event.CustomerEvent;
 import com.acroteq.ticketing.customer.service.domain.ports.output.message.publisher.CustomerEventMessagePublisher;
 import com.acroteq.ticketing.customer.service.domain.properties.CustomerServiceConfig;
 import com.acroteq.ticketing.customer.service.messaging.mapper.CustomerEventMessageFactory;
 import com.acroteq.ticketing.kafka.customer.avro.model.CustomerEventMessage;
-import com.acroteq.ticketing.kafka.producer.service.KafkaProducer;
-import com.acroteq.ticketing.kafka.producer.service.callback.KafkaPublisherCallbackHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

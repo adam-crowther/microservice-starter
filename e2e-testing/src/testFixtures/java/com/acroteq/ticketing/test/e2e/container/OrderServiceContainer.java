@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.test.e2e.container;
 
-import com.acroteq.ticketing.test.container.KafkaSslContainer;
-import com.acroteq.ticketing.test.container.SchemaRegistryContainer;
+import com.acroteq.test.container.KafkaSslContainer;
+import com.acroteq.test.container.SchemaRegistryContainer;
 import dasniko.testcontainers.keycloak.KeycloakContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
@@ -15,10 +15,9 @@ public final class OrderServiceContainer extends AbstractTicketingContainer<Orde
   private static final int EXPOSED_PORT = 8181;
   private static final String CONTAINER_NAME = "OrderService";
 
-  public static OrderServiceContainer startOrderServiceContainer(final PostgreSQLContainer<?> postgreSqlContainer,
-                                                                 final List<KafkaSslContainer> kafkaContainers,
-                                                                 final SchemaRegistryContainer schemaRegistryContainer,
-                                                                 final KeycloakContainer keycloakContainer) {
+  public static OrderServiceContainer startOrderServiceContainer(
+      final PostgreSQLContainer<?> postgreSqlContainer, final List<KafkaSslContainer> kafkaContainers,
+      final SchemaRegistryContainer schemaRegistryContainer, final KeycloakContainer keycloakContainer) {
     final OrderServiceContainer orderServiceContainer = new OrderServiceContainer(postgreSqlContainer,
                                                                                   kafkaContainers,
                                                                                   schemaRegistryContainer,
@@ -29,10 +28,9 @@ public final class OrderServiceContainer extends AbstractTicketingContainer<Orde
   }
 
   @SuppressWarnings("resource")
-  private OrderServiceContainer(final PostgreSQLContainer<?> postgreSqlContainer,
-                                final List<KafkaSslContainer> kafkaContainers,
-                                final SchemaRegistryContainer schemaRegistryContainer,
-                                final KeycloakContainer keycloakContainer) {
+  private OrderServiceContainer(
+      final PostgreSQLContainer<?> postgreSqlContainer, final List<KafkaSslContainer> kafkaContainers,
+      final SchemaRegistryContainer schemaRegistryContainer, final KeycloakContainer keycloakContainer) {
     super(DockerImageName.parse(ORDER_SERVICE_IMAGE_NAME),
           postgreSqlContainer,
           kafkaContainers,

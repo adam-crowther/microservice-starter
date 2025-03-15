@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.helper
+package com.acroteq.helper
 
 import com.acroteq.exception.MoreThanOneItemInStreamException
 import groovy.transform.CompileDynamic
@@ -6,8 +6,8 @@ import spock.lang.Specification
 
 import java.util.stream.Stream
 
-import static com.acroteq.helper.StreamHelper.toSingleItem
-import static com.acroteq.helper.StreamHelper.withCounter
+import static StreamHelper.toSingleItem
+import static StreamHelper.withCounter
 
 @CompileDynamic
 class StreamHelperSpec extends Specification {

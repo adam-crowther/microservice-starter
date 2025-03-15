@@ -6,13 +6,14 @@ byte-buddy = "1.16.1"
 commons-collections4 = "4.4"
 commons-math3 = "3.6.1"
 commons-lang3 = "3.17.0"
-cucumber = "7.20.0"
+cucumber = "7.21.1"
 docker-compose-plugin = "0.17.12"
 equalsverifier = "3.18.1"
 findsecbugs = "1.13.0"
 graphfity-plugin = "1.1.0"
 groovy = "4.0.25"
 guava = "33.4.0-jre"
+gson = "2.12.1"
 hamcrest = "3.0"
 hamcrest-optional = "2.0.0"
 jackson-databind-nullable = "0.2.6"
@@ -26,6 +27,7 @@ junit = "5.11.4"
 junit-platform-launcher = "1.11.4"
 kafka-clients = "3.9.0"
 kafka-serializer = "7.8.0"
+keycloak = "26.0.4"
 liquibase-plugin = "3.0.1"
 liquibase-groovy-dsl = "4.0.0"
 liquibase-slf4j = "5.1.0"
@@ -75,6 +77,7 @@ equalsverifier = { group = "nl.jqno.equalsverifier", name = "equalsverifier", ve
 graphfity-plugin = { group = "com.github.ivancarras", name = "graphfity-plugin", version.ref = "graphfity-plugin" }
 groovy = { group = "org.apache.groovy", name = "groovy", version.ref = "groovy" }
 guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 hamcrest = { group = "org.hamcrest", name = "hamcrest", version.ref = "hamcrest" }
 hamcrest-optional = { group = "com.github.npathai", name = "hamcrest-optional", version.ref = "hamcrest-optional" }
 jackson-annotations = { group = "com.fasterxml.jackson.core", name = "jackson-annotations", version.ref = "jackson" }
@@ -96,6 +99,7 @@ jul-to-slf4j = { group = "org.slf4j", name = "jul-to-slf4j", version.ref = "slf4
 kafka-avro-serializer = { group = "io.confluent", name = "kafka-avro-serializer", version.ref = "kafka-serializer" }
 kafka-clients = { group = "org.apache.kafka", name = "kafka-clients", version.ref = "kafka-clients" }
 kafka-schema-serializer = { group = "io.confluent", name = "kafka-schema-serializer", version.ref = "kafka-serializer" }
+keycloak-admin-client = { group = "org.keycloak", name = "keycloak-admin-client", version.ref = "keycloak" }
 liquibase-core = { group = "org.liquibase", name = "liquibase-core", version.ref = "liquibase" }
 liquibase-groovy-dsl = { group = "org.liquibase", name = "liquibase-groovy-dsl", version.ref = "liquibase-groovy-dsl" }
 liquibase-hibernate6 = { group = "org.liquibase.ext", name = "liquibase-hibernate6", version.ref = "liquibase" }
@@ -137,6 +141,7 @@ spring-boot-starter-data-jpa = { group = "org.springframework.boot", name = "spr
 spring-boot-starter-oauth2-client = { group = "org.springframework.boot", name = "spring-boot-starter-oauth2-client", version.ref = "springboot" }
 spring-boot-starter-oauth2-resource-server = { group = "org.springframework.boot", name = "spring-boot-starter-oauth2-resource-server", version.ref = "springboot" }
 spring-boot-starter-security = { group = "org.springframework.boot", name = "spring-boot-starter-security", version.ref = "springboot" }
+spring-boot-starter-test = { group = "org.springframework.boot", name = "spring-boot-starter-test", version.ref = "springboot" }
 spring-boot-starter-validation = { group = "org.springframework.boot", name = "spring-boot-starter-validation", version.ref = "springboot" }
 spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web", version.ref = "springboot" }
 spring-boot-test = { group = "org.springframework.boot", name = "spring-boot-test", version.ref = "springboot" }

@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.exception;
+package com.acroteq.exception;
 
 public class MoreThanOneItemInStreamException extends IllegalStateException {
 

@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.kafka.consumer.properties;
+package com.acroteq.kafka.consumer.properties;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Value;
@@ -6,5 +6,6 @@ import lombok.Value;
 @Value
 public class KafkaDeadLetterConfig {
 
-  @NotNull String suffix;
+  @NotNull
+  String suffix;
 }

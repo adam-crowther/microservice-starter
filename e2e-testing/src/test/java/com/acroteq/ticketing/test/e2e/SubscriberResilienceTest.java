@@ -8,12 +8,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import com.acroteq.ticketing.infrastructure.data.access.counter.JdbcDatabaseChecker;
+import com.acroteq.infrastructure.data.access.counter.JdbcDatabaseChecker;
+import com.acroteq.test.extension.KafkaContainerExtension;
 import com.acroteq.ticketing.test.e2e.container.OrderServiceContainer;
 import com.acroteq.ticketing.test.e2e.extension.TestContainersExtension;
 import com.acroteq.ticketing.test.e2e.extension.TestDockerContainers;
 import com.acroteq.ticketing.test.e2e.uploader.CustomerUploader;
-import com.acroteq.ticketing.test.extension.KafkaContainerExtension;
 import lombok.extern.slf4j.Slf4j;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.AfterAll;

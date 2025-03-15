@@ -1,12 +1,12 @@
 package com.acroteq.ticketing.payment.service.domain.helper
 
-import com.acroteq.ticketing.domain.valueobject.Audit
-import com.acroteq.ticketing.domain.valueobject.CashValue
-import com.acroteq.ticketing.domain.valueobject.CurrencyId
-import com.acroteq.ticketing.domain.valueobject.CustomerId
-import com.acroteq.ticketing.domain.valueobject.EventId
-import com.acroteq.ticketing.domain.valueobject.OrderId
-import com.acroteq.ticketing.domain.valueobject.PaymentId
+import com.acroteq.domain.valueobject.Audit
+import com.acroteq.domain.valueobject.CashValue
+import com.acroteq.domain.valueobject.CurrencyId
+import com.acroteq.domain.valueobject.CustomerId
+import com.acroteq.domain.valueobject.EventId
+import com.acroteq.domain.valueobject.OrderId
+import com.acroteq.domain.valueobject.PaymentId
 import com.acroteq.ticketing.payment.service.domain.entity.CreditBalance
 import com.acroteq.ticketing.payment.service.domain.entity.CreditChange
 import com.acroteq.ticketing.payment.service.domain.entity.Customer
@@ -17,7 +17,7 @@ import groovy.transform.CompileDynamic
 
 import java.time.Instant
 
-import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.PENDING
+import static com.acroteq.domain.valueobject.PaymentStatus.PENDING
 import static com.acroteq.ticketing.payment.service.domain.valueobject.CreditChangeType.CREDIT_LIMIT_UPDATE
 import static com.acroteq.ticketing.payment.service.domain.valueobject.TransactionType.CREDIT
 

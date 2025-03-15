@@ -5,7 +5,8 @@ import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "com.acroteq.ticketing")
+@SuppressWarnings("PMD.UseUtilityClass")
+@SpringBootApplication(scanBasePackages = "com.acroteq")
 public class AirlineApprovalServiceApplication {
 
   public static void main(final String[] args) {

@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.order.service.data;
 
-import com.acroteq.ticketing.test.kafka.TestKafkaProducer;
+import com.acroteq.test.kafka.TestKafkaProducer;
 import lombok.RequiredArgsConstructor;
 import org.apache.avro.specific.SpecificRecord;
 import org.awaitility.Awaitility;

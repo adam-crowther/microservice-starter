@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.order.service.client.model;
 
-import com.acroteq.ticketing.test.data.RandomStringGenerator;
+import com.acroteq.test.data.RandomStringGenerator;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

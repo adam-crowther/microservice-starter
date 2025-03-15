@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.saga;
+package com.acroteq.saga;
 
 import com.acroteq.application.dto.DataTransferObject;
 import com.acroteq.domain.event.Event;

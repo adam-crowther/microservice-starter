@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.order.service.domain.exception;
 
-import com.acroteq.ticketing.domain.exception.DomainException;
-import com.acroteq.ticketing.domain.valueobject.AirlineId;
+import com.acroteq.domain.exception.DomainException;
+import com.acroteq.domain.valueobject.AirlineId;
 
 public class AirlineNotActiveException extends DomainException {
 

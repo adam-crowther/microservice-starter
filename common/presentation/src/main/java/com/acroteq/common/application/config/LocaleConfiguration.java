@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.common.application.config;
+package com.acroteq.common.application.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

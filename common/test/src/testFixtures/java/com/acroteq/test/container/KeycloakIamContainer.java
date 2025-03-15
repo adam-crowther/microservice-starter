@@ -12,9 +12,8 @@ public class KeycloakIamContainer extends KeycloakContainer {
   private static final String KEYCLOAK_DOCKER_IMAGE = "keycloak/keycloak:26.1.3";
 
   private static final String KEYCLOAK_CONTAINER_NAME = "Keycloak";
-  private static final String ENV_KC_HOSTNAME_STRICT_BACKCHANNEL = "KC_HOSTNAME_STRICT_BACKCHANNEL";
-  private static final String ENV_KC_HOSTNAME = "KC_HOSTNAME";
-  private static final String ENV_KC_HOSTNAME_PORT = "KC_HOSTNAME_PORT";
+  private static final int KEYCLOAK_PORT = 8080;
+  private static final String ENV_KC_HOSTNAME_STRICT = "KC_HOSTNAME_STRICT";
 
   public static KeycloakIamContainer startKeycloakContainer() {
     final KeycloakIamContainer keycloakContainer = new KeycloakIamContainer();
@@ -26,7 +25,7 @@ public class KeycloakIamContainer extends KeycloakContainer {
     this(KEYCLOAK_DOCKER_IMAGE);
   }
 
-  @SuppressWarnings({"resource", "PMD.ConstructorCallsOverridableMethod"})
+  @SuppressWarnings({ "resource", "PMD.ConstructorCallsOverridableMethod" })
   private KeycloakIamContainer(final String dockerImageName) {
     super(dockerImageName);
 
@@ -36,13 +35,13 @@ public class KeycloakIamContainer extends KeycloakContainer {
     withRealmImportFile("acroteq-realm.json");
     withLogConsumer(logConsumer);
     withCreateContainerCmdModifier(hostNameSetter);
-    withExposedPorts(8080, 9000);
+    withExposedPorts(KEYCLOAK_PORT, 9000);
     withAdminUsername("admin");
     withAdminPassword("admin");
     withNetwork(getNetworkInstance());
     withNetworkAliases(getNetworkName());
-    withEnv(ENV_KC_HOSTNAME_STRICT_BACKCHANNEL, "true");
-    withEnv(ENV_KC_HOSTNAME, hostNameSetter.getHostName());
-    withEnv(ENV_KC_HOSTNAME_PORT, "8080");
+    withEnv(ENV_KC_HOSTNAME_STRICT, "false");
+
+    withVerboseOutput();
   }
 }

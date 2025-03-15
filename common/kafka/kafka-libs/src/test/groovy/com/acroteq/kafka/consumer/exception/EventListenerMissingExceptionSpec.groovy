@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.kafka.consumer.exception
+package com.acroteq.kafka.consumer.exception
 
 import groovy.transform.CompileDynamic
 import spock.lang.Specification

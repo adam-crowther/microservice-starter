@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.domain.event
+package com.acroteq.domain.event
 
 import groovy.transform.CompileDynamic
 import nl.jqno.equalsverifier.EqualsVerifier

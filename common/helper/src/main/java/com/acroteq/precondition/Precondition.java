@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.precondition;
+package com.acroteq.precondition;
 
 import static lombok.AccessLevel.PRIVATE;
 

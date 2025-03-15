@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.infrastructure.data.access.counter;
+package com.acroteq.infrastructure.data.access.counter;
 
 import lombok.SneakyThrows;
 

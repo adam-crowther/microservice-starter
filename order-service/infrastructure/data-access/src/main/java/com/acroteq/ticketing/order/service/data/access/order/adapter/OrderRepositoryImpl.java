@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.order.service.data.access.order.adapter;
 
-import com.acroteq.ticketing.domain.valueobject.OrderId;
-import com.acroteq.ticketing.infrastructure.data.access.repository.ReadWriteRepositoryImpl;
+import com.acroteq.domain.valueobject.OrderId;
+import com.acroteq.infrastructure.data.access.repository.ReadWriteRepositoryImpl;
 import com.acroteq.ticketing.order.service.data.access.order.entity.OrderJpaEntity;
 import com.acroteq.ticketing.order.service.data.access.order.mapper.OrderDomainToJpaMapper;
 import com.acroteq.ticketing.order.service.data.access.order.mapper.OrderJpaToDomainMapper;

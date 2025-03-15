@@ -1,6 +1,6 @@
 package com.acroteq.application.mapper.id;
 
-import com.acroteq.ticketing.domain.valueobject.EntityId;
+import com.acroteq.domain.valueobject.EntityId;
 import jakarta.annotation.Nullable;
 
 import java.util.Optional;

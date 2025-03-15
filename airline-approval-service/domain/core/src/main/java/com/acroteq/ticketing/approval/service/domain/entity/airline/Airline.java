@@ -1,11 +1,11 @@
 package com.acroteq.ticketing.approval.service.domain.entity.airline;
 
-import static com.acroteq.ticketing.precondition.Precondition.checkPrecondition;
+import static com.acroteq.precondition.Precondition.checkPrecondition;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
+import com.acroteq.domain.entity.ReplicatedEntity;
+import com.acroteq.domain.valueobject.AirlineId;
 import com.acroteq.ticketing.approval.service.domain.exception.AirlineValidationException;
-import com.acroteq.ticketing.domain.entity.ReplicatedEntity;
-import com.acroteq.ticketing.domain.valueobject.AirlineId;
 import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import lombok.Getter;
@@ -26,7 +26,7 @@ public class Airline extends ReplicatedEntity<AirlineId> {
 
   private final boolean active;
   @NonNull
-  private final ImmutableList<Flight> flights;
+  private final List<Flight> flights;
 
   public void validate() {
     checkPrecondition(isNotBlank(name), AirlineValidationException::new, "userName");

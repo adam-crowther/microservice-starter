@@ -2,8 +2,8 @@ package com.acroteq.ticketing.payment.service.domain.cucumber.steps;
 
 import static lombok.AccessLevel.PACKAGE;
 
-import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.CurrencyId;
+import com.acroteq.domain.valueobject.CashValue;
+import com.acroteq.domain.valueobject.CurrencyId;
 import com.acroteq.ticketing.payment.service.domain.CreditBalanceDomainService;
 import com.acroteq.ticketing.payment.service.domain.CreditBalanceDomainServiceImpl;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditBalance;

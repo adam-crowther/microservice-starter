@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.payment.service.data.access.payment.adapter;
 
-import com.acroteq.ticketing.domain.valueobject.OrderId;
-import com.acroteq.ticketing.domain.valueobject.PaymentId;
-import com.acroteq.ticketing.infrastructure.data.access.repository.ReadWriteRepositoryImpl;
+import com.acroteq.domain.valueobject.OrderId;
+import com.acroteq.domain.valueobject.PaymentId;
+import com.acroteq.infrastructure.data.access.repository.ReadWriteRepositoryImpl;
 import com.acroteq.ticketing.payment.service.data.access.payment.entity.PaymentJpaEntity;
 import com.acroteq.ticketing.payment.service.data.access.payment.mapper.PaymentDomainToJpaMapper;
 import com.acroteq.ticketing.payment.service.data.access.payment.mapper.PaymentJpaToDomainMapper;

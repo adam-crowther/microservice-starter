@@ -2,10 +2,10 @@ package com.acroteq.ticketing.order.service.domain.test.helper;
 
 import static org.mockito.Mockito.lenient;
 
-import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.CurrencyId;
-import com.acroteq.ticketing.domain.valueobject.EventId;
-import com.acroteq.ticketing.domain.valueobject.FlightId;
+import com.acroteq.domain.valueobject.CashValue;
+import com.acroteq.domain.valueobject.CurrencyId;
+import com.acroteq.domain.valueobject.EventId;
+import com.acroteq.domain.valueobject.FlightId;
 import com.acroteq.ticketing.order.service.domain.entity.Flight;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.FlightRepository;
 import lombok.RequiredArgsConstructor;

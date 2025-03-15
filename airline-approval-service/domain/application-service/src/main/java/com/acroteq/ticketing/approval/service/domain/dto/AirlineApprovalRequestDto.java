@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.approval.service.domain.dto;
 
-import com.acroteq.ticketing.application.dto.SagaDto;
-import com.acroteq.ticketing.domain.valueobject.OrderStatus;
+import com.acroteq.application.dto.SagaDto;
+import com.acroteq.domain.valueobject.OrderStatus;
 import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
@@ -28,7 +28,7 @@ public class AirlineApprovalRequestDto extends SagaDto {
   @NotNull
   private final OrderStatus orderStatus;
   @NotNull
-  private final ImmutableList<OrderItemDto> items;
+  private final List<OrderItemDto> items;
 
   public Long getId() {
     return orderId;

@@ -1,7 +1,6 @@
-package com.acroteq.ticketing.domain.entity;
+package com.acroteq.domain.entity;
 
-import com.acroteq.domain.entity.PrimaryEntity;
-import com.acroteq.ticketing.domain.valueobject.TestId;
+import com.acroteq.domain.valueobject.TestId;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;

@@ -1,6 +1,5 @@
-package com.acroteq.ticketing.application.dto
+package com.acroteq.application.dto
 
-import com.acroteq.application.dto.AuditDto
 import groovy.transform.CompileDynamic
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification

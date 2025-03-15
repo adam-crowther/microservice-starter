@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.kafka.producer.service.callback
+package com.acroteq.kafka.producer.service.callback
 
 import groovy.transform.CompileDynamic
 import org.apache.avro.specific.SpecificRecord

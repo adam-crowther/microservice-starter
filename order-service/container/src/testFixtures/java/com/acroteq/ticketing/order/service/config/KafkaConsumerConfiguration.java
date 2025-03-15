@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.order.service.config;
 
+import com.acroteq.test.kafka.TestKafkaConsumer;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalRequestMessage;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentRequestMessage;
-import com.acroteq.ticketing.test.kafka.TestKafkaConsumer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;

@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.approval.service.domain.dto;
 
-import com.acroteq.ticketing.application.dto.DataTransferObject;
+import com.acroteq.application.dto.DataTransferObject;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

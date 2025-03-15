@@ -1,12 +1,12 @@
 package com.acroteq.ticketing.approval.service.messaging.publisher.kafka;
 
+import com.acroteq.kafka.producer.service.KafkaProducer;
+import com.acroteq.kafka.producer.service.callback.KafkaPublisherCallbackHandler;
 import com.acroteq.ticketing.approval.service.domain.event.order.OrderRejectedEvent;
 import com.acroteq.ticketing.approval.service.domain.ports.output.message.publisher.OrderRejectedMessagePublisher;
 import com.acroteq.ticketing.approval.service.domain.properties.AirlineApprovalServiceConfig;
 import com.acroteq.ticketing.approval.service.messaging.mapper.approval.AirlineApprovalRejectedResponseMessageFactory;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalRejectedResponseMessage;
-import com.acroteq.ticketing.kafka.producer.service.KafkaProducer;
-import com.acroteq.ticketing.kafka.producer.service.callback.KafkaPublisherCallbackHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

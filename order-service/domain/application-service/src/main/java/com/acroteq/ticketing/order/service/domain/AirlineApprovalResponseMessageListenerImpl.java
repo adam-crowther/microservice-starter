@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.order.service.domain;
 
-import com.acroteq.ticketing.domain.validation.ValidationResult;
+import com.acroteq.domain.validation.ValidationResult;
 import com.acroteq.ticketing.order.service.domain.dto.message.AirlineApprovalApprovedResponseDto;
 import com.acroteq.ticketing.order.service.domain.dto.message.AirlineApprovalRejectedResponseDto;
 import com.acroteq.ticketing.order.service.domain.event.OrderCancelledEvent;

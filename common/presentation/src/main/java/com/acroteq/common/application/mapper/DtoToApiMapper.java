@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.common.application.mapper;
+package com.acroteq.common.application.mapper;
 
 import com.acroteq.application.dto.DataTransferObject;
 

@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.order.service.presentation.mapper;
 
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
-import com.acroteq.ticketing.common.application.mapper.ApiToDtoMapper;
+import com.acroteq.application.mapper.MapstructConfig;
+import com.acroteq.common.application.mapper.ApiToDtoMapper;
 import com.acroteq.ticketing.order.service.domain.dto.create.OrderAddressDto;
 import com.acroteq.ticketing.order.service.presentation.model.CreateAddressCommand;
 import org.mapstruct.Mapper;

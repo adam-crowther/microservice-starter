@@ -1,11 +1,11 @@
-package com.acroteq.ticketing.common.application.exception.handler;
+package com.acroteq.common.application.exception.handler;
 
-import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.Value;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,11 +18,14 @@ import java.util.Optional;
 @Value
 public class Problem {
 
-  @NonNull Integer code;
+  @NonNull
+  Integer code;
 
-  @NonNull String reason;
+  @NonNull
+  String reason;
 
-  @NonNull String message;
+  @NonNull
+  String message;
 
   @Nullable
   String i18nCode;
@@ -36,8 +39,8 @@ public class Problem {
 
     public ProblemBuilder i18nParameters(@Nullable final List<String> i18nParameters) {
       this.i18nParameters = Optional.ofNullable(i18nParameters)
-                                    .map(ImmutableList::copyOf)
-                                    .orElse(ImmutableList.of());
+                                    .map(Collections::unmodifiableList)
+                                    .orElse(Collections.emptyList());
       return this;
     }
   }

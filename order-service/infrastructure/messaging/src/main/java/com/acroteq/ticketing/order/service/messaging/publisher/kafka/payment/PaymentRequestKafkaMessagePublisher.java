@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.order.service.messaging.publisher.kafka.payment;
 
+import com.acroteq.kafka.producer.service.KafkaProducer;
+import com.acroteq.kafka.producer.service.callback.KafkaPublisherCallbackHandler;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentRequestMessage;
-import com.acroteq.ticketing.kafka.producer.service.KafkaProducer;
-import com.acroteq.ticketing.kafka.producer.service.callback.KafkaPublisherCallbackHandler;
 import com.acroteq.ticketing.order.service.domain.event.OrderCreatedEvent;
 import com.acroteq.ticketing.order.service.domain.ports.output.message.publisher.payment.PaymentRequestMessagePublisher;
 import com.acroteq.ticketing.order.service.domain.properties.OrderServiceConfig;

@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Version;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -31,6 +32,7 @@ public abstract class PrimaryJpaEntity implements JpaEntity {
   @Column(name = "version", nullable = false)
   private Long version;
 
+  @Builder.Default
   @Embedded
-  private AuditJpaEmbedded audit;
+  private final AuditJpaEmbedded audit = new AuditJpaEmbedded();
 }

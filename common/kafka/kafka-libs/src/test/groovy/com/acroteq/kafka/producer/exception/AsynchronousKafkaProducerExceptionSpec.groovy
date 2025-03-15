@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.kafka.producer.exception
+package com.acroteq.kafka.producer.exception
 
 import groovy.transform.CompileDynamic
 import spock.lang.Specification

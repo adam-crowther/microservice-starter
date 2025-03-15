@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.customer.service.presentation.exception;
 
-import com.acroteq.ticketing.domain.exception.DomainException;
+import com.acroteq.domain.exception.DomainException;
 
 public class MismatchedCustomerIdException extends DomainException {
 

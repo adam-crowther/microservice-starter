@@ -2,7 +2,7 @@ package com.acroteq.ticketing.order.service.data.access.order.entity;
 
 import static lombok.AccessLevel.PROTECTED;
 
-import com.acroteq.ticketing.infrastructure.data.access.entity.PrimaryJpaEntity;
+import com.acroteq.infrastructure.data.access.entity.PrimaryJpaEntity;
 import com.acroteq.ticketing.order.service.data.access.airline.entity.FlightJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

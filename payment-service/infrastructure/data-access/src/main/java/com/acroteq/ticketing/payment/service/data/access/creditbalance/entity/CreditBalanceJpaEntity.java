@@ -3,7 +3,7 @@ package com.acroteq.ticketing.payment.service.data.access.creditbalance.entity;
 import static jakarta.persistence.CascadeType.MERGE;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.acroteq.ticketing.infrastructure.data.access.entity.PrimaryJpaEntity;
+import com.acroteq.infrastructure.data.access.entity.PrimaryJpaEntity;
 import com.acroteq.ticketing.payment.service.data.access.customer.entity.CustomerJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

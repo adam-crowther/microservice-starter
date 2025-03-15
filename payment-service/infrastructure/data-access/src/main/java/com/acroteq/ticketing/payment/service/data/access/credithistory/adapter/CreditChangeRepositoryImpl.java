@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.payment.service.data.access.credithistory.adapter;
 
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
-import com.acroteq.ticketing.infrastructure.data.access.repository.ReadWriteRepositoryImpl;
+import com.acroteq.domain.valueobject.CustomerId;
+import com.acroteq.infrastructure.data.access.repository.ReadWriteRepositoryImpl;
 import com.acroteq.ticketing.payment.service.data.access.credithistory.entity.CreditChangeJpaEntity;
 import com.acroteq.ticketing.payment.service.data.access.credithistory.mapper.CreditChangeDomainToJpaMapper;
 import com.acroteq.ticketing.payment.service.data.access.credithistory.mapper.CreditChangeJpaToDomainMapper;

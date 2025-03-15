@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.payment.service.domain.valueobject;
 
-import com.acroteq.ticketing.domain.validation.ValidationResult;
+import com.acroteq.domain.validation.ValidationResult;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditBalance;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditChange;
 import com.acroteq.ticketing.payment.service.domain.entity.Payment;

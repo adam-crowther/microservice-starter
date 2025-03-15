@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.test.e2e.extension;
 
-import static com.acroteq.ticketing.test.extension.KafkaContainerExtension.KAFKA_CONTAINERS;
+import static com.acroteq.test.extension.KafkaContainerExtension.KAFKA_CONTAINERS;
 
-import com.acroteq.ticketing.test.container.KafkaSslContainer;
+import com.acroteq.test.container.KafkaSslContainer;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;

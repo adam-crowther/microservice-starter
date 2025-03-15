@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.order.service.domain;
 
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
+import com.acroteq.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.order.service.domain.dto.customer.CustomerEventDto;
 import com.acroteq.ticketing.order.service.domain.entity.Customer;
 import com.acroteq.ticketing.order.service.domain.exception.CustomerEventProcessingOrderException;

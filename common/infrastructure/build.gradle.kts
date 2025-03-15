@@ -1,38 +1,38 @@
 plugins {
-  id 'java-conventions'
-  id 'spock-conventions'
-  id 'testcontainers-conventions'
+  id("java-conventions")
+  id("spock-conventions")
+  id("testcontainers-conventions")
 }
 
 dependencies {
-  implementation project(":common:common-application")
-  implementation project(":common:common-domain")
-  implementation project(":common:common-helper")
+  implementation(project(":common:common-application"))
+  implementation(project(":common:common-domain"))
+  implementation(project(":common:common-helper"))
 
-  implementation 'com.google.guava:guava'
-  implementation 'jakarta.persistence:jakarta.persistence-api'
-  implementation 'org.apache.avro:avro'
-  implementation 'org.projectlombok:lombok'
-  implementation 'org.mapstruct:mapstruct'
-  implementation 'org.springframework:spring-context'
-  implementation 'org.springframework.data:spring-data-commons'
-  implementation 'org.springframework.data:spring-data-jpa'
-  implementation 'org.springframework.security:spring-security-core'
 
-  annotationProcessor 'org.mapstruct:mapstruct-processor'
-  annotationProcessor 'org.projectlombok:lombok'
-  annotationProcessor 'org.projectlombok:lombok-mapstruct-binding'
+  implementation(libs.guava)
+  implementation(libs.jakarta.persistence.api)
+  implementation(libs.avro)
+  implementation(libs.lombok)
+  implementation(libs.mapstruct)
+  implementation(libs.spring.context)
+  implementation(libs.spring.data.commons)
+  implementation(libs.spring.data.jpa)
+  implementation(libs.spring.security.core)
 
-  testImplementation 'jakarta.annotation:jakarta.annotation-api'
-  testImplementation 'org.springframework.boot:spring-boot-test'
-  testImplementation 'org.springframework:spring-test'
+  annotationProcessor(libs.mapstruct.processor)
+  annotationProcessor(libs.lombok)
+  annotationProcessor(libs.lombok.mapstruct.binding)
 
-  testAnnotationProcessor 'org.projectlombok:lombok'
+  testImplementation(libs.jakarta.annotation.api)
+  testImplementation(libs.spring.boot.test)
+  testImplementation(libs.spring.test)
 
-  testFixturesImplementation 'com.github.spotbugs:spotbugs-annotations'
-  testFixturesImplementation 'org.projectlombok:lombok'
-  testFixturesImplementation 'org.slf4j:slf4j-api'
+  testAnnotationProcessor(libs.lombok)
 
-  testFixturesAnnotationProcessor 'org.projectlombok:lombok'
+  testFixturesImplementation(libs.spotbugs.annotations)
+  testFixturesImplementation(libs.lombok)
+  testFixturesImplementation(libs.slf4j.api)
 
+  testFixturesAnnotationProcessor(libs.lombok)
 }

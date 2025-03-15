@@ -1,6 +1,5 @@
-package com.acroteq.ticketing.infrastructure.data.access.audit
+package com.acroteq.infrastructure.data.access.audit
 
-import com.acroteq.infrastructure.data.access.audit.AuditorAwareImpl
 import groovy.transform.CompileDynamic
 import org.mockito.Mock
 import org.mockito.Mockito

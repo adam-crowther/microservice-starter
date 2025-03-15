@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.order.service.data.access.order.resolver;
 
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
-import com.acroteq.ticketing.infrastructure.data.access.resolver.JpaResolver;
+import com.acroteq.domain.valueobject.CustomerId;
+import com.acroteq.infrastructure.data.access.resolver.JpaResolver;
 import com.acroteq.ticketing.order.service.data.access.customer.entity.CustomerJpaEntity;
 import com.acroteq.ticketing.order.service.data.access.customer.repository.CustomerJpaRepository;
 import lombok.RequiredArgsConstructor;

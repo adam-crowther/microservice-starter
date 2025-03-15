@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.order.service.domain.mapper.order;
 
-import com.acroteq.ticketing.application.mapper.DtoToDomainMapper;
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
-import com.acroteq.ticketing.application.mapper.id.OrderIdMapper;
+import com.acroteq.application.mapper.DtoToDomainMapper;
+import com.acroteq.application.mapper.MapstructConfig;
+import com.acroteq.application.mapper.id.OrderIdMapper;
 import com.acroteq.ticketing.order.service.domain.dto.create.OrderItemDto;
 import com.acroteq.ticketing.order.service.domain.entity.OrderItem;
 import com.acroteq.ticketing.order.service.domain.resolver.FlightResolver;

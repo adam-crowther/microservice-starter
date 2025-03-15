@@ -1,9 +1,9 @@
 package com.acroteq.ticketing.order.service.domain;
 
-import static com.acroteq.ticketing.precondition.Precondition.checkPrecondition;
+import static com.acroteq.precondition.Precondition.checkPrecondition;
 import static java.util.UUID.randomUUID;
 
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
+import com.acroteq.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderCommandDto;
 import com.acroteq.ticketing.order.service.domain.entity.Airline;
 import com.acroteq.ticketing.order.service.domain.entity.Order;

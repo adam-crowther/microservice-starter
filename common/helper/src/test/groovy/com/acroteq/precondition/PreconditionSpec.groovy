@@ -1,9 +1,9 @@
-package com.acroteq.ticketing.precondition
+package com.acroteq.precondition
 
 import groovy.transform.CompileDynamic
 import spock.lang.Specification
 
-import static com.acroteq.precondition.Precondition.checkPrecondition
+import static Precondition.checkPrecondition
 
 @CompileDynamic
 class PreconditionSpec extends Specification {

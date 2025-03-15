@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.customer.service.domain.dto.get;
 
-import com.acroteq.ticketing.application.dto.AuditedEntityDto;
-import com.acroteq.ticketing.domain.valueobject.CashValue;
+import com.acroteq.application.dto.AuditedEntityDto;
+import com.acroteq.domain.valueobject.CashValue;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

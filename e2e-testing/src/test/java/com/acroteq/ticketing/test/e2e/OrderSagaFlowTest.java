@@ -11,6 +11,8 @@ import static com.acroteq.ticketing.test.e2e.api.DatabaseCheckerFactory.createDa
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
+import com.acroteq.infrastructure.data.access.counter.JdbcDatabaseChecker;
+import com.acroteq.test.extension.KafkaContainerExtension;
 import com.acroteq.ticketing.airline.service.client.api.AirlinesApi;
 import com.acroteq.ticketing.airline.service.client.matcher.AirlineMatcher;
 import com.acroteq.ticketing.airline.service.client.model.Airline;
@@ -21,7 +23,6 @@ import com.acroteq.ticketing.customer.service.client.matcher.CustomerMatcher;
 import com.acroteq.ticketing.customer.service.client.model.CreateCustomerCommand;
 import com.acroteq.ticketing.customer.service.client.model.CreateCustomerResponse;
 import com.acroteq.ticketing.customer.service.client.model.Customer;
-import com.acroteq.ticketing.infrastructure.data.access.counter.JdbcDatabaseChecker;
 import com.acroteq.ticketing.order.service.client.api.OrdersApi;
 import com.acroteq.ticketing.order.service.client.matchers.OrderMatcher;
 import com.acroteq.ticketing.order.service.client.model.CreateOrderCommand;
@@ -32,7 +33,6 @@ import com.acroteq.ticketing.test.e2e.data.MasterData;
 import com.acroteq.ticketing.test.e2e.data.TestDataGenerator;
 import com.acroteq.ticketing.test.e2e.extension.TestContainersExtension;
 import com.acroteq.ticketing.test.e2e.extension.TestDockerContainers;
-import com.acroteq.ticketing.test.extension.KafkaContainerExtension;
 import lombok.extern.slf4j.Slf4j;
 import org.awaitility.Awaitility;
 import org.jetbrains.annotations.NotNull;
@@ -138,7 +138,7 @@ class OrderSagaFlowTest {
     // Create the customer through the CustomerMdm REST API.
     final CreateCustomerCommand createCustomerCommand = testDataGenerator.getCreateCustomerCommand(creditLimit);
     // when:
-    final CreateCustomerResponse customerResponse = createClient(createCustomerCommand);
+    final CreateCustomerResponse customerResponse = createCustomer(createCustomerCommand);
     // then:
     waitForCustomerReplication(customerResponse.getId());
 
@@ -170,7 +170,7 @@ class OrderSagaFlowTest {
                      .build();
   }
 
-  private CreateCustomerResponse createClient(final CreateCustomerCommand createCustomerCommand) {
+  private CreateCustomerResponse createCustomer(final CreateCustomerCommand createCustomerCommand) {
     return customersApi.createCustomer(createCustomerCommand)
                        .blockOptional()
                        .orElseThrow();

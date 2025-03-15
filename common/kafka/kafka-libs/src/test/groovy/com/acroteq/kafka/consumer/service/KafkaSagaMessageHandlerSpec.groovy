@@ -1,9 +1,9 @@
-package com.acroteq.ticketing.kafka.consumer.service
+package com.acroteq.kafka.consumer.service
 
 import com.acroteq.infrastructure.mapper.MessageToDtoMapper
-import com.acroteq.ticketing.kafka.consumer.exception.MessageHandlerParameterCountMismatchException
-import com.acroteq.ticketing.kafka.consumer.exception.UnsupportedMessageTypeException
-import com.acroteq.ticketing.kafka.dto.TestDto
+import com.acroteq.kafka.consumer.exception.MessageHandlerParameterCountMismatchException
+import com.acroteq.kafka.consumer.exception.UnsupportedMessageTypeException
+import com.acroteq.kafka.dto.TestDto
 import groovy.transform.CompileDynamic
 import org.apache.avro.Schema
 import org.apache.avro.specific.SpecificRecord

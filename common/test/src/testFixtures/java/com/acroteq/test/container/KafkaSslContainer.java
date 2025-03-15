@@ -14,7 +14,7 @@ import org.testcontainers.utility.DockerImageName;
 @EqualsAndHashCode(callSuper = true)
 public class KafkaSslContainer extends KafkaContainer {
 
-  public static final String KAFKA_IMAGE_NAME = "confluentinc/cp-kafka:7.9.0";
+  public static final String KAFKA_IMAGE_NAME = "confluentinc/cp-kafka:7.3.2";
 
   private static final String ENV_BROKER_ID = "KAFKA_BROKER_ID";
   private static final String ENV_OFFSETS_TOPIC_REPL_FACTOR = "KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR";
@@ -113,11 +113,9 @@ public class KafkaSslContainer extends KafkaContainer {
   private String getListeners() {
     final int exposedPlaintextPort = getExposedPlaintextPort();
     final int exposedSslPort = getExposedSslPort();
-    return "BROKER://0.0.0.0:" + KAFKA_BROKER_PORT + ","
-           + "INTERNAL_PLAINTEXT://0.0.0.0:" + KAFKA_INTERNAL_PLAINTEXT_PORT + ","
-           + "INTERNAL_SSL://0.0.0.0:" + KAFKA_INTERNAL_SSL_PORT + ","
-           + "EXPOSED_PLAINTEXT://0.0.0.0:" + exposedPlaintextPort + ","
-           + "EXPOSED_SSL://0.0.0.0:" + exposedSslPort;
+    return "BROKER://0.0.0.0:" + KAFKA_BROKER_PORT + "," + "INTERNAL_PLAINTEXT://0.0.0.0:"
+           + KAFKA_INTERNAL_PLAINTEXT_PORT + "," + "INTERNAL_SSL://0.0.0.0:" + KAFKA_INTERNAL_SSL_PORT + ","
+           + "EXPOSED_PLAINTEXT://0.0.0.0:" + exposedPlaintextPort + "," + "EXPOSED_SSL://0.0.0.0:" + exposedSslPort;
   }
 
   @Override
@@ -128,9 +126,10 @@ public class KafkaSslContainer extends KafkaContainer {
     final int mappedSslPort = getMappedPort(exposedSslPort);
     final String hostName = getContainerInfo().getConfig()
                                               .getHostName();
-    return String.format("INTERNAL_PLAINTEXT://%s:%d", hostName, KAFKA_INTERNAL_PLAINTEXT_PORT) + ","
-           + String.format("INTERNAL_SSL://%s:%d", hostName, KAFKA_INTERNAL_SSL_PORT) + ","
-           + String.format("EXPOSED_PLAINTEXT://localhost:%d", mappedPlaintextPort) + ","
+    return String.format("INTERNAL_PLAINTEXT://%s:%d", hostName, KAFKA_INTERNAL_PLAINTEXT_PORT) + "," + String.format(
+        "INTERNAL_SSL://%s:%d",
+        hostName,
+        KAFKA_INTERNAL_SSL_PORT) + "," + String.format("EXPOSED_PLAINTEXT://localhost:%d", mappedPlaintextPort) + ","
            + String.format("EXPOSED_SSL://localhost:%d", mappedSslPort);
   }
 

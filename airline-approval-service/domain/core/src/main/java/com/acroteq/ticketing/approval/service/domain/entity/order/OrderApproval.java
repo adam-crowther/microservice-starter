@@ -1,10 +1,10 @@
 package com.acroteq.ticketing.approval.service.domain.entity.order;
 
+import com.acroteq.domain.entity.AggregateRoot;
+import com.acroteq.domain.valueobject.OrderApprovalStatus;
+import com.acroteq.domain.valueobject.OrderId;
 import com.acroteq.ticketing.approval.service.domain.entity.airline.Airline;
 import com.acroteq.ticketing.approval.service.domain.valueobject.OrderApprovalId;
-import com.acroteq.ticketing.domain.entity.AggregateRoot;
-import com.acroteq.ticketing.domain.valueobject.OrderApprovalStatus;
-import com.acroteq.ticketing.domain.valueobject.OrderId;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;

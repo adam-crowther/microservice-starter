@@ -1,10 +1,10 @@
 package com.acroteq.ticketing.test.e2e.container;
 
-import com.acroteq.ticketing.test.container.KafkaSslContainer;
-import com.acroteq.ticketing.test.container.SchemaRegistryContainer;
-import com.acroteq.ticketing.test.extension.DockerNetworkSingleton;
-import com.acroteq.ticketing.test.extension.HostNameSetter;
-import com.acroteq.ticketing.test.extension.OutputFrameLogger;
+import com.acroteq.test.container.KafkaSslContainer;
+import com.acroteq.test.container.SchemaRegistryContainer;
+import com.acroteq.test.extension.DockerNetworkSingleton;
+import com.acroteq.test.extension.HostNameSetter;
+import com.acroteq.test.extension.OutputFrameLogger;
 import dasniko.testcontainers.keycloak.KeycloakContainer;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -26,16 +26,16 @@ abstract class AbstractTicketingContainer<SelfT extends GenericContainer<SelfT>>
   private static final String ENV_KEYCLOAK_PORT = "KEYCLOAK_PORT";
   private static final String ENV_KAFKA_BOOTSTRAP_SERVERS = "KAFKA_BOOTSTRAP_SERVERS";
   private static final String ENV_SCHEMA_REGISTRY_URL = "SCHEMA_REGISTRY_URL";
+
   private static final String KEYCLOAK_PORT = "8080";
+
   private static final String POSTGRES_PORT = PostgreSQLContainer.POSTGRESQL_PORT.toString();
 
-  @SuppressWarnings("resource")
-  AbstractTicketingContainer(final DockerImageName dockerImageName,
-                             final PostgreSQLContainer<?> postgreSqlContainer,
-                             final List<KafkaSslContainer> kafkaContainers,
-                             final SchemaRegistryContainer schemaRegistryContainer,
-                             final KeycloakContainer keycloakContainer,
-                             final String containerName) {
+  @SuppressWarnings({ "resource", "PMD.ConstructorCallsOverridableMethod" })
+  AbstractTicketingContainer(
+      final DockerImageName dockerImageName, final PostgreSQLContainer<?> postgreSqlContainer,
+      final List<KafkaSslContainer> kafkaContainers, final SchemaRegistryContainer schemaRegistryContainer,
+      final KeycloakContainer keycloakContainer, final String containerName) {
     super(dockerImageName);
 
     final String postgresHost = getPostgresHost(postgreSqlContainer);

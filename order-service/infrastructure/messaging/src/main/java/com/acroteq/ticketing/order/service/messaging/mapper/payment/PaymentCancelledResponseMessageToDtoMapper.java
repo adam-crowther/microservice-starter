@@ -1,9 +1,9 @@
 package com.acroteq.ticketing.order.service.messaging.mapper.payment;
 
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
-import com.acroteq.ticketing.application.mapper.ValidationResultMapper;
-import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
-import com.acroteq.ticketing.infrastructure.mapper.MessageToDtoMapper;
+import com.acroteq.application.mapper.MapstructConfig;
+import com.acroteq.application.mapper.ValidationResultMapper;
+import com.acroteq.application.mapper.id.CurrencyIdMapper;
+import com.acroteq.infrastructure.mapper.MessageToDtoMapper;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentCancelledResponseMessage;
 import com.acroteq.ticketing.order.service.domain.dto.message.PaymentCancelledResponseDto;
 import org.mapstruct.Mapper;

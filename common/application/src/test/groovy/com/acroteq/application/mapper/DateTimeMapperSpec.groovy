@@ -1,6 +1,5 @@
-package com.acroteq.ticketing.application.mapper
+package com.acroteq.application.mapper
 
-import com.acroteq.application.mapper.DateTimeMapper
 import groovy.transform.CompileDynamic
 import spock.lang.Specification
 

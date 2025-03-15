@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.order.service.domain.dto.message;
 
-import com.acroteq.ticketing.application.dto.AuditedSagaDto;
+import com.acroteq.application.dto.AuditedSagaDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.order.service.domain.exception;
 
-import com.acroteq.ticketing.domain.exception.DomainException;
-import com.acroteq.ticketing.domain.valueobject.FlightId;
+import com.acroteq.domain.exception.DomainException;
+import com.acroteq.domain.valueobject.FlightId;
 
 public class FlightNotFoundException extends DomainException {
 

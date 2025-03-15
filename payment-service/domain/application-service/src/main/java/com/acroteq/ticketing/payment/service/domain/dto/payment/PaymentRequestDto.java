@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.payment.service.domain.dto.payment;
 
-import com.acroteq.ticketing.application.dto.SagaDto;
-import com.acroteq.ticketing.domain.valueobject.CashValue;
+import com.acroteq.application.dto.SagaDto;
+import com.acroteq.domain.valueobject.CashValue;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

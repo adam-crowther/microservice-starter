@@ -1,19 +1,20 @@
 plugins {
-  id 'java-conventions'
-  id 'spock-conventions'
+  id("java-conventions")
+  id("spock-conventions")
 }
 
 dependencies {
-  implementation 'org.projectlombok:lombok'
-  implementation 'org.springframework:spring-context'
-  implementation 'org.springframework:spring-core'
-  implementation 'org.springframework.boot:spring-boot'
-  implementation 'org.springframework.boot:spring-boot-autoconfigure'
-  implementation 'org.springframework.security:spring-security-oauth2-resource-server'
-  implementation 'org.springframework.security:spring-security-config'
-  implementation 'org.springframework.security:spring-security-core'
-  implementation 'org.springframework.security:spring-security-oauth2-jose'
-  implementation 'org.springframework.security:spring-security-web'
+  implementation(libs.lombok)
+  implementation(libs.spring.context)
+  implementation(libs.spring.core)
+  implementation(libs.spring.boot)
+  implementation(libs.spring.boot.autoconfigure)
+  implementation(libs.spring.boot.starter.data.jpa)
+  implementation(libs.spring.security.oauth2.resource.server)
+  implementation(libs.spring.security.config)
+  implementation(libs.spring.security.core)
+  implementation(libs.spring.security.oauth2.jose)
+  implementation(libs.spring.security.web)
 
-  annotationProcessor 'org.projectlombok:lombok'
+  annotationProcessor(libs.lombok)
 }

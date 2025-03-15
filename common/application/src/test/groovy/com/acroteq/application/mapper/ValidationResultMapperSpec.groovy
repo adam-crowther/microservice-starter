@@ -1,6 +1,5 @@
-package com.acroteq.ticketing.application.mapper
+package com.acroteq.application.mapper
 
-import com.acroteq.application.mapper.ValidationResultMapper
 import com.acroteq.domain.validation.ValidationResult
 import groovy.transform.CompileDynamic
 import org.mapstruct.factory.Mappers

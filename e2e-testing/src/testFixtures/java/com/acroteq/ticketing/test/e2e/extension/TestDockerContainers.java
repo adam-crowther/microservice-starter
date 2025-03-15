@@ -1,18 +1,18 @@
 package com.acroteq.ticketing.test.e2e.extension;
 
-import static com.acroteq.ticketing.test.container.KeycloakIamContainer.startKeycloakContainer;
-import static com.acroteq.ticketing.test.container.PostgreSqlContainer.startPostgreSqlContainer;
-import static com.acroteq.ticketing.test.container.SchemaRegistryContainer.startSchemaRegistryContainer;
+import static com.acroteq.test.container.KeycloakIamContainer.startKeycloakContainer;
+import static com.acroteq.test.container.PostgreSqlContainer.startPostgreSqlContainer;
+import static com.acroteq.test.container.SchemaRegistryContainer.startSchemaRegistryContainer;
 import static com.acroteq.ticketing.test.e2e.container.AirlineApprovalContainer.startAirlineApprovalContainer;
 import static com.acroteq.ticketing.test.e2e.container.AirlineMdmContainer.startAirlineMdmContainer;
 import static com.acroteq.ticketing.test.e2e.container.CustomerMdmContainer.startCustomerMdmContainer;
 import static com.acroteq.ticketing.test.e2e.container.OrderServiceContainer.startOrderServiceContainer;
 import static com.acroteq.ticketing.test.e2e.container.PaymentServiceContainer.startPaymentServiceContainer;
 
-import com.acroteq.ticketing.test.container.KafkaSslContainer;
-import com.acroteq.ticketing.test.container.KeycloakIamContainer;
-import com.acroteq.ticketing.test.container.PostgreSqlContainer;
-import com.acroteq.ticketing.test.container.SchemaRegistryContainer;
+import com.acroteq.test.container.KafkaSslContainer;
+import com.acroteq.test.container.KeycloakIamContainer;
+import com.acroteq.test.container.PostgreSqlContainer;
+import com.acroteq.test.container.SchemaRegistryContainer;
 import com.acroteq.ticketing.test.e2e.container.AirlineApprovalContainer;
 import com.acroteq.ticketing.test.e2e.container.AirlineMdmContainer;
 import com.acroteq.ticketing.test.e2e.container.CustomerMdmContainer;

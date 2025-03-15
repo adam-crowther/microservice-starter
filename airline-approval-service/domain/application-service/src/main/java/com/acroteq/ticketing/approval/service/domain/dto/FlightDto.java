@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.approval.service.domain.dto;
 
-import com.acroteq.ticketing.application.dto.ReplicatedEntityDto;
-import com.acroteq.ticketing.domain.valueobject.CashValue;
+import com.acroteq.application.dto.ReplicatedEntityDto;
+import com.acroteq.domain.valueobject.CashValue;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.domain.exception
+package com.acroteq.domain.exception
 
 import groovy.transform.CompileDynamic
 import spock.lang.Specification

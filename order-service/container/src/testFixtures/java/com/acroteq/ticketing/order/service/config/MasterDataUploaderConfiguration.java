@@ -1,11 +1,11 @@
 package com.acroteq.ticketing.order.service.config;
 
+import com.acroteq.test.kafka.TestKafkaProducer;
 import com.acroteq.ticketing.kafka.airline.avro.model.AirlineEventMessage;
 import com.acroteq.ticketing.kafka.customer.avro.model.CustomerEventMessage;
 import com.acroteq.ticketing.order.service.data.MasterDataUploader;
 import com.acroteq.ticketing.order.service.data.access.airline.repository.AirlineJpaRepository;
 import com.acroteq.ticketing.order.service.data.access.customer.repository.CustomerJpaRepository;
-import com.acroteq.ticketing.test.kafka.TestKafkaProducer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;

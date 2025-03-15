@@ -1,12 +1,12 @@
 package com.acroteq.ticketing.approval.service.domain;
 
+import com.acroteq.domain.valueobject.AirlineId;
 import com.acroteq.ticketing.approval.service.domain.dto.AirlineEventDto;
 import com.acroteq.ticketing.approval.service.domain.entity.airline.Airline;
 import com.acroteq.ticketing.approval.service.domain.exception.AirlineEventProcessingOrderException;
 import com.acroteq.ticketing.approval.service.domain.mapper.AirlineEventDtoToDomainMapper;
 import com.acroteq.ticketing.approval.service.domain.ports.input.message.listener.airline.AirlineEventMessageListener;
 import com.acroteq.ticketing.approval.service.domain.ports.output.repository.AirlineRepository;
-import com.acroteq.ticketing.domain.valueobject.AirlineId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

@@ -1,9 +1,9 @@
 package com.acroteq.ticketing.order.service.data;
 
+import com.acroteq.test.data.RandomInstantGenerator;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalApprovedResponseMessage;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalRequestMessage;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.AuditRecord;
-import com.acroteq.ticketing.test.data.RandomInstantGenerator;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;

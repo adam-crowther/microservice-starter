@@ -1,19 +1,19 @@
 package com.acroteq.ticketing.payment.service.domain;
 
-import static com.acroteq.ticketing.domain.validation.ValidationResult.fail;
-import static com.acroteq.ticketing.domain.validation.ValidationResult.pass;
-import static com.acroteq.ticketing.domain.valueobject.CashValue.ZERO;
-import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.CANCELLED;
-import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.COMPLETED;
-import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.FAILED;
+import static com.acroteq.domain.validation.ValidationResult.fail;
+import static com.acroteq.domain.validation.ValidationResult.pass;
+import static com.acroteq.domain.valueobject.CashValue.ZERO;
+import static com.acroteq.domain.valueobject.PaymentStatus.CANCELLED;
+import static com.acroteq.domain.valueobject.PaymentStatus.COMPLETED;
+import static com.acroteq.domain.valueobject.PaymentStatus.FAILED;
 import static com.acroteq.ticketing.payment.service.domain.valueobject.CreditChangeType.PAYMENT;
 import static com.acroteq.ticketing.payment.service.domain.valueobject.TransactionType.CREDIT;
 import static com.acroteq.ticketing.payment.service.domain.valueobject.TransactionType.DEBIT;
 
-import com.acroteq.ticketing.domain.validation.ValidationResult;
-import com.acroteq.ticketing.domain.validation.ValidationResultBuilder;
-import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.PaymentStatus;
+import com.acroteq.domain.validation.ValidationResult;
+import com.acroteq.domain.validation.ValidationResultBuilder;
+import com.acroteq.domain.valueobject.CashValue;
+import com.acroteq.domain.valueobject.PaymentStatus;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditBalance;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditChange;
 import com.acroteq.ticketing.payment.service.domain.entity.Customer;

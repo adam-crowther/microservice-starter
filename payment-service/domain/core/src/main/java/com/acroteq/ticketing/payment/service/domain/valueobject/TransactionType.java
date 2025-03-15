@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.payment.service.domain.valueobject;
 
-import static com.acroteq.ticketing.helper.StreamHelper.toSingleItem;
+import static com.acroteq.helper.StreamHelper.toSingleItem;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

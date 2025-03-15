@@ -1,12 +1,12 @@
 package com.acroteq.ticketing.customer.service.domain.entity;
 
-import static com.acroteq.ticketing.domain.valueobject.CashValue.ZERO;
-import static com.acroteq.ticketing.precondition.Precondition.checkPrecondition;
+import static com.acroteq.domain.valueobject.CashValue.ZERO;
+import static com.acroteq.precondition.Precondition.checkPrecondition;
 
+import com.acroteq.domain.entity.AggregateRoot;
+import com.acroteq.domain.valueobject.CashValue;
+import com.acroteq.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.customer.service.domain.exception.CustomerCreditLimitException;
-import com.acroteq.ticketing.domain.entity.AggregateRoot;
-import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;

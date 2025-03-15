@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.approval.service.domain.entity.airline;
 
-import com.acroteq.ticketing.domain.entity.ReplicatedEntity;
-import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.FlightId;
+import com.acroteq.domain.entity.ReplicatedEntity;
+import com.acroteq.domain.valueobject.CashValue;
+import com.acroteq.domain.valueobject.FlightId;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;

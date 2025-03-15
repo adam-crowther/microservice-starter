@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.approval.service.domain.valueobject;
 
-import com.acroteq.ticketing.domain.valueobject.EntityId;
+import com.acroteq.domain.valueobject.EntityId;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;

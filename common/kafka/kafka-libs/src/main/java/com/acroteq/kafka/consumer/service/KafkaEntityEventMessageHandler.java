@@ -1,11 +1,11 @@
-package com.acroteq.ticketing.kafka.consumer.service;
+package com.acroteq.kafka.consumer.service;
 
 import static com.acroteq.precondition.Precondition.checkPrecondition;
 import static java.lang.Long.parseLong;
 
 import com.acroteq.application.dto.DataTransferObject;
 import com.acroteq.infrastructure.mapper.MessageToDtoMapper;
-import com.acroteq.ticketing.kafka.consumer.exception.UnsupportedMessageTypeException;
+import com.acroteq.kafka.consumer.exception.UnsupportedMessageTypeException;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.Schema;

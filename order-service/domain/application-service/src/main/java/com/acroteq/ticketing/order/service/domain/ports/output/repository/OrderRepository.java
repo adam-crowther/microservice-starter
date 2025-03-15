@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.order.service.domain.ports.output.repository;
 
-import com.acroteq.ticketing.application.repository.ReadRepository;
-import com.acroteq.ticketing.application.repository.WriteRepository;
-import com.acroteq.ticketing.domain.valueobject.OrderId;
+import com.acroteq.application.repository.ReadRepository;
+import com.acroteq.application.repository.WriteRepository;
+import com.acroteq.domain.valueobject.OrderId;
 import com.acroteq.ticketing.order.service.domain.entity.Order;
 import com.acroteq.ticketing.order.service.domain.valueobject.TrackingId;
 

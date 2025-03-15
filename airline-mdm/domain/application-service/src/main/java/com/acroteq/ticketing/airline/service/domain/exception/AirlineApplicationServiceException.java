@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.airline.service.domain.exception;
 
-import com.acroteq.ticketing.domain.exception.DomainException;
+import com.acroteq.domain.exception.DomainException;
 
 public class AirlineApplicationServiceException extends DomainException {
 

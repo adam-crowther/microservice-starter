@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.test.e2e.api;
 
-import com.acroteq.ticketing.test.authentication.KeycloakAuthenticator;
+import com.acroteq.test.authentication.KeycloakAuthenticator;
 import com.acroteq.ticketing.test.e2e.extension.TestDockerContainers;
 
 public final class AuthenticationHelper {

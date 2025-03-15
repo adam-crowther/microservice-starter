@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.kafka.consumer.properties;
+package com.acroteq.kafka.consumer.properties;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Value;
@@ -6,10 +6,14 @@ import lombok.Value;
 @Value
 public class KafkaBackoffConfig {
 
-  @NotNull Integer maxRetries;
-  @NotNull Integer initialIntervalInSeconds;
-  @NotNull Double multiplier;
-  @NotNull Integer maxIntervalInSeconds;
+  @NotNull
+  Integer maxRetries;
+  @NotNull
+  Integer initialIntervalInSeconds;
+  @NotNull
+  Double multiplier;
+  @NotNull
+  Integer maxIntervalInSeconds;
 
   public long getInitialIntervalInMilliseconds() {
     return initialIntervalInSeconds * 1000;

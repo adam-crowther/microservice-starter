@@ -1,9 +1,9 @@
 package com.acroteq.ticketing.payment.service.data.access.credithistory.mapper;
 
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
-import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
-import com.acroteq.ticketing.application.mapper.id.CustomerIdMapper;
-import com.acroteq.ticketing.infrastructure.mapper.JpaToDomainMapper;
+import com.acroteq.application.mapper.MapstructConfig;
+import com.acroteq.application.mapper.id.CurrencyIdMapper;
+import com.acroteq.application.mapper.id.CustomerIdMapper;
+import com.acroteq.infrastructure.mapper.JpaToDomainMapper;
 import com.acroteq.ticketing.payment.service.data.access.credithistory.entity.CreditChangeJpaEntity;
 import com.acroteq.ticketing.payment.service.data.access.customer.mapper.CustomerJpaToDomainMapper;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditChange;

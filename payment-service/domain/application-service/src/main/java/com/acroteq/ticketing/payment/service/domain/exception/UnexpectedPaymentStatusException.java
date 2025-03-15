@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.payment.service.domain.exception;
 
-import com.acroteq.ticketing.domain.exception.DomainException;
-import com.acroteq.ticketing.domain.valueobject.PaymentStatus;
+import com.acroteq.domain.exception.DomainException;
+import com.acroteq.domain.valueobject.PaymentStatus;
 
 public class UnexpectedPaymentStatusException extends DomainException {
 

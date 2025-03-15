@@ -1,8 +1,8 @@
 rootProject.name = "ticketing"
 
 include("airline-mdm:container")
-include("airline-mdm:domain:airline-mdm-domain-core")
-include("airline-mdm:domain:airline-mdm-application-service")
+include("airline-mdm:domain:core")
+include("airline-mdm:domain:application-service")
 include("airline-mdm:infrastructure:data-access")
 include("airline-mdm:infrastructure:messaging")
 include("airline-mdm:presentation:api-spec")
@@ -11,7 +11,7 @@ include("airline-mdm:presentation:swagger")
 
 findProject(":airline-mdm:container")?.name = "airline-mdm-container"
 findProject(":airline-mdm:domain")?.name = "airline-mdm-domain"
-findProject(":airline-mdm:domain:domain-core")?.name = "airline-mdm-domain-core"
+findProject(":airline-mdm:domain:core")?.name = "airline-mdm-domain-core"
 findProject(":airline-mdm:domain:application-service")?.name = "airline-mdm-application-service"
 findProject(":airline-mdm:infrastructure")?.name = "airline-mdm-infrastructure"
 findProject(":airline-mdm:infrastructure:data-access")?.name = "airline-mdm-data-access"

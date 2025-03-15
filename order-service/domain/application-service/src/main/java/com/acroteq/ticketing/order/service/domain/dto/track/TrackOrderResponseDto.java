@@ -1,11 +1,11 @@
 package com.acroteq.ticketing.order.service.domain.dto.track;
 
-import static com.acroteq.ticketing.domain.validation.ValidationResult.pass;
+import static com.acroteq.domain.validation.ValidationResult.pass;
 
-import com.acroteq.ticketing.application.dto.AuditDto;
-import com.acroteq.ticketing.application.dto.DataTransferObject;
-import com.acroteq.ticketing.domain.validation.ValidationResult;
-import com.acroteq.ticketing.domain.valueobject.OrderStatus;
+import com.acroteq.application.dto.AuditDto;
+import com.acroteq.application.dto.DataTransferObject;
+import com.acroteq.domain.validation.ValidationResult;
+import com.acroteq.domain.valueobject.OrderStatus;
 import com.acroteq.ticketing.order.service.domain.dto.create.OrderAddressDto;
 import com.acroteq.ticketing.order.service.domain.dto.create.OrderItemDto;
 import com.google.common.collect.ImmutableList;
@@ -35,7 +35,7 @@ public class TrackOrderResponseDto implements DataTransferObject {
   @NotNull
   private final OrderAddressDto streetAddress;
   @NotNull
-  private final ImmutableList<OrderItemDto> items;
+  private final List<OrderItemDto> items;
   @NotNull
   private final UUID trackingId;
   @NotNull

@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.infrastructure.data.access.valueobject;
+package com.acroteq.infrastructure.data.access.valueobject;
 
 import com.acroteq.domain.valueobject.EntityId;
 import lombok.experimental.SuperBuilder;

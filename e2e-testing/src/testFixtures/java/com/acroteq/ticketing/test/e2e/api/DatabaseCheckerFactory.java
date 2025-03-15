@@ -1,10 +1,10 @@
 package com.acroteq.ticketing.test.e2e.api;
 
-import static com.acroteq.ticketing.test.container.PostgreSqlContainer.POSTGRESQL_DATABASE_NAME;
-import static com.acroteq.ticketing.test.container.PostgreSqlContainer.POSTGRESQL_PASSWORD;
-import static com.acroteq.ticketing.test.container.PostgreSqlContainer.POSTGRESQL_USERNAME;
+import static com.acroteq.test.container.PostgreSqlContainer.POSTGRESQL_DATABASE_NAME;
+import static com.acroteq.test.container.PostgreSqlContainer.POSTGRESQL_PASSWORD;
+import static com.acroteq.test.container.PostgreSqlContainer.POSTGRESQL_USERNAME;
 
-import com.acroteq.ticketing.infrastructure.data.access.counter.JdbcDatabaseChecker;
+import com.acroteq.infrastructure.data.access.counter.JdbcDatabaseChecker;
 import com.acroteq.ticketing.test.e2e.extension.TestDockerContainers;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 

@@ -1,13 +1,13 @@
 package com.acroteq.ticketing.order.service.messaging.mapper.airline;
 
 
-import com.acroteq.ticketing.application.mapper.DateTimeMapper;
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
-import com.acroteq.ticketing.application.mapper.id.AirlineIdMapper;
-import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
-import com.acroteq.ticketing.application.mapper.id.FlightIdMapper;
-import com.acroteq.ticketing.application.mapper.id.OrderIdMapper;
-import com.acroteq.ticketing.infrastructure.mapper.EventToMessageMapper;
+import com.acroteq.application.mapper.DateTimeMapper;
+import com.acroteq.application.mapper.MapstructConfig;
+import com.acroteq.application.mapper.id.AirlineIdMapper;
+import com.acroteq.application.mapper.id.CurrencyIdMapper;
+import com.acroteq.application.mapper.id.FlightIdMapper;
+import com.acroteq.application.mapper.id.OrderIdMapper;
+import com.acroteq.infrastructure.mapper.EventToMessageMapper;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalRequestMessage;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.Flight;
 import com.acroteq.ticketing.order.service.domain.entity.OrderItem;

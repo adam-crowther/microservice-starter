@@ -1,12 +1,12 @@
 package com.acroteq.ticketing.payment.service.domain;
 
-import static com.acroteq.ticketing.domain.valueobject.CashValue.ZERO;
+import static com.acroteq.domain.valueobject.CashValue.ZERO;
 import static com.acroteq.ticketing.payment.service.domain.exception.CreditBalanceNotFoundException.creditBalanceNotFoundException;
 import static com.acroteq.ticketing.payment.service.domain.exception.CreditChangeNotFoundException.creditChangeNotFoundException;
 import static com.acroteq.ticketing.payment.service.domain.exception.CustomerNotFoundException.customerNotFoundException;
 
-import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
+import com.acroteq.domain.valueobject.CashValue;
+import com.acroteq.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.payment.service.domain.dto.customer.CustomerEventDto;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditBalance;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditChange;

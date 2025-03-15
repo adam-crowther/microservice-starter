@@ -3,7 +3,7 @@ package com.acroteq.ticketing.order.service.data.access.airline.entity;
 import static jakarta.persistence.CascadeType.ALL;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.acroteq.ticketing.infrastructure.data.access.entity.ReplicatedJpaEntity;
+import com.acroteq.infrastructure.data.access.entity.ReplicatedJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;

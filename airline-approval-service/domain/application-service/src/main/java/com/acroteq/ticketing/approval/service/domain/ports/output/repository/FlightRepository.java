@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.approval.service.domain.ports.output.repository;
 
-import com.acroteq.ticketing.application.repository.ReadRepository;
+import com.acroteq.application.repository.ReadRepository;
+import com.acroteq.domain.valueobject.FlightId;
 import com.acroteq.ticketing.approval.service.domain.entity.airline.Flight;
-import com.acroteq.ticketing.domain.valueobject.FlightId;
 
 public interface FlightRepository extends ReadRepository<FlightId, Flight> {}

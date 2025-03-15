@@ -1,6 +1,5 @@
-package com.acroteq.ticketing.infrastructure.data.access.entity;
+package com.acroteq.infrastructure.data.access.entity;
 
-import com.acroteq.infrastructure.data.access.entity.PrimaryJpaEntity;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder(toBuilder = true)

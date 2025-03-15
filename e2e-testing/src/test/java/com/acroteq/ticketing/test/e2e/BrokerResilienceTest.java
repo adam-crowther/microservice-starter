@@ -8,8 +8,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import com.acroteq.ticketing.infrastructure.data.access.counter.JdbcDatabaseChecker;
-import com.acroteq.ticketing.test.container.KafkaSslContainer;
+import com.acroteq.infrastructure.data.access.counter.JdbcDatabaseChecker;
+import com.acroteq.test.container.KafkaSslContainer;
 import com.acroteq.ticketing.test.e2e.extension.KafkaClusterContainers;
 import com.acroteq.ticketing.test.e2e.extension.KafkaClusterExtension;
 import com.acroteq.ticketing.test.e2e.extension.TestContainersExtension;
@@ -43,13 +43,13 @@ class BrokerResilienceTest {
   private static CustomerUploader uploader;
 
   @BeforeAll
-  static void startUp(final KafkaClusterContainers kafkaClusterContainers, final TestDockerContainers testContainers) {
+  static void startUp(final KafkaClusterContainers kafkaClusterContainers, final TestDockerContainers containers) {
 
-    final String bearerToken = authenticate(testContainers);
+    final String bearerToken = authenticate(containers);
     kafkaContainers = kafkaClusterContainers.getKafkaContainers();
-    uploader = new CustomerUploader(testContainers, bearerToken);
+    uploader = new CustomerUploader(containers, bearerToken);
 
-    databaseChecker = createDatabaseChecker(testContainers);
+    databaseChecker = createDatabaseChecker(containers);
   }
 
   @AfterAll
@@ -68,10 +68,7 @@ class BrokerResilienceTest {
   void testBrokerResilience() {
     // Generate one new customer record per second
     final ScheduledThreadPoolExecutor createCustomerThread = new ScheduledThreadPoolExecutor(1);
-    createCustomerThread.scheduleWithFixedDelay(uploader::createNewCustomer,
-                                                0,
-                                                DELAY_IN_MILLISECONDS,
-                                                MILLISECONDS);
+    createCustomerThread.scheduleWithFixedDelay(uploader::createNewCustomer, 0, DELAY_IN_MILLISECONDS, MILLISECONDS);
 
     // After 15 seconds, shut down the Kafka broker for 15 seconds
     final ScheduledThreadPoolExecutor shutdownKafkaThread = new ScheduledThreadPoolExecutor(1);

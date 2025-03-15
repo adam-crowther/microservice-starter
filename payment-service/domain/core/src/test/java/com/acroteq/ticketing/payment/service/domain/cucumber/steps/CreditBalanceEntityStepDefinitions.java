@@ -4,8 +4,8 @@ import static com.acroteq.ticketing.payment.service.domain.valueobject.Transacti
 import static com.acroteq.ticketing.payment.service.domain.valueobject.TransactionType.DEBIT;
 import static lombok.AccessLevel.PACKAGE;
 
-import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.CurrencyId;
+import com.acroteq.domain.valueobject.CashValue;
+import com.acroteq.domain.valueobject.CurrencyId;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditBalance;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditChange;
 import com.acroteq.ticketing.payment.service.domain.entity.Customer;

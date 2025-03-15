@@ -1,12 +1,12 @@
 package com.acroteq.ticketing.order.service.data.access.order.mapper;
 
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
-import com.acroteq.ticketing.application.mapper.ValidationResultMapper;
-import com.acroteq.ticketing.application.mapper.id.AirlineIdMapper;
-import com.acroteq.ticketing.application.mapper.id.CustomerIdMapper;
-import com.acroteq.ticketing.application.mapper.id.OrderIdMapper;
-import com.acroteq.ticketing.domain.validation.ValidationResult;
-import com.acroteq.ticketing.infrastructure.mapper.JpaToDomainMapper;
+import com.acroteq.application.mapper.MapstructConfig;
+import com.acroteq.application.mapper.ValidationResultMapper;
+import com.acroteq.application.mapper.id.AirlineIdMapper;
+import com.acroteq.application.mapper.id.CustomerIdMapper;
+import com.acroteq.application.mapper.id.OrderIdMapper;
+import com.acroteq.domain.validation.ValidationResult;
+import com.acroteq.infrastructure.mapper.JpaToDomainMapper;
 import com.acroteq.ticketing.order.service.data.access.airline.mapper.AirlineJpaToDomainMapper;
 import com.acroteq.ticketing.order.service.data.access.customer.mapper.CustomerJpaToDomainMapper;
 import com.acroteq.ticketing.order.service.data.access.order.entity.OrderJpaEntity;

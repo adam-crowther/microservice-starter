@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.order.service.presentation.mapper;
 
-import com.acroteq.ticketing.application.dto.AuditDto;
-import com.acroteq.ticketing.application.mapper.DateTimeMapper;
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
+import com.acroteq.application.dto.AuditDto;
+import com.acroteq.application.mapper.DateTimeMapper;
+import com.acroteq.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.order.service.presentation.model.Audit;
 import org.mapstruct.Mapper;
 

@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.kafka.producer.service;
+package com.acroteq.kafka.producer.service;
 
 import org.apache.avro.specific.SpecificRecord;
 import org.springframework.kafka.support.SendResult;

@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.customer.service.presentation.mapper;
 
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
-import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
-import com.acroteq.ticketing.common.application.mapper.ApiToDtoMapper;
+import com.acroteq.application.mapper.MapstructConfig;
+import com.acroteq.application.mapper.id.CurrencyIdMapper;
+import com.acroteq.common.application.mapper.ApiToDtoMapper;
 import com.acroteq.ticketing.customer.service.domain.dto.create.CreateCustomerCommandDto;
 import com.acroteq.ticketing.customer.service.presentation.model.CreateCustomerCommand;
 import org.mapstruct.Mapper;

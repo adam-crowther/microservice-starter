@@ -1,6 +1,4 @@
-package com.acroteq.ticketing.domain.exception;
-
-import com.acroteq.domain.exception.DomainException;
+package com.acroteq.domain.exception;
 
 public class TestDomainException extends DomainException {
 

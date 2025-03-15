@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.common.application.exception.handler;
+package com.acroteq.common.application.exception.handler;
 
 import static java.util.stream.Collectors.joining;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;

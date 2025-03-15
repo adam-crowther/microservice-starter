@@ -1,6 +1,6 @@
 package com.acroteq.application.resolver;
 
-import com.acroteq.ticketing.domain.valueobject.EntityId;
+import com.acroteq.domain.valueobject.EntityId;
 
 public interface Resolver<IdT extends EntityId, TypeT> {
 

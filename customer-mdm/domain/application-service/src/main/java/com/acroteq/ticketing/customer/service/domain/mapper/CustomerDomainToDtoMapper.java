@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.customer.service.domain.mapper;
 
-import com.acroteq.ticketing.application.mapper.DomainToDtoMapper;
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
-import com.acroteq.ticketing.application.mapper.id.CustomerIdMapper;
+import com.acroteq.application.mapper.DomainToDtoMapper;
+import com.acroteq.application.mapper.MapstructConfig;
+import com.acroteq.application.mapper.id.CustomerIdMapper;
 import com.acroteq.ticketing.customer.service.domain.dto.get.CustomerDto;
 import com.acroteq.ticketing.customer.service.domain.entity.Customer;
 import org.mapstruct.Mapper;

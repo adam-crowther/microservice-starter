@@ -1,9 +1,9 @@
 package com.acroteq.application.mapper;
 
-import static com.acroteq.ticketing.domain.validation.ValidationResult.pass;
+import static com.acroteq.domain.validation.ValidationResult.pass;
 import static java.util.Collections.emptyList;
 
-import com.acroteq.ticketing.domain.validation.ValidationResult;
+import com.acroteq.domain.validation.ValidationResult;
 import jakarta.annotation.Nullable;
 import org.mapstruct.Mapper;
 

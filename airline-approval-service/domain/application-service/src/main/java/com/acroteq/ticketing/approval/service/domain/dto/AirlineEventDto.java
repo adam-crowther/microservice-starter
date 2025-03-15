@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.approval.service.domain.dto;
 
-import com.acroteq.ticketing.application.dto.ReplicatedEntityDto;
+import com.acroteq.application.dto.ReplicatedEntityDto;
 import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
@@ -23,7 +23,7 @@ public class AirlineEventDto extends ReplicatedEntityDto {
   @NotNull
   private final boolean active;
   @NotNull
-  private final ImmutableList<FlightDto> flights;
+  private final List<FlightDto> flights;
 
   @SuppressWarnings("PublicInnerClass")
   public abstract static class AirlineEventDtoBuilder<C extends AirlineEventDto, B extends AirlineEventDtoBuilder<C, B>>

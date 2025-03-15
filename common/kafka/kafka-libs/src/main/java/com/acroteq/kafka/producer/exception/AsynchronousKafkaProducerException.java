@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.kafka.producer.exception;
+package com.acroteq.kafka.producer.exception;
 
 import com.acroteq.domain.exception.DomainException;
 

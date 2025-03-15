@@ -1,6 +1,7 @@
-package com.acroteq.ticketing.kafka.payment.avro.model;
+package com.acroteq.kafka.payment.avro.model;
 
-import com.acroteq.ticketing.test.kafka.TestKafkaProducer;
+import com.acroteq.test.kafka.TestKafkaProducer;
+import com.acroteq.ticketing.kafka.payment.avro.model.PaymentPaidResponseMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.payment.service.domain;
 
-import com.acroteq.ticketing.domain.valueobject.CashValue;
+import com.acroteq.domain.valueobject.CashValue;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditBalance;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditChange;
 import com.acroteq.ticketing.payment.service.domain.entity.Customer;

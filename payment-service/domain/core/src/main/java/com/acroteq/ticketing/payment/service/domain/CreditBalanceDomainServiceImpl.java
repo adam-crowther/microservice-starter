@@ -1,11 +1,11 @@
 package com.acroteq.ticketing.payment.service.domain;
 
-import static com.acroteq.ticketing.domain.valueobject.CashValue.ZERO;
+import static com.acroteq.domain.valueobject.CashValue.ZERO;
 import static com.acroteq.ticketing.payment.service.domain.valueobject.CreditChangeType.CREDIT_LIMIT_UPDATE;
 import static com.acroteq.ticketing.payment.service.domain.valueobject.TransactionType.CREDIT;
 import static com.acroteq.ticketing.payment.service.domain.valueobject.TransactionType.DEBIT;
 
-import com.acroteq.ticketing.domain.valueobject.CashValue;
+import com.acroteq.domain.valueobject.CashValue;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditBalance;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditChange;
 import com.acroteq.ticketing.payment.service.domain.entity.Customer;

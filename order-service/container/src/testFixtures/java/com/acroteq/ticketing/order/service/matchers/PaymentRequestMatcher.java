@@ -2,7 +2,7 @@ package com.acroteq.ticketing.order.service.matchers;
 
 import static java.math.BigDecimal.ZERO;
 
-import com.acroteq.ticketing.helper.StreamHelper;
+import com.acroteq.helper.StreamHelper;
 import com.acroteq.ticketing.kafka.airline.avro.model.AirlineEventMessage;
 import com.acroteq.ticketing.kafka.airline.avro.model.Flight;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentRequestMessage;

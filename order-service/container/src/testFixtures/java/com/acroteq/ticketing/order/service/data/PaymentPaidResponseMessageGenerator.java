@@ -1,11 +1,11 @@
 package com.acroteq.ticketing.order.service.data;
 
+import com.acroteq.test.data.IdGenerator;
+import com.acroteq.test.data.RandomInstantGenerator;
+import com.acroteq.test.data.RandomLongGenerator;
 import com.acroteq.ticketing.kafka.payment.avro.model.AuditRecord;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentPaidResponseMessage;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentRequestMessage;
-import com.acroteq.ticketing.test.data.IdGenerator;
-import com.acroteq.ticketing.test.data.RandomInstantGenerator;
-import com.acroteq.ticketing.test.data.RandomLongGenerator;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;

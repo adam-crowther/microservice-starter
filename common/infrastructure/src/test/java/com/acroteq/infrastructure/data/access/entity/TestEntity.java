@@ -1,7 +1,7 @@
-package com.acroteq.ticketing.infrastructure.data.access.entity;
+package com.acroteq.infrastructure.data.access.entity;
 
 import com.acroteq.domain.entity.PrimaryEntity;
-import com.acroteq.ticketing.infrastructure.data.access.valueobject.TestId;
+import com.acroteq.infrastructure.data.access.valueobject.TestId;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 

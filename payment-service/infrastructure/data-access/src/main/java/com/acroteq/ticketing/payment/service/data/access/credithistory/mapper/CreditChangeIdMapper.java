@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.payment.service.data.access.credithistory.mapper;
 
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
-import com.acroteq.ticketing.application.mapper.id.IdMapper;
+import com.acroteq.application.mapper.MapstructConfig;
+import com.acroteq.application.mapper.id.IdMapper;
 import com.acroteq.ticketing.payment.service.domain.valueobject.CreditChangeId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

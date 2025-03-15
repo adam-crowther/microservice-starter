@@ -3,9 +3,9 @@ package com.acroteq.ticketing.order.service.domain.entity;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
-import com.acroteq.ticketing.domain.entity.ReplicatedEntity;
-import com.acroteq.ticketing.domain.valueobject.AirlineId;
-import com.acroteq.ticketing.domain.valueobject.FlightId;
+import com.acroteq.domain.entity.ReplicatedEntity;
+import com.acroteq.domain.valueobject.AirlineId;
+import com.acroteq.domain.valueobject.FlightId;
 import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import lombok.Getter;
@@ -26,7 +26,7 @@ public class Airline extends ReplicatedEntity<AirlineId> {
   private final String name;
 
   @NonNull
-  private final ImmutableList<Flight> flights;
+  private final List<Flight> flights;
 
   private boolean active;
 

@@ -1,12 +1,11 @@
-package com.acroteq.ticketing.infrastructure.data.access.repository
+package com.acroteq.infrastructure.data.access.repository
 
-import com.acroteq.infrastructure.data.access.repository.ReadWriteRepositoryImpl
-import com.acroteq.ticketing.infrastructure.data.access.entity.TestEntity
-import com.acroteq.ticketing.infrastructure.data.access.entity.TestJpaEntity
-import com.acroteq.ticketing.infrastructure.data.access.jpa.TestJpaRepository
-import com.acroteq.ticketing.infrastructure.data.access.mapper.TestDomainToJpaMapper
-import com.acroteq.ticketing.infrastructure.data.access.mapper.TestJpaToDomainMapper
-import com.acroteq.ticketing.infrastructure.data.access.valueobject.TestId
+import com.acroteq.infrastructure.data.access.entity.TestEntity
+import com.acroteq.infrastructure.data.access.entity.TestJpaEntity
+import com.acroteq.infrastructure.data.access.jpa.TestJpaRepository
+import com.acroteq.infrastructure.data.access.mapper.TestDomainToJpaMapper
+import com.acroteq.infrastructure.data.access.mapper.TestJpaToDomainMapper
+import com.acroteq.infrastructure.data.access.valueobject.TestId
 import groovy.transform.CompileDynamic
 import spock.lang.Specification
 

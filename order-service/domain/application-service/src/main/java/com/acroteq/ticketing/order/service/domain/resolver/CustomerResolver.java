@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.order.service.domain.resolver;
 
-import com.acroteq.ticketing.application.resolver.Resolver;
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
+import com.acroteq.application.resolver.Resolver;
+import com.acroteq.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.order.service.domain.entity.Customer;
 import com.acroteq.ticketing.order.service.domain.exception.CustomerNotFoundException;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.CustomerRepository;

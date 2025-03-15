@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.airline.service.data.access.airline.exception;
 
-import com.acroteq.ticketing.domain.exception.DomainException;
+import com.acroteq.domain.exception.DomainException;
 
 public class NoAirlinesFoundException extends DomainException {
 

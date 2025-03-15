@@ -2,7 +2,7 @@ package com.acroteq.ticketing.payment.service.data.access.customer.entity;
 
 import static lombok.AccessLevel.PROTECTED;
 
-import com.acroteq.ticketing.infrastructure.data.access.entity.ReplicatedJpaEntity;
+import com.acroteq.infrastructure.data.access.entity.ReplicatedJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

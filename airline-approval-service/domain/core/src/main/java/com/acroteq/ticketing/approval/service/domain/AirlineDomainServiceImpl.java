@@ -1,12 +1,12 @@
 package com.acroteq.ticketing.approval.service.domain;
 
+import com.acroteq.domain.validation.ValidationResult;
+import com.acroteq.domain.valueobject.OrderApprovalStatus;
+import com.acroteq.domain.valueobject.OrderId;
 import com.acroteq.ticketing.approval.service.domain.entity.airline.Airline;
 import com.acroteq.ticketing.approval.service.domain.entity.order.Order;
 import com.acroteq.ticketing.approval.service.domain.entity.order.OrderApproval;
 import com.acroteq.ticketing.approval.service.domain.valueobject.OrderApprovalOutput;
-import com.acroteq.ticketing.domain.validation.ValidationResult;
-import com.acroteq.ticketing.domain.valueobject.OrderApprovalStatus;
-import com.acroteq.ticketing.domain.valueobject.OrderId;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

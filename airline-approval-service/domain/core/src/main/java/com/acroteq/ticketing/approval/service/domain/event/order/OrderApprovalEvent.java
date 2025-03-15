@@ -1,10 +1,10 @@
 package com.acroteq.ticketing.approval.service.domain.event.order;
 
+import com.acroteq.domain.event.SagaEvent;
+import com.acroteq.domain.validation.ValidationResult;
+import com.acroteq.domain.valueobject.OrderId;
 import com.acroteq.ticketing.approval.service.domain.entity.order.OrderApproval;
 import com.acroteq.ticketing.approval.service.domain.event.order.visitor.OrderApprovalEventVisitor;
-import com.acroteq.ticketing.domain.event.SagaEvent;
-import com.acroteq.ticketing.domain.validation.ValidationResult;
-import com.acroteq.ticketing.domain.valueobject.OrderId;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;

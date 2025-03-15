@@ -5,9 +5,9 @@ plugins {
 val libs = versionCatalogs.named("libs")
 
 dependencies {
-  testImplementation(libs.findLibrary("cucumber-java"))
-  testImplementation(libs.findLibrary("cucumber-junit"))
-  testImplementation(libs.findLibrary("cucumber-picocontainer"))
-  testImplementation(libs.findLibrary("junit"))
-  testImplementation(libs.findLibrary("junit-vintage"))
+  testImplementation(libs.findLibrary("cucumber-java").get())
+  testImplementation(libs.findLibrary("cucumber-junit").get())
+  testImplementation(libs.findLibrary("cucumber-picocontainer").get())
+  testImplementation(libs.findLibrary("junit").get())
+  testImplementation(libs.findLibrary("junit-vintage").get())
 }

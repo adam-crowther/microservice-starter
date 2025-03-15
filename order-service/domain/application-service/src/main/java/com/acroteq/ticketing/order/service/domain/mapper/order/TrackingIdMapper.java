@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.order.service.domain.mapper.order;
 
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
+import com.acroteq.application.mapper.MapstructConfig;
 import com.acroteq.ticketing.order.service.domain.valueobject.TrackingId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,11 +1,11 @@
 package com.acroteq.ticketing.airline.service.data.access.airline.mapper;
 
+import com.acroteq.application.mapper.MapstructConfig;
+import com.acroteq.application.mapper.id.CurrencyIdMapper;
+import com.acroteq.application.mapper.id.FlightIdMapper;
+import com.acroteq.infrastructure.mapper.DomainToJpaMapper;
 import com.acroteq.ticketing.airline.service.data.access.airline.entity.FlightJpaEntity;
 import com.acroteq.ticketing.airline.service.domain.entity.Flight;
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
-import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
-import com.acroteq.ticketing.application.mapper.id.FlightIdMapper;
-import com.acroteq.ticketing.infrastructure.mapper.DomainToJpaMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

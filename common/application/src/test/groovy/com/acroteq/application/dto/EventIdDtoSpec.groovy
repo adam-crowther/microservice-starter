@@ -1,6 +1,5 @@
-package com.acroteq.ticketing.application.dto
+package com.acroteq.application.dto
 
-import com.acroteq.application.dto.EventIdDto
 import groovy.transform.CompileDynamic
 import jakarta.validation.Validation
 import jakarta.validation.Validator

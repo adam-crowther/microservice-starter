@@ -3,9 +3,9 @@ package com.acroteq.ticketing.airline.service.presentation.exception.handler;
 import static java.util.Arrays.asList;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+import com.acroteq.common.application.exception.handler.Problem;
+import com.acroteq.domain.exception.DomainException;
 import com.acroteq.ticketing.airline.service.domain.exception.AirlineNotFoundException;
-import com.acroteq.ticketing.common.application.exception.handler.Problem;
-import com.acroteq.ticketing.domain.exception.DomainException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;

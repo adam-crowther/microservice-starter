@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.order.service.domain.dto.create;
 
-import com.acroteq.ticketing.application.dto.AuditDto;
-import com.acroteq.ticketing.application.dto.DataTransferObject;
-import com.acroteq.ticketing.domain.valueobject.OrderStatus;
+import com.acroteq.application.dto.AuditDto;
+import com.acroteq.application.dto.DataTransferObject;
+import com.acroteq.domain.valueobject.OrderStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

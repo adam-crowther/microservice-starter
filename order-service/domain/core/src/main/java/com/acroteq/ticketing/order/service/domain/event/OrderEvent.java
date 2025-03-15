@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.order.service.domain.event;
 
-import com.acroteq.ticketing.domain.event.SagaEvent;
+import com.acroteq.domain.event.SagaEvent;
 import com.acroteq.ticketing.order.service.domain.entity.Order;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

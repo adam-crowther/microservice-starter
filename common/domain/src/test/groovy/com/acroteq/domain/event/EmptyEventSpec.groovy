@@ -1,6 +1,5 @@
-package com.acroteq.ticketing.domain.event
+package com.acroteq.domain.event
 
-import com.acroteq.domain.event.EmptyEvent
 import groovy.transform.CompileDynamic
 import spock.lang.Specification
 

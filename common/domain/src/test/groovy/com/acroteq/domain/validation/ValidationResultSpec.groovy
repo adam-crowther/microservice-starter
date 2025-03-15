@@ -1,6 +1,5 @@
-package com.acroteq.ticketing.domain.validation
+package com.acroteq.domain.validation
 
-import com.acroteq.domain.validation.ValidationResult
 import groovy.transform.CompileDynamic
 import spock.lang.Specification
 

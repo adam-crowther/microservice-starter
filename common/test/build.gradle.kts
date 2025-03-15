@@ -1,35 +1,35 @@
 plugins {
-  id 'java-conventions'
-  id 'testcontainers-conventions'
+  id("java-conventions")
+  id("testcontainers-conventions")
 }
 
 dependencies {
-  testFixturesImplementation 'com.github.dasniko:testcontainers-keycloak'
-  testFixturesImplementation 'com.github.spotbugs:spotbugs-annotations'
-  testFixturesImplementation 'io.confluent:kafka-avro-serializer'
-  testFixturesImplementation 'io.projectreactor.kafka:reactor-kafka'
-  testFixturesImplementation 'io.projectreactor:reactor-core'
-  testFixturesImplementation 'org.apache.avro:avro'
-  testFixturesImplementation 'org.apache.commons:commons-math3'
-  testFixturesImplementation 'org.apache.kafka:kafka-clients'
-  testFixturesImplementation 'org.junit.jupiter:junit-jupiter'
-  testFixturesImplementation 'org.projectlombok:lombok'
-  testFixturesImplementation 'org.springframework.boot:spring-boot-test'
-  testFixturesImplementation 'org.springframework.kafka:spring-kafka'
-  testFixturesImplementation 'org.springframework:spring-context'
-  testFixturesImplementation 'org.springframework:spring-web'
-  testFixturesImplementation "org.springframework:spring-webflux"
-  testFixturesImplementation 'org.testcontainers:testcontainers'
-  testFixturesImplementation 'org.testcontainers:kafka'
-  testFixturesImplementation 'org.testcontainers:postgresql'
+  testFixturesImplementation(libs.testcontainers.keycloak)
+  testFixturesImplementation(libs.spotbugs.annotations)
+  testFixturesImplementation(libs.kafka.avro.serializer)
+  testFixturesImplementation(libs.reactor.kafka)
+  testFixturesImplementation(libs.reactor.core)
+  testFixturesImplementation(libs.avro)
+  testFixturesImplementation(libs.commons.math3)
+  testFixturesImplementation(libs.kafka.clients)
+  testFixturesImplementation(libs.junit.jupiter)
+  testFixturesImplementation(libs.lombok)
+  testFixturesImplementation(libs.spring.boot.test)
+  testFixturesImplementation(libs.spring.kafka)
+  testFixturesImplementation(libs.spring.context)
+  testFixturesImplementation(libs.spring.web)
+  testFixturesImplementation(libs.spring.webflux)
+  testFixturesImplementation(libs.testcontainers)
+  testFixturesImplementation(libs.testcontainers.kafka)
+  testFixturesImplementation(libs.testcontainers.postgresql)
 
-  testFixturesAnnotationProcessor 'org.projectlombok:lombok'
+  testFixturesAnnotationProcessor(libs.lombok)
 }
 
 sourceSets {
   test {
     resources {
-      srcDirs "src/testFixtures/resources"
+      srcDirs("src/testFixtures/resources")
     }
   }
 }

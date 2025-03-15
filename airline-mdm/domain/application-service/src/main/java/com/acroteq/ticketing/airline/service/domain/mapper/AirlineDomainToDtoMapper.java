@@ -1,10 +1,10 @@
 package com.acroteq.ticketing.airline.service.domain.mapper;
 
+import com.acroteq.application.mapper.DomainToDtoMapper;
+import com.acroteq.application.mapper.MapstructConfig;
+import com.acroteq.application.mapper.id.AirlineIdMapper;
 import com.acroteq.ticketing.airline.service.domain.dto.get.AirlineDto;
 import com.acroteq.ticketing.airline.service.domain.entity.Airline;
-import com.acroteq.ticketing.application.mapper.DomainToDtoMapper;
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
-import com.acroteq.ticketing.application.mapper.id.AirlineIdMapper;
 import org.mapstruct.Mapper;
 
 @Mapper(config = MapstructConfig.class, uses = { AirlineIdMapper.class, FlightDomainToDtoMapper.class })

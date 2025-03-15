@@ -4,7 +4,7 @@ import static org.springframework.kafka.support.KafkaHeaders.OFFSET;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_KEY;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
 
-import com.acroteq.ticketing.kafka.consumer.service.KafkaEntityEventMessageHandler;
+import com.acroteq.kafka.consumer.service.KafkaEntityEventMessageHandler;
 import com.acroteq.ticketing.kafka.customer.avro.model.CustomerEventMessage;
 import com.acroteq.ticketing.order.service.domain.ports.input.message.listener.customer.CustomerEventMessageListener;
 import com.acroteq.ticketing.order.service.messaging.mapper.customer.CustomerEventMessageToDtoMapper;

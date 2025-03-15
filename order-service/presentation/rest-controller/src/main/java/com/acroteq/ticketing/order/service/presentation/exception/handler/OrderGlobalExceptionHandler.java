@@ -3,7 +3,7 @@ package com.acroteq.ticketing.order.service.presentation.exception.handler;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-import com.acroteq.ticketing.domain.exception.DomainException;
+import com.acroteq.domain.exception.DomainException;
 import com.acroteq.ticketing.order.service.domain.exception.AirlineNotActiveException;
 import com.acroteq.ticketing.order.service.domain.exception.AirlineNotFoundException;
 import com.acroteq.ticketing.order.service.domain.exception.CustomerNotFoundException;

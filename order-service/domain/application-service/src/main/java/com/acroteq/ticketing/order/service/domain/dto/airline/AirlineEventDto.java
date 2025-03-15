@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.order.service.domain.dto.airline;
 
-import com.acroteq.ticketing.application.dto.ReplicatedEntityDto;
+import com.acroteq.application.dto.ReplicatedEntityDto;
 import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
@@ -21,7 +21,7 @@ public class AirlineEventDto extends ReplicatedEntityDto {
   @NotNull
   private final String name;
   @NotNull
-  private final ImmutableList<FlightDto> flights;
+  private final List<FlightDto> flights;
   @NotNull
   private final boolean active;
 

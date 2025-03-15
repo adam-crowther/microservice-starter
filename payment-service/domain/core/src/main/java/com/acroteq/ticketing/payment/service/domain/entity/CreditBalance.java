@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.payment.service.domain.entity;
 
-import com.acroteq.ticketing.domain.entity.PrimaryEntity;
-import com.acroteq.ticketing.domain.valueobject.CashValue;
+import com.acroteq.domain.entity.PrimaryEntity;
+import com.acroteq.domain.valueobject.CashValue;
 import com.acroteq.ticketing.payment.service.domain.valueobject.CreditBalanceId;
 import lombok.Getter;
 import lombok.NonNull;

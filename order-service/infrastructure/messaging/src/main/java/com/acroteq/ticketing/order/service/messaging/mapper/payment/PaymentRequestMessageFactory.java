@@ -1,12 +1,12 @@
 package com.acroteq.ticketing.order.service.messaging.mapper.payment;
 
 
-import com.acroteq.ticketing.application.mapper.DateTimeMapper;
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
-import com.acroteq.ticketing.application.mapper.id.CurrencyIdMapper;
-import com.acroteq.ticketing.application.mapper.id.CustomerIdMapper;
-import com.acroteq.ticketing.application.mapper.id.OrderIdMapper;
-import com.acroteq.ticketing.infrastructure.mapper.EventToMessageMapper;
+import com.acroteq.application.mapper.DateTimeMapper;
+import com.acroteq.application.mapper.MapstructConfig;
+import com.acroteq.application.mapper.id.CurrencyIdMapper;
+import com.acroteq.application.mapper.id.CustomerIdMapper;
+import com.acroteq.application.mapper.id.OrderIdMapper;
+import com.acroteq.infrastructure.mapper.EventToMessageMapper;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentRequestMessage;
 import com.acroteq.ticketing.order.service.domain.event.OrderEvent;
 import org.mapstruct.Mapper;

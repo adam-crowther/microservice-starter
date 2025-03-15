@@ -1,10 +1,10 @@
-package com.acroteq.ticketing.kafka.producer.service.impl;
+package com.acroteq.kafka.producer.service.impl;
 
 import static java.lang.System.lineSeparator;
 
-import com.acroteq.ticketing.kafka.producer.exception.AsynchronousKafkaProducerException;
-import com.acroteq.ticketing.kafka.producer.exception.SynchronousKafkaProducerException;
-import com.acroteq.ticketing.kafka.producer.service.KafkaProducer;
+import com.acroteq.kafka.producer.exception.AsynchronousKafkaProducerException;
+import com.acroteq.kafka.producer.exception.SynchronousKafkaProducerException;
+import com.acroteq.kafka.producer.service.KafkaProducer;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

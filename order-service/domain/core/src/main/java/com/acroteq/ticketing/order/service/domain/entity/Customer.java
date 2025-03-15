@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.order.service.domain.entity;
 
-import com.acroteq.ticketing.domain.entity.ReplicatedEntity;
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
+import com.acroteq.domain.entity.ReplicatedEntity;
+import com.acroteq.domain.valueobject.CustomerId;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;

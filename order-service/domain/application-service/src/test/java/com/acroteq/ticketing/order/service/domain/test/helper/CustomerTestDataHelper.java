@@ -6,8 +6,8 @@ import static com.acroteq.ticketing.order.service.domain.test.helper.OrderTestDa
 import static com.acroteq.ticketing.order.service.domain.test.helper.OrderTestDataHelper.ORDER_1_ITEM_1_QUANTITY;
 import static org.mockito.Mockito.lenient;
 
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
-import com.acroteq.ticketing.domain.valueobject.EventId;
+import com.acroteq.domain.valueobject.CustomerId;
+import com.acroteq.domain.valueobject.EventId;
 import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderCommandDto;
 import com.acroteq.ticketing.order.service.domain.dto.create.OrderAddressDto;
 import com.acroteq.ticketing.order.service.domain.dto.create.OrderItemDto;

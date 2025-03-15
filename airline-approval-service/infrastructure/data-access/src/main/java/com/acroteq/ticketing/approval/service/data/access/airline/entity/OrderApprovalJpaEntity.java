@@ -4,8 +4,8 @@ import static jakarta.persistence.CascadeType.MERGE;
 import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.acroteq.ticketing.domain.valueobject.OrderApprovalStatus;
-import com.acroteq.ticketing.infrastructure.data.access.entity.PrimaryJpaEntity;
+import com.acroteq.domain.valueobject.OrderApprovalStatus;
+import com.acroteq.infrastructure.data.access.entity.PrimaryJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;

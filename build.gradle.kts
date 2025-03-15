@@ -1,18 +1,17 @@
 plugins {
-  id 'base'
-  id 'maven-publish'
-  id 'gradlelint-conventions'
+    base
+    `maven-publish`
 }
 
 allprojects {
-  repositories {
-    mavenCentral()
-    maven {
-      url "https://packages.confluent.io/maven/"
+    repositories {
+        mavenCentral()
+        maven {
+            url = uri("https://packages.confluent.io/maven/")
+        }
     }
-  }
 }
 
 configurations.configureEach {
-  resolutionStrategy.failOnVersionConflict()
+    resolutionStrategy.failOnVersionConflict()
 }

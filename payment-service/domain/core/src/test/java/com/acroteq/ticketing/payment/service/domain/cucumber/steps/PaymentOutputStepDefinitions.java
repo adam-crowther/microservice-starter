@@ -1,13 +1,13 @@
 package com.acroteq.ticketing.payment.service.domain.cucumber.steps;
 
-import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.CANCELLED;
-import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.COMPLETED;
-import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.FAILED;
+import static com.acroteq.domain.valueobject.PaymentStatus.CANCELLED;
+import static com.acroteq.domain.valueobject.PaymentStatus.COMPLETED;
+import static com.acroteq.domain.valueobject.PaymentStatus.FAILED;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import com.acroteq.ticketing.domain.validation.ValidationResult;
-import com.acroteq.ticketing.domain.valueobject.OrderApprovalStatus;
+import com.acroteq.domain.validation.ValidationResult;
+import com.acroteq.domain.valueobject.OrderApprovalStatus;
 import com.acroteq.ticketing.payment.service.domain.entity.Payment;
 import com.acroteq.ticketing.payment.service.domain.valueobject.PaymentOutput;
 import io.cucumber.java.en.Then;

@@ -56,13 +56,17 @@ spring:
             client-id: ticketing
             authorization-grant-type: authorization_code
             scope: openid
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
         provider:
           keycloak:
-            issuer-uri: http://${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/realms/acroteq
+            authorization-uri: http://${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/realms/acroteq/protocol/openid-connect/auth
+            jwk-set-uri: http://${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/realms/acroteq/protocol/openid-connect/certs
+            token-uri: http://${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/realms/acroteq/protocol/openid-connect/token
+            user-info-uri: http://${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/realms/acroteq/protocol/openid-connect/userinfo
             user-name-attribute: preferred_username
       resourceserver:
         jwt:
-          issuer-uri: http://${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/realms/acroteq
+          jwk-set-uri: http://${KEYCLOAK_HOST}:${KEYCLOAK_PORT}/realms/acroteq/protocol/openid-connect/certs
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
     security:

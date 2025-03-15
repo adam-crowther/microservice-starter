@@ -1,9 +1,9 @@
 package com.acroteq.ticketing.payment.service.domain.event;
 
-import static com.acroteq.ticketing.domain.validation.ValidationResult.pass;
+import static com.acroteq.domain.validation.ValidationResult.pass;
 
-import com.acroteq.ticketing.domain.event.SagaEvent;
-import com.acroteq.ticketing.domain.validation.ValidationResult;
+import com.acroteq.domain.event.SagaEvent;
+import com.acroteq.domain.validation.ValidationResult;
 import com.acroteq.ticketing.payment.service.domain.entity.Payment;
 import com.acroteq.ticketing.payment.service.domain.event.visitor.PaymentEventVisitor;
 import lombok.Builder;

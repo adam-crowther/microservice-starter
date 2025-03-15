@@ -3,7 +3,7 @@
 ## Authentication
 
 - Authentication is provided by KeyCloud, which is configured to run in a docker container for test purposes.
-  [docker-compose.yaml](../infrastructure/docker-compose/docker-compose.yaml).
+  [docker-compose.yaml](../infrastructure/docker-compose.yaml).
 - Swagger UI redirects to the KeyCloud Login page for authentication and stores the resulting access token (JWT) in its
   local Javascript session.
 - The access token (JWT) is then included in the subsequent REST API Request headers.

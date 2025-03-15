@@ -1,7 +1,7 @@
 package com.acroteq.application.repository;
 
-import com.acroteq.ticketing.domain.entity.Entity;
-import com.acroteq.ticketing.domain.valueobject.EntityId;
+import com.acroteq.domain.entity.Entity;
+import com.acroteq.domain.valueobject.EntityId;
 
 import java.util.Optional;
 

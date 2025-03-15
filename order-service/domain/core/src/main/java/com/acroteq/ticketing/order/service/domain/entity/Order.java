@@ -1,20 +1,20 @@
 package com.acroteq.ticketing.order.service.domain.entity;
 
-import static com.acroteq.ticketing.domain.validation.ValidationResult.combine;
-import static com.acroteq.ticketing.domain.validation.ValidationResult.pass;
-import static com.acroteq.ticketing.domain.valueobject.CashValue.ZERO;
-import static com.acroteq.ticketing.domain.valueobject.OrderStatus.APPROVED;
-import static com.acroteq.ticketing.domain.valueobject.OrderStatus.CANCELLED;
-import static com.acroteq.ticketing.domain.valueobject.OrderStatus.CANCELLING;
-import static com.acroteq.ticketing.domain.valueobject.OrderStatus.PAID;
-import static com.acroteq.ticketing.domain.valueobject.OrderStatus.PENDING;
-import static com.acroteq.ticketing.precondition.Precondition.checkPrecondition;
+import static com.acroteq.domain.validation.ValidationResult.combine;
+import static com.acroteq.domain.validation.ValidationResult.pass;
+import static com.acroteq.domain.valueobject.CashValue.ZERO;
+import static com.acroteq.domain.valueobject.OrderStatus.APPROVED;
+import static com.acroteq.domain.valueobject.OrderStatus.CANCELLED;
+import static com.acroteq.domain.valueobject.OrderStatus.CANCELLING;
+import static com.acroteq.domain.valueobject.OrderStatus.PAID;
+import static com.acroteq.domain.valueobject.OrderStatus.PENDING;
+import static com.acroteq.precondition.Precondition.checkPrecondition;
 
-import com.acroteq.ticketing.domain.entity.AggregateRoot;
-import com.acroteq.ticketing.domain.validation.ValidationResult;
-import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.OrderId;
-import com.acroteq.ticketing.domain.valueobject.OrderStatus;
+import com.acroteq.domain.entity.AggregateRoot;
+import com.acroteq.domain.validation.ValidationResult;
+import com.acroteq.domain.valueobject.CashValue;
+import com.acroteq.domain.valueobject.OrderId;
+import com.acroteq.domain.valueobject.OrderStatus;
 import com.acroteq.ticketing.order.service.domain.exception.InvalidOrderPrestateException;
 import com.acroteq.ticketing.order.service.domain.valueobject.StreetAddress;
 import com.acroteq.ticketing.order.service.domain.valueobject.TrackingId;
@@ -42,7 +42,7 @@ public class Order extends AggregateRoot<OrderId> {
   @NonNull
   private final StreetAddress streetAddress;
   @NonNull
-  private final ImmutableList<OrderItem> items;
+  private final List<OrderItem> items;
 
   @NonNull
   @Builder.Default

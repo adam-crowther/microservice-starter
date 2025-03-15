@@ -1,12 +1,12 @@
-package com.acroteq.ticketing.kafka.consumer.config;
+package com.acroteq.kafka.consumer.config;
 
 import static org.springframework.kafka.KafkaException.Level.ERROR;
 
-import com.acroteq.ticketing.kafka.consumer.exception.EventListenerMissingException;
-import com.acroteq.ticketing.kafka.consumer.exception.UnsupportedMessageTypeException;
-import com.acroteq.ticketing.kafka.consumer.properties.KafkaBackoffConfig;
-import com.acroteq.ticketing.kafka.consumer.properties.KafkaConsumerConfig;
-import com.acroteq.ticketing.kafka.consumer.properties.KafkaDeadLetterConfig;
+import com.acroteq.kafka.consumer.exception.EventListenerMissingException;
+import com.acroteq.kafka.consumer.exception.UnsupportedMessageTypeException;
+import com.acroteq.kafka.consumer.properties.KafkaBackoffConfig;
+import com.acroteq.kafka.consumer.properties.KafkaConsumerConfig;
+import com.acroteq.kafka.consumer.properties.KafkaDeadLetterConfig;
 import lombok.RequiredArgsConstructor;
 import org.apache.avro.SchemaValidationException;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -14,10 +14,7 @@ import org.apache.kafka.common.TopicPartition;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.config.AbstractKafkaListenerContainerFactory;
-import org.springframework.kafka.config.ContainerCustomizer;
 import org.springframework.kafka.core.KafkaOperations;
-import org.springframework.kafka.listener.AbstractMessageListenerContainer;
 import org.springframework.kafka.listener.ConsumerRecordRecoverer;
 import org.springframework.kafka.listener.DeadLetterPublishingRecoverer;
 import org.springframework.kafka.listener.DefaultErrorHandler;

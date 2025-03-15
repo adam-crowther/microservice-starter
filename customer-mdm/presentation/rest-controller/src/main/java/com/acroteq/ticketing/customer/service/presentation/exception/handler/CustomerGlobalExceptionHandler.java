@@ -3,13 +3,12 @@ package com.acroteq.ticketing.customer.service.presentation.exception.handler;
 import static java.util.Arrays.asList;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-import com.acroteq.ticketing.common.application.exception.handler.Problem;
+import com.acroteq.common.application.exception.handler.Problem;
+import com.acroteq.domain.exception.DomainException;
 import com.acroteq.ticketing.customer.service.domain.exception.CustomerNotFoundException;
-import com.acroteq.ticketing.domain.exception.DomainException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

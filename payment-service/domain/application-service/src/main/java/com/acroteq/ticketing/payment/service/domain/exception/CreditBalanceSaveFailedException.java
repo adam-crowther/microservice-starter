@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.payment.service.domain.exception;
 
-import com.acroteq.ticketing.domain.exception.DomainException;
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
+import com.acroteq.domain.exception.DomainException;
+import com.acroteq.domain.valueobject.CustomerId;
 
 public class CreditBalanceSaveFailedException extends DomainException {
 

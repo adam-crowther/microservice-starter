@@ -1,10 +1,10 @@
 package com.acroteq.ticketing.approval.service.messaging.mapper.approval;
 
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
+import com.acroteq.application.mapper.MapstructConfig;
+import com.acroteq.infrastructure.mapper.MessageToDtoMapper;
 import com.acroteq.ticketing.approval.service.domain.dto.AirlineApprovalRequestDto;
 import com.acroteq.ticketing.approval.service.domain.dto.OrderItemDto;
 import com.acroteq.ticketing.approval.service.messaging.mapper.airline.FlightMessageToDtoMapper;
-import com.acroteq.ticketing.infrastructure.mapper.MessageToDtoMapper;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalRequestMessage;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.Flight;
 import org.mapstruct.Mapper;

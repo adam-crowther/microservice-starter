@@ -1,28 +1,28 @@
 plugins {
-  id 'java-conventions'
-  id 'spock-conventions'
-  id 'liquibase-conventions'
+  id("java-conventions")
+  id("spock-conventions")
+  id("liquibase-conventions")
 }
 
 dependencies {
-  implementation project(":common:common-domain")
-  implementation project(":common:common-application")
-  implementation project(":common:common-helper")
-  implementation project(":common:common-infrastructure")
-  implementation project(":airline-mdm:airline-mdm-domain:airline-mdm-domain-core")
-  implementation project(":airline-mdm:airline-mdm-domain:airline-mdm-application-service")
+  implementation(project(":common:common-domain"))
+  implementation(project(":common:common-application"))
+  implementation(project(":common:common-helper"))
+  implementation(project(":common:common-infrastructure"))
+  implementation(project(":airline-mdm:airline-mdm-domain:airline-mdm-domain-core"))
+  implementation(project(":airline-mdm:airline-mdm-domain:airline-mdm-application-service"))
 
-  implementation 'com.google.guava:guava'
-  implementation 'jakarta.persistence:jakarta.persistence-api'
-  implementation 'org.projectlombok:lombok'
-  implementation 'org.mapstruct:mapstruct'
-  implementation 'org.springframework.boot:spring-boot-autoconfigure'
-  implementation 'org.springframework:spring-context'
-  implementation 'org.springframework.data:spring-data-commons'
-  implementation 'org.springframework.data:spring-data-jpa'
+  implementation(libs.guava)
+  implementation(libs.jakarta.persistence.api)
+  implementation(libs.lombok)
+  implementation(libs.mapstruct)
+  implementation(libs.spring.boot.autoconfigure)
+  implementation(libs.spring.context)
+  implementation(libs.spring.data.commons)
+  implementation(libs.spring.data.jpa)
 
-  annotationProcessor 'org.mapstruct:mapstruct-processor'
-  annotationProcessor 'org.projectlombok:lombok'
-  annotationProcessor 'org.projectlombok:lombok-mapstruct-binding'
+  annotationProcessor(libs.mapstruct.processor)
+  annotationProcessor(libs.lombok)
+  annotationProcessor(libs.lombok.mapstruct.binding)
 }
 

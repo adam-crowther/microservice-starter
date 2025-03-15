@@ -1,13 +1,13 @@
 package com.acroteq.ticketing.payment.service.domain.event;
 
-import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.CANCELLED;
-import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.COMPLETED;
-import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.FAILED;
+import static com.acroteq.domain.valueobject.PaymentStatus.CANCELLED;
+import static com.acroteq.domain.valueobject.PaymentStatus.COMPLETED;
+import static com.acroteq.domain.valueobject.PaymentStatus.FAILED;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static lombok.AccessLevel.PACKAGE;
 
-import com.acroteq.ticketing.domain.validation.ValidationResult;
-import com.acroteq.ticketing.domain.valueobject.PaymentStatus;
+import com.acroteq.domain.validation.ValidationResult;
+import com.acroteq.domain.valueobject.PaymentStatus;
 import com.acroteq.ticketing.payment.service.domain.entity.Payment;
 import com.acroteq.ticketing.payment.service.domain.exception.UnexpectedPaymentStatusException;
 import lombok.NoArgsConstructor;

@@ -1,11 +1,11 @@
 package com.acroteq.ticketing.payment.service.domain.entity
 
-import com.acroteq.ticketing.domain.valueobject.CustomerId
+import com.acroteq.domain.valueobject.CustomerId
 import groovy.transform.CompileDynamic
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 
-import static com.acroteq.ticketing.domain.valueobject.CashValue.ZERO
+import static com.acroteq.domain.valueobject.CashValue.ZERO
 import static com.acroteq.ticketing.payment.service.domain.helper.TestDataHelper.createCashValue
 import static com.acroteq.ticketing.payment.service.domain.helper.TestDataHelper.createEventId
 import static nl.jqno.equalsverifier.Warning.STRICT_INHERITANCE

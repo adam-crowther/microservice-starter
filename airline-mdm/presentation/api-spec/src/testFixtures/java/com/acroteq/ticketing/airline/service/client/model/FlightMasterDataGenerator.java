@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.airline.service.client.model;
 
-import com.acroteq.ticketing.test.data.RandomDoubleGenerator;
-import com.acroteq.ticketing.test.data.RandomStringGenerator;
+import com.acroteq.test.data.RandomDoubleGenerator;
+import com.acroteq.test.data.RandomStringGenerator;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

@@ -1,8 +1,8 @@
-package com.acroteq.ticketing.container.config;
+package com.acroteq.container.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-import com.acroteq.ticketing.container.properties.JwtMappingProperties;
+import com.acroteq.container.properties.JwtMappingProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

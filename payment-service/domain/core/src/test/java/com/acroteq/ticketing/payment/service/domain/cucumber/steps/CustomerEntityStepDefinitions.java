@@ -2,10 +2,10 @@ package com.acroteq.ticketing.payment.service.domain.cucumber.steps;
 
 import static lombok.AccessLevel.PACKAGE;
 
-import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.CurrencyId;
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
-import com.acroteq.ticketing.domain.valueobject.EventId;
+import com.acroteq.domain.valueobject.CashValue;
+import com.acroteq.domain.valueobject.CurrencyId;
+import com.acroteq.domain.valueobject.CustomerId;
+import com.acroteq.domain.valueobject.EventId;
 import com.acroteq.ticketing.payment.service.domain.entity.Customer;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;

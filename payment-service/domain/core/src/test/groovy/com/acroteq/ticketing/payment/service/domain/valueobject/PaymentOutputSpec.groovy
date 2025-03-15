@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.payment.service.domain.valueobject
 
-import com.acroteq.ticketing.domain.validation.ValidationResult
+import com.acroteq.domain.validation.ValidationResult
 import groovy.transform.CompileDynamic
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification

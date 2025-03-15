@@ -1,7 +1,7 @@
-package com.acroteq.ticketing.domain.entity
+package com.acroteq.domain.entity
 
 import com.acroteq.domain.valueobject.EventId
-import com.acroteq.ticketing.domain.valueobject.TestId
+import com.acroteq.domain.valueobject.TestId
 import groovy.transform.CompileDynamic
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification

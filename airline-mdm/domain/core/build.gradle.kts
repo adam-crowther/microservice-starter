@@ -1,17 +1,20 @@
 plugins {
-  id 'java-conventions'
-  id 'spock-conventions'
+  id("java-conventions")
+  id("spock-conventions")
 }
 
 dependencies {
-  implementation project(":common:common-helper")
-  implementation project(":common:common-domain")
+  implementation(project(":common:common-helper"))
+  implementation(project(":common:common-domain"))
 
-  implementation 'org.apache.commons:commons-lang3'
-  implementation 'com.google.guava:guava'
-  implementation 'jakarta.annotation:jakarta.annotation-api'
-  implementation 'org.projectlombok:lombok'
-  implementation 'org.slf4j:slf4j-api'
+  implementation(libs.commons.lang3)
+  implementation(libs.commons.collections4)
+  implementation(libs.guava)
+  implementation(libs.jakarta.annotation.api)
+  implementation(libs.lombok)
+  implementation(libs.slf4j.api)
 
-  annotationProcessor 'org.projectlombok:lombok'
+  annotationProcessor(libs.lombok)
+
+  testRuntimeOnly(libs.slf4j.simple)
 }

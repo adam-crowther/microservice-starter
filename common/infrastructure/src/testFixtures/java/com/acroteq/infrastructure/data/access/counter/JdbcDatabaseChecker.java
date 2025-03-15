@@ -1,13 +1,13 @@
-package com.acroteq.ticketing.infrastructure.data.access.counter;
+package com.acroteq.infrastructure.data.access.counter;
 
 import lombok.SneakyThrows;
 
 public class JdbcDatabaseChecker implements AutoCloseable {
 
-  private static final String CUSTOMERS_TABLE = "customers";
-  private static final String AIRLINES_TABLE = "airlines";
-  private static final String ORDERS_TABLE = "orders";
-  private static final String PAYMENTS_TABLE = "payments";
+  private static final String CUSTOMERS_TABLE = "customer_master.customers";
+  private static final String AIRLINES_TABLE = "airline_master.airlines";
+  private static final String ORDERS_TABLE = "orders.orders";
+  private static final String PAYMENTS_TABLE = "payment.payments";
 
   private final JdbcQueryExecutor airlineMdmQueryExecutor;
   private final JdbcQueryExecutor customerMdmQueryExecutor;
@@ -19,11 +19,10 @@ public class JdbcDatabaseChecker implements AutoCloseable {
     return new JdbcDatabaseCheckerBuilder();
   }
 
-  JdbcDatabaseChecker(final JdbcQueryExecutor airlineMdmQueryExecutor,
-                      final JdbcQueryExecutor customerMdmQueryExecutor,
-                      final JdbcQueryExecutor airlineApprovalQueryExecutor,
-                      final JdbcQueryExecutor orderServiceQueryExecutor,
-                      final JdbcQueryExecutor paymentServiceQueryExecutor) {
+  JdbcDatabaseChecker(
+      final JdbcQueryExecutor airlineMdmQueryExecutor, final JdbcQueryExecutor customerMdmQueryExecutor,
+      final JdbcQueryExecutor airlineApprovalQueryExecutor, final JdbcQueryExecutor orderServiceQueryExecutor,
+      final JdbcQueryExecutor paymentServiceQueryExecutor) {
     this.airlineMdmQueryExecutor = airlineMdmQueryExecutor;
     this.customerMdmQueryExecutor = customerMdmQueryExecutor;
     this.airlineApprovalQueryExecutor = airlineApprovalQueryExecutor;

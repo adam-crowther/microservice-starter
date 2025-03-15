@@ -3,8 +3,8 @@ package com.acroteq.ticketing.order.service.domain.test.helper;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
 
-import com.acroteq.ticketing.domain.valueobject.OrderId;
-import com.acroteq.ticketing.domain.valueobject.OrderItemId;
+import com.acroteq.domain.valueobject.OrderId;
+import com.acroteq.domain.valueobject.OrderItemId;
 import com.acroteq.ticketing.order.service.domain.entity.Order;
 import com.acroteq.ticketing.order.service.domain.entity.OrderItem;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.OrderRepository;

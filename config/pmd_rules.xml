@@ -19,8 +19,8 @@
     <rule ref="category/java/bestpractices.xml">
         <exclude name="GuardLogStatement"/>
         <exclude name="AbstractClassWithoutAbstractMethod"/>
-        <exclude name="JUnitAssertionsShouldIncludeMessage"/>
-        <exclude name="JUnitTestContainsTooManyAsserts"/>
+        <exclude name="UnitTestAssertionsShouldIncludeMessage"/>
+        <exclude name="UnitTestContainsTooManyAsserts"/>
     </rule>
 
     <rule ref="category/java/codestyle.xml">
@@ -80,11 +80,12 @@
         <exclude name="LoosePackageCoupling"/>
     </rule>
 
-    <rule ref="category/java/design.xml/UseUtilityClass">
-        <properties>
-            <property name="ignoredAnnotations" value="org.springframework.boot.autoconfigure.SpringBootApplication"/>
-        </properties>
-    </rule>
+    <!-- TODO: Uncomment after plugin upgrades to PMD 7.9.0 -->
+    <!-- <rule ref="category/java/design.xml/UseUtilityClass"> -->
+    <!--     <properties> -->
+    <!--         <property name="ignoredAnnotations" value="org.springframework.boot.autoconfigure.SpringBootApplication"/> -->
+    <!--     </properties> -->
+    <!-- </rule> -->
 
     <rule ref="category/java/design.xml/TooManyMethods">
         <properties>

@@ -1,10 +1,10 @@
 package com.acroteq.ticketing.approval.service.domain.visitor;
 
+import com.acroteq.domain.event.publisher.DomainEventPublisher;
 import com.acroteq.ticketing.approval.service.domain.event.order.OrderApprovalEvent;
 import com.acroteq.ticketing.approval.service.domain.event.order.OrderApprovedEvent;
 import com.acroteq.ticketing.approval.service.domain.event.order.OrderRejectedEvent;
 import com.acroteq.ticketing.approval.service.domain.event.order.visitor.OrderApprovalEventVisitor;
-import com.acroteq.ticketing.domain.event.publisher.DomainEventPublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.customer.service.domain;
 
+import com.acroteq.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.customer.service.domain.dto.create.CreateCustomerCommandDto;
 import com.acroteq.ticketing.customer.service.domain.dto.update.UpdateCustomerCommandDto;
 import com.acroteq.ticketing.customer.service.domain.entity.Customer;
@@ -7,7 +8,6 @@ import com.acroteq.ticketing.customer.service.domain.event.CustomerEvent;
 import com.acroteq.ticketing.customer.service.domain.mapper.CreateCustomerDtoToDomainMapper;
 import com.acroteq.ticketing.customer.service.domain.mapper.UpdateCustomerDtoToDomainMapper;
 import com.acroteq.ticketing.customer.service.domain.ports.output.repository.CustomerRepository;
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

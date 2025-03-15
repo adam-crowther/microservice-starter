@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.order.service.domain.resolver;
 
-import com.acroteq.ticketing.application.resolver.Resolver;
-import com.acroteq.ticketing.domain.valueobject.AirlineId;
+import com.acroteq.application.resolver.Resolver;
+import com.acroteq.domain.valueobject.AirlineId;
 import com.acroteq.ticketing.order.service.domain.entity.Airline;
 import com.acroteq.ticketing.order.service.domain.exception.AirlineNotFoundException;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.AirlineRepository;

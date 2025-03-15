@@ -1,7 +1,7 @@
-package com.acroteq.ticketing.kafka.producer.service.impl
+package com.acroteq.kafka.producer.service.impl
 
-import com.acroteq.ticketing.kafka.producer.exception.SynchronousKafkaProducerException
-import com.acroteq.ticketing.kafka.producer.service.KafkaProducer
+import com.acroteq.kafka.producer.exception.SynchronousKafkaProducerException
+import com.acroteq.kafka.producer.service.KafkaProducer
 import groovy.transform.CompileDynamic
 import groovy.util.logging.Slf4j
 import org.apache.avro.specific.SpecificRecord

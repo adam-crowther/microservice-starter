@@ -1,9 +1,9 @@
 package com.acroteq.ticketing.approval.service.messaging.mapper.airline;
 
-import com.acroteq.ticketing.application.mapper.MapstructConfig;
+import com.acroteq.application.mapper.MapstructConfig;
+import com.acroteq.infrastructure.mapper.EventIdMessageToDtoMapper;
+import com.acroteq.infrastructure.mapper.MessageToDtoMapper;
 import com.acroteq.ticketing.approval.service.domain.dto.AirlineEventDto;
-import com.acroteq.ticketing.infrastructure.mapper.EventIdMessageToDtoMapper;
-import com.acroteq.ticketing.infrastructure.mapper.MessageToDtoMapper;
 import com.acroteq.ticketing.kafka.airline.avro.model.AirlineEventMessage;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

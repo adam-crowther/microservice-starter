@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.test.e2e.extension;
 
-import com.acroteq.ticketing.test.container.KafkaSslContainer;
-import com.acroteq.ticketing.test.container.ZookeeperContainer;
+import com.acroteq.test.container.KafkaSslContainer;
+import com.acroteq.test.container.ZookeeperContainer;
 import lombok.Getter;
 
 import java.util.List;

@@ -1,14 +1,14 @@
 package com.acroteq.ticketing.approval.service.domain.event.order;
 
-import static com.acroteq.ticketing.domain.valueobject.OrderApprovalStatus.APPROVED;
-import static com.acroteq.ticketing.domain.valueobject.OrderApprovalStatus.REJECTED;
+import static com.acroteq.domain.valueobject.OrderApprovalStatus.APPROVED;
+import static com.acroteq.domain.valueobject.OrderApprovalStatus.REJECTED;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static lombok.AccessLevel.PACKAGE;
 
+import com.acroteq.domain.validation.ValidationResult;
+import com.acroteq.domain.valueobject.OrderApprovalStatus;
 import com.acroteq.ticketing.approval.service.domain.entity.order.OrderApproval;
 import com.acroteq.ticketing.approval.service.domain.exception.UnexpectedOrderApprovalStatusException;
-import com.acroteq.ticketing.domain.validation.ValidationResult;
-import com.acroteq.ticketing.domain.valueobject.OrderApprovalStatus;
 import lombok.NoArgsConstructor;
 
 import java.util.Map;

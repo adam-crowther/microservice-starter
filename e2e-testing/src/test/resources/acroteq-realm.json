@@ -5,6 +5,10 @@
     {
       "username": "adamcc",
       "enabled": true,
+      "emailVerified": true,
+      "firstName": "Adam",
+      "lastName": "Crowther",
+      "email": "foo@bar.com",
       "credentials": [
         {
           "type": "password",
@@ -36,8 +40,8 @@
       "clientId": "ticketing",
       "enabled": true,
       "standardFlowEnabled": true,
-      "implicitFlowEnabled": true,
       "directAccessGrantsEnabled": true,
+      "implicitFlowEnabled": true,
       "publicClient": true,
       "redirectUris": [
         "*"

@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.order.service.domain;
 
-import static com.acroteq.ticketing.domain.valueobject.OrderStatus.PENDING;
+import static com.acroteq.domain.valueobject.OrderStatus.PENDING;
 import static com.acroteq.ticketing.order.service.domain.test.helper.AirlineTestDataHelper.AIRLINE_ID;
 import static com.acroteq.ticketing.order.service.domain.test.helper.CustomerTestDataHelper.createCreateOrderCommandDto;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.startsWith;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-import com.acroteq.ticketing.domain.valueobject.AirlineId;
+import com.acroteq.domain.valueobject.AirlineId;
 import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderCommandDto;
 import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderResponseDto;
 import com.acroteq.ticketing.order.service.domain.entity.Airline;

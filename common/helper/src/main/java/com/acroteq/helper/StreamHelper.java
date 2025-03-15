@@ -1,8 +1,8 @@
-package com.acroteq.ticketing.helper;
+package com.acroteq.helper;
 
 import static lombok.AccessLevel.PRIVATE;
 
-import com.acroteq.ticketing.exception.MoreThanOneItemInStreamException;
+import com.acroteq.exception.MoreThanOneItemInStreamException;
 import lombok.NoArgsConstructor;
 
 import java.util.concurrent.atomic.AtomicInteger;

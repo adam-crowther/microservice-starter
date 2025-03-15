@@ -1,4 +1,4 @@
-package com.acroteq.ticketing.precondition
+package com.acroteq.precondition
 
 import groovy.transform.CompileDynamic
 

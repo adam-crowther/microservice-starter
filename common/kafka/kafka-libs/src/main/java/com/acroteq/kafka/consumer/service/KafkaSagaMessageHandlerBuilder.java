@@ -1,5 +1,4 @@
-package com.acroteq.ticketing.kafka.consumer.service;
-
+package com.acroteq.kafka.consumer.service;
 
 import static java.util.Collections.unmodifiableMap;
 import static lombok.AccessLevel.PACKAGE;

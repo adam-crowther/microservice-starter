@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.order.service.messaging.publisher.kafka.payment;
 
+import com.acroteq.kafka.producer.service.KafkaProducer;
+import com.acroteq.kafka.producer.service.callback.KafkaPublisherCallbackHandler;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentCancelRequestMessage;
-import com.acroteq.ticketing.kafka.producer.service.KafkaProducer;
-import com.acroteq.ticketing.kafka.producer.service.callback.KafkaPublisherCallbackHandler;
 import com.acroteq.ticketing.order.service.domain.event.OrderCancelledEvent;
 import com.acroteq.ticketing.order.service.domain.ports.output.message.publisher.payment.PaymentCancelRequestMessagePublisher;
 import com.acroteq.ticketing.order.service.domain.properties.OrderServiceConfig;

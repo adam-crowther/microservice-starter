@@ -1,15 +1,15 @@
 package com.acroteq.ticketing.payment.service.domain.entity
 
-import com.acroteq.ticketing.domain.valueobject.OrderId
-import com.acroteq.ticketing.domain.valueobject.PaymentId
+import com.acroteq.domain.valueobject.OrderId
+import com.acroteq.domain.valueobject.PaymentId
 import groovy.transform.CompileDynamic
 import nl.jqno.equalsverifier.EqualsVerifier
 import spock.lang.Specification
 
-import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.CANCELLED
-import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.COMPLETED
-import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.FAILED
-import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.PENDING
+import static com.acroteq.domain.valueobject.PaymentStatus.CANCELLED
+import static com.acroteq.domain.valueobject.PaymentStatus.COMPLETED
+import static com.acroteq.domain.valueobject.PaymentStatus.FAILED
+import static com.acroteq.domain.valueobject.PaymentStatus.PENDING
 import static com.acroteq.ticketing.payment.service.domain.helper.TestDataHelper.createAudit
 import static com.acroteq.ticketing.payment.service.domain.helper.TestDataHelper.createCashValue
 import static com.acroteq.ticketing.payment.service.domain.helper.TestDataHelper.createCustomer

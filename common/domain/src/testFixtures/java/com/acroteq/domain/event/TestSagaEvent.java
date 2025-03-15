@@ -1,6 +1,5 @@
-package com.acroteq.ticketing.domain.event;
+package com.acroteq.domain.event;
 
-import com.acroteq.domain.event.SagaEvent;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;

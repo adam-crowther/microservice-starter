@@ -2,10 +2,9 @@ package com.acroteq.ticketing.order.service.domain.test.helper;
 
 import static org.mockito.Mockito.lenient;
 
-import com.acroteq.ticketing.domain.valueobject.AirlineId;
-import com.acroteq.ticketing.domain.valueobject.EventId;
+import com.acroteq.domain.valueobject.AirlineId;
+import com.acroteq.domain.valueobject.EventId;
 import com.acroteq.ticketing.order.service.domain.entity.Airline;
-import com.acroteq.ticketing.order.service.domain.entity.Flight;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.AirlineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.test.context.TestComponent;
@@ -29,9 +28,9 @@ public class AirlineTestDataHelper {
                                                                .build())
                                                .name(AIRLINE_NAME)
                                                .active(true)
-                                               .flights(List.of(new Flight[]{ FlightTestDataHelper.FLIGHT_1,
-                                                                              FlightTestDataHelper.FLIGHT_2,
-                                                                              FlightTestDataHelper.FLIGHT_3 }))
+                                               .flights(List.of(FlightTestDataHelper.FLIGHT_1,
+                                                                FlightTestDataHelper.FLIGHT_2,
+                                                                FlightTestDataHelper.FLIGHT_3))
                                                .build();
 
 

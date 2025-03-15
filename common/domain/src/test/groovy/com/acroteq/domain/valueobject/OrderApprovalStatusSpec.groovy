@@ -1,6 +1,5 @@
-package com.acroteq.ticketing.domain.valueobject
+package com.acroteq.domain.valueobject
 
-import com.acroteq.domain.valueobject.OrderApprovalStatus
 import groovy.transform.CompileDynamic
 import spock.lang.Specification
 

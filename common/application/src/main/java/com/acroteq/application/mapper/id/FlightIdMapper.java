@@ -1,7 +1,7 @@
 package com.acroteq.application.mapper.id;
 
 import com.acroteq.application.mapper.MapstructConfig;
-import com.acroteq.ticketing.domain.valueobject.FlightId;
+import com.acroteq.domain.valueobject.FlightId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

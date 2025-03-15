@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.payment.service.data.access.creditbalance.adapter;
 
-import com.acroteq.ticketing.domain.valueobject.CustomerId;
-import com.acroteq.ticketing.infrastructure.data.access.repository.ReadWriteRepositoryImpl;
+import com.acroteq.domain.valueobject.CustomerId;
+import com.acroteq.infrastructure.data.access.repository.ReadWriteRepositoryImpl;
 import com.acroteq.ticketing.payment.service.data.access.creditbalance.entity.CreditBalanceJpaEntity;
 import com.acroteq.ticketing.payment.service.data.access.creditbalance.mapper.CreditBalanceDomainToJpaMapper;
 import com.acroteq.ticketing.payment.service.data.access.creditbalance.mapper.CreditBalanceJpaToDomainMapper;

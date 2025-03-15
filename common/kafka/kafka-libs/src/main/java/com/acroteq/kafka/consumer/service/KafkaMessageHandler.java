@@ -1,10 +1,10 @@
-package com.acroteq.ticketing.kafka.consumer.service;
+package com.acroteq.kafka.consumer.service;
 
 import static com.acroteq.helper.StreamHelper.withCounter;
 import static com.acroteq.precondition.Precondition.checkPrecondition;
 import static lombok.AccessLevel.PACKAGE;
 
-import com.acroteq.ticketing.kafka.consumer.exception.MessageHandlerParameterCountMismatchException;
+import com.acroteq.kafka.consumer.exception.MessageHandlerParameterCountMismatchException;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

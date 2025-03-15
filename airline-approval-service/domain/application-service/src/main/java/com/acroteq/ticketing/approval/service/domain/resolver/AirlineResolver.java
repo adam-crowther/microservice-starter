@@ -1,10 +1,10 @@
 package com.acroteq.ticketing.approval.service.domain.resolver;
 
-import com.acroteq.ticketing.application.resolver.Resolver;
+import com.acroteq.application.resolver.Resolver;
+import com.acroteq.domain.valueobject.AirlineId;
 import com.acroteq.ticketing.approval.service.domain.entity.airline.Airline;
 import com.acroteq.ticketing.approval.service.domain.exception.AirlineNotFoundException;
 import com.acroteq.ticketing.approval.service.domain.ports.output.repository.AirlineRepository;
-import com.acroteq.ticketing.domain.valueobject.AirlineId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

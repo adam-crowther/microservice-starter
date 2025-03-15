@@ -4,10 +4,10 @@ import static org.springframework.kafka.support.KafkaHeaders.OFFSET;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_KEY;
 import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
 
+import com.acroteq.kafka.consumer.service.KafkaEntityEventMessageHandler;
 import com.acroteq.ticketing.approval.service.domain.ports.input.message.listener.airline.AirlineEventMessageListener;
 import com.acroteq.ticketing.approval.service.messaging.mapper.airline.AirlineEventMessageToDtoMapper;
 import com.acroteq.ticketing.kafka.airline.avro.model.AirlineEventMessage;
-import com.acroteq.ticketing.kafka.consumer.service.KafkaEntityEventMessageHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecord;
 import org.springframework.kafka.annotation.KafkaListener;

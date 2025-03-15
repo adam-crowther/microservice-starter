@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.test.e2e.container;
 
-import com.acroteq.ticketing.test.container.KafkaSslContainer;
-import com.acroteq.ticketing.test.container.SchemaRegistryContainer;
+import com.acroteq.test.container.KafkaSslContainer;
+import com.acroteq.test.container.SchemaRegistryContainer;
 import dasniko.testcontainers.keycloak.KeycloakContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
@@ -15,10 +15,9 @@ public final class AirlineMdmContainer extends AbstractTicketingContainer<Airlin
   private static final int EXPOSED_PORT = 8183;
   private static final String CONTAINER_NAME = "AirlineMdm";
 
-  public static AirlineMdmContainer startAirlineMdmContainer(final PostgreSQLContainer<?> postgreSqlContainer,
-                                                             final List<KafkaSslContainer> kafkaContainers,
-                                                             final SchemaRegistryContainer schemaRegistryContainer,
-                                                             final KeycloakContainer keycloakContainer) {
+  public static AirlineMdmContainer startAirlineMdmContainer(
+      final PostgreSQLContainer<?> postgreSqlContainer, final List<KafkaSslContainer> kafkaContainers,
+      final SchemaRegistryContainer schemaRegistryContainer, final KeycloakContainer keycloakContainer) {
     final AirlineMdmContainer airlineMdmContainer = new AirlineMdmContainer(postgreSqlContainer,
                                                                             kafkaContainers,
                                                                             schemaRegistryContainer,
@@ -29,10 +28,9 @@ public final class AirlineMdmContainer extends AbstractTicketingContainer<Airlin
   }
 
   @SuppressWarnings("resource")
-  private AirlineMdmContainer(final PostgreSQLContainer<?> postgreSqlContainer,
-                              final List<KafkaSslContainer> kafkaContainers,
-                              final SchemaRegistryContainer schemaRegistryContainer,
-                              final KeycloakContainer keycloakContainer) {
+  private AirlineMdmContainer(
+      final PostgreSQLContainer<?> postgreSqlContainer, final List<KafkaSslContainer> kafkaContainers,
+      final SchemaRegistryContainer schemaRegistryContainer, final KeycloakContainer keycloakContainer) {
     super(DockerImageName.parse(AIRLINE_MDM_IMAGE_NAME),
           postgreSqlContainer,
           kafkaContainers,

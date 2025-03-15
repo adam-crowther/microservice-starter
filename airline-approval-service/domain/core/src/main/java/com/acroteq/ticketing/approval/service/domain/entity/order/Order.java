@@ -1,15 +1,15 @@
 package com.acroteq.ticketing.approval.service.domain.entity.order;
 
-import static com.acroteq.ticketing.domain.validation.ValidationResult.fail;
-import static com.acroteq.ticketing.domain.valueobject.OrderStatus.PAID;
+import static com.acroteq.domain.validation.ValidationResult.fail;
+import static com.acroteq.domain.valueobject.OrderStatus.PAID;
 
+import com.acroteq.domain.entity.PrimaryEntity;
+import com.acroteq.domain.validation.ValidationResult;
+import com.acroteq.domain.validation.ValidationResultBuilder;
+import com.acroteq.domain.valueobject.CashValue;
+import com.acroteq.domain.valueobject.OrderId;
+import com.acroteq.domain.valueobject.OrderStatus;
 import com.acroteq.ticketing.approval.service.domain.entity.airline.Airline;
-import com.acroteq.ticketing.domain.entity.PrimaryEntity;
-import com.acroteq.ticketing.domain.validation.ValidationResult;
-import com.acroteq.ticketing.domain.validation.ValidationResultBuilder;
-import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.OrderId;
-import com.acroteq.ticketing.domain.valueobject.OrderStatus;
 import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import lombok.Getter;
@@ -30,7 +30,7 @@ public class Order extends PrimaryEntity<OrderId> {
   @NonNull
   private final Airline airline;
   @NonNull
-  private final ImmutableList<OrderItem> items;
+  private final List<OrderItem> items;
 
   public ValidationResult validate() {
     final ValidationResultBuilder result = ValidationResult.builder();

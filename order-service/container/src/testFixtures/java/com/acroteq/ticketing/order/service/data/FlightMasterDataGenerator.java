@@ -1,10 +1,10 @@
 package com.acroteq.ticketing.order.service.data;
 
+import com.acroteq.test.data.IdGenerator;
+import com.acroteq.test.data.RandomBigDecimalGenerator;
+import com.acroteq.test.data.RandomLongGenerator;
+import com.acroteq.test.data.RandomStringGenerator;
 import com.acroteq.ticketing.kafka.airline.avro.model.Flight;
-import com.acroteq.ticketing.test.data.IdGenerator;
-import com.acroteq.ticketing.test.data.RandomBigDecimalGenerator;
-import com.acroteq.ticketing.test.data.RandomLongGenerator;
-import com.acroteq.ticketing.test.data.RandomStringGenerator;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;

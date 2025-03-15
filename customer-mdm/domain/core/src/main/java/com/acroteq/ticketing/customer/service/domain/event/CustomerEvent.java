@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.customer.service.domain.event;
 
+import com.acroteq.domain.event.EntityEvent;
+import com.acroteq.domain.valueobject.EntityId;
 import com.acroteq.ticketing.customer.service.domain.entity.Customer;
-import com.acroteq.ticketing.domain.event.EntityEvent;
-import com.acroteq.ticketing.domain.valueobject.EntityId;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.ToString;

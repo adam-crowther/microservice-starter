@@ -1,6 +1,5 @@
-package com.acroteq.ticketing.application.mapper.id
+package com.acroteq.application.mapper.id
 
-import com.acroteq.application.mapper.id.AirlineIdMapper
 import com.acroteq.domain.valueobject.AirlineId
 import groovy.transform.CompileDynamic
 import org.mapstruct.factory.Mappers

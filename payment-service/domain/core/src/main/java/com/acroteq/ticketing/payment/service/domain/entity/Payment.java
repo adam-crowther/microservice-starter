@@ -1,16 +1,16 @@
 package com.acroteq.ticketing.payment.service.domain.entity;
 
-import static com.acroteq.ticketing.domain.validation.ValidationResult.fail;
-import static com.acroteq.ticketing.domain.validation.ValidationResult.pass;
-import static com.acroteq.ticketing.domain.valueobject.CashValue.ZERO;
-import static com.acroteq.ticketing.domain.valueobject.PaymentStatus.COMPLETED;
+import static com.acroteq.domain.validation.ValidationResult.fail;
+import static com.acroteq.domain.validation.ValidationResult.pass;
+import static com.acroteq.domain.valueobject.CashValue.ZERO;
+import static com.acroteq.domain.valueobject.PaymentStatus.COMPLETED;
 
-import com.acroteq.ticketing.domain.entity.AggregateRoot;
-import com.acroteq.ticketing.domain.validation.ValidationResult;
-import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.OrderId;
-import com.acroteq.ticketing.domain.valueobject.PaymentId;
-import com.acroteq.ticketing.domain.valueobject.PaymentStatus;
+import com.acroteq.domain.entity.AggregateRoot;
+import com.acroteq.domain.validation.ValidationResult;
+import com.acroteq.domain.valueobject.CashValue;
+import com.acroteq.domain.valueobject.OrderId;
+import com.acroteq.domain.valueobject.PaymentId;
+import com.acroteq.domain.valueobject.PaymentStatus;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;

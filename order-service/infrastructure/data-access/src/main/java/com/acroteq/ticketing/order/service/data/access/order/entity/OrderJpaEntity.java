@@ -5,8 +5,8 @@ import static jakarta.persistence.CascadeType.MERGE;
 import static jakarta.persistence.EnumType.STRING;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.acroteq.ticketing.domain.valueobject.OrderStatus;
-import com.acroteq.ticketing.infrastructure.data.access.entity.PrimaryJpaEntity;
+import com.acroteq.domain.valueobject.OrderStatus;
+import com.acroteq.infrastructure.data.access.entity.PrimaryJpaEntity;
 import com.acroteq.ticketing.order.service.data.access.airline.entity.AirlineJpaEntity;
 import com.acroteq.ticketing.order.service.data.access.customer.entity.CustomerJpaEntity;
 import jakarta.persistence.CollectionTable;
@@ -14,6 +14,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -23,6 +24,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -31,6 +33,7 @@ import java.util.List;
 @Setter
 @SuperBuilder(toBuilder = true)
 @NoArgsConstructor(access = PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "orders")
 @Entity
 public class OrderJpaEntity extends PrimaryJpaEntity {

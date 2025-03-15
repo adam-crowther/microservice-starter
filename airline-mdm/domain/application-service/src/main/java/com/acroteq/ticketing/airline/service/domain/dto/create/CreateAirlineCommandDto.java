@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.airline.service.domain.dto.create;
 
-import com.acroteq.ticketing.application.dto.DataTransferObject;
+import com.acroteq.application.dto.DataTransferObject;
 import com.google.common.collect.ImmutableList;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
@@ -23,7 +23,7 @@ public class CreateAirlineCommandDto implements DataTransferObject {
   @NotNull
   private final boolean active;
   @NotNull
-  private final ImmutableList<CreateFlightCommandDto> flights;
+  private final List<CreateFlightCommandDto> flights;
 
 
   @SuppressWarnings("PublicInnerClass")

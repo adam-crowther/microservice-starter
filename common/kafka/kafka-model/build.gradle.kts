@@ -1,14 +1,14 @@
 plugins {
-  id 'java-conventions'
-  id 'avro-conventions'
+  id("java-conventions")
+  id("avro-conventions")
 }
 
 dependencies {
-  testFixturesImplementation testFixtures(project(":common:common-test"))
+  testFixturesImplementation(testFixtures(project(":common:common-test")))
 
-  testFixturesImplementation "org.apache.avro:avro"
-  testFixturesImplementation "org.projectlombok:lombok"
-  testFixturesImplementation "org.springframework:spring-context"
+  testFixturesImplementation(libs.avro)
+  testFixturesImplementation(libs.lombok)
+  testFixturesImplementation(libs.spring.context)
 
-  testFixturesAnnotationProcessor "org.projectlombok:lombok"
+  testFixturesAnnotationProcessor(libs.lombok)
 }

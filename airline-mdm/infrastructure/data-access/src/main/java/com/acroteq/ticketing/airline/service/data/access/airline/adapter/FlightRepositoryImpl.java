@@ -1,12 +1,12 @@
 package com.acroteq.ticketing.airline.service.data.access.airline.adapter;
 
+import com.acroteq.domain.valueobject.FlightId;
+import com.acroteq.infrastructure.data.access.repository.ReadRepositoryImpl;
 import com.acroteq.ticketing.airline.service.data.access.airline.entity.FlightJpaEntity;
 import com.acroteq.ticketing.airline.service.data.access.airline.mapper.FlightJpaToDomainMapper;
 import com.acroteq.ticketing.airline.service.data.access.airline.repository.FlightJpaRepository;
 import com.acroteq.ticketing.airline.service.domain.entity.Flight;
 import com.acroteq.ticketing.airline.service.domain.ports.output.repository.FlightRepository;
-import com.acroteq.ticketing.domain.valueobject.FlightId;
-import com.acroteq.ticketing.infrastructure.data.access.repository.ReadRepositoryImpl;
 import org.springframework.stereotype.Component;
 
 @Component

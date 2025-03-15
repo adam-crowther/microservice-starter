@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.order.service.messaging.publisher.kafka.airline;
 
+import com.acroteq.kafka.producer.service.KafkaProducer;
+import com.acroteq.kafka.producer.service.callback.KafkaPublisherCallbackHandler;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalRequestMessage;
-import com.acroteq.ticketing.kafka.producer.service.KafkaProducer;
-import com.acroteq.ticketing.kafka.producer.service.callback.KafkaPublisherCallbackHandler;
 import com.acroteq.ticketing.order.service.domain.event.OrderPaidEvent;
 import com.acroteq.ticketing.order.service.domain.ports.output.message.publisher.airlineapproval.AirlineApprovalRequestMessagePublisher;
 import com.acroteq.ticketing.order.service.domain.properties.OrderServiceConfig;

@@ -1,8 +1,8 @@
 package com.acroteq.ticketing.airline.service.domain.entity;
 
-import com.acroteq.ticketing.domain.entity.PrimaryEntity;
-import com.acroteq.ticketing.domain.valueobject.CashValue;
-import com.acroteq.ticketing.domain.valueobject.FlightId;
+import com.acroteq.domain.entity.PrimaryEntity;
+import com.acroteq.domain.valueobject.CashValue;
+import com.acroteq.domain.valueobject.FlightId;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
