@@ -1,10 +1,10 @@
 package com.acroteq.ticketing.order.service.domain.ports.input.message.listener.customer;
 
-import com.acroteq.ticketing.order.service.domain.dto.customer.CustomerEventDto;
+import com.acroteq.ticketing.order.service.domain.entity.Customer;
 
 public interface CustomerEventMessageListener {
 
-  void customerCreatedOrUpdated(CustomerEventDto customerEventDto);
+  void customerCreatedOrUpdated(Customer customer);
 
-  void customerDeleted(Long id);
+  void customerDeleted(String key);
 }

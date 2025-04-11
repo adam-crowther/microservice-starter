@@ -36,7 +36,7 @@ public interface AirlineApprovalRequestMessageFactory
   @Mapping(target = "priceAmount", source = "order.price.amount")
   @Mapping(target = "airlineOrderStatus", constant = "PAID")
   @Override
-  AirlineApprovalRequestMessage convertEventToMessage(OrderEvent event);
+  AirlineApprovalRequestMessage convert(OrderEvent event);
 
   @Mapping(target = "id", source = "flight.id")
   @Mapping(target = "quantity", source = "quantity")

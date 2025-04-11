@@ -24,10 +24,10 @@ public class FlightMasterDataGenerator {
   public Flight getFlight(final boolean available) {
     final Long flightId = idGenerator.nextId();
     final Long flightVersion = randomLongGenerator.getPositiveWithUpperBound(5);
-    final String flightNumber = randomStringGenerator.getRandomString();
+    final String code = randomStringGenerator.getRandomString();
     final String priceCurrencyId = "CHF";
     final BigDecimal priceAmount = randomBigDecimalGenerator.getBetween(100, 250);
 
-    return new Flight(flightId, flightVersion, flightNumber, priceCurrencyId, priceAmount, available);
+    return new Flight(flightId, flightVersion, code, priceCurrencyId, priceAmount, available);
   }
 }

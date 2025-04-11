@@ -10,13 +10,32 @@ import com.acroteq.ticketing.approval.service.domain.entity.airline.Airline;
 import com.acroteq.ticketing.approval.service.domain.ports.output.repository.AirlineRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class AirlineRepositoryImpl extends ReadWriteRepositoryImpl<AirlineId, Airline, AirlineJpaEntity>
     implements AirlineRepository {
 
-  public AirlineRepositoryImpl(final AirlineJpaRepository jpaRepository,
-                               final AirlineJpaToDomainMapper jpaToDomainMapper,
-                               final AirlineDomainToJpaMapper domainToJpaMapper) {
+  private final AirlineJpaRepository jpaRepository;
+  private final AirlineJpaToDomainMapper jpaToDomainMapper;
+
+  public AirlineRepositoryImpl(
+      final AirlineJpaRepository jpaRepository, final AirlineJpaToDomainMapper jpaToDomainMapper,
+      final AirlineDomainToJpaMapper domainToJpaMapper) {
     super(jpaRepository, jpaToDomainMapper, domainToJpaMapper);
+
+    this.jpaRepository = jpaRepository;
+    this.jpaToDomainMapper = jpaToDomainMapper;
+  }
+
+  @Override
+  public Optional<Airline> findByCode(final String code) {
+    return jpaRepository.findByCode(code)
+                        .map(jpaToDomainMapper::convertJpaToDomain);
+  }
+
+  @Override
+  public void deleteByCode(final String code) {
+    jpaRepository.deleteByCode(code);
   }
 }

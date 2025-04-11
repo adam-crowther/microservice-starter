@@ -1,9 +1,10 @@
 package com.acroteq.kafka.consumer.service
 
-import com.acroteq.infrastructure.mapper.MessageToDtoMapper
+import com.acroteq.application.mapper.MessageToDomainMapper
+import com.acroteq.domain.valueobject.EventId
 import com.acroteq.kafka.consumer.exception.MessageHandlerParameterCountMismatchException
 import com.acroteq.kafka.consumer.exception.UnsupportedMessageTypeException
-import com.acroteq.kafka.dto.TestDto
+import com.acroteq.kafka.entity.TestReplicatedEntity
 import groovy.transform.CompileDynamic
 import org.apache.avro.Schema
 import org.apache.avro.specific.SpecificRecord
@@ -19,18 +20,15 @@ class KafkaEntityEventMessageHandlerSpec extends Specification {
   static final String UNKNOWN_MESSAGE_TYPE = 'unknown-message-type'
 
   static final String KEY = '666'
-  static final Long ID = 666
   static final Integer PARTITION = 3
   static final Long OFFSET = 345345
 
-  MessageToDtoMapper<SpecificRecord, TestDto> mapper = Mock()
-  Consumer<TestDto> createdOrUpdatedConsumer = Mock()
-  Consumer<Long> deletedConsumer = Mock()
+  MessageToDomainMapper<SpecificRecord, TestReplicatedEntity> mapper = Mock()
+  Consumer<TestReplicatedEntity> createdOrUpdatedConsumer = Mock()
+  Consumer<String> deletedConsumer = Mock()
 
-  KafkaEntityEventMessageHandler messageHandler = new KafkaEntityEventMessageHandler(KNOWN_MESSAGE_TYPE,
-        mapper,
-        createdOrUpdatedConsumer,
-        deletedConsumer)
+  KafkaEntityEventMessageHandler messageHandler = //
+        new KafkaEntityEventMessageHandler(KNOWN_MESSAGE_TYPE, mapper, createdOrUpdatedConsumer, deletedConsumer)
 
   def 'The consumer should be invoked for each message that has a known message type'() {
     given:
@@ -39,8 +37,9 @@ class KafkaEntityEventMessageHandlerSpec extends Specification {
     record.schema >> schema
     schema.name >> KNOWN_MESSAGE_TYPE
 
-    def dto = Mock(TestDto)
-    4 * mapper.convertMessageToDto(record, PARTITION, OFFSET) >> dto
+    def entity = Mock(TestReplicatedEntity)
+    def eventId = EventId.builder().partition(PARTITION).offset(OFFSET).build()
+    4 * mapper.convert(record, eventId) >> entity
 
     def records = [record, record, record, record]
     def keys = [KEY, KEY, KEY, KEY]
@@ -51,7 +50,7 @@ class KafkaEntityEventMessageHandlerSpec extends Specification {
     messageHandler.processMessages(records, keys, partitions, offsets)
 
     then:
-    4 * createdOrUpdatedConsumer.accept(dto)
+    4 * createdOrUpdatedConsumer.accept(entity)
   }
 
   def 'A mismatch in the number of keys, partitions or offsets should throw an exception'() {
@@ -100,7 +99,7 @@ class KafkaEntityEventMessageHandlerSpec extends Specification {
     messageHandler.processMessages([null], [KEY], [PARTITION], [OFFSET])
 
     then:
-    1 * deletedConsumer.accept(ID)
+    1 * deletedConsumer.accept(KEY)
   }
 
   def 'An unknown message type should throw an exception'() {
@@ -110,8 +109,9 @@ class KafkaEntityEventMessageHandlerSpec extends Specification {
     record.schema >> schema
     schema.name >> UNKNOWN_MESSAGE_TYPE
 
-    def dto = Mock(TestDto)
-    mapper.convertMessageToDto(record, PARTITION, OFFSET) >> dto
+    def entity = Mock(TestReplicatedEntity)
+    def eventId = EventId.builder().partition(PARTITION).offset(OFFSET).build()
+    mapper.convert(record, eventId) >> entity
 
     def records = [record]
     def keys = [KEY]

@@ -1,10 +1,10 @@
 package com.acroteq.ticketing.order.service.domain;
 
+import static java.lang.Long.parseLong;
+
 import com.acroteq.domain.valueobject.CustomerId;
-import com.acroteq.ticketing.order.service.domain.dto.customer.CustomerEventDto;
 import com.acroteq.ticketing.order.service.domain.entity.Customer;
 import com.acroteq.ticketing.order.service.domain.exception.CustomerEventProcessingOrderException;
-import com.acroteq.ticketing.order.service.domain.mapper.customer.CustomerEventDtoToDomainMapper;
 import com.acroteq.ticketing.order.service.domain.ports.input.message.listener.customer.CustomerEventMessageListener;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +20,11 @@ import java.util.function.Function;
 public class CustomerEventMessageListenerImpl implements CustomerEventMessageListener {
 
   private final CustomerRepository customerRepository;
-  private final CustomerEventDtoToDomainMapper createdMapper;
 
   @Transactional
   @Override
-  public void customerCreatedOrUpdated(final CustomerEventDto dto) {
-    log.info("Creating Customer: {}", dto.getId());
-    final Customer customer = createdMapper.convertDtoToDomain(dto);
+  public void customerCreatedOrUpdated(final Customer customer) {
+    log.info("Creating Customer: {}", customer.getId());
     if (!eventAlreadyProcessed(customer)) {
       customerRepository.save(customer);
     }
@@ -62,8 +60,8 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
 
   @Transactional
   @Override
-  public void customerDeleted(final Long id) {
-    final CustomerId customerId = CustomerId.of(id);
+  public void customerDeleted(final String key) {
+    final CustomerId customerId = CustomerId.of(parseLong(key));
     log.info("Deleting Customer: {}", customerId);
     customerRepository.deleteById(customerId);
   }

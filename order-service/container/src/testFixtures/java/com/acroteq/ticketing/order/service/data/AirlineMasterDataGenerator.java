@@ -29,6 +29,7 @@ public class AirlineMasterDataGenerator {
   public AirlineEventMessage getAirlineEventMessage(final boolean active, final int flightCount) {
     final Long airlineId = idGenerator.nextId();
     final Long airlineVersion = randomLongGenerator.getPositiveWithUpperBound(5);
+    final String airlineCode = randomStringGenerator.getRandomString();
     final String airlineName = randomStringGenerator.getRandomString();
 
     final Instant createdTimestamp = randomInstantGenerator.getPast();
@@ -39,6 +40,6 @@ public class AirlineMasterDataGenerator {
                                           .mapToObj(count -> flightGenerator.getFlight())
                                           .toList();
 
-    return new AirlineEventMessage(airlineId, airlineVersion, audit, airlineName, active, flights);
+    return new AirlineEventMessage(airlineId, airlineVersion, audit, airlineCode, airlineName, active, flights);
   }
 }

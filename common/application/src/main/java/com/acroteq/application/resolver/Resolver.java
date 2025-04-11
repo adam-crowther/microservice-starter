@@ -1,10 +1,6 @@
 package com.acroteq.application.resolver;
 
-import com.acroteq.domain.valueobject.EntityId;
+public interface Resolver<KeyT, TypeT> {
 
-public interface Resolver<IdT extends EntityId, TypeT> {
-
-  TypeT resolve(IdT id);
-
-  TypeT resolve(Long id);
+  TypeT resolve(KeyT key);
 }

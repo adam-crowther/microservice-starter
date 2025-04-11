@@ -1,0 +1,16 @@
+components:
+  schemas:
+    Audit:
+      type: object
+      required:
+        - createdTimestamp
+        - lastModifiedTimestamp
+      properties:
+        createdTimestamp:
+          type: string
+          format: date-time
+          readOnly: true
+        lastModifiedTimestamp:
+          type: string
+          format: date-time
+          readOnly: true

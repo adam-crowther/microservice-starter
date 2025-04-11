@@ -3,7 +3,7 @@ package com.acroteq.kafka.consumer.service
 import com.acroteq.infrastructure.mapper.MessageToDtoMapper
 import com.acroteq.kafka.consumer.exception.MessageHandlerParameterCountMismatchException
 import com.acroteq.kafka.consumer.exception.UnsupportedMessageTypeException
-import com.acroteq.kafka.dto.TestDto
+import com.acroteq.kafka.dto.TestSagaDto
 import groovy.transform.CompileDynamic
 import org.apache.avro.Schema
 import org.apache.avro.specific.SpecificRecord
@@ -23,10 +23,11 @@ class KafkaSagaMessageHandlerSpec extends Specification {
   static final Integer PARTITION = 3
   static final Long OFFSET = 345345
 
-  @Shared final SpecificRecord message = Mock(SpecificRecord)
+  @Shared
+  final SpecificRecord message = Mock(SpecificRecord)
 
-  MessageToDtoMapper<SpecificRecord, TestDto> mapper = Mock()
-  Consumer<TestDto> consumer = Mock()
+  MessageToDtoMapper<SpecificRecord, TestSagaDto> mapper = Mock()
+  Consumer<TestSagaDto> consumer = Mock()
 
   KafkaSagaMessageHandler messageHandler = KafkaSagaMessageHandler.builder()
         .addMessageType(KNOWN_MESSAGE_TYPE, mapper, consumer)
@@ -39,7 +40,7 @@ class KafkaSagaMessageHandlerSpec extends Specification {
     record.schema >> schema
     schema.name >> KNOWN_MESSAGE_TYPE
 
-    def dto = Mock(TestDto)
+    def dto = Mock(TestSagaDto)
     4 * mapper.convertMessageToDto(record, PARTITION, OFFSET) >> dto
 
     def records = [record, record, record, record]
@@ -81,7 +82,7 @@ class KafkaSagaMessageHandlerSpec extends Specification {
     record.schema >> schema
     schema.name >> KNOWN_MESSAGE_TYPE
 
-    def dto = Mock(TestDto)
+    def dto = Mock(TestSagaDto)
     1 * mapper.convertMessageToDto(record, _, _) >> dto
 
     when:
@@ -118,7 +119,7 @@ class KafkaSagaMessageHandlerSpec extends Specification {
     record.schema >> schema
     schema.name >> UNKNOWN_MESSAGE_TYPE
 
-    def dto = Mock(TestDto)
+    def dto = Mock(TestSagaDto)
     mapper.convertMessageToDto(record, PARTITION, OFFSET) >> dto
 
     def records = [record]

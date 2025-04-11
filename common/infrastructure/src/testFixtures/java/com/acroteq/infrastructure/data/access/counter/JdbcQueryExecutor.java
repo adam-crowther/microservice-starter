@@ -1,5 +1,6 @@
 package com.acroteq.infrastructure.data.access.counter;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.awaitility.Awaitility;
@@ -13,12 +14,14 @@ import java.sql.SQLException;
 public class JdbcQueryExecutor implements AutoCloseable {
 
   private static final String COUNT_COLUMN = "rowCount";
-
   private final Connection connection;
 
-  @SneakyThrows
   JdbcQueryExecutor(final Connection connection) {
     this.connection = connection;
+  }
+
+  public static JdbcQueryExecutorBuilder builder() {
+    return new JdbcQueryExecutorBuilder();
   }
 
   int getCount(final String tableName) {
@@ -35,9 +38,10 @@ public class JdbcQueryExecutor implements AutoCloseable {
               .until(() -> exists(tableName, id));
   }
 
+  @SuppressFBWarnings("SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING")
   @SneakyThrows
   private int count(final String tableName) {
-    final String query = createCountQuery(tableName);
+    final String query = String.format("SELECT count(*) AS %s FROM %s", COUNT_COLUMN, tableName);
     final int count;
     try (PreparedStatement statement = connection.prepareStatement(query)) {
       count = executeCountStatement(statement, tableName);
@@ -46,13 +50,11 @@ public class JdbcQueryExecutor implements AutoCloseable {
     return count;
   }
 
-  private String createCountQuery(final String tableName) {
-    return String.format("SELECT count(*) AS %s FROM %s", COUNT_COLUMN, tableName);
-  }
-
+  @SuppressFBWarnings("SQL_PREPARED_STATEMENT_GENERATED_FROM_NONCONSTANT_STRING")
   @SneakyThrows
   private boolean exists(final String tableName, final Long id) {
-    final String query = createExistsQuery(tableName);
+    final String query = String.format("SELECT count(*) AS %s FROM %s where id = ?", COUNT_COLUMN, tableName);
+
     final int count;
     try (PreparedStatement statement = connection.prepareStatement(query)) {
       statement.setLong(1, id);
@@ -73,10 +75,6 @@ public class JdbcQueryExecutor implements AutoCloseable {
       }
     }
     return count;
-  }
-
-  private String createExistsQuery(final String tableName) {
-    return String.format("SELECT count(*) AS %s FROM %s where id = ?", COUNT_COLUMN, tableName);
   }
 
   @Override

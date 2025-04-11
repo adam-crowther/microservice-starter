@@ -17,12 +17,16 @@ public class FlightResolver implements Resolver<FlightId, Flight> {
   @Override
   public Flight resolve(final FlightId id) {
     return flightRepository.findById(id)
-                           .orElseThrow(() -> new FlightNotFoundException(id));
+                           .orElseThrow(() -> new FlightNotFoundException(id.toString()));
   }
 
-  @Override
   public Flight resolve(final Long id) {
     final FlightId flightId = FlightId.of(id);
     return resolve(flightId);
+  }
+
+  public Flight resolve(final String code) {
+    return flightRepository.findByCode(code)
+                           .orElseThrow(() -> new FlightNotFoundException(code));
   }
 }

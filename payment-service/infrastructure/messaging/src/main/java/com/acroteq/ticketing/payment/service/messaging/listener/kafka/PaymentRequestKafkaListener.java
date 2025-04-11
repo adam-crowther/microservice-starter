@@ -25,25 +25,24 @@ public class PaymentRequestKafkaListener {
 
   private final KafkaSagaMessageHandler messageHandler;
 
-  public PaymentRequestKafkaListener(final PaymentRequestMessageListener listener,
-                                     final PaymentRequestMessageToDtoMapper requestMapper,
-                                     final PaymentCancelRequestMessageToDtoMapper cancelRequestMapper) {
+  public PaymentRequestKafkaListener(
+      final PaymentRequestMessageListener listener, final PaymentRequestMessageToDtoMapper requestMapper,
+      final PaymentCancelRequestMessageToDtoMapper cancelRequestMapper) {
     messageHandler = KafkaSagaMessageHandler.builder()
                                             .addMessageType(PaymentRequestMessage.SCHEMA$.getName(),
-                                                        requestMapper,
-                                                        listener::completePayment)
+                                                            requestMapper,
+                                                            listener::completePayment)
                                             .addMessageType(PaymentCancelRequestMessage.SCHEMA$.getName(),
-                                                        cancelRequestMapper,
-                                                        listener::cancelPayment)
+                                                            cancelRequestMapper,
+                                                            listener::cancelPayment)
                                             .build();
   }
 
   @KafkaListener(id = "${payment-service.payment.consumer-group-id}",
                  topics = "${payment-service.payment.request-topic-name}")
-  public void receive(@Payload @Validated final List<PaymentRequestMessage> messages,
-                      @Header(RECEIVED_KEY) final List<String> keys,
-                      @Header(RECEIVED_PARTITION) final List<Integer> partitions,
-                      @Header(OFFSET) final List<Long> offsets) {
+  public void receive(
+      @Payload @Validated final List<PaymentRequestMessage> messages, @Header(RECEIVED_KEY) final List<String> keys,
+      @Header(RECEIVED_PARTITION) final List<Integer> partitions, @Header(OFFSET) final List<Long> offsets) {
     log.info("{} number of payment requests received with keys:{}, partitions:{} and offsets: {}",
              messages.size(),
              keys.toString(),

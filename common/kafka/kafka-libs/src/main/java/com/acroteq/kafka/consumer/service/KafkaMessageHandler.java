@@ -18,10 +18,9 @@ import java.util.function.BiConsumer;
 @RequiredArgsConstructor(access = PACKAGE)
 public abstract class KafkaMessageHandler {
 
-  public void processMessages(@NonNull final List<? extends SpecificRecord> messages,
-                              @NonNull final List<String> keys,
-                              @NonNull final List<Integer> partitions,
-                              @NonNull final List<Long> offsets) {
+  public void processMessages(
+      @NonNull final List<? extends SpecificRecord> messages, @NonNull final List<String> keys,
+      @NonNull final List<Integer> partitions, @NonNull final List<Long> offsets) {
     log.info("Handling {} messages", messages.size());
 
     checkPrecondition(messages.size() == keys.size(), "keys", MessageHandlerParameterCountMismatchException::new);
@@ -33,19 +32,17 @@ public abstract class KafkaMessageHandler {
     messages.forEach(withCounter(processMessage(keys, partitions, offsets)));
   }
 
-  private BiConsumer<Integer, SpecificRecord> processMessage(final List<String> keys,
-                                                             final List<Integer> partitions,
-                                                             final List<Long> offsets) {
+  private BiConsumer<Integer, SpecificRecord> processMessage(
+      final List<String> keys, final List<Integer> partitions,
+      final List<Long> offsets) {
     return (counter, message) -> processMessage(counter, message, keys, partitions, offsets);
   }
 
   // This is OK in a message listener.  We have to catch, log and rethrow everything, that's the point.
   @SuppressWarnings("PMD.AvoidCatchingGenericException")
-  private void processMessage(final int counter,
-                              final SpecificRecord message,
-                              final List<String> keys,
-                              final List<Integer> partitions,
-                              final List<Long> offsets) {
+  private void processMessage(
+      final int counter, final SpecificRecord message, final List<String> keys,
+      final List<Integer> partitions, final List<Long> offsets) {
     final String key = keys.get(counter);
     final Integer partition = partitions.get(counter);
     final Long offset = offsets.get(counter);

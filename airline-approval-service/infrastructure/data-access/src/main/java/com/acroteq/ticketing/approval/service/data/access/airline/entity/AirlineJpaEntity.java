@@ -25,6 +25,9 @@ import java.util.List;
 @Entity
 public class AirlineJpaEntity extends ReplicatedJpaEntity {
 
+  @Column(name = "code", nullable = false, unique = true)
+  private String code;
+
   @Column(name = "name", nullable = false)
   private String name;
 

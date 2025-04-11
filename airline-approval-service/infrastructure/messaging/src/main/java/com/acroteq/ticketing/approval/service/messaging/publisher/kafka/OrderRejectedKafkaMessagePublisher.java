@@ -28,7 +28,7 @@ public class OrderRejectedKafkaMessagePublisher implements OrderRejectedMessageP
                               .getValue();
     log.info("Received OrderRejectedEvent for order id: {}", orderId);
 
-    final AirlineApprovalRejectedResponseMessage message = messageFactory.convertEventToMessage(event);
+    final AirlineApprovalRejectedResponseMessage message = messageFactory.convert(event);
     final String topic = config.getAirlineApproval()
                                .getResponseTopicName();
     kafkaProducer.send(topic, orderId, message, callbackHandler::callback);

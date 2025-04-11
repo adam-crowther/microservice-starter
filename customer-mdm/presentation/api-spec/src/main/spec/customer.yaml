@@ -1,0 +1,204 @@
+paths:
+  /customers:
+    get:
+      summary: List all customers
+      operationId: listCustomers
+      tags:
+        - customers
+      parameters:
+        - $ref: "parameters.yaml#/components/parameters/limitQueryParam"
+      responses:
+        '200':
+          description: An array of customers
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customers"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "problem.yaml#/components/schemas/Problem"
+    post:
+      summary: Create a customer
+      operationId: createCustomer
+      tags:
+        - customers
+      requestBody:
+        description: The customer to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCustomer"
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "response.yaml#/components/schemas/AuditedEntityResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "problem.yaml#/components/schemas/Problem"
+
+  /customers/{id}:
+    get:
+      summary: Info for a specific customer
+      operationId: getCustomerById
+      tags:
+        - customers
+      parameters:
+        - $ref: "parameters.yaml#/components/parameters/idPathParam"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "problem.yaml#/components/schemas/Problem"
+    put:
+      summary: Update a customer
+      operationId: updateCustomerById
+      tags:
+        - customers
+      parameters:
+        - $ref: "parameters.yaml#/components/parameters/idPathParam"
+      requestBody:
+        description: The customer to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateCustomer"
+      responses:
+        '204':
+          description: Updated
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "problem.yaml#/components/schemas/Problem"
+    delete:
+      summary: Delete a customer
+      operationId: deleteCustomerById
+      tags:
+        - customers
+      parameters:
+        - $ref: "parameters.yaml#/components/parameters/idPathParam"
+      responses:
+        '204':
+          description: Deleted
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "problem.yaml#/components/schemas/Problem"
+
+components:
+  securitySchemes:
+    keycloak:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: http://localhost:8080/realms/acroteq/protocol/openid-connect/auth
+          scopes: { }
+
+  schemas:
+    CreateCustomer:
+      type: object
+      required:
+        - userName
+        - firstName
+        - lastName
+        - creditLimitCurrencyId
+        - creditLimitAmount
+      properties:
+        userName:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        creditLimitCurrencyId:
+          type: string
+        creditLimitAmount:
+          type: number
+          format: double
+
+    UpdateCustomer:
+      allOf:
+        - $ref: '#/components/schemas/CreateCustomer'
+      required:
+        - id
+        - version
+      properties:
+        id:
+          type: integer
+          format: int64
+        version:
+          type: integer
+          format: int64
+
+    Customer:
+      type: object
+      required:
+        - id
+        - version
+        - audit
+        - userName
+        - firstName
+        - lastName
+        - creditLimitCurrencyId
+        - creditLimitAmount
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        version:
+          type: integer
+          format: int64
+          readOnly: true
+        audit:
+          $ref: "audit.yaml#/components/schemas/Audit"
+        userName:
+          type: string
+          readOnly: true
+        firstName:
+          type: string
+          readOnly: true
+        lastName:
+          type: string
+          readOnly: true
+        creditLimitCurrencyId:
+          type: string
+          readOnly: true
+        creditLimitAmount:
+          type: number
+          format: double
+          readOnly: true
+
+    Customers:
+      type: array
+      maxItems: 100
+      readOnly: true
+      items:
+        $ref: "#/components/schemas/Customer"

@@ -7,7 +7,7 @@ import static org.springframework.kafka.support.KafkaHeaders.RECEIVED_PARTITION;
 import com.acroteq.kafka.consumer.service.KafkaEntityEventMessageHandler;
 import com.acroteq.ticketing.kafka.airline.avro.model.AirlineEventMessage;
 import com.acroteq.ticketing.order.service.domain.ports.input.message.listener.airline.AirlineEventMessageListener;
-import com.acroteq.ticketing.order.service.messaging.mapper.airline.AirlineEventMessageToDtoMapper;
+import com.acroteq.ticketing.order.service.messaging.mapper.airline.AirlineEventMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecord;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -24,8 +24,9 @@ public class AirlineEventKafkaListener {
 
   private final KafkaEntityEventMessageHandler messageHandler;
 
-  public AirlineEventKafkaListener(final AirlineEventMessageToDtoMapper airlineEventMapper,
-                                   final AirlineEventMessageListener listener) {
+  public AirlineEventKafkaListener(
+      final AirlineEventMapper airlineEventMapper,
+      final AirlineEventMessageListener listener) {
     messageHandler = new KafkaEntityEventMessageHandler(AirlineEventMessage.SCHEMA$.getName(),
                                                         airlineEventMapper,
                                                         listener::airlineCreatedOrUpdated,
@@ -34,10 +35,9 @@ public class AirlineEventKafkaListener {
 
   @KafkaListener(id = "${order-service.airline-event.consumer-group-id}",
                  topics = "${order-service.airline-event.topic-name}")
-  public void receive(@Payload @Validated final List<? extends SpecificRecord> messages,
-                      @Header(RECEIVED_KEY) final List<String> keys,
-                      @Header(RECEIVED_PARTITION) final List<Integer> partitions,
-                      @Header(OFFSET) final List<Long> offsets) {
+  public void receive(
+      @Payload @Validated final List<? extends SpecificRecord> messages, @Header(RECEIVED_KEY) final List<String> keys,
+      @Header(RECEIVED_PARTITION) final List<Integer> partitions, @Header(OFFSET) final List<Long> offsets) {
     log.info("{} airline events received with keys {}, partitions {}, offsets {}",
              messages.size(),
              keys,

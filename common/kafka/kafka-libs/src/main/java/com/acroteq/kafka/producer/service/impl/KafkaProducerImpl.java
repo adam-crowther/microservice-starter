@@ -29,16 +29,21 @@ public class KafkaProducerImpl<MessageT extends SpecificRecord> implements Kafka
   private final KafkaTemplate<String, MessageT> kafkaTemplate;
 
   @Override
-  public void send(final String topicName,
-                   final Long id,
-                   final MessageT message,
-                   final BiConsumer<SendResult<String, MessageT>, Throwable> callback) {
+  public void send(
+      final String topicName, final Long id, final MessageT message,
+      final BiConsumer<SendResult<String, MessageT>, Throwable> callback) {
+    final String key = id.toString();
+    send(topicName, key, message, callback);
+  }
+
+  @Override
+  public void send(
+      final String topicName, final String key, final MessageT message,
+      final BiConsumer<SendResult<String, MessageT>, Throwable> callback) {
     try {
-      log.info("Sending message key {} to topic {}", id, topicName);
+      log.info("Sending message key {} to topic {}", key, topicName);
       log.debug("Message {}", message);
-      final CompletableFuture<SendResult<String, MessageT>> future = kafkaTemplate.send(topicName,
-                                                                                        id.toString(),
-                                                                                        message);
+      final CompletableFuture<SendResult<String, MessageT>> future = kafkaTemplate.send(topicName, key, message);
       future.handle(this::handleSendResult)
             .whenComplete(callback);
     } catch (final KafkaException exception) {
@@ -47,23 +52,14 @@ public class KafkaProducerImpl<MessageT extends SpecificRecord> implements Kafka
     }
   }
 
-  private SendResult<String, MessageT> handleSendResult(final SendResult<String, MessageT> sendResult,
-                                                        final Throwable exception) {
+  private SendResult<String, MessageT> handleSendResult(
+      final SendResult<String, MessageT> sendResult,
+      final Throwable exception) {
     if (exception == null) {
       // the record was successfully sent
       final RecordMetadata recordMetadata = sendResult.getRecordMetadata();
-      log.info("Message send to kafka successfully. "
-               + EOL
-               + "Topic:"
-               + recordMetadata.topic()
-               + EOL
-               + "Partition: "
-               + recordMetadata.partition()
-               + EOL
-               + "Offset: "
-               + recordMetadata.offset()
-               + EOL
-               + "Timestamp: "
+      log.info("Message send to kafka successfully. " + EOL + "Topic:" + recordMetadata.topic() + EOL + "Partition: "
+               + recordMetadata.partition() + EOL + "Offset: " + recordMetadata.offset() + EOL + "Timestamp: "
                + recordMetadata.timestamp());
     } else {
       // Error while producing

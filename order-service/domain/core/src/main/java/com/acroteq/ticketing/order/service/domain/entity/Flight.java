@@ -6,7 +6,7 @@ import static com.acroteq.precondition.Precondition.checkPrecondition;
 import com.acroteq.domain.entity.ReplicatedEntity;
 import com.acroteq.domain.valueobject.CashValue;
 import com.acroteq.domain.valueobject.FlightId;
-import com.acroteq.ticketing.order.service.domain.exception.FlightNumberMismatchException;
+import com.acroteq.ticketing.order.service.domain.exception.CodeMismatchException;
 import com.acroteq.ticketing.order.service.domain.exception.FlightPriceMismatchException;
 import com.acroteq.ticketing.order.service.domain.exception.InvalidPriceException;
 import lombok.Getter;
@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 public class Flight extends ReplicatedEntity<FlightId> {
 
   @NonNull
-  private final String flightNumber;
+  private final String code;
   @NonNull
   private final CashValue price;
 
@@ -28,12 +28,9 @@ public class Flight extends ReplicatedEntity<FlightId> {
     checkPrecondition(price.isGreaterThan(ZERO), InvalidPriceException::new);
   }
 
-  public void validateFlightNumberAndPriceEquality(final Flight other) {
-    final String otherFlightNumber = other.getFlightNumber();
-    checkPrecondition(flightNumber.equals(otherFlightNumber),
-                      FlightNumberMismatchException::new,
-                      flightNumber,
-                      otherFlightNumber);
+  public void validateCodeAndPriceEquality(final Flight other) {
+    final String otherCode = other.getCode();
+    checkPrecondition(code.equals(otherCode), CodeMismatchException::new, code, otherCode);
 
     final CashValue otherPrice = other.getPrice();
     checkPrecondition(price.equals(otherPrice), FlightPriceMismatchException::new, price, otherPrice);

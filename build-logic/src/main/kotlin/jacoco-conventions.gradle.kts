@@ -51,7 +51,7 @@ tasks.named<JacocoCoverageVerification>("jacocoTestCoverageVerification") {
         rule {
             enabled = true
             element = "CLASS"
-            includes = listOf("ch.acroteq.risk.model.*")
+            includes = listOf("ch.acroteq.ticketing.*")
 
             limit {
                 counter = "LINE"

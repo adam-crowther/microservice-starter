@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AirlineJpaRepository extends JpaRepository<AirlineJpaEntity, Long> {
 
+  void deleteByCode(String code);
 }

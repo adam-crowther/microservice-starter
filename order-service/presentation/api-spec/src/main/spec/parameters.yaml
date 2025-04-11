@@ -1,0 +1,20 @@
+components:
+  parameters:
+    limitQueryParam:
+      name: limit
+      description: How many items to return at one time (max 100)
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 100
+    trackingIdPathParam:
+      name: trackingId
+      description: The tracking id of the order to retrieve
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid

@@ -7,6 +7,7 @@ dependencies {
   implementation(project(":common:common-domain"))
   implementation(project(":common:common-helper"))
 
+  implementation(libs.avro)
   implementation(libs.guava)
   implementation(libs.jakarta.annotation.api)
   implementation(libs.jakarta.validation.api)

@@ -53,7 +53,9 @@ public class KafkaErrorHandlerConfiguration {
   @Bean
   public DefaultErrorHandler kafkaErrorHandler() {
     final KafkaDeadLetterConfig deadLetterConfig = kafkaConsumerConfig.getDeadLetter();
-    final ConsumerRecordRecoverer recoverer = new DeadLetterPublishingRecoverer(operations, getTopicPartitionSupplier(deadLetterConfig));
+    final ConsumerRecordRecoverer recoverer = new DeadLetterPublishingRecoverer(operations, 
+                                                                                getTopicPartitionSupplier(
+                                                                                    deadLetterConfig));
 
     final KafkaBackoffConfig backoffConfig = kafkaConsumerConfig.getBackoff();
     final BackOff backOff;
@@ -75,12 +77,14 @@ public class KafkaErrorHandlerConfiguration {
     return errorHandler;
   }
 
-  private BiFunction<ConsumerRecord<?, ?>, Exception, TopicPartition> getTopicPartitionSupplier(final KafkaDeadLetterConfig deadLetterConfig) {
+  private BiFunction<ConsumerRecord<?, ?>, Exception, TopicPartition> getTopicPartitionSupplier(
+      final KafkaDeadLetterConfig deadLetterConfig) {
     return (consumerRecord, exception) -> getTopicPartitionSupplier(consumerRecord, deadLetterConfig);
   }
 
-  private TopicPartition getTopicPartitionSupplier(final ConsumerRecord<?, ?> consumerRecord,
-                                                   final KafkaDeadLetterConfig deadLetterConfig) {
+  private TopicPartition getTopicPartitionSupplier(
+      final ConsumerRecord<?, ?> consumerRecord,
+      final KafkaDeadLetterConfig deadLetterConfig) {
     final String deadLetterTopicSuffix = deadLetterConfig.getSuffix();
     final String topicName = consumerRecord.topic();
     final String deadLetterTopicName = topicName + deadLetterTopicSuffix;

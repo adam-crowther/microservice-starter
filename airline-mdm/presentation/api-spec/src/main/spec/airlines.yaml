@@ -1,0 +1,189 @@
+paths:
+  /airlines:
+    get:
+      summary: List all airlines
+      operationId: listAirlines
+      tags:
+        - airlines
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            maximum: 100
+            format: int32
+      responses:
+        '200':
+          description: An  array of airlines
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Airlines"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "problem.yaml#/components/schemas/Problem"
+    post:
+      summary: Create an airline
+      operationId: createAirline
+      tags:
+        - airlines
+      requestBody:
+        description: The airline to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAirline"
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "response.yaml#/components/schemas/AuditedEntityResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "problem.yaml#/components/schemas/Problem"
+
+  /airlines/{airlineCode}:
+    get:
+      summary: Info for a specific airline
+      operationId: getAirlineByCode
+      tags:
+        - airlines
+      parameters:
+        - $ref: 'parameters.yaml#/components/parameters/airlineCodePathParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Airline"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "problem.yaml#/components/schemas/Problem"
+    put:
+      summary: Update an airline
+      operationId: updateAirlineByCode
+      tags:
+        - airlines
+      parameters:
+        - $ref: 'parameters.yaml#/components/parameters/airlineCodePathParam'
+      requestBody:
+        description: The airline to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateAirline"
+      responses:
+        '204':
+          description: Updated
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "problem.yaml#/components/schemas/Problem"
+    delete:
+      summary: Delete an airline
+      operationId: deleteAirlineByCode
+      tags:
+        - airlines
+      parameters:
+        - $ref: 'parameters.yaml#/components/parameters/airlineCodePathParam'
+      responses:
+        '204':
+          description: Deleted
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "problem.yaml#/components/schemas/Problem"
+
+components:
+  schemas:
+    CreateAirline:
+      type: object
+      required:
+        - code
+        - name
+        - active
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        active:
+          type: boolean
+
+    UpdateAirline:
+      allOf:
+        - $ref: '#/components/schemas/CreateAirline'
+      required:
+        - id
+        - version
+      properties:
+        id:
+          type: integer
+          format: int64
+        version:
+          type: integer
+          format: int64
+
+    Airline:
+      type: object
+      required:
+        - id
+        - version
+        - audit
+        - code
+        - name
+        - active
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        version:
+          type: integer
+          format: int64
+          readOnly: true
+        audit:
+          $ref: "types.yaml#/components/schemas/Audit"
+        code:
+          type: string
+          readOnly: true
+        name:
+          type: string
+          readOnly: true
+        active:
+          type: boolean
+          readOnly: true
+        flights:
+          $ref: "flights.yaml#/components/schemas/Flights"
+
+    Airlines:
+      type: array
+      maxItems: 100
+      readOnly: true
+      items:
+        $ref: "#/components/schemas/Airline"

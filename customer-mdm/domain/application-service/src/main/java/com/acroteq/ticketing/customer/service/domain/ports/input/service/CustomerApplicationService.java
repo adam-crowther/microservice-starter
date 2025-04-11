@@ -1,18 +1,21 @@
 package com.acroteq.ticketing.customer.service.domain.ports.input.service;
 
-import com.acroteq.ticketing.customer.service.domain.dto.create.CreateCustomerCommandDto;
-import com.acroteq.ticketing.customer.service.domain.dto.create.CreateCustomerResponseDto;
-import com.acroteq.ticketing.customer.service.domain.dto.get.CustomerDto;
-import com.acroteq.ticketing.customer.service.domain.dto.update.UpdateCustomerCommandDto;
+import com.acroteq.domain.valueobject.CustomerId;
+import com.acroteq.ticketing.customer.service.domain.entity.Customer;
 import jakarta.validation.Valid;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface CustomerApplicationService {
 
-  CustomerDto getCustomer(Long customerId);
+  List<Customer> loadAllCustomers();
 
-  CreateCustomerResponseDto createCustomer(@Valid CreateCustomerCommandDto createCustomerCommandDto);
+  Optional<Customer> loadCustomer(CustomerId customerId);
 
-  void updateCustomer(@Valid UpdateCustomerCommandDto createCustomerCommandDto);
+  Customer createCustomer(@Valid Customer customer);
 
-  void deleteCustomer(Long customerId);
+  void updateCustomer(@Valid Customer customer);
+
+  void deleteCustomer(CustomerId customerId);
 }

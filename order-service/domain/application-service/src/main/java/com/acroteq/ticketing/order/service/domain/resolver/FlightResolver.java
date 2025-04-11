@@ -20,7 +20,6 @@ public class FlightResolver implements Resolver<FlightId, Flight> {
                            .orElseThrow(() -> new FlightNotFoundException(flightId));
   }
 
-  @Override
   public Flight resolve(final Long id) {
     final FlightId flightId = FlightId.of(id);
     return resolve(flightId);

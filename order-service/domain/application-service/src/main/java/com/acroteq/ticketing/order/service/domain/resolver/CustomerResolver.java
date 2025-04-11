@@ -20,7 +20,6 @@ public class CustomerResolver implements Resolver<CustomerId, Customer> {
                              .orElseThrow(() -> new CustomerNotFoundException(id));
   }
 
-  @Override
   public Customer resolve(final Long id) {
     final CustomerId customerId = CustomerId.of(id);
     return resolve(customerId);

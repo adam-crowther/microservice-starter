@@ -27,5 +27,5 @@ public interface AirlineApprovalRejectedResponseMessageFactory
   @Mapping(target = "failureMessages", source = "result")
   @Mapping(target = "auditBuilder", ignore = true)
   @Override
-  AirlineApprovalRejectedResponseMessage convertEventToMessage(OrderRejectedEvent event);
+  AirlineApprovalRejectedResponseMessage convert(OrderRejectedEvent event);
 }

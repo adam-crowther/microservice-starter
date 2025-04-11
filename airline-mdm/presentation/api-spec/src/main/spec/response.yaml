@@ -1,0 +1,27 @@
+components:
+  schemas:
+    EntityResponse:
+      type: object
+      required:
+        - id
+        - version
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        version:
+          type: integer
+          format: int64
+          readOnly: true
+
+    AuditedEntityResponse:
+      allOf:
+        - $ref: "#/components/schemas/EntityResponse"
+      required:
+        - id
+        - version
+        - audit
+      properties:
+        audit:
+          $ref: "audit.yaml#/components/schemas/Audit"

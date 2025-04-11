@@ -3,7 +3,11 @@ package com.acroteq.common.application.exception.handler;
 import static java.util.stream.Collectors.joining;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+import com.acroteq.domain.exception.DomainValidationException;
+import com.acroteq.domain.exception.NotFoundException;
+import com.acroteq.domain.exception.PersistenceFailedException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
@@ -54,6 +58,48 @@ public class GlobalExceptionHandler {
                   .reason(BAD_REQUEST.getReasonPhrase())
                   .message(MESSAGE_VALIDATION_EXCEPTION + ": " + exception.getMessage())
                   .i18nCode(I18N_CODE_VALIDATION_FAILED)
+                  .build();
+  }
+
+  @ResponseBody
+  @ExceptionHandler({ DomainValidationException.class })
+  @ResponseStatus(BAD_REQUEST)
+  public Problem handleException(final DomainValidationException exception) {
+    log.error(exception.getMessage(), exception);
+    return Problem.builder()
+                  .code(BAD_REQUEST.value())
+                  .reason(BAD_REQUEST.getReasonPhrase())
+                  .message(exception.getMessage())
+                  .i18nCode(exception.getCode())
+                  .i18nParameters(List.of(exception.getParameters()))
+                  .build();
+  }
+
+  @ResponseBody
+  @ExceptionHandler({ PersistenceFailedException.class })
+  @ResponseStatus(INTERNAL_SERVER_ERROR)
+  public Problem handleException(final PersistenceFailedException exception) {
+    log.error(exception.getMessage(), exception);
+    return Problem.builder()
+                  .code(INTERNAL_SERVER_ERROR.value())
+                  .reason(INTERNAL_SERVER_ERROR.getReasonPhrase())
+                  .message(exception.getMessage())
+                  .i18nCode(exception.getCode())
+                  .i18nParameters(List.of(exception.getParameters()))
+                  .build();
+  }
+
+  @ResponseBody
+  @ExceptionHandler({ NotFoundException.class })
+  @ResponseStatus(NOT_FOUND)
+  public Problem handleException(final NotFoundException exception) {
+    log.error(exception.getMessage(), exception);
+    return Problem.builder()
+                  .code(NOT_FOUND.value())
+                  .reason(NOT_FOUND.getReasonPhrase())
+                  .message(exception.getMessage())
+                  .i18nCode(exception.getCode())
+                  .i18nParameters(List.of(exception.getParameters()))
                   .build();
   }
 

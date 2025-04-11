@@ -1,0 +1,26 @@
+components:
+  parameters:
+    limitQueryParam:
+      name: limit
+      description: How many items to return at one time (max 100)
+      in: query
+      required: false
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 100
+    airlineCodePathParam:
+      name: airlineCode
+      in: path
+      required: true
+      description: The code of the airline to retrieve
+      schema:
+        type: string
+    flightCodePathParam:
+      name: flightCode
+      in: path
+      required: true
+      description: The code of the flight to retrieve
+      schema:
+        type: string

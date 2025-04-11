@@ -1,7 +1,7 @@
 package com.acroteq.ticketing.order.service.config;
 
 import com.acroteq.test.config.RandomMasterDataGeneratorConfiguration;
-import com.acroteq.ticketing.order.service.client.model.CreateOrderCommandGenerator;
+import com.acroteq.ticketing.order.service.client.model.CreateOrderGenerator;
 import com.acroteq.ticketing.order.service.data.AirlineApprovalApprovedResponseMessageGenerator;
 import com.acroteq.ticketing.order.service.data.AirlineMasterDataGenerator;
 import com.acroteq.ticketing.order.service.data.CustomerMasterDataGenerator;
@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Import;
           AirlineMasterDataGenerator.class,
           FlightMasterDataGenerator.class,
           CustomerMasterDataGenerator.class,
-          CreateOrderCommandGenerator.class,
+          CreateOrderGenerator.class,
           PaymentPaidResponseMessageGenerator.class,
           AirlineApprovalApprovedResponseMessageGenerator.class,
           TestDataGenerator.class,

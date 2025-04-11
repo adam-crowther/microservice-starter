@@ -1,14 +1,17 @@
 package com.acroteq.ticketing.test.e2e;
 
 import static com.acroteq.ticketing.test.e2e.api.AuthenticationHelper.authenticate;
-import static com.acroteq.ticketing.test.e2e.api.DatabaseCheckerFactory.createDatabaseChecker;
+import static com.acroteq.ticketing.test.e2e.api.DatabaseCheckerFactory.createQueryExecutor;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import com.acroteq.infrastructure.data.access.counter.JdbcDatabaseChecker;
+import com.acroteq.infrastructure.data.access.counter.CustomerMdmDatabaseChecker;
+import com.acroteq.infrastructure.data.access.counter.JdbcQueryExecutor;
+import com.acroteq.infrastructure.data.access.counter.OrderServiceDatabaseChecker;
+import com.acroteq.infrastructure.data.access.counter.PaymentServiceDatabaseChecker;
 import com.acroteq.test.container.KafkaSslContainer;
 import com.acroteq.ticketing.test.e2e.extension.KafkaClusterContainers;
 import com.acroteq.ticketing.test.e2e.extension.KafkaClusterExtension;
@@ -38,10 +41,13 @@ class BrokerResilienceTest {
   private static final int POLL_INTERVAL_SECONDS = 10;
   private static final int SHUTDOWN_TIMEOUT_SECONDS = 90;
 
-  private static JdbcDatabaseChecker databaseChecker;
+  private static CustomerMdmDatabaseChecker customerMdmChecker;
+  private static PaymentServiceDatabaseChecker paymentServiceDbChecker;
+  private static OrderServiceDatabaseChecker orderServiceDbChecker;
   private static List<KafkaSslContainer> kafkaContainers;
   private static CustomerUploader uploader;
 
+  @SuppressWarnings({ "PMD.CloseResource" })
   @BeforeAll
   static void startUp(final KafkaClusterContainers kafkaClusterContainers, final TestDockerContainers containers) {
 
@@ -49,12 +55,17 @@ class BrokerResilienceTest {
     kafkaContainers = kafkaClusterContainers.getKafkaContainers();
     uploader = new CustomerUploader(containers, bearerToken);
 
-    databaseChecker = createDatabaseChecker(containers);
+    final JdbcQueryExecutor queryExecutor = createQueryExecutor(containers);
+    customerMdmChecker = new CustomerMdmDatabaseChecker(queryExecutor);
+    paymentServiceDbChecker = new PaymentServiceDatabaseChecker(queryExecutor);
+    orderServiceDbChecker = new OrderServiceDatabaseChecker(queryExecutor);
   }
 
   @AfterAll
   static void shutdown() {
-    databaseChecker.close();
+    customerMdmChecker.close();
+    paymentServiceDbChecker.close();
+    orderServiceDbChecker.close();
   }
 
   @BeforeEach
@@ -89,11 +100,11 @@ class BrokerResilienceTest {
               .until(createCustomerThread::isShutdown);
 
     // Check that the data was replicated correctly
-    final int count = databaseChecker.inCustomerMdmGetCustomerCount();
+    final int count = customerMdmChecker.getCustomerCount();
     assertThat(count, is(equalTo(uploader.getCustomerCount())));
 
-    databaseChecker.inOrderServiceWaitForCustomersCount(count);
-    databaseChecker.inPaymentServiceWaitForCustomersCount(count);
+    orderServiceDbChecker.waitForCustomersCount(count);
+    paymentServiceDbChecker.waitForCustomersCount(count);
   }
 
   private void shutdownKafkaInstance() {

@@ -14,10 +14,11 @@ public interface AirlineEventMessageFactory extends EventToMessageMapper<Airline
   @Mapping(target = "id", source = "airline.id")
   @Mapping(target = "version", source = "airline.version")
   @Mapping(target = "audit", source = "airline.audit")
+  @Mapping(target = "code", source = "airline.code")
   @Mapping(target = "name", source = "airline.name")
   @Mapping(target = "active", source = "airline.active")
   @Mapping(target = "flights", source = "airline.flights")
   @Mapping(target = "auditBuilder", ignore = true)
   @Override
-  AirlineEventMessage convertEventToMessage(AirlineEvent event);
+  AirlineEventMessage convert(AirlineEvent event);
 }

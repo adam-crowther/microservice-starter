@@ -17,6 +17,8 @@ import java.util.Optional;
 public class AirlineTestDataHelper {
 
   public static final Long AIRLINE_ID = IdTestDataHelper.nextId();
+  public static final Long FLIGHT_ID = IdTestDataHelper.nextId();
+  public static final String AIRLINE_CODE = "code";
   public static final String AIRLINE_NAME = "airline-name";
 
   public static final Airline AIRLINE = Airline.builder()
@@ -26,6 +28,7 @@ public class AirlineTestDataHelper {
                                                                .partition(0)
                                                                .offset(0L)
                                                                .build())
+                                               .code(AIRLINE_CODE)
                                                .name(AIRLINE_NAME)
                                                .active(true)
                                                .flights(List.of(FlightTestDataHelper.FLIGHT_1,

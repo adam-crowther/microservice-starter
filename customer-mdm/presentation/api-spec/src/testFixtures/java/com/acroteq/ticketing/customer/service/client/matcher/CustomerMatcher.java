@@ -1,6 +1,6 @@
 package com.acroteq.ticketing.customer.service.client.matcher;
 
-import com.acroteq.ticketing.customer.service.client.model.CreateCustomerCommand;
+import com.acroteq.ticketing.customer.service.client.model.CreateCustomer;
 import com.acroteq.ticketing.customer.service.client.model.Customer;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.math3.util.Precision;
@@ -13,22 +13,22 @@ import java.util.Objects;
 public class CustomerMatcher extends TypeSafeMatcher<Customer> {
 
   private static final double DOUBLE_COMPARISON_EPSILON = 10E-6;
-  private final CreateCustomerCommand request;
+  private final CreateCustomer request;
 
-  public static CustomerMatcher matches(final CreateCustomerCommand request) {
+  public static CustomerMatcher matches(final CreateCustomer request) {
     return new CustomerMatcher(request);
   }
 
   @Override
   protected boolean matchesSafely(final Customer customer) {
 
-    return Objects.equals(customer.getUserName(), request.getUserName())
-           && Objects.equals(customer.getFirstName(), request.getFirstName())
+    return Objects.equals(customer.getUserName(), request.getUserName()) && Objects.equals(customer.getFirstName(),
+                                                                                           request.getFirstName())
            && Objects.equals(customer.getLastName(), request.getLastName())
            && Precision.equals(customer.getCreditLimitAmount(),
                                request.getCreditLimitAmount(),
-                               DOUBLE_COMPARISON_EPSILON)
-           && Objects.equals(customer.getCreditLimitCurrencyId(), request.getCreditLimitCurrencyId());
+                               DOUBLE_COMPARISON_EPSILON) && Objects.equals(customer.getCreditLimitCurrencyId(),
+                                                                            request.getCreditLimitCurrencyId());
 
 
   }

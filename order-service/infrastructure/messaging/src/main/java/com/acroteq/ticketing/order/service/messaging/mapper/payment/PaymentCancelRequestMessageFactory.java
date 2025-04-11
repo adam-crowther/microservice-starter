@@ -25,5 +25,5 @@ public interface PaymentCancelRequestMessageFactory
   @Mapping(target = "orderId", source = "order.id")
   @Mapping(target = "orderVersion", source = "order.version")
   @Override
-  PaymentCancelRequestMessage convertEventToMessage(OrderEvent event);
+  PaymentCancelRequestMessage convert(OrderEvent event);
 }

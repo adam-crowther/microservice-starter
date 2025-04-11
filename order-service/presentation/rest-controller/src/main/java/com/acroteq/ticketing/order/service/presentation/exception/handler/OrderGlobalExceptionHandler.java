@@ -6,9 +6,9 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import com.acroteq.domain.exception.DomainException;
 import com.acroteq.ticketing.order.service.domain.exception.AirlineNotActiveException;
 import com.acroteq.ticketing.order.service.domain.exception.AirlineNotFoundException;
+import com.acroteq.ticketing.order.service.domain.exception.CodeMismatchException;
 import com.acroteq.ticketing.order.service.domain.exception.CustomerNotFoundException;
 import com.acroteq.ticketing.order.service.domain.exception.FlightNotFoundException;
-import com.acroteq.ticketing.order.service.domain.exception.FlightNumberMismatchException;
 import com.acroteq.ticketing.order.service.domain.exception.FlightPriceMismatchException;
 import com.acroteq.ticketing.order.service.domain.exception.InvalidOrderPrestateException;
 import com.acroteq.ticketing.order.service.domain.exception.InvalidPriceException;
@@ -77,9 +77,9 @@ public class OrderGlobalExceptionHandler {
   }
 
   @ResponseBody
-  @ExceptionHandler({ FlightNumberMismatchException.class })
+  @ExceptionHandler({ CodeMismatchException.class })
   @ResponseStatus(BAD_REQUEST)
-  public Problem handleException(final FlightNumberMismatchException exception, final Locale locale) {
+  public Problem handleException(final CodeMismatchException exception, final Locale locale) {
     log.error(exception.getMessage(), exception);
     return createProblem(BAD_REQUEST, exception, locale);
   }

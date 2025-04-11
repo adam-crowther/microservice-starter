@@ -1,18 +1,17 @@
 package com.acroteq.ticketing.airline.service.domain.exception;
 
 import com.acroteq.domain.exception.DomainException;
-import com.acroteq.domain.valueobject.AirlineId;
 
 public class AirlineNotFoundException extends DomainException {
 
   private static final String I18N_CODE = "problem.airline.not.found";
   private static final String MESSAGE = "Airline not found %s";
 
-  private final AirlineId airlineId;
+  private final String code;
 
-  public AirlineNotFoundException(final AirlineId airlineId) {
-    super(String.format(MESSAGE, airlineId));
-    this.airlineId = airlineId;
+  public AirlineNotFoundException(final String code) {
+    super(String.format(MESSAGE, code));
+    this.code = code;
   }
 
   @Override
@@ -22,6 +21,6 @@ public class AirlineNotFoundException extends DomainException {
 
   @Override
   public String[] getParameters() {
-    return new String[]{ airlineId.toString() };
+    return new String[]{ code };
   }
 }

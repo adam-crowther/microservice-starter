@@ -22,6 +22,8 @@ import java.util.Optional;
 public class Airline extends ReplicatedEntity<AirlineId> {
 
   @NonNull
+  private final String code;
+  @NonNull
   private final String name;
 
   private final boolean active;

@@ -8,7 +8,7 @@ of `infrastructure/docker-compose/build` before you start the containers.
 |     |                                       | Shell script / Gradle task                                                    |
 |----:|---------------------------------------|-------------------------------------------------------------------------------|
 |     | Change directory to docker_compose.   | `$ cd infrastructure/docker-compose/`                                         |
-|  1. | Start Docker Containers               | `$ ./start.sh`                                                      |
+|  1. | Start Docker Containers               | `$ ./start.sh`                                                                |
 |  2. | Initialise Kafka topics               | `$ ./init_kafka.sh`                                                           |
 |     | Change directory back to project root | `$ cd ../..`                                                                  |
 |  3. | Start Airline MDM                     | `gradle :airline-mdm:airline-mdm-container:bootRun`                           |
@@ -32,7 +32,7 @@ of `infrastructure/docker-compose/build` before you start the containers.
   "active": true,
   "flights": [
     {
-      "flightNumber": "BA123",
+      "code": "BA123",
       "price": {
         "currencyId": "CHF",
         "amount": 990
@@ -40,7 +40,7 @@ of `infrastructure/docker-compose/build` before you start the containers.
       "available": "true"
     },
     {
-      "flightNumber": "BA456",
+      "code": "BA456",
       "price": {
         "currencyId": "CHF",
         "amount": 750
@@ -87,7 +87,7 @@ Output:
   "flights": [
     {
       "id": 1,
-      "flightNumber": "BA123",
+      "code": "BA123",
       "price": {
         "currencyId": "CHF",
         "amount": 990.0
@@ -96,7 +96,7 @@ Output:
     },
     {
       "id": 2,
-      "flightNumber": "BA456",
+      "code": "BA456",
       "price": {
         "currencyId": "CHF",
         "amount": 750.0
@@ -192,7 +192,8 @@ Output:
 
 ### Load the order
 
-[GET `localhost:8281/orders/c721bfe2-791c-454c-85cd-464d07aafe5f`](http://localhost:8281/index.html#operations-orders-getOrderByTrackingId)
+[GET
+`localhost:8281/orders/c721bfe2-791c-454c-85cd-464d07aafe5f`](http://localhost:8281/index.html#operations-orders-getOrderByTrackingId)
 with body:
 
 ```json

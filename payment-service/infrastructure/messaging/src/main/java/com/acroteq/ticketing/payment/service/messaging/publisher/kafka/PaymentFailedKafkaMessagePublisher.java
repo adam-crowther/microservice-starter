@@ -28,7 +28,7 @@ public class PaymentFailedKafkaMessagePublisher implements PaymentFailedMessageP
                               .getValue();
     log.info("Received PaymentFailedEvent for order id: {}", orderId);
 
-    final PaymentFailedResponseMessage message = messageFactory.convertEventToMessage(event);
+    final PaymentFailedResponseMessage message = messageFactory.convert(event);
     final String topic = config.getPayment()
                                .getResponseTopicName();
     kafkaProducer.send(topic, orderId, message, callbackHandler::callback);

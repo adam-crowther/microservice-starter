@@ -38,5 +38,5 @@ public interface PaymentFailedResponseMessageFactory
   @Mapping(target = "failureMessages", source = "result")
   @Mapping(target = "auditBuilder", ignore = true)
   @Override
-  PaymentFailedResponseMessage convertEventToMessage(PaymentFailedEvent event);
+  PaymentFailedResponseMessage convert(PaymentFailedEvent event);
 }

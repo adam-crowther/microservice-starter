@@ -18,7 +18,7 @@ import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalReq
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentPaidResponseMessage;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentRequestMessage;
 import com.acroteq.ticketing.order.service.client.api.OrdersApi;
-import com.acroteq.ticketing.order.service.client.model.CreateOrderCommand;
+import com.acroteq.ticketing.order.service.client.model.CreateOrder;
 import com.acroteq.ticketing.order.service.client.model.CreateOrderResponse;
 import com.acroteq.ticketing.order.service.client.model.Order;
 import com.acroteq.ticketing.order.service.client.model.OrderStatus;
@@ -111,13 +111,10 @@ class OrderServiceApplicationIntegrationTest {
     final AirlineEventMessage airline = masterDataFixture.getAirline();
     final long airlineId = masterDataFixture.getAirlineId();
 
-    final CreateOrderCommand createOrderCommand = testDataGenerator.getCreateOrderCommand(customerId,
-                                                                                          airlineId,
-                                                                                          flightId,
-                                                                                          1);
+    final CreateOrder createOrder = testDataGenerator.getCreateOrder(customerId, airlineId, flightId, 1);
 
     // when:
-    final CreateOrderResponse createOrderResponse = ordersApi.createOrder(createOrderCommand)
+    final CreateOrderResponse createOrderResponse = ordersApi.createOrder(createOrder)
                                                              .blockOptional()
                                                              .orElseGet(Assertions::fail);
 
@@ -131,14 +128,14 @@ class OrderServiceApplicationIntegrationTest {
                                  .blockOptional()
                                  .orElseGet(Assertions::fail);
     // then:
-    assertThat(order, matches(createOrderCommand, OrderStatus.PENDING, trackingId));
+    assertThat(order, matches(createOrder, OrderStatus.PENDING, trackingId));
 
     // when:
     final PaymentRequestMessage paymentRequest = paymentRequestMessageConsumer.poll()
                                                                               .blockOptional()
                                                                               .orElseGet(Assertions::fail);
     // then:
-    assertThat(paymentRequest, matches(createOrderCommand, order.getId(), airline));
+    assertThat(paymentRequest, matches(createOrder, order.getId(), airline));
 
     // then:
     final PaymentPaidResponseMessage paymentPaidResponse = testDataGenerator.getPaymentPaidResponseMessage(
@@ -148,14 +145,14 @@ class OrderServiceApplicationIntegrationTest {
     // when:
     final Order paidOrder = waitForOrderState(trackingId, OrderStatus.PAID);
     // then:
-    assertThat(paidOrder, matches(createOrderCommand, OrderStatus.PAID, trackingId));
+    assertThat(paidOrder, matches(createOrder, OrderStatus.PAID, trackingId));
 
     // when:
     final AirlineApprovalRequestMessage approvalRequest = approvalRequestMessageConsumer.poll()
                                                                                         .blockOptional()
                                                                                         .orElseGet(Assertions::fail);
     // then:
-    assertThat(approvalRequest, matches(createOrderCommand, paymentRequest, airline));
+    assertThat(approvalRequest, matches(createOrder, paymentRequest, airline));
 
     // then:
     final AirlineApprovalApprovedResponseMessage approvedResponse =
@@ -165,7 +162,7 @@ class OrderServiceApplicationIntegrationTest {
     // when:
     final Order approvedOrder = waitForOrderState(trackingId, OrderStatus.APPROVED);
     // then:
-    assertThat(approvedOrder, matches(createOrderCommand, OrderStatus.APPROVED, trackingId));
+    assertThat(approvedOrder, matches(createOrder, OrderStatus.APPROVED, trackingId));
   }
 
   private Order waitForOrderState(final UUID trackingId, final OrderStatus expectedState) {

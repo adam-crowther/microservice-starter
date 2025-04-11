@@ -15,12 +15,19 @@ import java.util.Optional;
 @Value
 public class CustomerEvent implements EntityEvent {
 
-  @NonNull Customer customer;
+  @NonNull
+  Customer customer;
 
   @Override
   public Optional<Long> getId() {
     return Optional.of(customer)
                    .map(Customer::getId)
                    .map(EntityId::getValue);
+  }
+
+  @Override
+  public Optional<Long> getVersion() {
+    return Optional.of(customer)
+                   .map(Customer::getVersion);
   }
 }

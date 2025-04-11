@@ -10,24 +10,24 @@ public class CustomerMasterDataGenerator {
   private final RandomStringGenerator randomStringGenerator;
   private final RandomDoubleGenerator randomDoubleGenerator;
 
-  public CreateCustomerCommand getCreateCustomerCommand() {
+  public CreateCustomer getCreateCustomer() {
     final double creditLimit = randomDoubleGenerator.getPositive();
 
-    return getCreateCustomerCommand(creditLimit);
+    return getCreateCustomer(creditLimit);
   }
 
-  public CreateCustomerCommand getCreateCustomerCommand(final double creditLimit) {
+  public CreateCustomer getCreateCustomer(final double creditLimit) {
     final String customerUserName = randomStringGenerator.getRandomString();
     final String customerFirstName = randomStringGenerator.getRandomString();
     final String customerLastName = randomStringGenerator.getRandomString();
     final String customerCreditLimitCurrencyId = "CHF";
 
-    return CreateCustomerCommand.builder()
-                                .userName(customerUserName)
-                                .firstName(customerFirstName)
-                                .lastName(customerLastName)
-                                .creditLimitCurrencyId(customerCreditLimitCurrencyId)
-                                .creditLimitAmount(creditLimit)
-                                .build();
+    return CreateCustomer.builder()
+                         .userName(customerUserName)
+                         .firstName(customerFirstName)
+                         .lastName(customerLastName)
+                         .creditLimitCurrencyId(customerCreditLimitCurrencyId)
+                         .creditLimitAmount(creditLimit)
+                         .build();
   }
 }

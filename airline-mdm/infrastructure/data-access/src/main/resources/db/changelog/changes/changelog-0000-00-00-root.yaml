@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: 1683469996250-1
-      author: micro (generated)
+      id: 1744375311423-1
+      author: adamcc (generated)
       changes:
         - createTable:
             columns:
@@ -42,12 +42,17 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
+                  name: code
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
                   name: name
                   type: VARCHAR(255)
             tableName: airlines
   - changeSet:
-      id: 1683469996250-2
-      author: micro (generated)
+      id: 1744375311423-2
+      author: adamcc (generated)
       changes:
         - createTable:
             columns:
@@ -88,7 +93,7 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
-                  name: flight_number
+                  name: code
                   type: VARCHAR(255)
               - column:
                   constraints:
@@ -107,8 +112,24 @@ databaseChangeLog:
                   type: BIGINT
             tableName: flights
   - changeSet:
-      id: 1683469996250-3
-      author: micro (generated)
+      id: 1744375311423-3
+      author: adamcc (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: code
+            constraintName: UC_AIRLINESCODE_COL
+            tableName: airlines
+  - changeSet:
+      id: 1744375311423-4
+      author: adamcc (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: code
+            constraintName: UC_FLIGHTSCODE_COL
+            tableName: flights
+  - changeSet:
+      id: 1744375311423-5
+      author: adamcc (generated)
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: airline_id
@@ -119,4 +140,3 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: airlines
             validate: true
-

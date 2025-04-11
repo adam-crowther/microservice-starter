@@ -2,7 +2,7 @@ window.onload = function () {
     window.ui = SwaggerUIBundle({
         url: "/openapi.yaml",
         dom_id: '#swagger-ui',
-        deepLinking: true,
+        deepLinking: false,
         presets: [
             SwaggerUIBundle.presets.apis,
             SwaggerUIStandalonePreset

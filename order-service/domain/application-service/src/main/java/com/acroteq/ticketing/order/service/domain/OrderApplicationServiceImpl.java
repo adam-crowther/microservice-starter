@@ -1,14 +1,14 @@
 package com.acroteq.ticketing.order.service.domain;
 
-import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderCommandDto;
-import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderResponseDto;
-import com.acroteq.ticketing.order.service.domain.dto.track.TrackOrderQueryDto;
-import com.acroteq.ticketing.order.service.domain.dto.track.TrackOrderResponseDto;
+import com.acroteq.ticketing.order.service.domain.entity.Order;
 import com.acroteq.ticketing.order.service.domain.ports.input.service.OrderApplicationService;
+import com.acroteq.ticketing.order.service.domain.valueobject.TrackingId;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -20,12 +20,12 @@ class OrderApplicationServiceImpl implements OrderApplicationService {
   private final OrderTrackCommandHandler orderTrackCommandHandler;
 
   @Override
-  public CreateOrderResponseDto createOrder(final CreateOrderCommandDto createOrderCommand) {
-    return orderCreateCommandHandler.createOrder(createOrderCommand);
+  public Order createOrder(final Order order) {
+    return orderCreateCommandHandler.createOrder(order);
   }
 
   @Override
-  public TrackOrderResponseDto trackOrder(final TrackOrderQueryDto trackOrderQuery) {
-    return orderTrackCommandHandler.trackOrder(trackOrderQuery);
+  public Optional<Order> trackOrder(final TrackingId trackingId) {
+    return orderTrackCommandHandler.trackOrder(trackingId);
   }
 }

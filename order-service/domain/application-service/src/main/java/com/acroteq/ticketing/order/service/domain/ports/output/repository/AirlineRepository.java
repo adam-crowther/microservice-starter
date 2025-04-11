@@ -5,4 +5,7 @@ import com.acroteq.application.repository.WriteRepository;
 import com.acroteq.domain.valueobject.AirlineId;
 import com.acroteq.ticketing.order.service.domain.entity.Airline;
 
-public interface AirlineRepository extends ReadRepository<AirlineId, Airline>, WriteRepository<AirlineId, Airline> {}
+public interface AirlineRepository extends ReadRepository<AirlineId, Airline>, WriteRepository<AirlineId, Airline> {
+
+  void deleteByCode(String code);
+}

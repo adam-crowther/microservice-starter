@@ -19,6 +19,21 @@ class ReadRepositoryImplSpec extends Specification {
 
   ReadRepositoryImpl repository = new ReadRepositoryImpl(jpaRepository, jpaToDomainMapper)
 
+  def 'loadAll returns a list containing all the existing entities'() {
+    given:
+    def testEntity = Mock(TestEntity)
+    def testJpaEntity = Mock(TestJpaEntity)
+
+    jpaRepository.findAll() >> List.of(testJpaEntity)
+    jpaToDomainMapper.convertJpaToDomain(testJpaEntity) >> testEntity
+
+    when:
+    def entities = repository.loadAll()
+
+    then:
+    entities == List.of(testEntity)
+  }
+
   def 'findById returns an optional containing the requested entity'() {
     given:
     def testEntity = Mock(TestEntity)

@@ -1,15 +1,8 @@
 package com.acroteq.ticketing.customer.service.domain;
 
 import com.acroteq.domain.valueobject.CustomerId;
-import com.acroteq.ticketing.customer.service.domain.dto.create.CreateCustomerCommandDto;
-import com.acroteq.ticketing.customer.service.domain.dto.create.CreateCustomerResponseDto;
-import com.acroteq.ticketing.customer.service.domain.dto.get.CustomerDto;
-import com.acroteq.ticketing.customer.service.domain.dto.update.UpdateCustomerCommandDto;
 import com.acroteq.ticketing.customer.service.domain.entity.Customer;
 import com.acroteq.ticketing.customer.service.domain.event.CustomerEvent;
-import com.acroteq.ticketing.customer.service.domain.exception.CustomerNotFoundException;
-import com.acroteq.ticketing.customer.service.domain.mapper.CustomerCreatedEventToResponseDtoMapper;
-import com.acroteq.ticketing.customer.service.domain.mapper.CustomerDomainToDtoMapper;
 import com.acroteq.ticketing.customer.service.domain.ports.input.service.CustomerApplicationService;
 import com.acroteq.ticketing.customer.service.domain.ports.output.message.publisher.CustomerEventMessagePublisher;
 import com.acroteq.ticketing.customer.service.domain.ports.output.repository.CustomerRepository;
@@ -18,6 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
+
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,36 +24,43 @@ public class CustomerApplicationServiceImpl implements CustomerApplicationServic
   private final CustomerCommandProcessor commandProcessor;
   private final CustomerRepository repository;
   private final CustomerEventMessagePublisher eventPublisher;
-  private final CustomerDomainToDtoMapper domainDtoMapper;
-  private final CustomerCreatedEventToResponseDtoMapper eventDtoMapper;
 
   @Override
   @Transactional(readOnly = true)
-  public CustomerDto getCustomer(final Long id) {
-    final CustomerId customerId = CustomerId.of(id);
-    final Customer customer = repository.findById(customerId)
-                                        .orElseThrow(() -> new CustomerNotFoundException(customerId));
-    return domainDtoMapper.convertDomainToDto(customer);
+  public List<Customer> loadAllCustomers() {
+    return repository.loadAll();
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public Optional<Customer> loadCustomer(final CustomerId id) {
+    return repository.findById(id);
   }
 
   @Override
   @Transactional
-  public CreateCustomerResponseDto createCustomer(final CreateCustomerCommandDto createCustomerCommandDto) {
-    final CustomerEvent customerEvent = commandProcessor.createCustomer(createCustomerCommandDto);
-    eventPublisher.publish(customerEvent);
-    return eventDtoMapper.convertEventToDto(customerEvent);
+  public Customer createCustomer(final Customer customer) {
+    final Customer savedCustomer = commandProcessor.createCustomer(customer);
+    final CustomerEvent event = CustomerEvent.builder()
+                                             .customer(savedCustomer)
+                                             .build();
+    eventPublisher.publish(event);
+    return savedCustomer;
   }
 
   @Override
   @Transactional
-  public void updateCustomer(final UpdateCustomerCommandDto updateCustomerCommandDto) {
-    final CustomerEvent customerEvent = commandProcessor.updateCustomer(updateCustomerCommandDto);
-    eventPublisher.publish(customerEvent);
+  public void updateCustomer(final Customer customer) {
+    final Customer savedCustomer = commandProcessor.updateCustomer(customer);
+    final CustomerEvent event = CustomerEvent.builder()
+                                             .customer(savedCustomer)
+                                             .build();
+    eventPublisher.publish(event);
   }
 
   @Override
   @Transactional
-  public void deleteCustomer(final Long customerId) {
+  public void deleteCustomer(final CustomerId customerId) {
     commandProcessor.deleteCustomer(customerId);
     eventPublisher.publishDelete(customerId);
   }

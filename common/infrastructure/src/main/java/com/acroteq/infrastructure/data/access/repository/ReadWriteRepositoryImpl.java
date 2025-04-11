@@ -10,6 +10,7 @@ import com.acroteq.infrastructure.mapper.JpaToDomainMapper;
 import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ReadWriteRepositoryImpl<IdT extends EntityId, EntityT extends Entity<IdT>, JpaT extends JpaEntity>
@@ -18,11 +19,16 @@ public class ReadWriteRepositoryImpl<IdT extends EntityId, EntityT extends Entit
   private final ReadRepository<IdT, EntityT> readRepository;
   private final WriteRepository<IdT, EntityT> writeRepository;
 
-  public ReadWriteRepositoryImpl(final JpaRepository<JpaT, Long> jpaRepository,
-                                 final JpaToDomainMapper<JpaT, EntityT> jpaToDomainMapper,
-                                 final DomainToJpaMapper<EntityT, JpaT> domainToJpaMapper) {
+  public ReadWriteRepositoryImpl(
+      final JpaRepository<JpaT, Long> jpaRepository, final JpaToDomainMapper<JpaT, EntityT> jpaToDomainMapper,
+      final DomainToJpaMapper<EntityT, JpaT> domainToJpaMapper) {
     readRepository = new ReadRepositoryImpl<>(jpaRepository, jpaToDomainMapper);
     writeRepository = new WriteRepositoryImpl<>(jpaRepository, jpaToDomainMapper, domainToJpaMapper);
+  }
+
+  @Override
+  public List<EntityT> loadAll() {
+    return readRepository.loadAll();
   }
 
   @Override

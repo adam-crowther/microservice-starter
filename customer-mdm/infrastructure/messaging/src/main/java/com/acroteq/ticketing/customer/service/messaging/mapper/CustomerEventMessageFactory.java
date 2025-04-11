@@ -29,5 +29,5 @@ public interface CustomerEventMessageFactory extends EventToMessageMapper<Custom
   @Mapping(target = "creditLimitAmount", source = "customer.creditLimit.amount")
   @Mapping(target = "auditBuilder", ignore = true)
   @Override
-  CustomerEventMessage convertEventToMessage(CustomerEvent event);
+  CustomerEventMessage convert(CustomerEvent event);
 }

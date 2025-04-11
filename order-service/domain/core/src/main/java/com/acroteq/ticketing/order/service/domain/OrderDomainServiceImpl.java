@@ -48,8 +48,7 @@ public class OrderDomainServiceImpl implements OrderDomainService {
     Optional.of(currentFlight)
             .map(Flight::getId)
             .map(flightMap::get)
-            .ifPresentOrElse(currentFlight::validateFlightNumberAndPriceEquality,
-                             throwFlightNotFoundException(currentFlight));
+            .ifPresentOrElse(currentFlight::validateCodeAndPriceEquality, throwFlightNotFoundException(currentFlight));
   }
 
   private Runnable throwFlightNotFoundException(final Flight currentFlight) {

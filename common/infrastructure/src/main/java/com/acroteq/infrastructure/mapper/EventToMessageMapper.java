@@ -5,5 +5,5 @@ import org.apache.avro.specific.SpecificRecord;
 
 public interface EventToMessageMapper<EventT extends Event, MessageT extends SpecificRecord> {
 
-  MessageT convertEventToMessage(EventT event);
+  MessageT convert(EventT event);
 }

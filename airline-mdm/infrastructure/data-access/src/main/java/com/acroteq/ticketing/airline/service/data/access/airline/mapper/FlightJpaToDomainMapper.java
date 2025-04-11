@@ -14,6 +14,7 @@ public interface FlightJpaToDomainMapper extends JpaToDomainMapper<FlightJpaEnti
 
   @Mapping(target = "price.amount", source = "priceAmount")
   @Mapping(target = "price.currencyId", source = "priceCurrencyId")
+  @Mapping(target = "airlineCode", source = "airline.code")
   @Override
   Flight convertJpaToDomain(FlightJpaEntity entity);
 }

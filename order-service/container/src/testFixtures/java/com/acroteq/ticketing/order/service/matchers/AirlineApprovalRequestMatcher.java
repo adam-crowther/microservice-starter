@@ -7,8 +7,8 @@ import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineApprovalReq
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.AirlineOrderStatus;
 import com.acroteq.ticketing.kafka.flight.approval.avro.model.Flight;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentRequestMessage;
-import com.acroteq.ticketing.order.service.client.model.CreateOrderCommand;
-import com.acroteq.ticketing.order.service.client.model.CreateOrderItemCommand;
+import com.acroteq.ticketing.order.service.client.model.CreateOrder;
+import com.acroteq.ticketing.order.service.client.model.CreateOrderItem;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
@@ -20,13 +20,14 @@ import java.util.function.Predicate;
 @RequiredArgsConstructor
 public class AirlineApprovalRequestMatcher extends TypeSafeMatcher<AirlineApprovalRequestMessage> {
 
-  private final CreateOrderCommand request;
+  private final CreateOrder request;
   private final PaymentRequestMessage paymentRequestMessage;
   private final AirlineEventMessage airline;
 
-  public static AirlineApprovalRequestMatcher matches(final CreateOrderCommand request,
-                                                      final PaymentRequestMessage paymentRequestMessage,
-                                                      final AirlineEventMessage airline) {
+  public static AirlineApprovalRequestMatcher matches(
+      final CreateOrder request,
+      final PaymentRequestMessage paymentRequestMessage,
+      final AirlineEventMessage airline) {
     return new AirlineApprovalRequestMatcher(request, paymentRequestMessage, airline);
   }
 
@@ -36,32 +37,33 @@ public class AirlineApprovalRequestMatcher extends TypeSafeMatcher<AirlineApprov
     return Objects.equals(message.getAirlineId(), request.getAirlineId())
            && Objects.equals(message.getAirlineOrderStatus(), AirlineOrderStatus.PAID)
            && Objects.equals(message.getOrderId(), paymentRequestMessage.getOrderId())
-           && itemsMatch(message.getFlights(), request.getItems())
-           && Objects.compare(message.getPriceAmount(), paymentRequestMessage.getValueAmount(), naturalOrder()) == 0
+           && itemsMatch(message.getFlights(), request.getItems()) && Objects.compare(message.getPriceAmount(),
+                                                                                      paymentRequestMessage.getValueAmount(),
+                                                                                      naturalOrder()) == 0
            && Objects.equals(message.getPriceCurrencyId(), paymentRequestMessage.getValueCurrencyId())
            && Objects.equals(message.getSagaId(), paymentRequestMessage.getSagaId());
   }
 
 
-  private boolean itemsMatch(final List<Flight> order, final List<CreateOrderItemCommand> request) {
+  private boolean itemsMatch(final List<Flight> order, final List<CreateOrderItem> request) {
     return order.size() == request.size() && order.stream()
                                                   .allMatch(hasMatchingFlight(request));
   }
 
-  private Predicate<Flight> hasMatchingFlight(final List<CreateOrderItemCommand> request) {
+  private Predicate<Flight> hasMatchingFlight(final List<CreateOrderItem> request) {
     return flight -> hasMatchingFlight(flight, request);
   }
 
-  private boolean hasMatchingFlight(final Flight flight, final List<CreateOrderItemCommand> request) {
+  private boolean hasMatchingFlight(final Flight flight, final List<CreateOrderItem> request) {
     return request.stream()
                   .anyMatch(isMatchingFlight(flight));
   }
 
-  private Predicate<CreateOrderItemCommand> isMatchingFlight(final Flight flight) {
+  private Predicate<CreateOrderItem> isMatchingFlight(final Flight flight) {
     return orderItem -> isMatchingFlight(orderItem, flight);
   }
 
-  private boolean isMatchingFlight(final CreateOrderItemCommand orderItem, final Flight flight) {
+  private boolean isMatchingFlight(final CreateOrderItem orderItem, final Flight flight) {
     return Objects.equals(flight.getId(), orderItem.getFlightId()) && Objects.compare(flight.getQuantity(),
                                                                                       orderItem.getQuantity(),
                                                                                       naturalOrder()) == 0;

@@ -28,7 +28,7 @@ public class PaymentRequestKafkaMessagePublisher implements PaymentRequestMessag
                               .getValue();
     log.info("Publishing OrderCreatedEvent for order id {}", orderId);
 
-    final PaymentRequestMessage message = messageFactory.convertEventToMessage(event);
+    final PaymentRequestMessage message = messageFactory.convert(event);
     final String topic = config.getPayment()
                                .getRequestTopicName();
     kafkaProducer.send(topic, orderId, message, callbackHandler::callback);

@@ -4,7 +4,10 @@ import com.acroteq.ticketing.approval.service.data.access.airline.entity.FlightJ
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface FlightJpaRepository extends JpaRepository<FlightJpaEntity, Long> {
 
+  Optional<FlightJpaEntity> findByCode(String code);
 }

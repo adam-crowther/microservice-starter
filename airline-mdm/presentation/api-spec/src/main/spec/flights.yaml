@@ -1,0 +1,190 @@
+paths:
+  /airlines/{airlineCode}/flights:
+    get:
+      summary: List all flights for a given airline
+      operationId: listAirlineFlights
+      tags:
+        - flights
+        - airlines
+      parameters:
+        - $ref: 'parameters.yaml#/components/parameters/airlineCodePathParam'
+        - $ref: 'parameters.yaml#/components/parameters/limitQueryParam'
+      responses:
+        '200':
+          description: An array of flights
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Flights"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "problem.yaml#/components/schemas/Problem"
+    post:
+      summary: Create an airline flight
+      operationId: createAirlineFlight
+      tags:
+        - flights
+        - airlines
+      parameters:
+        - $ref: 'parameters.yaml#/components/parameters/airlineCodePathParam'
+      requestBody:
+        description: The flight to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateFlight"
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "response.yaml#/components/schemas/EntityResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "problem.yaml#/components/schemas/Problem"
+
+  /airlines/{airlineCode}/flights/{flightCode}:
+    get:
+      summary: Info for a specific flight
+      operationId: getAirlineFlightByCode
+      tags:
+        - flights
+        - airlines
+      parameters:
+        - $ref: 'parameters.yaml#/components/parameters/airlineCodePathParam'
+        - $ref: 'parameters.yaml#/components/parameters/flightCodePathParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Flight"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "problem.yaml#/components/schemas/Problem"
+    put:
+      summary: Update a flight
+      operationId: updateAirlineFlightByCode
+      tags:
+        - flights
+        - airlines
+      parameters:
+        - $ref: 'parameters.yaml#/components/parameters/airlineCodePathParam'
+        - $ref: 'parameters.yaml#/components/parameters/flightCodePathParam'
+      requestBody:
+        description: The flight to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateFlight"
+      responses:
+        '204':
+          description: Updated
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "problem.yaml#/components/schemas/Problem"
+    delete:
+      summary: Delete a flight
+      operationId: deleteFlightByCode
+      tags:
+        - flights
+        - airlines
+      parameters:
+        - $ref: 'parameters.yaml#/components/parameters/airlineCodePathParam'
+        - $ref: 'parameters.yaml#/components/parameters/flightCodePathParam'
+      responses:
+        '204':
+          description: Deleted
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "problem.yaml#/components/schemas/Problem"
+
+components:
+  securitySchemes:
+    keycloak:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: http://localhost:8080/realms/acroteq/protocol/openid-connect/auth
+          scopes: { }
+
+  schemas:
+    CreateFlight:
+      type: object
+      required:
+        - code
+        - price
+        - available
+      properties:
+        code:
+          type: string
+        price:
+          $ref: "types.yaml#/components/schemas/CashValueCommand"
+        available:
+          type: boolean
+
+    UpdateFlight:
+      allOf:
+        - $ref: '#/components/schemas/CreateFlight'
+      required:
+        - id
+        - version
+      properties:
+        id:
+          type: integer
+          format: int64
+        version:
+          type: integer
+          format: int64
+
+    Flight:
+      type: object
+      required:
+        - id
+        - version
+        - code
+        - price
+        - available
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+        version:
+          type: integer
+          format: int64
+          readOnly: true
+        code:
+          type: string
+          readOnly: true
+        price:
+          $ref: "types.yaml#/components/schemas/CashValue"
+        available:
+          type: boolean
+          readOnly: true
+
+    Flights:
+      type: array
+      maxItems: 100
+      readOnly: true
+      items:
+        $ref: "#/components/schemas/Flight"

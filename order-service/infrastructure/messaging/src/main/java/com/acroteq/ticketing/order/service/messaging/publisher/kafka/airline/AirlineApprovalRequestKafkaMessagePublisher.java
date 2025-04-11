@@ -28,7 +28,7 @@ public class AirlineApprovalRequestKafkaMessagePublisher implements AirlineAppro
                               .getValue();
     log.info("Publishing OrderPaidEvent for order id {}", orderId);
 
-    final AirlineApprovalRequestMessage message = messageFactory.convertEventToMessage(event);
+    final AirlineApprovalRequestMessage message = messageFactory.convert(event);
     final String topic = config.getAirlineApproval()
                                .getRequestTopicName();
     kafkaProducer.send(topic, orderId, message, callbackHandler::callback);

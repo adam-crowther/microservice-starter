@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: 1683469998909-1
-      author: micro (generated)
+      id: 1744296523463-1
+      author: adamcc (generated)
       changes:
         - createTable:
             columns:
@@ -60,4 +60,3 @@ databaseChangeLog:
                   name: user_name
                   type: VARCHAR(255)
             tableName: customers
-

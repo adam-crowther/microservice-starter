@@ -15,12 +15,19 @@ import java.util.Optional;
 @Value
 public class AirlineEvent implements EntityEvent {
 
-  @NonNull Airline airline;
+  @NonNull
+  Airline airline;
 
   @Override
   public Optional<Long> getId() {
     return Optional.of(airline)
                    .map(Airline::getId)
                    .map(EntityId::getValue);
+  }
+
+  @Override
+  public Optional<Long> getVersion() {
+    return Optional.of(airline)
+                   .map(Airline::getVersion);
   }
 }

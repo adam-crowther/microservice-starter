@@ -4,16 +4,15 @@ import static com.acroteq.domain.valueobject.CashValue.ZERO;
 import static com.acroteq.ticketing.payment.service.domain.exception.CreditBalanceNotFoundException.creditBalanceNotFoundException;
 import static com.acroteq.ticketing.payment.service.domain.exception.CreditChangeNotFoundException.creditChangeNotFoundException;
 import static com.acroteq.ticketing.payment.service.domain.exception.CustomerNotFoundException.customerNotFoundException;
+import static java.lang.Long.parseLong;
 
 import com.acroteq.domain.valueobject.CashValue;
 import com.acroteq.domain.valueobject.CustomerId;
-import com.acroteq.ticketing.payment.service.domain.dto.customer.CustomerEventDto;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditBalance;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditChange;
 import com.acroteq.ticketing.payment.service.domain.entity.Customer;
 import com.acroteq.ticketing.payment.service.domain.exception.CustomerEventProcessingOrderException;
 import com.acroteq.ticketing.payment.service.domain.exception.CustomerNotFoundException;
-import com.acroteq.ticketing.payment.service.domain.mapper.CustomerEventDtoToDomainMapper;
 import com.acroteq.ticketing.payment.service.domain.ports.input.message.listener.CustomerEventMessageListener;
 import com.acroteq.ticketing.payment.service.domain.ports.output.repository.CreditBalanceRepository;
 import com.acroteq.ticketing.payment.service.domain.ports.output.repository.CreditChangeRepository;
@@ -36,16 +35,13 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
   private final CustomerRepository customerRepository;
   private final CreditBalanceRepository creditBalanceRepository;
   private final CreditChangeRepository creditChangeRepository;
-  private final CustomerEventDtoToDomainMapper customerEventMapper;
   private final CreditBalanceDomainService creditBalanceDomainService;
 
   @Transactional
   @Override
-  public void customerCreatedOrUpdated(final CustomerEventDto dto) {
-    final CustomerId id = CustomerId.of(dto.getId());
+  public void customerCreatedOrUpdated(final Customer customer) {
+    final CustomerId id = customer.getId();
     log.info("Creating CreditBalance and adding CreditHistory for customer: {}", id);
-
-    final Customer customer = customerEventMapper.convertDtoToDomain(dto);
     final Optional<CreditBalanceOutput> output;
 
     if (doesNotAlreadyExist(customer)) {
@@ -108,9 +104,10 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
                    .map(updateCreditLimit(oldCreditLimit, oldCreditBalance, creditHistory));
   }
 
-  private Function<CashValue, CreditBalanceOutput> updateCreditLimit(final CashValue oldCreditLimit,
-                                                                     final CreditBalance oldCreditBalance,
-                                                                     final List<CreditChange> creditHistory) {
+  private Function<CashValue, CreditBalanceOutput> updateCreditLimit(
+      final CashValue oldCreditLimit,
+      final CreditBalance oldCreditBalance,
+      final List<CreditChange> creditHistory) {
     return newCreditLimit -> creditBalanceDomainService.updateCreditLimit(newCreditLimit,
                                                                           oldCreditLimit,
                                                                           oldCreditBalance,
@@ -119,11 +116,10 @@ public class CustomerEventMessageListenerImpl implements CustomerEventMessageLis
 
   @Transactional
   @Override
-  public void customerDeleted(final Long customerId) {
-    final CustomerId id = CustomerId.of(customerId);
-    log.info("Customer {} deleted. Setting credit limit and credit to zero.", id);
-
-    customerRepository.findById(id)
+  public void customerDeleted(final String key) {
+    log.info("Customer {} deleted. Setting credit limit and credit to zero.", key);
+    final CustomerId customerId = CustomerId.of(parseLong(key));
+    customerRepository.findById(customerId)
                       .ifPresent(this::setCreditLimitToZero);
   }
 

@@ -1,0 +1,42 @@
+components:
+  schemas:
+    CashValueCommand:
+      type: object
+      required:
+        - currencyId
+        - amount
+      properties:
+        currencyId:
+          type: string
+        amount:
+          type: number
+          format: double
+
+    CashValue:
+      type: object
+      required:
+        - currencyId
+        - amount
+      properties:
+        currencyId:
+          type: string
+          readOnly: true
+        amount:
+          type: number
+          format: double
+          readOnly: true
+
+    Audit:
+      type: object
+      required:
+        - createdTimestamp
+        - lastModifiedTimestamp
+      properties:
+        createdTimestamp:
+          type: string
+          format: date-time
+          readOnly: true
+        lastModifiedTimestamp:
+          type: string
+          format: date-time
+          readOnly: true

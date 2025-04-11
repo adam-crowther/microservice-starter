@@ -27,5 +27,5 @@ public interface PaymentRequestMessageFactory extends EventToMessageMapper<Order
   @Mapping(target = "valueAmount", source = "order.price.amount")
   @Mapping(target = "valueCurrencyId", source = "order.price.currencyId")
   @Override
-  PaymentRequestMessage convertEventToMessage(OrderEvent event);
+  PaymentRequestMessage convert(OrderEvent event);
 }

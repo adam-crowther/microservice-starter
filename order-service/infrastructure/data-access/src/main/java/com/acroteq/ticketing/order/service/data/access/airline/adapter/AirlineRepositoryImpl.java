@@ -14,9 +14,18 @@ import org.springframework.stereotype.Component;
 public class AirlineRepositoryImpl extends ReadWriteRepositoryImpl<AirlineId, Airline, AirlineJpaEntity>
     implements AirlineRepository {
 
-  public AirlineRepositoryImpl(final AirlineJpaRepository jpaRepository,
-                               final AirlineJpaToDomainMapper jpaToDomainMapper,
-                               final AirlineDomainToJpaMapper domainToJpaMapper) {
+  private final AirlineJpaRepository jpaRepository;
+
+  public AirlineRepositoryImpl(
+      final AirlineJpaRepository jpaRepository, final AirlineJpaToDomainMapper jpaToDomainMapper,
+      final AirlineDomainToJpaMapper domainToJpaMapper) {
     super(jpaRepository, jpaToDomainMapper, domainToJpaMapper);
+
+    this.jpaRepository = jpaRepository;
+  }
+
+  @Override
+  public void deleteByCode(final String code) {
+    jpaRepository.deleteByCode(code);
   }
 }

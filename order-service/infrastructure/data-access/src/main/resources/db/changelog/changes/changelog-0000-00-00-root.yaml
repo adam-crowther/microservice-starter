@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: 1683556275700-1
-      author: micro (generated)
+      id: 1744296524056-1
+      author: adamcc (generated)
       changes:
         - createTable:
             columns:
@@ -35,12 +35,17 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
+                  name: code
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
                   name: name
                   type: VARCHAR(255)
             tableName: airlines
   - changeSet:
-      id: 1683556275700-2
-      author: micro (generated)
+      id: 1744296524056-2
+      author: adamcc (generated)
       changes:
         - createTable:
             columns:
@@ -83,8 +88,8 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: customers
   - changeSet:
-      id: 1683556275700-3
-      author: micro (generated)
+      id: 1744296524056-3
+      author: adamcc (generated)
       changes:
         - createTable:
             columns:
@@ -113,7 +118,7 @@ databaseChangeLog:
               - column:
                   constraints:
                     nullable: false
-                  name: flight_number
+                  name: code
                   type: VARCHAR(255)
               - column:
                   constraints:
@@ -132,8 +137,8 @@ databaseChangeLog:
                   type: BIGINT
             tableName: flights
   - changeSet:
-      id: 1683556275700-4
-      author: micro (generated)
+      id: 1744296524056-4
+      author: adamcc (generated)
       changes:
         - createTable:
             columns:
@@ -149,8 +154,8 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: order_failure_messages
   - changeSet:
-      id: 1683556275700-5
-      author: micro (generated)
+      id: 1744296524056-5
+      author: adamcc (generated)
       changes:
         - createTable:
             columns:
@@ -200,8 +205,8 @@ databaseChangeLog:
                   type: BIGINT
             tableName: order_items
   - changeSet:
-      id: 1683556275700-6
-      author: micro (generated)
+      id: 1744296524056-6
+      author: adamcc (generated)
       changes:
         - createTable:
             columns:
@@ -281,8 +286,24 @@ databaseChangeLog:
                   type: BIGINT
             tableName: orders
   - changeSet:
-      id: 1683556275700-7
-      author: micro (generated)
+      id: 1744296524056-7
+      author: adamcc (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: code
+            constraintName: UC_AIRLINESCODE_COL
+            tableName: airlines
+  - changeSet:
+      id: 1744296524056-8
+      author: adamcc (generated)
+      changes:
+        - addUniqueConstraint:
+            columnNames: code
+            constraintName: UC_FLIGHTSCODE_COL
+            tableName: flights
+  - changeSet:
+      id: 1744296524056-9
+      author: adamcc (generated)
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: order_id
@@ -294,8 +315,8 @@ databaseChangeLog:
             referencedTableName: orders
             validate: true
   - changeSet:
-      id: 1683556275700-8
-      author: micro (generated)
+      id: 1744296524056-10
+      author: adamcc (generated)
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: flight_id
@@ -307,8 +328,8 @@ databaseChangeLog:
             referencedTableName: flights
             validate: true
   - changeSet:
-      id: 1683556275700-9
-      author: micro (generated)
+      id: 1744296524056-11
+      author: adamcc (generated)
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: order_id
@@ -320,8 +341,8 @@ databaseChangeLog:
             referencedTableName: orders
             validate: true
   - changeSet:
-      id: 1683556275700-10
-      author: micro (generated)
+      id: 1744296524056-12
+      author: adamcc (generated)
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: airline_id
@@ -333,8 +354,8 @@ databaseChangeLog:
             referencedTableName: airlines
             validate: true
   - changeSet:
-      id: 1683556275700-11
-      author: micro (generated)
+      id: 1744296524056-13
+      author: adamcc (generated)
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: airline_id
@@ -346,8 +367,8 @@ databaseChangeLog:
             referencedTableName: airlines
             validate: true
   - changeSet:
-      id: 1683556275700-12
-      author: micro (generated)
+      id: 1744296524056-14
+      author: adamcc (generated)
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: customer_id
@@ -358,4 +379,3 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: customers
             validate: true
-

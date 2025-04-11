@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 public class Flight extends ReplicatedEntity<FlightId> {
 
   @NonNull
-  private final String flightNumber;
+  private final String code;
   @NonNull
   private final CashValue price;
 

@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: 1685801453822-1
-      author: micro (generated)
+      id: 1744296523753-1
+      author: adamcc (generated)
       changes:
         - createTable:
             columns:
@@ -51,8 +51,8 @@ databaseChangeLog:
                   type: BIGINT
             tableName: credit_balances
   - changeSet:
-      id: 1685801453822-2
-      author: micro (generated)
+      id: 1744296523753-2
+      author: adamcc (generated)
       changes:
         - createTable:
             columns:
@@ -112,8 +112,8 @@ databaseChangeLog:
                   type: BIGINT
             tableName: credit_changes
   - changeSet:
-      id: 1685801453822-3
-      author: micro (generated)
+      id: 1744296523753-3
+      author: adamcc (generated)
       changes:
         - createTable:
             columns:
@@ -151,8 +151,8 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: customers
   - changeSet:
-      id: 1685801453822-4
-      author: micro (generated)
+      id: 1744296523753-4
+      author: adamcc (generated)
       changes:
         - createTable:
             columns:
@@ -217,16 +217,16 @@ databaseChangeLog:
                   type: BIGINT
             tableName: payments
   - changeSet:
-      id: 1685801453822-5
-      author: micro (generated)
+      id: 1744296523753-5
+      author: adamcc (generated)
       changes:
         - addUniqueConstraint:
             columnNames: customer_id
-            constraintName: UK_go629wso7u7s8spwdpimr9rkr
+            constraintName: UC_CREDIT_BALANCESCUSTOMER_ID_COL
             tableName: credit_balances
   - changeSet:
-      id: 1685801453822-6
-      author: micro (generated)
+      id: 1744296523753-6
+      author: adamcc (generated)
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: customer_id
@@ -238,8 +238,8 @@ databaseChangeLog:
             referencedTableName: customers
             validate: true
   - changeSet:
-      id: 1685801453822-7
-      author: micro (generated)
+      id: 1744296523753-7
+      author: adamcc (generated)
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: customer_id
@@ -251,8 +251,8 @@ databaseChangeLog:
             referencedTableName: customers
             validate: true
   - changeSet:
-      id: 1685801453822-8
-      author: micro (generated)
+      id: 1744296523753-8
+      author: adamcc (generated)
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: customer_id
@@ -263,4 +263,3 @@ databaseChangeLog:
             referencedColumnNames: id
             referencedTableName: customers
             validate: true
-

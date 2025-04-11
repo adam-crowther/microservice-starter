@@ -1,14 +1,17 @@
 package com.acroteq.ticketing.test.e2e;
 
 import static com.acroteq.ticketing.test.e2e.api.AuthenticationHelper.authenticate;
-import static com.acroteq.ticketing.test.e2e.api.DatabaseCheckerFactory.createDatabaseChecker;
+import static com.acroteq.ticketing.test.e2e.api.DatabaseCheckerFactory.createQueryExecutor;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import com.acroteq.infrastructure.data.access.counter.JdbcDatabaseChecker;
+import com.acroteq.infrastructure.data.access.counter.CustomerMdmDatabaseChecker;
+import com.acroteq.infrastructure.data.access.counter.JdbcQueryExecutor;
+import com.acroteq.infrastructure.data.access.counter.OrderServiceDatabaseChecker;
+import com.acroteq.infrastructure.data.access.counter.PaymentServiceDatabaseChecker;
 import com.acroteq.test.extension.KafkaContainerExtension;
 import com.acroteq.ticketing.test.e2e.container.OrderServiceContainer;
 import com.acroteq.ticketing.test.e2e.extension.TestContainersExtension;
@@ -36,18 +39,24 @@ class SubscriberResilienceTest {
   private static final int POLL_INTERVAL_SECONDS = 10;
   private static final int SHUTDOWN_TIMEOUT_SECONDS = 90;
 
-  private static JdbcDatabaseChecker databaseChecker;
+  private static CustomerMdmDatabaseChecker customerMdmDbChecker;
+  private static OrderServiceDatabaseChecker orderServiceDbChecker;
+  private static PaymentServiceDatabaseChecker paymentServiceDbChecker;
   private static OrderServiceContainer orderServiceContainer;
   private static CustomerUploader uploader;
 
+  @SuppressWarnings({ "PMD.CloseResource" })
   @BeforeAll
-  static void startUp(final TestDockerContainers testContainers) {
+  static void startUp(final TestDockerContainers containers) {
 
-    final String bearerToken = authenticate(testContainers);
-    orderServiceContainer = testContainers.getOrderServiceContainer();
-    uploader = new CustomerUploader(testContainers, bearerToken);
+    final String bearerToken = authenticate(containers);
+    orderServiceContainer = containers.getOrderServiceContainer();
+    uploader = new CustomerUploader(containers, bearerToken);
 
-    databaseChecker = createDatabaseChecker(testContainers);
+    final JdbcQueryExecutor queryExecutor = createQueryExecutor(containers);
+    customerMdmDbChecker = new CustomerMdmDatabaseChecker(queryExecutor);
+    orderServiceDbChecker = new OrderServiceDatabaseChecker(queryExecutor);
+    paymentServiceDbChecker = new PaymentServiceDatabaseChecker(queryExecutor);
   }
 
   @BeforeEach
@@ -57,9 +66,10 @@ class SubscriberResilienceTest {
 
   @AfterAll
   static void shutdown() {
-    databaseChecker.close();
+    customerMdmDbChecker.close();
+    orderServiceDbChecker.close();
+    paymentServiceDbChecker.close();
   }
-
 
   // Shut down one of a cluster of 3 brokers while the customer entity replication is running, and restart it a
   // couple of seconds later.  No events should be lost.
@@ -67,10 +77,7 @@ class SubscriberResilienceTest {
   void testBrokerResilience() {
     // Generate one new customer record per second
     final ScheduledThreadPoolExecutor createCustomerThread = new ScheduledThreadPoolExecutor(1);
-    createCustomerThread.scheduleWithFixedDelay(uploader::createNewCustomer,
-                                                0,
-                                                DELAY_IN_MILLISECONDS,
-                                                MILLISECONDS);
+    createCustomerThread.scheduleWithFixedDelay(uploader::createNewCustomer, 0, DELAY_IN_MILLISECONDS, MILLISECONDS);
 
     // After 15 seconds, shut down the Order Service for 15 seconds
     final ScheduledThreadPoolExecutor shutdownOrderService = new ScheduledThreadPoolExecutor(1);
@@ -91,10 +98,10 @@ class SubscriberResilienceTest {
               .until(createCustomerThread::isShutdown);
 
     // Check that the data was replicated correctly
-    final int count = databaseChecker.inCustomerMdmGetCustomerCount();
+    final int count = customerMdmDbChecker.getCustomerCount();
     assertThat(count, is(equalTo(uploader.getCustomerCount())));
 
-    databaseChecker.inOrderServiceWaitForCustomersCount(count);
-    databaseChecker.inPaymentServiceWaitForCustomersCount(count);
+    orderServiceDbChecker.waitForCustomersCount(count);
+    paymentServiceDbChecker.waitForCustomersCount(count);
   }
 }

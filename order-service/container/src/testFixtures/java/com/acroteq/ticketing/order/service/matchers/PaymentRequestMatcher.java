@@ -6,8 +6,8 @@ import com.acroteq.helper.StreamHelper;
 import com.acroteq.ticketing.kafka.airline.avro.model.AirlineEventMessage;
 import com.acroteq.ticketing.kafka.airline.avro.model.Flight;
 import com.acroteq.ticketing.kafka.payment.avro.model.PaymentRequestMessage;
-import com.acroteq.ticketing.order.service.client.model.CreateOrderCommand;
-import com.acroteq.ticketing.order.service.client.model.CreateOrderItemCommand;
+import com.acroteq.ticketing.order.service.client.model.CreateOrder;
+import com.acroteq.ticketing.order.service.client.model.CreateOrderItem;
 import lombok.RequiredArgsConstructor;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
@@ -20,13 +20,13 @@ import java.util.function.Predicate;
 @RequiredArgsConstructor
 public class PaymentRequestMatcher extends TypeSafeMatcher<PaymentRequestMessage> {
 
-  private final CreateOrderCommand request;
+  private final CreateOrder request;
   private final long orderId;
   private final AirlineEventMessage airline;
 
-  public static PaymentRequestMatcher matches(final CreateOrderCommand request,
-                                              final long orderId,
-                                              final AirlineEventMessage airline) {
+  public static PaymentRequestMatcher matches(
+      final CreateOrder request, final long orderId,
+      final AirlineEventMessage airline) {
     return new PaymentRequestMatcher(request, orderId, airline);
   }
 
@@ -51,25 +51,24 @@ public class PaymentRequestMatcher extends TypeSafeMatcher<PaymentRequestMessage
     final BigDecimal requestValueAmount = calculateValue(request, airline);
     final String requestValueCurrencyId = calculateCurrencyId(request, airline);
 
-    return Objects.equals(message.getValueAmount(), requestValueAmount)
-           && Objects.equals(message.getCustomerId(),
-                             request.getCustomerId())
+    return Objects.equals(message.getValueAmount(), requestValueAmount) && Objects.equals(message.getCustomerId(),
+                                                                                          request.getCustomerId())
            && Objects.equals(message.getValueCurrencyId(), requestValueCurrencyId)
            && Objects.equals(message.getOrderId(), orderId);
   }
 
-  private BigDecimal calculateValue(final CreateOrderCommand request, final AirlineEventMessage airline) {
+  private BigDecimal calculateValue(final CreateOrder request, final AirlineEventMessage airline) {
     return request.getItems()
                   .stream()
                   .map(calculateValue(airline))
                   .reduce(ZERO, BigDecimal::add);
   }
 
-  private Function<CreateOrderItemCommand, BigDecimal> calculateValue(final AirlineEventMessage airline) {
+  private Function<CreateOrderItem, BigDecimal> calculateValue(final AirlineEventMessage airline) {
     return item -> calculateValue(item, airline);
   }
 
-  private BigDecimal calculateValue(final CreateOrderItemCommand item, final AirlineEventMessage airline) {
+  private BigDecimal calculateValue(final CreateOrderItem item, final AirlineEventMessage airline) {
     final long flightId = item.getFlightId();
     final Flight flight = selectFlight(airline, flightId);
 
@@ -78,7 +77,7 @@ public class PaymentRequestMatcher extends TypeSafeMatcher<PaymentRequestMessage
                  .multiply(quantity);
   }
 
-  private String calculateCurrencyId(final CreateOrderCommand request, final AirlineEventMessage airline) {
+  private String calculateCurrencyId(final CreateOrder request, final AirlineEventMessage airline) {
     return request.getItems()
                   .stream()
                   .map(calculateCurrencyId(airline))
@@ -87,11 +86,11 @@ public class PaymentRequestMatcher extends TypeSafeMatcher<PaymentRequestMessage
                   .orElseThrow(() -> new IllegalArgumentException("Items must have same currency"));
   }
 
-  private Function<CreateOrderItemCommand, String> calculateCurrencyId(final AirlineEventMessage airline) {
+  private Function<CreateOrderItem, String> calculateCurrencyId(final AirlineEventMessage airline) {
     return item -> calculateCurrencyId(item, airline);
   }
 
-  private String calculateCurrencyId(final CreateOrderItemCommand item, final AirlineEventMessage airline) {
+  private String calculateCurrencyId(final CreateOrderItem item, final AirlineEventMessage airline) {
     final long flightId = item.getFlightId();
     final Flight flight = selectFlight(airline, flightId);
 

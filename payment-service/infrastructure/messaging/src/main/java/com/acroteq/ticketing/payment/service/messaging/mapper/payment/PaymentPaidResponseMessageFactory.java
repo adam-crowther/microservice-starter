@@ -37,5 +37,5 @@ public interface PaymentPaidResponseMessageFactory
   @Mapping(target = "valueCurrencyId", source = "payment.value.currencyId")
   @Mapping(target = "auditBuilder", ignore = true)
   @Override
-  PaymentPaidResponseMessage convertEventToMessage(PaymentCompletedEvent event);
+  PaymentPaidResponseMessage convert(PaymentCompletedEvent event);
 }

@@ -20,7 +20,6 @@ public class AirlineResolver implements Resolver<AirlineId, Airline> {
                             .orElseThrow(() -> new AirlineNotFoundException(id));
   }
 
-  @Override
   public Airline resolve(final Long id) {
     final AirlineId airlineId = AirlineId.of(id);
     return resolve(airlineId);

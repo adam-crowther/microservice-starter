@@ -6,7 +6,9 @@ import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Component;
 
+import java.time.DayOfWeek;
 import java.time.Instant;
+import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -54,5 +56,51 @@ public class DateTimeMapper {
 
   private Function<Instant, OffsetDateTime> toOffset(final ZoneOffset offset) {
     return instant -> instant.atOffset(offset);
+  }
+
+  @Nullable
+  public ZoneId convertToZoneId(@Nullable final String timezone) {
+    return Optional.ofNullable(timezone)
+                   .map(ZoneId::of)
+                   .orElse(null);
+  }
+
+  @Nullable
+  public String convertZoneIdToString(@Nullable final ZoneId zoneId) {
+    return Optional.ofNullable(zoneId)
+                   .map(ZoneId::getId)
+                   .orElse(null);
+  }
+
+  @Nullable
+  public Integer convertLocalTimeToInt(@Nullable final LocalTime localTime) {
+    return Optional.ofNullable(localTime)
+                   .map(LocalTime::toNanoOfDay)
+                   .map(n -> n / 1000)
+                   .map(Long::intValue)
+                   .orElse(null);
+  }
+
+  @Nullable
+  public LocalTime convertIntToLocalTime(@Nullable final Integer time) {
+    return Optional.ofNullable(time)
+                   .map(Integer::longValue)
+                   .map(m -> m * 1000)
+                   .map(LocalTime::ofNanoOfDay)
+                   .orElse(null);
+  }
+
+  @Nullable
+  public Integer convertDayOfWeekToInt(@Nullable final DayOfWeek day) {
+    return Optional.ofNullable(day)
+                   .map(DayOfWeek::getValue)
+                   .orElse(null);
+  }
+
+  @Nullable
+  public DayOfWeek convertIntToDayOfWeek(@Nullable final Integer day) {
+    return Optional.ofNullable(day)
+                   .map(DayOfWeek::of)
+                   .orElse(null);
   }
 }

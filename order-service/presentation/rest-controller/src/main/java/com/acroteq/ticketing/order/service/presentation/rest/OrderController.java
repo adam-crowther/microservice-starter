@@ -1,15 +1,12 @@
 package com.acroteq.ticketing.order.service.presentation.rest;
 
-import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderCommandDto;
-import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderResponseDto;
-import com.acroteq.ticketing.order.service.domain.dto.track.TrackOrderQueryDto;
-import com.acroteq.ticketing.order.service.domain.dto.track.TrackOrderResponseDto;
+import com.acroteq.ticketing.order.service.domain.exception.OrderNotFoundException;
 import com.acroteq.ticketing.order.service.domain.ports.input.service.OrderApplicationService;
+import com.acroteq.ticketing.order.service.domain.valueobject.TrackingId;
 import com.acroteq.ticketing.order.service.presentation.api.OrdersApi;
-import com.acroteq.ticketing.order.service.presentation.mapper.CreateOrderCommandApiToDtoMapper;
-import com.acroteq.ticketing.order.service.presentation.mapper.CreateOrderResponseDtoToApiMapper;
-import com.acroteq.ticketing.order.service.presentation.mapper.TrackOrderResponseDtoToApiMapper;
-import com.acroteq.ticketing.order.service.presentation.model.CreateOrderCommand;
+import com.acroteq.ticketing.order.service.presentation.mapper.CreateOrderResponseMapper;
+import com.acroteq.ticketing.order.service.presentation.mapper.OrderMapper;
+import com.acroteq.ticketing.order.service.presentation.model.CreateOrder;
 import com.acroteq.ticketing.order.service.presentation.model.CreateOrderResponse;
 import com.acroteq.ticketing.order.service.presentation.model.Order;
 import lombok.RequiredArgsConstructor;
@@ -30,33 +27,29 @@ import java.util.UUID;
 @CrossOrigin(origins = "${order-service.permit-cross-origin-from}")
 public class OrderController implements OrdersApi {
 
-  private final CreateOrderCommandApiToDtoMapper createOrderCommandApiToDtoMapper;
-  private final TrackOrderResponseDtoToApiMapper trackOrderResponseDtoToApiMapper;
-  private final CreateOrderResponseDtoToApiMapper createOrderResponseDtoToApiMapper;
+  private final OrderMapper orderMapper;
+  private final CreateOrderResponseMapper responseMapper;
   private final OrderApplicationService orderApplicationService;
 
   @Override
-  public ResponseEntity<CreateOrderResponse> createOrder(final CreateOrderCommand createOrderCommand) {
-    log.info("Creating order for customer {} at airline {}",
-             createOrderCommand.getCustomerId(),
-             createOrderCommand.getAirlineId());
+  public ResponseEntity<CreateOrderResponse> createOrder(final CreateOrder createOrder) {
+    log.info("Creating order for customer {} at airline {}", createOrder.getCustomerId(), createOrder.getAirlineId());
 
-    final CreateOrderCommandDto commandDto = createOrderCommandApiToDtoMapper.convertApiToDto(createOrderCommand);
-    final CreateOrderResponseDto responseDto = orderApplicationService.createOrder(commandDto);
-    final CreateOrderResponse response = createOrderResponseDtoToApiMapper.convertDtoToApi(responseDto);
+    final com.acroteq.ticketing.order.service.domain.entity.Order order = orderMapper.convert(createOrder);
+    final com.acroteq.ticketing.order.service.domain.entity.Order savedOrder =
+        orderApplicationService.createOrder(order);
+    final CreateOrderResponse response = responseMapper.convert(savedOrder);
 
-    log.info("Order created with tracking id {}", response.getTrackingId());
+    log.info("Order created with tracking id {}", savedOrder.getTrackingId());
     return ResponseEntity.ok(response);
   }
 
   @Override
   public ResponseEntity<Order> getOrderByTrackingId(final UUID trackingId) {
-    final TrackOrderQueryDto queryDto = TrackOrderQueryDto.builder()
-                                                          .trackingId(trackingId)
-                                                          .build();
-    final TrackOrderResponseDto responseDto = orderApplicationService.trackOrder(queryDto);
-    final Order response = trackOrderResponseDtoToApiMapper.convertDtoToApi(responseDto);
-
-    return ResponseEntity.ok(response);
+    final TrackingId id = TrackingId.of(trackingId);
+    final Order order = orderApplicationService.trackOrder(id)
+                                               .map(orderMapper::convert)
+                                               .orElseThrow(() -> new OrderNotFoundException(id));
+    return ResponseEntity.ok(order);
   }
 }

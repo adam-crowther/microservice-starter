@@ -1,12 +1,6 @@
 package com.acroteq.ticketing.airline.service.domain;
 
-import com.acroteq.domain.valueobject.AirlineId;
-import com.acroteq.ticketing.airline.service.domain.dto.create.CreateAirlineCommandDto;
-import com.acroteq.ticketing.airline.service.domain.dto.update.UpdateAirlineCommandDto;
 import com.acroteq.ticketing.airline.service.domain.entity.Airline;
-import com.acroteq.ticketing.airline.service.domain.event.AirlineEvent;
-import com.acroteq.ticketing.airline.service.domain.mapper.CreateAirlineDtoToDomainMapper;
-import com.acroteq.ticketing.airline.service.domain.mapper.UpdateAirlineDtoToDomainMapper;
 import com.acroteq.ticketing.airline.service.domain.ports.output.repository.AirlineRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,34 +13,21 @@ class AirlineCommandProcessor {
 
   private final AirlineDomainService airlineDomainService;
   private final AirlineRepository airlineRepository;
-  private final CreateAirlineDtoToDomainMapper createAirlineMapper;
-  private final UpdateAirlineDtoToDomainMapper updateAirlineMapper;
 
-  AirlineEvent createAirline(final CreateAirlineCommandDto createAirlineCommandDto) {
-    log.info("Received create airline command");
-    final Airline airline = createAirlineMapper.convertDtoToDomain(createAirlineCommandDto);
+  Airline createAirline(final Airline airline) {
+    log.info("Received create airline command for code {}", airline.getCode());
     airlineDomainService.validateAirline(airline);
-    final Airline savedAirline = airlineRepository.save(airline);
-
-    return AirlineEvent.builder()
-                       .airline(savedAirline)
-                       .build();
+    return airlineRepository.save(airline);
   }
 
-  AirlineEvent updateAirline(final UpdateAirlineCommandDto updateAirlineCommandDto) {
-    log.info("Received update airline command for id {}", updateAirlineCommandDto.getId());
-    final Airline airline = updateAirlineMapper.convertDtoToDomain(updateAirlineCommandDto);
+  Airline updateAirline(final Airline airline) {
+    log.info("Received update airline command for code {}", airline.getCode());
     airlineDomainService.validateAirline(airline);
-    final Airline savedAirline = airlineRepository.save(airline);
-
-    return AirlineEvent.builder()
-                       .airline(savedAirline)
-                       .build();
+    return airlineRepository.save(airline);
   }
 
-  void deleteAirline(final Long id) {
-    final AirlineId airlineId = AirlineId.of(id);
-    log.info("Received delete airline command for id {}", airlineId);
-    airlineRepository.deleteById(airlineId);
+  void deleteAirline(final String code) {
+    log.info("Received delete airline command for code {}", code);
+    airlineRepository.deleteByCode(code);
   }
 }

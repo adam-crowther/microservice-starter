@@ -28,7 +28,7 @@ public class PaymentCancelledKafkaMessagePublisher implements PaymentCancelledMe
                               .getValue();
     log.info("Received PaymentCancelledEvent for order id: {}", orderId);
 
-    final PaymentCancelledResponseMessage message = messageFactory.convertEventToMessage(event);
+    final PaymentCancelledResponseMessage message = messageFactory.convert(event);
     final String topic = config.getPayment()
                                .getResponseTopicName();
     kafkaProducer.send(topic, orderId, message, callbackHandler::callback);

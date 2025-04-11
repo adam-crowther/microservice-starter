@@ -155,7 +155,7 @@ tasks.named("liquibaseDiffChangelog") {
                     "driver" to "org.postgresql.Driver",
                     "username" to "postgres",
                     "password" to "password",
-                    "referenceUrl" to "hibernate:spring:com.acroteq.risk.model?dialect=org.hibernate.dialect.PostgreSQLDialect&" +
+                    "referenceUrl" to "hibernate:spring:com.acroteq.ticketing?dialect=org.hibernate.dialect.PostgreSQLDialect&" +
                             "hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl&" +
                             "hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy",
                     "referenceDriver" to "liquibase.ext.hibernate.database.connection.HibernateDriver",
@@ -182,7 +182,7 @@ tasks.named("liquibaseGenerateChangelog") {
                 "changelogFile" to layout.buildDirectory.file("liquibase/changelog-${project.extra["timestamp"]}.yaml")
                     .get(),
                 "overwriteOutputFile" to true,
-                "url" to "hibernate:spring:com.acroteq.risk.model?dialect=org.hibernate.dialect.PostgreSQLDialect&" +
+                "url" to "hibernate:spring:com.acroteq.ticketing?dialect=org.hibernate.dialect.PostgreSQLDialect&" +
                         "hibernate.physical_naming_strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl&" +
                         "hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy",
                 "driver" to "liquibase.ext.hibernate.database.connection.HibernateDriver",

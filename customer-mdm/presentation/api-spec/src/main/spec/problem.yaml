@@ -1,0 +1,33 @@
+components:
+  schemas:
+    Problem:
+      type: object
+      required:
+        - code
+        - reason
+        - i18nCode
+        - i18nParameters
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          readOnly: true
+        reason:
+          type: string
+          maxLength: 50
+          readOnly: true
+        i18nCode:
+          type: string
+          readOnly: true
+        i18nParameters:
+          type: array
+          readOnly: true
+          items:
+            type: string
+            maxLength: 50
+            readOnly: true
+        message:
+          type: string
+          maxLength: 100
+          readOnly: true

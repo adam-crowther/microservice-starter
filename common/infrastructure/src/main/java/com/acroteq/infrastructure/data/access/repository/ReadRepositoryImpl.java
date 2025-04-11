@@ -9,6 +9,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -17,6 +18,14 @@ public class ReadRepositoryImpl<IdT extends EntityId, EntityT extends Entity<IdT
 
   private final JpaRepository<JpaT, Long> jpaRepository;
   private final JpaToDomainMapper<JpaT, EntityT> jpaToDomainMapper;
+
+  @Override
+  public List<EntityT> loadAll() {
+    return jpaRepository.findAll()
+                        .stream()
+                        .map(jpaToDomainMapper::convertJpaToDomain)
+                        .toList();
+  }
 
   @Override
   public Optional<EntityT> findById(@NonNull final IdT entityId) {

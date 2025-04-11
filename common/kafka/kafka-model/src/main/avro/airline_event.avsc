@@ -35,6 +35,10 @@
       }
     },
     {
+      "name": "code",
+      "type": "string"
+    },
+    {
       "name": "name",
       "type": "string"
     },
@@ -59,7 +63,7 @@
               "type": "long"
             },
             {
-              "name": "flightNumber",
+              "name": "code",
               "type": "string"
             },
             {

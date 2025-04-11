@@ -1,10 +1,8 @@
 package com.acroteq.ticketing.approval.service.domain;
 
 import com.acroteq.domain.valueobject.AirlineId;
-import com.acroteq.ticketing.approval.service.domain.dto.AirlineEventDto;
 import com.acroteq.ticketing.approval.service.domain.entity.airline.Airline;
 import com.acroteq.ticketing.approval.service.domain.exception.AirlineEventProcessingOrderException;
-import com.acroteq.ticketing.approval.service.domain.mapper.AirlineEventDtoToDomainMapper;
 import com.acroteq.ticketing.approval.service.domain.ports.input.message.listener.airline.AirlineEventMessageListener;
 import com.acroteq.ticketing.approval.service.domain.ports.output.repository.AirlineRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +18,11 @@ import java.util.function.Function;
 public class AirlineEventMessageListenerImpl implements AirlineEventMessageListener {
 
   private final AirlineRepository airlineRepository;
-  private final AirlineEventDtoToDomainMapper mapper;
 
   @Transactional
   @Override
-  public void airlineCreatedOrUpdated(final AirlineEventDto dto) {
-    log.info("Creating Airline: {}", dto.getId());
-    final Airline airline = mapper.convertDtoToDomain(dto);
+  public void airlineCreatedOrUpdated(final Airline airline) {
+    log.info("Creating Airline: {}", airline.getId());
     if (!eventAlreadyProcessed(airline)) {
       airlineRepository.save(airline);
     }
@@ -61,9 +57,8 @@ public class AirlineEventMessageListenerImpl implements AirlineEventMessageListe
 
   @Transactional
   @Override
-  public void airlineDeleted(final Long id) {
-    final AirlineId airlineId = AirlineId.of(id);
-    log.info("Deleting Airline: {}", airlineId);
-    airlineRepository.deleteById(airlineId);
+  public void airlineDeleted(final String airlineCode) {
+    log.info("Deleting Airline: {}", airlineCode);
+    airlineRepository.deleteByCode(airlineCode);
   }
 }

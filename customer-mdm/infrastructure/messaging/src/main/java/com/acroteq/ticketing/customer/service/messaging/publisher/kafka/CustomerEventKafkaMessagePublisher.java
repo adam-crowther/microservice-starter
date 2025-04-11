@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.customer.service.messaging.publisher.kafka;
 
+import com.acroteq.domain.valueobject.CustomerId;
 import com.acroteq.kafka.producer.service.KafkaProducer;
 import com.acroteq.kafka.producer.service.callback.KafkaPublisherCallbackHandler;
 import com.acroteq.ticketing.customer.service.domain.event.CustomerEvent;
@@ -29,7 +30,7 @@ public class CustomerEventKafkaMessagePublisher implements CustomerEventMessageP
 
     log.info("Publishing CustomerEvent for order id: {}", customerId);
 
-    final CustomerEventMessage message = messageFactory.convertEventToMessage(event);
+    final CustomerEventMessage message = messageFactory.convert(event);
     final String topic = config.getCustomerEvent()
                                .getTopicName();
     kafkaProducer.send(topic, customerId, message, callbackHandler::callback);
@@ -38,13 +39,13 @@ public class CustomerEventKafkaMessagePublisher implements CustomerEventMessageP
   }
 
   @Override
-  public void publishDelete(final Long customerId) {
+  public void publishDelete(final CustomerId customerId) {
     log.info("Publishing CustomerEvent (delete) for order id: {}", customerId);
 
     final String topic = config.getCustomerEvent()
                                .getTopicName();
     // By convention, sending a null value constitutes a 'terminal' event, which deletes the entity.
-    kafkaProducer.send(topic, customerId, null, callbackHandler::callback);
+    kafkaProducer.send(topic, customerId.getValue(), null, callbackHandler::callback);
 
     log.info("CustomerEventMessage (delete) sent to kafka for order id: {}", customerId);
   }

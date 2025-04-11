@@ -1,18 +1,23 @@
 package com.acroteq.ticketing.airline.service.domain.ports.input.service;
 
-import com.acroteq.ticketing.airline.service.domain.dto.create.CreateAirlineCommandDto;
-import com.acroteq.ticketing.airline.service.domain.dto.create.CreateAirlineResponseDto;
-import com.acroteq.ticketing.airline.service.domain.dto.get.AirlineDto;
-import com.acroteq.ticketing.airline.service.domain.dto.update.UpdateAirlineCommandDto;
+import com.acroteq.domain.valueobject.AirlineId;
+import com.acroteq.ticketing.airline.service.domain.entity.Airline;
 import jakarta.validation.Valid;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface AirlineApplicationService {
 
-  AirlineDto getAirline(Long airlineId);
+  List<Airline> loadAllAirlines();
 
-  CreateAirlineResponseDto createAirline(@Valid CreateAirlineCommandDto createAirlineCommandDto);
+  Optional<Airline> loadAirline(String code);
 
-  void updateAirline(@Valid UpdateAirlineCommandDto createAirlineCommandDto);
+  Optional<AirlineId> fetchAirlineId(String code);
 
-  void deleteAirline(Long airlineId);
+  Airline createAirline(@Valid Airline airline);
+
+  void updateAirline(@Valid Airline airline);
+
+  void deleteAirline(String code);
 }

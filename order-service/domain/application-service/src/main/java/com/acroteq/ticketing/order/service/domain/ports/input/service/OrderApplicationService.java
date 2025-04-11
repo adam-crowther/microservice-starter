@@ -1,14 +1,14 @@
 package com.acroteq.ticketing.order.service.domain.ports.input.service;
 
-import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderCommandDto;
-import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderResponseDto;
-import com.acroteq.ticketing.order.service.domain.dto.track.TrackOrderQueryDto;
-import com.acroteq.ticketing.order.service.domain.dto.track.TrackOrderResponseDto;
+import com.acroteq.ticketing.order.service.domain.entity.Order;
+import com.acroteq.ticketing.order.service.domain.valueobject.TrackingId;
 import jakarta.validation.Valid;
+
+import java.util.Optional;
 
 public interface OrderApplicationService {
 
-  CreateOrderResponseDto createOrder(@Valid CreateOrderCommandDto createOrderCommand);
+  Order createOrder(@Valid Order order);
 
-  TrackOrderResponseDto trackOrder(@Valid TrackOrderQueryDto trackOrderQuery);
+  Optional<Order> trackOrder(@Valid TrackingId trackingId);
 }

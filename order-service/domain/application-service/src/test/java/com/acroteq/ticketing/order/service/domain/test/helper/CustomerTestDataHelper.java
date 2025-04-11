@@ -8,11 +8,13 @@ import static org.mockito.Mockito.lenient;
 
 import com.acroteq.domain.valueobject.CustomerId;
 import com.acroteq.domain.valueobject.EventId;
-import com.acroteq.ticketing.order.service.domain.dto.create.CreateOrderCommandDto;
-import com.acroteq.ticketing.order.service.domain.dto.create.OrderAddressDto;
-import com.acroteq.ticketing.order.service.domain.dto.create.OrderItemDto;
+import com.acroteq.ticketing.order.service.domain.entity.Airline;
 import com.acroteq.ticketing.order.service.domain.entity.Customer;
+import com.acroteq.ticketing.order.service.domain.entity.Flight;
+import com.acroteq.ticketing.order.service.domain.entity.Order;
+import com.acroteq.ticketing.order.service.domain.entity.OrderItem;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.CustomerRepository;
+import com.acroteq.ticketing.order.service.domain.valueobject.StreetAddress;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.test.context.TestComponent;
 
@@ -42,22 +44,22 @@ public class CustomerTestDataHelper {
 
   private final CustomerRepository customerRepository;
 
-  public static CreateOrderCommandDto createCreateOrderCommandDto() {
-    final OrderAddressDto orderAddress = OrderAddressDto.builder()
-                                                        .street(ADDRESS_STREET)
-                                                        .postalCode(ADDRESS_POSTAL_CODE)
-                                                        .city(ADDRESS_CITY)
-                                                        .build();
-    final OrderItemDto orderItem = OrderItemDto.builder()
-                                               .flightId(FlightTestDataHelper.FLIGHT_1_ID)
-                                               .quantity(ORDER_1_ITEM_1_QUANTITY)
+  public static Order createOrder(final Customer customer, final Airline airline, final Flight flight) {
+    final StreetAddress address = StreetAddress.builder()
+                                               .street(ADDRESS_STREET)
+                                               .postalCode(ADDRESS_POSTAL_CODE)
+                                               .city(ADDRESS_CITY)
                                                .build();
-    return CreateOrderCommandDto.builder()
-                                .customerId(CUSTOMER_ID)
-                                .airlineId(AirlineTestDataHelper.AIRLINE_ID)
-                                .address(orderAddress)
-                                .items(List.of(orderItem))
-                                .build();
+    final OrderItem orderItem = OrderItem.builder()
+                                         .flight(flight)
+                                         .quantity(ORDER_1_ITEM_1_QUANTITY)
+                                         .build();
+    return Order.builder()
+                .customer(customer)
+                .airline(airline)
+                .streetAddress(address)
+                .items(List.of(orderItem))
+                .build();
   }
 
   void initialiseMocks() {

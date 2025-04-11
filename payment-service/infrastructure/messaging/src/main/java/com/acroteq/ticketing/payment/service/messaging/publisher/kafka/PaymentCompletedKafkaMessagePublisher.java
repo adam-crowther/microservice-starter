@@ -28,7 +28,7 @@ public class PaymentCompletedKafkaMessagePublisher implements PaymentCompletedMe
                               .getValue();
     log.info("Received PaymentCompletedEvent for order id: {}", orderId);
 
-    final PaymentPaidResponseMessage message = messageFactory.convertEventToMessage(event);
+    final PaymentPaidResponseMessage message = messageFactory.convert(event);
     final String topic = config.getPayment()
                                .getResponseTopicName();
     kafkaProducer.send(topic, orderId, message, callbackHandler::callback);

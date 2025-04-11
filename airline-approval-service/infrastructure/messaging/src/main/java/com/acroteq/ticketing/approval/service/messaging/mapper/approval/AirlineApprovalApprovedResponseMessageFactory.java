@@ -26,5 +26,5 @@ public interface AirlineApprovalApprovedResponseMessageFactory
   @Mapping(target = "airlineId", source = "orderApproval.airline.id")
   @Mapping(target = "auditBuilder", ignore = true)
   @Override
-  AirlineApprovalApprovedResponseMessage convertEventToMessage(OrderApprovedEvent event);
+  AirlineApprovalApprovedResponseMessage convert(OrderApprovedEvent event);
 }

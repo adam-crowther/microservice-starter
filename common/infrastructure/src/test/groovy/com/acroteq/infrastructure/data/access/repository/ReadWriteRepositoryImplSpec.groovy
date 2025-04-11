@@ -21,6 +21,21 @@ class ReadWriteRepositoryImplSpec extends Specification {
 
   ReadWriteRepositoryImpl<TestId, TestEntity, TestJpaEntity> repository = new ReadWriteRepositoryImpl<>(jpaRepository, jpaToDomainMapper, domainToJpaMapper)
 
+  def 'loadAll returns a list containing all the existing entities'() {
+    given:
+    def testEntity = Mock(TestEntity)
+    def testJpaEntity = Mock(TestJpaEntity)
+
+    jpaRepository.findAll() >> List.of(testJpaEntity)
+    jpaToDomainMapper.convertJpaToDomain(testJpaEntity) >> testEntity
+
+    when:
+    def entities = repository.loadAll()
+
+    then:
+    entities == List.of(testEntity)
+  }
+
   def 'findById should return an optional containing the requested entity'() {
     given:
     def testEntity = Mock(TestEntity)
