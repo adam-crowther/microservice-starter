@@ -1,11 +1,11 @@
 package com.acroteq.ticketing.payment.service.domain.exception;
 
-import com.acroteq.domain.exception.DomainException;
+import com.acroteq.domain.exception.NotFoundException;
 import com.acroteq.domain.valueobject.CustomerId;
 
 import java.util.function.Supplier;
 
-public class CreditBalanceNotFoundException extends DomainException {
+public class CreditBalanceNotFoundException extends NotFoundException {
 
   private static final String I18N_CODE = "problem.credit.balance.not.found.for.customer.id";
   private static final String MESSAGE = "Credit Balance not found for customer id: %s";
@@ -24,7 +24,7 @@ public class CreditBalanceNotFoundException extends DomainException {
   }
 
   @Override
-  public String getCode() {
+  public String getUserName() {
     return i18nCode;
   }
 

@@ -1,9 +1,9 @@
 package com.acroteq.ticketing.customer.service.domain.exception;
 
-import com.acroteq.domain.exception.DomainException;
+import com.acroteq.domain.exception.NotFoundException;
 import com.acroteq.domain.valueobject.CustomerId;
 
-public class CustomerNotFoundException extends DomainException {
+public class CustomerNotFoundException extends NotFoundException {
 
 
   private static final String I18N_CODE = "problem.customer.not.found";
@@ -17,7 +17,7 @@ public class CustomerNotFoundException extends DomainException {
   }
 
   @Override
-  public String getCode() {
+  public String getUserName() {
     return I18N_CODE;
   }
 

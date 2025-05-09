@@ -1,7 +1,5 @@
 package com.acroteq.ticketing.airline.service.presentation.rest;
 
-import static java.util.stream.Collectors.toList;
-
 import com.acroteq.ticketing.airline.service.domain.exception.AirlineNotFoundException;
 import com.acroteq.ticketing.airline.service.domain.ports.input.service.AirlineApplicationService;
 import com.acroteq.ticketing.airline.service.presentation.api.AirlinesApi;
@@ -38,7 +36,7 @@ public class AirlinesController implements AirlinesApi {
     final List<Airline> airlines = airlineApplicationService.loadAllAirlines()
                                                             .stream()
                                                             .map(airlineMapper::convert)
-                                                            .collect(toList());
+                                                            .toList();
     return ResponseEntity.ok(airlines);
   }
 

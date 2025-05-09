@@ -4,7 +4,7 @@ import com.acroteq.application.repository.ReadRepository;
 import com.acroteq.domain.entity.Entity;
 import com.acroteq.domain.valueobject.EntityId;
 import com.acroteq.infrastructure.data.access.entity.JpaEntity;
-import com.acroteq.infrastructure.mapper.JpaToDomainMapper;
+import com.acroteq.infrastructure.mapper.JpaMapper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,20 +17,20 @@ public class ReadRepositoryImpl<IdT extends EntityId, EntityT extends Entity<IdT
     implements ReadRepository<IdT, EntityT> {
 
   private final JpaRepository<JpaT, Long> jpaRepository;
-  private final JpaToDomainMapper<JpaT, EntityT> jpaToDomainMapper;
+  private final JpaMapper<EntityT, JpaT> jpaMapper;
 
   @Override
   public List<EntityT> loadAll() {
     return jpaRepository.findAll()
                         .stream()
-                        .map(jpaToDomainMapper::convertJpaToDomain)
+                        .map(jpaMapper::convert)
                         .toList();
   }
 
   @Override
   public Optional<EntityT> findById(@NonNull final IdT entityId) {
     return jpaRepository.findById(entityId.getValue())
-                        .map(jpaToDomainMapper::convertJpaToDomain);
+                        .map(jpaMapper::convert);
   }
 
   @Override

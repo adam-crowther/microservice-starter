@@ -11,7 +11,7 @@ class EventIdDomainToJpaMapperSpec extends Specification {
   static final Integer PARTITION = 3L
   static final Long OFFSET = 7447
 
-  EventIdDomainToJpaMapper mapper = Mappers.getMapper(EventIdDomainToJpaMapper)
+  EventIdJpaMapper mapper = Mappers.getMapper(EventIdJpaMapper)
 
   def 'all attributes in eventId should be converted from domain to jpa model'() {
     given:
@@ -20,7 +20,7 @@ class EventIdDomainToJpaMapperSpec extends Specification {
           .offset(OFFSET)
           .build()
     when:
-    def jpaEvent = mapper.convertMessageToDto(eventId)
+    def jpaEvent = mapper.convert(eventId)
 
     then:
     jpaEvent.partition == PARTITION
@@ -29,7 +29,7 @@ class EventIdDomainToJpaMapperSpec extends Specification {
 
   def 'when convertMessageToDto is given a null reference, it should return null'() {
     when:
-    def jpaEvent = mapper.convertMessageToDto(null)
+    def jpaEvent = mapper.convert(null)
 
     then:
     jpaEvent == null

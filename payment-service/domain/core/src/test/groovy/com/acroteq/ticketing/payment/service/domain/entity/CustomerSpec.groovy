@@ -14,6 +14,7 @@ import static nl.jqno.equalsverifier.Warning.STRICT_INHERITANCE
 class CustomerSpec extends Specification {
 
   static final CustomerId CUSTOMER_ID = CustomerId.of(987)
+  static final String USER_NAME = 'UserName'
   static final int VERSION = 2
 
   def 'calling the builder with all attributes should set them on the entity and getters should them back the same'() {
@@ -26,6 +27,7 @@ class CustomerSpec extends Specification {
           .id(CUSTOMER_ID)
           .version(VERSION)
           .eventId(eventId)
+          .userName(USER_NAME)
           .creditLimit(creditLimit)
           .build()
     then:
@@ -62,6 +64,7 @@ class CustomerSpec extends Specification {
           .id(CUSTOMER_ID)
           .version(VERSION)
           .eventId(eventId)
+          .userName(USER_NAME)
           .creditLimit(creditLimit)
           .build()
 
@@ -92,6 +95,7 @@ class CustomerSpec extends Specification {
           .id(CUSTOMER_ID)
           .version(VERSION)
           .eventId(eventId)
+          .userName(USER_NAME)
           .creditLimit(creditLimit)
           .build()
 

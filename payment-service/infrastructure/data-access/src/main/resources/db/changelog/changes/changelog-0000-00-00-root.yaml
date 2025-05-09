@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1744296523753-1
+      id: 1746803286684-1
       author: adamcc (generated)
       changes:
         - createTable:
@@ -51,7 +51,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: credit_balances
   - changeSet:
-      id: 1744296523753-2
+      id: 1746803286684-2
       author: adamcc (generated)
       changes:
         - createTable:
@@ -112,7 +112,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: credit_changes
   - changeSet:
-      id: 1744296523753-3
+      id: 1746803286684-3
       author: adamcc (generated)
       changes:
         - createTable:
@@ -149,9 +149,14 @@ databaseChangeLog:
                     nullable: false
                   name: credit_limit_currency_id
                   type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: user_name
+                  type: VARCHAR(255)
             tableName: customers
   - changeSet:
-      id: 1744296523753-4
+      id: 1746803286684-4
       author: adamcc (generated)
       changes:
         - createTable:
@@ -217,7 +222,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: payments
   - changeSet:
-      id: 1744296523753-5
+      id: 1746803286684-5
       author: adamcc (generated)
       changes:
         - addUniqueConstraint:
@@ -225,7 +230,7 @@ databaseChangeLog:
             constraintName: UC_CREDIT_BALANCESCUSTOMER_ID_COL
             tableName: credit_balances
   - changeSet:
-      id: 1744296523753-6
+      id: 1746803286684-6
       author: adamcc (generated)
       changes:
         - addForeignKeyConstraint:
@@ -238,7 +243,7 @@ databaseChangeLog:
             referencedTableName: customers
             validate: true
   - changeSet:
-      id: 1744296523753-7
+      id: 1746803286684-7
       author: adamcc (generated)
       changes:
         - addForeignKeyConstraint:
@@ -251,7 +256,7 @@ databaseChangeLog:
             referencedTableName: customers
             validate: true
   - changeSet:
-      id: 1744296523753-8
+      id: 1746803286684-8
       author: adamcc (generated)
       changes:
         - addForeignKeyConstraint:

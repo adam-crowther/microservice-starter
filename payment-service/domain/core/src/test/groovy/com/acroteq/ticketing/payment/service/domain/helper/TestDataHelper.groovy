@@ -25,6 +25,7 @@ import static com.acroteq.ticketing.payment.service.domain.valueobject.Transacti
 class TestDataHelper {
 
   static final CustomerId CUSTOMER_ID = CustomerId.of(777)
+  static final String USER_NAME = 'UserName'
   static final CreditBalanceId CREDIT_BALANCE_ID = CreditBalanceId.of(888)
   static final Integer CREDIT_BALANCE_VERSION = 2
   static final CreditChangeId CREDIT_CHANGE_ID = CreditChangeId.of(999)
@@ -69,6 +70,7 @@ class TestDataHelper {
           .id(CUSTOMER_ID)
           .version(765)
           .eventId(eventId)
+          .userName(USER_NAME)
           .creditLimit(creditLimit)
           .build()
   }

@@ -13,7 +13,7 @@ class AsynchronousKafkaProducerExceptionSpec extends Specification {
     def exception = new AsynchronousKafkaProducerException(cause)
 
     then:
-    exception.code == 'problem.asynchronous.error.in.kafka.producer'
+    exception.userName == 'problem.asynchronous.error.in.kafka.producer'
     exception.parameters == [] as String[]
     exception.message == 'Asynchronous exception while sending a message to Kafka'
     exception.cause == cause

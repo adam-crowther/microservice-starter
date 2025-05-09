@@ -1,5 +1,6 @@
 package com.acroteq.ticketing.airline.service.domain.entity;
 
+import static com.acroteq.helper.StreamHelper.toSingleItem;
 import static com.acroteq.precondition.Precondition.checkPrecondition;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
@@ -12,8 +13,11 @@ import lombok.NonNull;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 @Getter
 @ToString(callSuper = true)
@@ -34,19 +38,43 @@ public class Airline extends AggregateRoot<AirlineId> {
     flights.forEach(Flight::validate);
   }
 
+  public static Predicate<Airline> hasCode(final String code) {
+    return airline -> airline.code.equals(code);
+  }
+
+  public Optional<Flight> getFlightWithCode(final String flightCode) {
+    return flights.stream()
+                  .filter(flight -> flight.getCode()
+                                          .equals(flightCode))
+                  .reduce(toSingleItem());
+  }
+
   public boolean containsFlightWithId(final FlightId flightId) {
     return flights.stream()
                   .map(Flight::getId)
                   .anyMatch(a -> Objects.equals(a, flightId));
   }
 
-  @SuppressWarnings("PublicInnerClass")
-  public abstract static class AirlineBuilder<C extends Airline, B extends AirlineBuilder<C, B>>
-      extends AggregateRootBuilder<AirlineId, C, B> {
+  public Airline withAddedFlight(final Flight flight) {
+    final List<Flight> updatedFlights = new ArrayList<>(flights);
+    updatedFlights.add(flight);
+    return toBuilder().flights(updatedFlights)
+                      .build();
+  }
 
-    public B addFlight(@NonNull final Flight flight) {
-      this.flights.add(flight);
-      return this.self();
-    }
+  public Airline withUpdatedFlight(final Flight flight) {
+    final List<Flight> updatedFlights = new ArrayList<>(flights);
+    final String flightCode = flight.getCode();
+    updatedFlights.removeIf(Flight.hasCode(flightCode));
+    updatedFlights.add(flight);
+    return toBuilder().flights(updatedFlights)
+                      .build();
+  }
+
+  public Airline withRemovedFlight(final String flightCode) {
+    final List<Flight> updatedFlights = new ArrayList<>(flights);
+    updatedFlights.removeIf(Flight.hasCode(flightCode));
+    return toBuilder().flights(updatedFlights)
+                      .build();
   }
 }

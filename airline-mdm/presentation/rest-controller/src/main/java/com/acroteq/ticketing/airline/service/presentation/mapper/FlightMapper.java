@@ -29,7 +29,6 @@ public interface FlightMapper
   }
 
   @Mapping(target = "id", ignore = true)
-  @Mapping(target = "airlineCode", ignore = true)
   Flight.FlightBuilder<?, ?> convert(UpdateFlight api, @MappingTarget Flight.FlightBuilder<?, ?> existing);
 
   default Function<Flight, Flight> convertToExisting(final UpdateFlight api) {

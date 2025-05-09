@@ -13,7 +13,7 @@ class EventListenerMissingExceptionSpec extends Specification {
     def exception = new EventListenerMissingException(parameter)
 
     then:
-    exception.code == 'problem.event.listener.missing'
+    exception.userName == 'problem.event.listener.missing'
     exception.parameters == [parameter] as String[]
     exception.message == message
     exception.cause == null

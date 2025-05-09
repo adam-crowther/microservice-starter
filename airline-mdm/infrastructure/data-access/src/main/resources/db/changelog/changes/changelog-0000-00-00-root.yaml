@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1744375311423-1
+      id: 1746803286608-1
       author: adamcc (generated)
       changes:
         - createTable:
@@ -51,7 +51,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: airlines
   - changeSet:
-      id: 1744375311423-2
+      id: 1746803286608-2
       author: adamcc (generated)
       changes:
         - createTable:
@@ -112,7 +112,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: flights
   - changeSet:
-      id: 1744375311423-3
+      id: 1746803286608-3
       author: adamcc (generated)
       changes:
         - addUniqueConstraint:
@@ -120,7 +120,7 @@ databaseChangeLog:
             constraintName: UC_AIRLINESCODE_COL
             tableName: airlines
   - changeSet:
-      id: 1744375311423-4
+      id: 1746803286608-4
       author: adamcc (generated)
       changes:
         - addUniqueConstraint:
@@ -128,7 +128,7 @@ databaseChangeLog:
             constraintName: UC_FLIGHTSCODE_COL
             tableName: flights
   - changeSet:
-      id: 1744375311423-5
+      id: 1746803286608-5
       author: adamcc (generated)
       changes:
         - addForeignKeyConstraint:

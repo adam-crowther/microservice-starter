@@ -10,7 +10,7 @@ public abstract class DomainException extends RuntimeException {
     super(message, cause);
   }
 
-  public abstract String getCode();
+  public abstract String getUserName();
 
   public abstract String[] getParameters();
 }

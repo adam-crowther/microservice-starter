@@ -3,8 +3,7 @@ package com.acroteq.ticketing.order.service.data.access.order.adapter;
 import com.acroteq.domain.valueobject.OrderId;
 import com.acroteq.infrastructure.data.access.repository.ReadWriteRepositoryImpl;
 import com.acroteq.ticketing.order.service.data.access.order.entity.OrderJpaEntity;
-import com.acroteq.ticketing.order.service.data.access.order.mapper.OrderDomainToJpaMapper;
-import com.acroteq.ticketing.order.service.data.access.order.mapper.OrderJpaToDomainMapper;
+import com.acroteq.ticketing.order.service.data.access.order.mapper.OrderJpaMapper;
 import com.acroteq.ticketing.order.service.data.access.order.repository.OrderJpaRepository;
 import com.acroteq.ticketing.order.service.domain.entity.Order;
 import com.acroteq.ticketing.order.service.domain.ports.output.repository.OrderRepository;
@@ -18,15 +17,13 @@ public class OrderRepositoryImpl extends ReadWriteRepositoryImpl<OrderId, Order,
     implements OrderRepository {
 
   private final OrderJpaRepository jpaRepository;
-  private final OrderJpaToDomainMapper jpaToDomainMapper;
+  private final OrderJpaMapper jpaMapper;
 
-  public OrderRepositoryImpl(final OrderJpaRepository jpaRepository,
-                             final OrderJpaToDomainMapper jpaToDomainMapper,
-                             final OrderDomainToJpaMapper domainToJpaMapper) {
-    super(jpaRepository, jpaToDomainMapper, domainToJpaMapper);
+  public OrderRepositoryImpl(final OrderJpaRepository jpaRepository, final OrderJpaMapper jpaMapper) {
+    super(jpaRepository, jpaMapper);
 
     this.jpaRepository = jpaRepository;
-    this.jpaToDomainMapper = jpaToDomainMapper;
+    this.jpaMapper = jpaMapper;
   }
 
   @Override
@@ -34,6 +31,6 @@ public class OrderRepositoryImpl extends ReadWriteRepositoryImpl<OrderId, Order,
     final String id = trackingId.getValue()
                                 .toString();
     return jpaRepository.findByTrackingId(id)
-                        .map(jpaToDomainMapper::convertJpaToDomain);
+                        .map(jpaMapper::convert);
   }
 }

@@ -16,6 +16,9 @@ import lombok.experimental.SuperBuilder;
 public class Customer extends ReplicatedEntity<CustomerId> {
 
   @NonNull
+  private final String userName;
+
+  @NonNull
   private final CashValue creditLimit;
 
   public Customer withZeroCreditLimit() {

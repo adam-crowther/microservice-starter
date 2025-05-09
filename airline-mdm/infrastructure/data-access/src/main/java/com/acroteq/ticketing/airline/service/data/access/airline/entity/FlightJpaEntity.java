@@ -5,8 +5,6 @@ import static lombok.AccessLevel.PROTECTED;
 import com.acroteq.infrastructure.data.access.entity.PrimaryJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,10 +23,6 @@ public class FlightJpaEntity extends PrimaryJpaEntity {
 
   @Column(name = "code", nullable = false, unique = true)
   private String code;
-
-  @ManyToOne
-  @JoinColumn(name = "airline_id", nullable = false, updatable = false)
-  private AirlineJpaEntity airline;
 
   @Column(name = "price_currency_id", nullable = false)
   private String priceCurrencyId;

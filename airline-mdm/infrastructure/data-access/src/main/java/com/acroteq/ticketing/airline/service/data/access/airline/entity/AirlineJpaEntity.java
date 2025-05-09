@@ -6,6 +6,7 @@ import static lombok.AccessLevel.PROTECTED;
 import com.acroteq.infrastructure.data.access.entity.PrimaryJpaEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -32,6 +33,7 @@ public class AirlineJpaEntity extends PrimaryJpaEntity {
   @Column(name = "active", nullable = false)
   private Boolean active;
 
-  @OneToMany(mappedBy = "airline", cascade = ALL, orphanRemoval = true)
+  @OneToMany(cascade = ALL, orphanRemoval = true)
+  @JoinColumn(name = "airline_id", referencedColumnName = "id", nullable = false)
   private List<FlightJpaEntity> flights;
 }

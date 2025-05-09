@@ -1,10 +1,10 @@
 package com.acroteq.ticketing.order.service.domain.exception;
 
-import com.acroteq.domain.exception.DomainException;
+import com.acroteq.domain.exception.NotFoundException;
 import com.acroteq.domain.valueobject.OrderId;
 import com.acroteq.ticketing.order.service.domain.valueobject.TrackingId;
 
-public class OrderNotFoundException extends DomainException {
+public class OrderNotFoundException extends NotFoundException {
 
   private static final String I18N_CODE_TRACKING_ID = "problem.order.not.found.for.tracking.id";
   private static final String I18N_CODE_ORDER_ID = "problem.order.not.found.for.order.id";
@@ -28,7 +28,7 @@ public class OrderNotFoundException extends DomainException {
   }
 
   @Override
-  public String getCode() {
+  public String getUserName() {
     return i18nCode;
   }
 

@@ -5,8 +5,7 @@ import com.acroteq.application.repository.WriteRepository;
 import com.acroteq.domain.entity.Entity;
 import com.acroteq.domain.valueobject.EntityId;
 import com.acroteq.infrastructure.data.access.entity.JpaEntity;
-import com.acroteq.infrastructure.mapper.DomainToJpaMapper;
-import com.acroteq.infrastructure.mapper.JpaToDomainMapper;
+import com.acroteq.infrastructure.mapper.JpaMapper;
 import lombok.NonNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -20,10 +19,9 @@ public class ReadWriteRepositoryImpl<IdT extends EntityId, EntityT extends Entit
   private final WriteRepository<IdT, EntityT> writeRepository;
 
   public ReadWriteRepositoryImpl(
-      final JpaRepository<JpaT, Long> jpaRepository, final JpaToDomainMapper<JpaT, EntityT> jpaToDomainMapper,
-      final DomainToJpaMapper<EntityT, JpaT> domainToJpaMapper) {
-    readRepository = new ReadRepositoryImpl<>(jpaRepository, jpaToDomainMapper);
-    writeRepository = new WriteRepositoryImpl<>(jpaRepository, jpaToDomainMapper, domainToJpaMapper);
+      final JpaRepository<JpaT, Long> jpaRepository, final JpaMapper<EntityT, JpaT> jpaMapper) {
+    readRepository = new ReadRepositoryImpl<>(jpaRepository, jpaMapper);
+    writeRepository = new WriteRepositoryImpl<>(jpaRepository, jpaMapper);
   }
 
   @Override

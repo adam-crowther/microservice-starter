@@ -13,7 +13,7 @@ class DomainExceptionSpec extends Specification {
     def exception = new TestDomainException(parameter)
 
     then:
-    exception.code == 'problem.test.domain.exception'
+    exception.userName == 'problem.test.domain.exception'
     exception.parameters == [parameter] as String[]
     exception.message == message
     exception.cause == null
@@ -32,7 +32,7 @@ class DomainExceptionSpec extends Specification {
     def exception = new TestDomainException(parameter, cause)
 
     then:
-    exception.code == 'problem.test.domain.exception'
+    exception.userName == 'problem.test.domain.exception'
     exception.parameters == [parameter] as String[]
     exception.message == message
     exception.cause == cause

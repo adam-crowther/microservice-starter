@@ -40,9 +40,7 @@ class AggregateRootSpec extends Specification {
     then:
     aggregateRoot.id == null
     aggregateRoot.version == null
-    aggregateRoot.audit != null
-    aggregateRoot.audit.lastModifiedTimestamp == null
-    aggregateRoot.audit.createdTimestamp == null
+    aggregateRoot.audit == null
   }
 
   def 'equals and hashcode contract is correct'() {

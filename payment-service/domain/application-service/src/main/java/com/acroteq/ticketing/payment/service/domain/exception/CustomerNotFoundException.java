@@ -1,33 +1,45 @@
 package com.acroteq.ticketing.payment.service.domain.exception;
 
-import com.acroteq.domain.exception.DomainException;
+import com.acroteq.domain.exception.NotFoundException;
 import com.acroteq.domain.valueobject.CustomerId;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
-public class CustomerNotFoundException extends DomainException {
+public class CustomerNotFoundException extends NotFoundException {
 
   private static final String I18N_CODE = "problem.customer.not.found";
   private static final String MESSAGE = "Customer not found %s";
 
   private final CustomerId customerId;
+  private final String userName;
 
   public static Supplier<CustomerNotFoundException> customerNotFoundException(final CustomerId customerId) {
     return () -> new CustomerNotFoundException(customerId);
   }
 
+  public CustomerNotFoundException(final String userName) {
+    super(String.format(MESSAGE, userName));
+    this.customerId = null;
+    this.userName = userName;
+  }
+
   public CustomerNotFoundException(final CustomerId customerId) {
     super(String.format(MESSAGE, customerId));
     this.customerId = customerId;
+    this.userName = null;
   }
 
   @Override
-  public String getCode() {
+  public String getUserName() {
     return I18N_CODE;
   }
 
   @Override
   public String[] getParameters() {
-    return new String[]{ customerId.toString() };
+    final String parameter = Optional.ofNullable(customerId)
+                                     .map(Object::toString)
+                                     .orElse(userName);
+    return new String[]{ parameter };
   }
 }

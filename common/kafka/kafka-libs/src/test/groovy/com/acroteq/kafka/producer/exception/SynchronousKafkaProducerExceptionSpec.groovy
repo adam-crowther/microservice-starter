@@ -13,7 +13,7 @@ class SynchronousKafkaProducerExceptionSpec extends Specification {
     def exception = new SynchronousKafkaProducerException(cause)
 
     then:
-    exception.code == 'problem.synchronous.error.in.kafka.producer'
+    exception.userName == 'problem.synchronous.error.in.kafka.producer'
     exception.parameters == [] as String[]
     exception.message == 'Synchronous exception while sending a message to Kafka'
     exception.cause == cause

@@ -3,8 +3,7 @@ package com.acroteq.ticketing.approval.service.data.access.airline.adapter;
 import com.acroteq.domain.valueobject.AirlineId;
 import com.acroteq.infrastructure.data.access.repository.ReadWriteRepositoryImpl;
 import com.acroteq.ticketing.approval.service.data.access.airline.entity.AirlineJpaEntity;
-import com.acroteq.ticketing.approval.service.data.access.airline.mapper.AirlineDomainToJpaMapper;
-import com.acroteq.ticketing.approval.service.data.access.airline.mapper.AirlineJpaToDomainMapper;
+import com.acroteq.ticketing.approval.service.data.access.airline.mapper.AirlineJpaMapper;
 import com.acroteq.ticketing.approval.service.data.access.airline.repository.AirlineJpaRepository;
 import com.acroteq.ticketing.approval.service.domain.entity.airline.Airline;
 import com.acroteq.ticketing.approval.service.domain.ports.output.repository.AirlineRepository;
@@ -17,21 +16,19 @@ public class AirlineRepositoryImpl extends ReadWriteRepositoryImpl<AirlineId, Ai
     implements AirlineRepository {
 
   private final AirlineJpaRepository jpaRepository;
-  private final AirlineJpaToDomainMapper jpaToDomainMapper;
+  private final AirlineJpaMapper jpaMapper;
 
-  public AirlineRepositoryImpl(
-      final AirlineJpaRepository jpaRepository, final AirlineJpaToDomainMapper jpaToDomainMapper,
-      final AirlineDomainToJpaMapper domainToJpaMapper) {
-    super(jpaRepository, jpaToDomainMapper, domainToJpaMapper);
+  public AirlineRepositoryImpl(final AirlineJpaRepository jpaRepository, final AirlineJpaMapper jpaMapper) {
+    super(jpaRepository, jpaMapper);
 
     this.jpaRepository = jpaRepository;
-    this.jpaToDomainMapper = jpaToDomainMapper;
+    this.jpaMapper = jpaMapper;
   }
 
   @Override
   public Optional<Airline> findByCode(final String code) {
     return jpaRepository.findByCode(code)
-                        .map(jpaToDomainMapper::convertJpaToDomain);
+                        .map(jpaMapper::convert);
   }
 
   @Override

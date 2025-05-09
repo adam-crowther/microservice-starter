@@ -21,6 +21,9 @@ import java.math.BigDecimal;
 @Entity
 public class CustomerJpaEntity extends ReplicatedJpaEntity {
 
+  @Column(name = "user_name", nullable = false)
+  private String userName;
+
   @Column(name = "credit_limit_currency_id", nullable = false)
   private String creditLimitCurrencyId;
 

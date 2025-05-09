@@ -16,7 +16,7 @@ public class AirlineNotActiveException extends DomainException {
   }
 
   @Override
-  public String getCode() {
+  public String getUserName() {
     return I18N_CODE;
   }
 

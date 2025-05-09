@@ -41,7 +41,7 @@ public class AirlineServiceExceptionHandler {
   }
 
   private Problem createProblem(final HttpStatus httpStatus, final DomainException exception, final Locale locale) {
-    final String code = exception.getCode();
+    final String code = exception.getUserName();
     final String[] parameters = exception.getParameters();
     final String message = messageSource.getMessage(code, parameters, locale);
     return Problem.builder()

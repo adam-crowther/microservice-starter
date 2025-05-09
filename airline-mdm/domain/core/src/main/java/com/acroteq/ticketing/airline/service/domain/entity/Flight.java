@@ -12,6 +12,8 @@ import lombok.NonNull;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.util.function.Predicate;
+
 @Getter
 @ToString(callSuper = true)
 @SuperBuilder(toBuilder = true)
@@ -20,12 +22,14 @@ public class Flight extends PrimaryEntity<FlightId> {
   @NonNull
   private final String code;
   @NonNull
-  private final String airlineCode;
-  @NonNull
   private final CashValue price;
   private final boolean available;
 
   public void validate() {
     checkPrecondition(isNotBlank(code), AirlineValidationException::new, "code");
+  }
+
+  public static Predicate<Flight> hasCode(final String code) {
+    return flight -> flight.code.equals(code);
   }
 }

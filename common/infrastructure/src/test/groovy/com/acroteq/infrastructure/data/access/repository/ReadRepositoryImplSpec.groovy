@@ -3,7 +3,7 @@ package com.acroteq.infrastructure.data.access.repository
 import com.acroteq.infrastructure.data.access.entity.TestEntity
 import com.acroteq.infrastructure.data.access.entity.TestJpaEntity
 import com.acroteq.infrastructure.data.access.jpa.TestJpaRepository
-import com.acroteq.infrastructure.data.access.mapper.TestJpaToDomainMapper
+import com.acroteq.infrastructure.data.access.mapper.TestJpaMapper
 import com.acroteq.infrastructure.data.access.valueobject.TestId
 import groovy.transform.CompileDynamic
 import spock.lang.Specification
@@ -15,9 +15,9 @@ class ReadRepositoryImplSpec extends Specification {
   static final TestId TEST_ID = TestId.of(ID)
 
   TestJpaRepository jpaRepository = Mock()
-  TestJpaToDomainMapper jpaToDomainMapper = Mock()
+  TestJpaMapper jpaMapper = Mock()
 
-  ReadRepositoryImpl repository = new ReadRepositoryImpl(jpaRepository, jpaToDomainMapper)
+  ReadRepositoryImpl repository = new ReadRepositoryImpl(jpaRepository, jpaMapper)
 
   def 'loadAll returns a list containing all the existing entities'() {
     given:
@@ -25,7 +25,7 @@ class ReadRepositoryImplSpec extends Specification {
     def testJpaEntity = Mock(TestJpaEntity)
 
     jpaRepository.findAll() >> List.of(testJpaEntity)
-    jpaToDomainMapper.convertJpaToDomain(testJpaEntity) >> testEntity
+    jpaMapper.convert(testJpaEntity) >> testEntity
 
     when:
     def entities = repository.loadAll()
@@ -40,7 +40,7 @@ class ReadRepositoryImplSpec extends Specification {
     def testJpaEntity = Mock(TestJpaEntity)
 
     jpaRepository.findById(ID) >> Optional.ofNullable(testJpaEntity)
-    jpaToDomainMapper.convertJpaToDomain(testJpaEntity) >> testEntity
+    jpaMapper.convert(testJpaEntity) >> testEntity
 
     when:
     def entity = repository.findById(TEST_ID)

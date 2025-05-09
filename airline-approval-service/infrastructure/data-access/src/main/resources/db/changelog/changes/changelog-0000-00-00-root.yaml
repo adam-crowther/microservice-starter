@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1744296523715-1
+      id: 1746803286664-1
       author: adamcc (generated)
       changes:
         - createTable:
@@ -44,7 +44,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
             tableName: airlines
   - changeSet:
-      id: 1744296523715-2
+      id: 1746803286664-2
       author: adamcc (generated)
       changes:
         - createTable:
@@ -98,7 +98,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: flights
   - changeSet:
-      id: 1744296523715-3
+      id: 1746803286664-3
       author: adamcc (generated)
       changes:
         - createTable:
@@ -154,7 +154,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: order_approvals
   - changeSet:
-      id: 1744296523715-4
+      id: 1746803286664-4
       author: adamcc (generated)
       changes:
         - addUniqueConstraint:
@@ -162,7 +162,7 @@ databaseChangeLog:
             constraintName: UC_AIRLINESCODE_COL
             tableName: airlines
   - changeSet:
-      id: 1744296523715-5
+      id: 1746803286664-5
       author: adamcc (generated)
       changes:
         - addUniqueConstraint:
@@ -170,7 +170,7 @@ databaseChangeLog:
             constraintName: UC_FLIGHTSCODE_COL
             tableName: flights
   - changeSet:
-      id: 1744296523715-6
+      id: 1746803286664-6
       author: adamcc (generated)
       changes:
         - addForeignKeyConstraint:
@@ -183,7 +183,7 @@ databaseChangeLog:
             referencedTableName: airlines
             validate: true
   - changeSet:
-      id: 1744296523715-7
+      id: 1746803286664-7
       author: adamcc (generated)
       changes:
         - addForeignKeyConstraint:

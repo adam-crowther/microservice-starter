@@ -20,6 +20,7 @@ import com.acroteq.ticketing.payment.service.domain.entity.Customer;
 import com.acroteq.ticketing.payment.service.domain.entity.Payment;
 import com.acroteq.ticketing.payment.service.domain.valueobject.PaymentOutput;
 import com.acroteq.ticketing.payment.service.domain.valueobject.TransactionType;
+import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -28,9 +29,9 @@ import java.util.List;
 public class PaymentDomainServiceImpl implements PaymentDomainService {
 
   @Override
-  public PaymentOutput validatePayment(final Payment payment,
-                                       final CreditBalance originalCreditBalance,
-                                       final List<CreditChange> creditHistory) {
+  public PaymentOutput validatePayment(
+      final Payment payment, final CreditBalance originalCreditBalance,
+      final List<CreditChange> creditHistory) {
     final ValidationResultBuilder resultBuilder = ValidationResult.builder();
     resultBuilder.validationResult(payment.validate());
     resultBuilder.validationResult(checkCreditBalance(payment, originalCreditBalance));
@@ -38,10 +39,13 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
     final CreditBalance updatedCreditBalance = subtractCredit(payment, originalCreditBalance);
     final CreditChange newCreditChange = createNewCreditChange(payment, DEBIT);
 
-    creditHistory.add(newCreditChange);
+    final List<CreditChange> updatedCreditHistory = ImmutableList.<CreditChange>builder()
+                                                                 .addAll(creditHistory)
+                                                                 .add(newCreditChange)
+                                                                 .build();
     final Customer customer = payment.getCustomer();
 
-    resultBuilder.validationResult(validateCreditHistory(customer, updatedCreditBalance, creditHistory));
+    resultBuilder.validationResult(validateCreditHistory(customer, updatedCreditBalance, updatedCreditHistory));
 
     final ValidationResult result = resultBuilder.build();
     final PaymentStatus updatedStatus = getPaymentStatus(result);
@@ -117,9 +121,9 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
                        .build();
   }
 
-  private ValidationResult validateCreditHistory(final Customer customer,
-                                                 final CreditBalance creditBalance,
-                                                 final List<CreditChange> creditHistory) {
+  private ValidationResult validateCreditHistory(
+      final Customer customer, final CreditBalance creditBalance,
+      final List<CreditChange> creditHistory) {
     final CashValue totalCreditHistory = getTotalHistoryAmount(creditHistory, CREDIT);
     final CashValue totalDebitHistory = getTotalHistoryAmount(creditHistory, DEBIT);
 
@@ -147,8 +151,9 @@ public class PaymentDomainServiceImpl implements PaymentDomainService {
     return validationResult.build();
   }
 
-  private CashValue getTotalHistoryAmount(final List<CreditChange> creditHistories,
-                                          final TransactionType transactionType) {
+  private CashValue getTotalHistoryAmount(
+      final List<CreditChange> creditHistories,
+      final TransactionType transactionType) {
     return creditHistories.stream()
                           .filter(creditHistory -> transactionType == creditHistory.getTransactionType())
                           .map(CreditChange::getCreditDelta)

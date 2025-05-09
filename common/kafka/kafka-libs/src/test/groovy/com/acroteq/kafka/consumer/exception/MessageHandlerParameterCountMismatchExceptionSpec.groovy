@@ -13,7 +13,7 @@ class MessageHandlerParameterCountMismatchExceptionSpec extends Specification {
     def exception = new MessageHandlerParameterCountMismatchException(parameter)
 
     then:
-    exception.code == 'problem.message.handler.parameter.count.mismatch'
+    exception.userName == 'problem.message.handler.parameter.count.mismatch'
     exception.parameters == [parameter] as String[]
     exception.message == message
     exception.cause == null

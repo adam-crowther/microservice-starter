@@ -13,7 +13,7 @@ class UnsupportedMessageTypeExceptionSpec extends Specification {
     def exception = new UnsupportedMessageTypeException(parameter)
 
     then:
-    exception.code == 'problem.unsupported.message.type'
+    exception.userName == 'problem.unsupported.message.type'
     exception.parameters == [parameter] as String[]
     exception.message == message
     exception.cause == null

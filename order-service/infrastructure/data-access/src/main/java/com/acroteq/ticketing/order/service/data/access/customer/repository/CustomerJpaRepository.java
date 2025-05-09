@@ -4,5 +4,10 @@ import com.acroteq.ticketing.order.service.data.access.customer.entity.CustomerJ
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface CustomerJpaRepository extends JpaRepository<CustomerJpaEntity, Long> {}
+public interface CustomerJpaRepository extends JpaRepository<CustomerJpaEntity, Long> {
+
+  Optional<CustomerJpaEntity> findByUserName(String userName);
+}

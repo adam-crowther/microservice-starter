@@ -70,8 +70,7 @@ class PaymentSpec extends Specification {
     then:
     payment.id == null
     payment.version == null
-    payment.audit.createdTimestamp == null
-    payment.audit.lastModifiedTimestamp == null
+    payment.audit == null
   }
 
   def 'calling the builder with missing data should throw an exception'() {

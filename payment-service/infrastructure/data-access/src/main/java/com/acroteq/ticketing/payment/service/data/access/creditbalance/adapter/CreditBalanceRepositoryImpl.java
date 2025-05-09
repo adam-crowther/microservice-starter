@@ -3,8 +3,7 @@ package com.acroteq.ticketing.payment.service.data.access.creditbalance.adapter;
 import com.acroteq.domain.valueobject.CustomerId;
 import com.acroteq.infrastructure.data.access.repository.ReadWriteRepositoryImpl;
 import com.acroteq.ticketing.payment.service.data.access.creditbalance.entity.CreditBalanceJpaEntity;
-import com.acroteq.ticketing.payment.service.data.access.creditbalance.mapper.CreditBalanceDomainToJpaMapper;
-import com.acroteq.ticketing.payment.service.data.access.creditbalance.mapper.CreditBalanceJpaToDomainMapper;
+import com.acroteq.ticketing.payment.service.data.access.creditbalance.mapper.CreditBalanceJpaMapper;
 import com.acroteq.ticketing.payment.service.data.access.creditbalance.repository.CreditBalanceJpaRepository;
 import com.acroteq.ticketing.payment.service.domain.entity.CreditBalance;
 import com.acroteq.ticketing.payment.service.domain.ports.output.repository.CreditBalanceRepository;
@@ -19,19 +18,18 @@ public class CreditBalanceRepositoryImpl
     implements CreditBalanceRepository {
 
   private final CreditBalanceJpaRepository jpaRepository;
-  private final CreditBalanceJpaToDomainMapper jpaToDomainMapper;
+  private final CreditBalanceJpaMapper jpaMapper;
 
-  public CreditBalanceRepositoryImpl(final CreditBalanceJpaRepository jpaRepository,
-                                     final CreditBalanceJpaToDomainMapper jpaToDomainMapper,
-                                     final CreditBalanceDomainToJpaMapper domainToJpaMapper) {
-    super(jpaRepository, jpaToDomainMapper, domainToJpaMapper);
+  public CreditBalanceRepositoryImpl(
+      final CreditBalanceJpaRepository jpaRepository, final CreditBalanceJpaMapper jpaMapper) {
+    super(jpaRepository, jpaMapper);
     this.jpaRepository = jpaRepository;
-    this.jpaToDomainMapper = jpaToDomainMapper;
+    this.jpaMapper = jpaMapper;
   }
 
   @Override
   public Optional<CreditBalance> findByCustomerId(final CustomerId customerId) {
     return jpaRepository.findByCustomerId(customerId.getValue())
-                        .map(jpaToDomainMapper::convertJpaToDomain);
+                        .map(jpaMapper::convert);
   }
 }

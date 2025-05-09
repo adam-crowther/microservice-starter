@@ -1,7 +1,5 @@
 package com.acroteq.ticketing.customer.service.presentation.rest;
 
-import static java.util.stream.Collectors.toList;
-
 import com.acroteq.domain.valueobject.CustomerId;
 import com.acroteq.ticketing.customer.service.domain.exception.CustomerNotFoundException;
 import com.acroteq.ticketing.customer.service.domain.ports.input.service.CustomerApplicationService;
@@ -42,7 +40,7 @@ public class CustomersController implements CustomersApi {
     final List<Customer> customers = customerApplicationService.loadAllCustomers()
                                                                .stream()
                                                                .map(customerMapper::convert)
-                                                               .collect(toList());
+                                                               .toList();
     return ResponseEntity.ok(customers);
   }
 

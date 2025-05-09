@@ -1,9 +1,9 @@
 package com.acroteq.ticketing.approval.service.domain.exception;
 
-import com.acroteq.domain.exception.DomainException;
+import com.acroteq.domain.exception.NotFoundException;
 import com.acroteq.domain.valueobject.OrderId;
 
-public class OrderNotFoundException extends DomainException {
+public class OrderNotFoundException extends NotFoundException {
 
   private static final String I18N_CODE = "problem.order.not.found";
   private static final String MESSAGE = "Order not found %s";
@@ -16,7 +16,7 @@ public class OrderNotFoundException extends DomainException {
   }
 
   @Override
-  public String getCode() {
+  public String getUserName() {
     return I18N_CODE;
   }
 

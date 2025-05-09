@@ -1,9 +1,9 @@
 package com.acroteq.ticketing.payment.service.domain.exception;
 
-import com.acroteq.domain.exception.DomainException;
+import com.acroteq.domain.exception.NotFoundException;
 import com.acroteq.domain.valueobject.OrderId;
 
-public class PaymentNotFoundException extends DomainException {
+public class PaymentNotFoundException extends NotFoundException {
 
   private static final String I18N_CODE = "problem.payment.not.found.for.order.if";
   private static final String MESSAGE = "Payment not found for order id: %s";
@@ -18,7 +18,7 @@ public class PaymentNotFoundException extends DomainException {
   }
 
   @Override
-  public String getCode() {
+  public String getUserName() {
     return i18nCode;
   }
 

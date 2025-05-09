@@ -70,7 +70,7 @@ public class GlobalExceptionHandler {
                   .code(BAD_REQUEST.value())
                   .reason(BAD_REQUEST.getReasonPhrase())
                   .message(exception.getMessage())
-                  .i18nCode(exception.getCode())
+                  .i18nCode(exception.getUserName())
                   .i18nParameters(List.of(exception.getParameters()))
                   .build();
   }
@@ -84,7 +84,7 @@ public class GlobalExceptionHandler {
                   .code(INTERNAL_SERVER_ERROR.value())
                   .reason(INTERNAL_SERVER_ERROR.getReasonPhrase())
                   .message(exception.getMessage())
-                  .i18nCode(exception.getCode())
+                  .i18nCode(exception.getUserName())
                   .i18nParameters(List.of(exception.getParameters()))
                   .build();
   }
@@ -98,7 +98,7 @@ public class GlobalExceptionHandler {
                   .code(NOT_FOUND.value())
                   .reason(NOT_FOUND.getReasonPhrase())
                   .message(exception.getMessage())
-                  .i18nCode(exception.getCode())
+                  .i18nCode(exception.getUserName())
                   .i18nParameters(List.of(exception.getParameters()))
                   .build();
   }

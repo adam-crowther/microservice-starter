@@ -41,3 +41,13 @@ dependencies {
     testRuntimeOnly(libs.log4j.layout.template.json)
     testRuntimeOnly(libs.log4j.slf4j2.impl)
 }
+
+tasks.named("test") {
+    dependsOn(
+        project(":airline-approval-service:airline-approval-container").tasks.named("bootBuildImage"),
+        project(":airline-mdm:airline-mdm-container").tasks.named("bootBuildImage"),
+        project(":customer-mdm:customer-mdm-container").tasks.named("bootBuildImage"),
+        project(":order-service:order-container").tasks.named("bootBuildImage"),
+        project(":payment-service:payment-container").tasks.named("bootBuildImage"),
+    )
+}

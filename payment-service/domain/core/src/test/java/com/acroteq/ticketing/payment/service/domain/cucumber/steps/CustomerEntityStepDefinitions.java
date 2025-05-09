@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 public class CustomerEntityStepDefinitions {
 
   private static final CustomerId CUSTOMER_ID = CustomerId.of(1234L);
+  private static final String USER_NAME = "UserName";
   private static final Integer PARTITION = 2;
   private static final Long OFFSET = 5678L;
 
@@ -33,8 +34,9 @@ public class CustomerEntityStepDefinitions {
     customer = Customer.builder()
                        .id(CUSTOMER_ID)
                        .version(0L)
-                       .creditLimit(CashValue.ZERO)
                        .eventId(eventId)
+                       .userName(USER_NAME)
+                       .creditLimit(CashValue.ZERO)
                        .build();
   }
 
