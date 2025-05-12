@@ -1,4 +1,3 @@
-
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -31,9 +30,17 @@ The microservices are implemented using Java 17, Spring Boot and common librarie
 specified using OpenAPI 3 (API first) and the client stubs and server skeletons are generated using the OpenApi
 generators.
 
-4 different kinds of tests are shown: Spock Unit tests, Cucumber BDD business logic/domain tests, Integration tests and
-End-to-End tests. Test coverage is enforced with JaCoCo. Integration tests use TestContainers to run the infrastructure
+Since this is a showcase, and not a fully productive application, test coverage is not complete. 4
+kinds of tests are demonstrated:
+
+* Spock Unit tests ([`common`](common/domain/src/test))
+* Cucumber BDD business logic/domain tests ([`payment-domain-core`](payment-service/domain/core/src/test))
+* Integration tests ([`order-application-service`](order-service/domain/application-service/src/test))
+* End-to-End tests. ([`e2e-testing`](e2e-testing))
+
+Test coverage is enforced with JaCoCo. Integration tests use TestContainers to run the infrastructure
 and microservice containers locally, with lifecycles that are managed by custom JUnit5 extensions.
+See [TESTING.md](docs/TESTING.md) for more details.
 
 SwaggerUI is provided for spec and testing purposes, served by a separate, independent microservices for each REST API.
 
